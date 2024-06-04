@@ -13,10 +13,10 @@ import 'package:new_project_app/view/widgets/login_button/login_button.dart';
 import 'package:new_project_app/view/widgets/signup_text_formfield/signup_text_formfield.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
-class StudentSignUpScreen extends StatelessWidget {
-  StudentSignUpScreen({super.key});
+class StudentProfileCreationScreen extends StatelessWidget {
+  StudentProfileCreationScreen({super.key});
 
-  final studentSignUpController = StudentSignUpController();
+  final studentSignUpController = Get.put(StudentSignUpController());
   final GetImage getImageController = Get.put(GetImage());
 
   @override
@@ -24,7 +24,7 @@ class StudentSignUpScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () {
         getImageController.pickedImage.value = "";
-        // studentSignUpController.clearFields();
+        studentSignUpController.clearFields();
         return Future.value(true);
       },
       child: Scaffold(
@@ -47,7 +47,7 @@ class StudentSignUpScreen extends StatelessWidget {
               kHeight10,
               SingleChildScrollView(
                 child: Form(
-                  key: studentSignUpController.formKey,
+                  key: studentSignUpController.formKey1,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -99,9 +99,10 @@ class StudentSignUpScreen extends StatelessWidget {
                         text: "Phone Number *",
                         hintText: "Phone Number",
                         keyboardType: TextInputType.phone,
+                        maxLength: 10,
                         textfromController:
                             studentSignUpController.phoneController,
-                        validator: checkFieldEmpty,
+                        validator: checkFieldPhoneNumberIsValid,
                       ),
                       SignUpTextFromFiled(
                         text: 'Date of birth'.tr,
@@ -116,14 +117,6 @@ class StudentSignUpScreen extends StatelessWidget {
                         },
                       ),
                       SignUpTextFromFiled(
-                        text: "Mail Id *",
-                        hintText: "mail id",
-                        keyboardType: TextInputType.emailAddress,
-                        textfromController:
-                            studentSignUpController.emailController,
-                        validator: checkFieldEmailIsValid,
-                      ),
-                      SignUpTextFromFiled(
                         text: "Father/Spouse Name *",
                         hintText: "name",
                         keyboardType: TextInputType.text,
@@ -136,7 +129,7 @@ class StudentSignUpScreen extends StatelessWidget {
                         hintText: "Place",
                         keyboardType: TextInputType.text,
                         textfromController:
-                            studentSignUpController.fatherSpouseController,
+                            studentSignUpController.placeController,
                         validator: checkFieldEmpty,
                       ),
                       SignUpTextFromFiled(
@@ -161,13 +154,16 @@ class StudentSignUpScreen extends StatelessWidget {
                         hintText: "number",
                         keyboardType: TextInputType.text,
                         textfromController:
-                            studentSignUpController.rtoNameController,
+                            studentSignUpController.licenceController,
                       ),
                       kHeight20,
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            if (studentSignUpController.formKey1.currentState!
+                                .validate()) {}
+                          },
                           child: loginButtonWidget(
                               height: 60, width: 180, text: 'Submit'.tr),
                         ),
