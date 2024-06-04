@@ -46,6 +46,8 @@ dependencies:
   line_icons:
   shimmer:
   carousel_slider:
+  firebase_core: ^2.32.0
+  firebase_auth:
 
 dev_dependencies:
   flutter_test:

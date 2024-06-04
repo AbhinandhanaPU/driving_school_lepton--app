@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "693384841272",
+    "project_id": "driving-school-6e78e",
+    "storage_bucket": "driving-school-6e78e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693384841272:android:178778acb16aa4aa77becd",
+        "android_client_info": {
+          "package_name": "com.example.new_project_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHah0nNCIBpQSbtBN-6LR13h58dHJVu58"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
