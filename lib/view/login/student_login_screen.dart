@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
+import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/text_hide_controller/text_hide_controller.dart';
 import 'package:new_project_app/controller/user_login_controller/student_login_controller.dart';
 import 'package:new_project_app/view/sign_up/student_sign_up/student_sign_up_page.dart';
-import 'package:new_project_app/view/users/student/student_home_page/student_home_page.dart';
 import 'package:new_project_app/view/widgets/image_container_widgets/image_container_widgets.dart';
 import 'package:new_project_app/view/widgets/login_button/login_button.dart';
 import 'package:new_project_app/view/widgets/login_text_formfield/login_text_formfield.dart';
@@ -26,7 +26,7 @@ class StudentLoginScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
-            // key: ,
+            key: studentLoginController.formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -99,17 +99,20 @@ class StudentLoginScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: 60.h),
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const StudentsMainHomeScreen();
-                        },
-                      ));
+                    onTap: () async {
+                      if (studentLoginController.formKey.currentState!
+                          .validate()) {
+                        await studentLoginController.studentSignIn(context);
+                      }
                     },
-                    child: loginButtonWidget(
-                      height: 50,
-                      width: 150,
-                      text: 'Login'.tr,
+                    child: Obx(
+                      () => studentLoginController.isLoading.value
+                          ? circularProgressIndicatotWidget
+                          : loginButtonWidget(
+                              height: 50,
+                              width: 150,
+                              text: 'Login'.tr,
+                            ),
                     ),
                   ),
                 ),

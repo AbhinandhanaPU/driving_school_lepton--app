@@ -1,9 +1,17 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:new_project_app/constant/images/images.dart';
+import 'package:new_project_app/constant/utils/firebase/firebase.dart';
+import 'package:new_project_app/constant/utils/utils.dart';
+import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
+import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/home/first_screen/first_screen.dart';
+import 'package:new_project_app/view/users/student/student_home_page/student_home_page.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_montserrat.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,14 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const FirstScreen(),
-        ),
-      );
-    });
+    nextpage(context);
   }
 
   @override
@@ -80,5 +81,71 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       )),
     );
+  }
+}
+
+nextpage(context) async {
+  //creating firebase auth instance
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  //assigning shared preference value to to UserCredentialController
+  UserCredentialsController.schoolId =
+      SharedPreferencesHelper.getString(SharedPreferencesHelper.schoolIdKey);
+  UserCredentialsController.userRole =
+      SharedPreferencesHelper.getString(SharedPreferencesHelper.userRoleKey);
+  UserCredentialsController.currentUSerID =
+      SharedPreferencesHelper.getString(SharedPreferencesHelper.currenUserKey);
+
+  await Future.delayed(const Duration(seconds: 6));
+  log("schoolId:${UserCredentialsController.schoolId}");
+  log("userRole:${UserCredentialsController.userRole}");
+  log('currentUSerID Auth ${UserCredentialsController.currentUSerID}');
+
+  if (auth.currentUser == null) {
+    Navigator.pushReplacement(context, MaterialPageRoute(
+      builder: (context) {
+        return const FirstScreen();
+      },
+    ));
+  } else {
+    if (UserCredentialsController.userRole == 'student') {
+      //getting studentData
+      await checkStudent(context);
+    } else {
+      Navigator.pushReplacement(context, MaterialPageRoute(
+        builder: (context) {
+          return const FirstScreen();
+        },
+      ));
+      //Get.offAll(() => const DujoLoginScren());
+    }
+  }
+}
+
+Future<void> checkStudent(
+  context,
+) async {
+  final studentData = await server
+      .collection('DrivingSchoolCollection')
+      .doc(UserCredentialsController.schoolId)
+      .collection('Students')
+      .doc(serverAuth.currentUser?.uid)
+      .get();
+
+  if (studentData.data() != null) {
+    UserCredentialsController.studentModel =
+        StudentModel.fromMap(studentData.data()!);
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return const StudentsMainHomeScreen();
+      },
+    ));
+  } else {
+    showToast(msg: "Please login again");
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return const FirstScreen();
+      },
+    ));
   }
 }

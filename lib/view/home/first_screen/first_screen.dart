@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
+import 'package:new_project_app/controller/school_controller/school_controller.dart';
 import 'package:new_project_app/view/home/user_selection_screen/user_selection_screen.dart';
 import 'package:new_project_app/view/widgets/login_button/login_button.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_montserrat.dart';
@@ -11,6 +13,8 @@ class FirstScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SchoolController schoolController = Get.put(SchoolController());
+
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -44,7 +48,8 @@ class FirstScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      await schoolController.fetchAllSchoolData();
                       Navigator.push(
                         context,
                         MaterialPageRoute(

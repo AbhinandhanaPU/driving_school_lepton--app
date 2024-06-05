@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/constant/const/const.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
@@ -130,6 +131,13 @@ class StudentSignUpScreen extends StatelessWidget {
                                     .trim() ==
                                 studentSignUpController.passwordController.text
                                     .trim()) {
+                              StudentPasswordSaver.studentEmailID =
+                                  studentSignUpController.emailController.text
+                                      .trim();
+                              StudentPasswordSaver.studentPassword =
+                                  studentSignUpController
+                                      .passwordController.text
+                                      .trim();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -142,10 +150,14 @@ class StudentSignUpScreen extends StatelessWidget {
                             }
                           }
                         },
-                        child: loginButtonWidget(
-                          height: 60,
-                          width: 180,
-                          text: 'Submit'.tr,
+                        child: Obx(
+                          () => studentSignUpController.isLoading.value
+                              ? circularProgressIndicatotWidget
+                              : loginButtonWidget(
+                                  height: 60,
+                                  width: 180,
+                                  text: 'Submit'.tr,
+                                ),
                         ),
                       ),
                     ),

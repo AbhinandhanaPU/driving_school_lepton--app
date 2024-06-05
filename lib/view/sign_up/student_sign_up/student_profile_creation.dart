@@ -160,12 +160,25 @@ class StudentProfileCreationScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             if (studentSignUpController.formKey1.currentState!
-                                .validate()) {}
+                                .validate()) {
+                              await studentSignUpController
+                                  .createStudent(context);
+                            } else {
+                              showToast(msg: "All Fields are mandatory");
+                              return;
+                            }
                           },
-                          child: loginButtonWidget(
-                              height: 60, width: 180, text: 'Submit'.tr),
+                          child: Obx(
+                            () => studentSignUpController.isLoading.value
+                                ? circularProgressIndicatotWidget
+                                : loginButtonWidget(
+                                    height: 60,
+                                    width: 180,
+                                    text: 'Submit'.tr,
+                                  ),
+                          ),
                         ),
                       ),
                     ],
