@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
- 
 import 'package:new_project_app/view/splash_screen/splash_screen.dart';
 
 import '../../../helper/shared_pref_helper.dart';
@@ -19,11 +18,8 @@ class _SelectLanguageState extends State<SelectLanguage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     userRequestPermission();
-    // notificationServices.firebaseInit(context);
-    // notificationServices.setupInteractMessage(context);
   }
 
   final List locale = [
@@ -126,10 +122,12 @@ class _SelectLanguageState extends State<SelectLanguage> {
                   onPressed: () async {
                     SharedPreferencesHelper.setString("langCode", "en");
                     SharedPreferencesHelper.setString("countryCode", "US");
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                    return  const SplashScreen();
-                  },));
-                   // Get.offAll( SplashScreen());
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const SplashScreen();
+                      },
+                    ));
+                    // Get.offAll( SplashScreen());
                   },
                   child: Text('Next'.tr)),
             ),

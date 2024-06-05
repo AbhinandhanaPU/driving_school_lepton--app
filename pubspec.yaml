@@ -49,12 +49,11 @@ dependencies:
   carousel_slider:
   firebase_core:
   firebase_auth:
-  firebase_ui_auth: 
-  cloud_firestore: ^4.17.5
-  progress_state_button: ^1.0.4
-  shared_preferences: ^2.2.3
-  uuid: ^4.4.0
-  firebase_storage: ^11.7.7
+  firebase_ui_auth:
+  cloud_firestore:
+  progress_state_button:
+  uuid:
+  firebase_storage:
 
 dev_dependencies:
   flutter_test:
