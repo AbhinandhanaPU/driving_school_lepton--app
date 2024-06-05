@@ -45,6 +45,7 @@ dependencies:
   google_nav_bar:
   line_icons:
   shimmer:
+  shared_preferences:
   carousel_slider:
   firebase_core:
   firebase_auth:
