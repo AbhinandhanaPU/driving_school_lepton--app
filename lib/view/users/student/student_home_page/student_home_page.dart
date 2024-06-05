@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
+import 'package:new_project_app/view/users/student/drawer/student_header_drawer.dart';
 import 'package:new_project_app/view/users/student/student_home_page/student_dashboard.dart';
 
 class StudentsMainHomeScreen extends StatefulWidget {
@@ -27,13 +28,13 @@ class _StudentsMainHomeScreenState extends State<StudentsMainHomeScreen> {
             title: const Text("Driving School"),
             backgroundColor: themeColor),
         body: const StudentDashboard(),
-        drawer: const Drawer(
+        drawer: Drawer(
           backgroundColor: Colors.white,
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // const StudentsHeaderDrawer(),
-                // MyDrawerList(context),
+                const StudentsHeaderDrawer(),
+                MyDrawerList(context),
               ],
             ),
           ),
