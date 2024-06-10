@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/users/widgets/notices/notices.dart';
-import 'package:new_project_app/view/users/widgets/videos/video_display_page.dart';
+import 'package:new_project_app/view/users/student/student_pages/notices/notices.dart';
+import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials.dart';
+import 'package:new_project_app/view/users/student/student_pages/videos/video_display_page.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
-class QuickActionPart extends StatelessWidget {
-  const QuickActionPart({super.key});
+class QuickActionPartStudent extends StatelessWidget {
+  const QuickActionPartStudent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +54,9 @@ viewallMenus(BuildContext context) {
   double w = MediaQuery.of(context).size.width;
   int columnCount = 3;
   final screenNavigationOfStd = [
-    const NoticePage(), //Notice
+    const StudyMaterials(), // Study Materials
     const VideosList(), // Video
+    const NoticePage(), //Notice
   ];
 
   Get.bottomSheet(

@@ -2,7 +2,7 @@ import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/users/widgets/notices/notice_display_page.dart';
+import 'package:new_project_app/view/users/student/student_pages/notices/notice_display_page.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 

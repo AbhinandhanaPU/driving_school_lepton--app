@@ -1,6 +1,7 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials.dart';
 
 class QuickActionsWidgetDrivingTest extends StatelessWidget {
   const QuickActionsWidgetDrivingTest({
@@ -98,9 +99,11 @@ class QuickActionsWidgetSM extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //  return const  TimeTable();
-            // },)),
+            onTap: () => Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return const StudyMaterials();
+              },
+            )),
             child: Container(
               height: 55.h,
               width: 55.w,
