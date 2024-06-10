@@ -8,6 +8,7 @@ import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/text_hide_controller/text_hide_controller.dart';
 import 'package:new_project_app/controller/user_login_controller/student_login_controller.dart';
 import 'package:new_project_app/view/sign_up/student_sign_up/student_sign_up_page.dart';
+import 'package:new_project_app/view/widgets/forgot_password_screen/forgot_password.dart';
 import 'package:new_project_app/view/widgets/image_container_widgets/image_container_widgets.dart';
 import 'package:new_project_app/view/widgets/login_button/login_button.dart';
 import 'package:new_project_app/view/widgets/login_text_formfield/login_text_formfield.dart';
@@ -81,12 +82,12 @@ class StudentLoginScreen extends StatelessWidget {
                   padding: EdgeInsets.only(left: 210.w),
                   child: GestureDetector(
                     onTap: () {
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         const ForgotPasswordScreen(),
-                      //   ),
-                      // );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const ForgotPasswordScreen(),
+                        ),
+                      );
                     },
                     child: GooglePoppinsWidgets(
                       fontsize: 15,
