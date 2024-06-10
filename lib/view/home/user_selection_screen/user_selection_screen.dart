@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/view/login/student_login_screen.dart';
+import 'package:new_project_app/view/login/teacher_loginscreen.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 import 'package:new_project_app/view/widgets/user_select_container/user_select_container.dart';
 
@@ -53,6 +54,13 @@ class UserSelectionScreen extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
                               return StudentLoginScreen();
+                            },
+                          ));
+                        }
+                        else {
+                            Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return TeacherLoginScreen();
                             },
                           ));
                         }
