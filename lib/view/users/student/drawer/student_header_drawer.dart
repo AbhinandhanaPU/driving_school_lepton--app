@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
+import 'package:new_project_app/controller/user_logout_controller/user_logout_controller.dart';
 import 'package:new_project_app/language/language_change_drawer.dart';
 import 'package:new_project_app/view/home/general_instructions/general_instructions.dart';
 import 'package:new_project_app/view/pages/privacy_policy/dialogs/privacy_policy.dart';
 
 class StudentsHeaderDrawer extends StatelessWidget {
   const StudentsHeaderDrawer({super.key});
-
   @override
   Widget build(BuildContext context) {
+    UserLogoutController userLogoutController = Get.put(UserLogoutController());
     return Container(
       color: Colors.grey.withOpacity(0.2),
       width: double.infinity,
@@ -37,7 +38,9 @@ class StudentsHeaderDrawer extends StatelessWidget {
           Text(
             'Royal Driving',
             style: GoogleFonts.montserrat(
-                color: Colors.black, fontSize: 25.h, fontWeight: FontWeight.w600),
+                color: Colors.black,
+                fontSize: 25.h,
+                fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 10,
@@ -45,11 +48,13 @@ class StudentsHeaderDrawer extends StatelessWidget {
           Text(
             "Watch and Guide      \n  Let them Study",
             style: GoogleFonts.poppins(
-                color: Colors.black.withOpacity(0.5), fontSize: 10.h, fontWeight: FontWeight.w600),
+                color: Colors.black.withOpacity(0.5),
+                fontSize: 10.h,
+                fontWeight: FontWeight.w600),
           ),
           TextButton(
             onPressed: () async {
-              // await userLogOut(context);
+              await userLogoutController.userLogOut(context);
             },
             child: Text(
               "Logout".tr,
@@ -62,7 +67,7 @@ class StudentsHeaderDrawer extends StatelessWidget {
   }
 }
 
-Widget MenuItem(int id, String image, String title, bool selected, onTap) {
+Widget menuItem(int id, String image, String title, bool selected, onTap) {
   return Material(
     color: Colors.white,
     child: InkWell(
@@ -75,7 +80,8 @@ Widget MenuItem(int id, String image, String title, bool selected, onTap) {
               child: Container(
                 height: 30.h,
                 width: double.infinity,
-                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(image))),
+                decoration: BoxDecoration(
+                    image: DecorationImage(image: AssetImage(image))),
               ),
             ),
             Expanded(
@@ -115,24 +121,13 @@ Widget MyDrawerList(context) {
   //   } catch (e) {}
   // }
 
-  void errorBox(context, e) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text("Error"),
-            content: Text(e.toString()),
-          );
-        });
-  }
-
   var currentPage = DrawerSections.dashboard;
   return Container(
     padding: const EdgeInsets.only(top: 15),
     child: Column(
       // show list  of menu drawer.........................
       children: [
-        MenuItem(1, 'assets/images/information.png', 'General Instructions'.tr,
+        menuItem(1, 'assets/images/information.png', 'General Instructions'.tr,
             currentPage == DrawerSections.dashboard ? true : false, () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
@@ -142,7 +137,7 @@ Widget MyDrawerList(context) {
           // Get.off(
           //   () => GeneralInstruction(),
         }),
-        MenuItem(2, 'assets/images/languages.png', 'Change Language'.tr,
+        menuItem(2, 'assets/images/languages.png', 'Change Language'.tr,
             currentPage == DrawerSections.dashboard ? true : false, () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
@@ -151,7 +146,7 @@ Widget MyDrawerList(context) {
           ));
           // Get.off(() => LanguageChangeDrawerPage());
         }),
-        MenuItem(3, 'assets/images/attendance.png', 'Privacy Policy'.tr,
+        menuItem(3, 'assets/images/attendance.png', 'Privacy Policy'.tr,
             currentPage == DrawerSections.dashboard ? true : false, () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
@@ -178,7 +173,8 @@ Widget MyDrawerList(context) {
                     children: [
                       Text(
                         "Developed by",
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
@@ -202,7 +198,9 @@ Widget MyDrawerList(context) {
                     Text(
                       "Lepton Communications",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black, fontSize: 11.5),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 11.5),
                     ),
                   ],
                 )),
@@ -219,7 +217,8 @@ Widget MyDrawerList(context) {
                       ),
                       Text(
                         " Version",
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

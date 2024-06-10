@@ -2,9 +2,10 @@ import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/student/student_pages/notifications.dart';
-import 'package:new_project_app/view/users/student/student_pages/quick_action/quick_action_widgets.dart';
 import 'package:new_project_app/view/users/student/student_pages/quick_action/quick_action_part.dart';
+import 'package:new_project_app/view/users/student/student_pages/quick_action/quick_action_widgets.dart';
 import 'package:new_project_app/view/users/student/student_pages/slider/carousal_slider.dart';
 import 'package:new_project_app/view/users/widgets/profile_edit_widgets/student_edit_profile.dart';
 
@@ -92,7 +93,9 @@ class _StudentDashboardState extends State<StudentDashboard> {
                         child: SizedBox(
                             width: 200,
                             child: Text(
-                              "Abhi",
+                              UserCredentialsController
+                                      .studentModel?.studentName ??
+                                  "",
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
                                 fontSize: 17.sp,
