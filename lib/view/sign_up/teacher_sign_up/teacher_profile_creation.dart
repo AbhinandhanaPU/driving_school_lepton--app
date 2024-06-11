@@ -91,6 +91,7 @@ class TeacherProfileCreationScreen extends StatelessWidget {
                         text: "Name *",
                         hintText: "Name",
                         keyboardType: TextInputType.text,
+                        
                         textfromController:
                             teacherSignUpController.nameController,
                         validator: checkFieldEmpty,
