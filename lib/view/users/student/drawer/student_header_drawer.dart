@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/controller/user_logout_controller/user_logout_controller.dart';
 import 'package:new_project_app/language/language_change_drawer.dart';
-import 'package:new_project_app/view/home/general_instructions/general_instructions.dart';
+import 'package:new_project_app/view/pages/general_instructions/general_instructions.dart';
 import 'package:new_project_app/view/pages/privacy_policy/dialogs/privacy_policy.dart';
 
 class StudentsHeaderDrawer extends StatelessWidget {

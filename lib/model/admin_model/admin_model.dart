@@ -18,6 +18,8 @@ class AdminModel {
   String designation;
   String profileImageId;
   String profileImageUrl;
+  String createdDate;
+  bool verified;
 
   String userRole = 'admin';
 
@@ -38,6 +40,8 @@ class AdminModel {
     required this.designation,
     required this.profileImageId,
     required this.profileImageUrl,
+    required this.createdDate,
+    required this.verified,
     required this.userRole,
   });
 
@@ -58,6 +62,8 @@ class AdminModel {
     String? designation,
     String? profileImageId,
     String? profileImageUrl,
+    String? createdDate,
+    bool? verified,
     String? userRole,
   }) {
     return AdminModel(
@@ -77,6 +83,8 @@ class AdminModel {
       designation: designation ?? this.designation,
       profileImageId: profileImageId ?? this.profileImageId,
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+      createdDate: createdDate ?? this.createdDate,
+      verified: verified ?? this.verified,
       userRole: userRole ?? this.userRole,
     );
   }
@@ -99,6 +107,8 @@ class AdminModel {
       'designation': designation,
       'profileImageId': profileImageId,
       'profileImageUrl': profileImageUrl,
+      'createdDate': createdDate,
+      'verified': verified,
       'userRole': userRole,
     };
   }
@@ -121,6 +131,8 @@ class AdminModel {
       designation: map['designation'] as String,
       profileImageId: map['profileImageId'] as String,
       profileImageUrl: map['profileImageUrl'] as String,
+      createdDate: map['createdDate'] as String,
+      verified: map['verified'] as bool,
       userRole: map['userRole'] as String,
     );
   }
@@ -132,51 +144,54 @@ class AdminModel {
 
   @override
   String toString() {
-    return 'AdminModel(docid: $docid, country: $country, state: $state, city: $city, password: $password, adminEmail: $adminEmail, adminName: $adminName, schoolCode: $schoolCode, schoolName: $schoolName, phoneNumber: $phoneNumber, schoolLicenceNumber: $schoolLicenceNumber, address: $address, place: $place, designation: $designation, profileImageId: $profileImageId, profileImageUrl: $profileImageUrl, userRole: $userRole)';
+    return 'AdminModel(docid: $docid, country: $country, state: $state, city: $city, password: $password, adminEmail: $adminEmail, adminName: $adminName, schoolCode: $schoolCode, schoolName: $schoolName, phoneNumber: $phoneNumber, schoolLicenceNumber: $schoolLicenceNumber, address: $address, place: $place, designation: $designation, profileImageId: $profileImageId, profileImageUrl: $profileImageUrl, createdDate: $createdDate, verified: $verified, userRole: $userRole)';
   }
 
   @override
   bool operator ==(covariant AdminModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.docid == docid &&
-      other.country == country &&
-      other.state == state &&
-      other.city == city &&
-      other.password == password &&
-      other.adminEmail == adminEmail &&
-      other.adminName == adminName &&
-      other.schoolCode == schoolCode &&
-      other.schoolName == schoolName &&
-      other.phoneNumber == phoneNumber &&
-      other.schoolLicenceNumber == schoolLicenceNumber &&
-      other.address == address &&
-      other.place == place &&
-      other.designation == designation &&
-      other.profileImageId == profileImageId &&
-      other.profileImageUrl == profileImageUrl &&
-      other.userRole == userRole;
+
+    return other.docid == docid &&
+        other.country == country &&
+        other.state == state &&
+        other.city == city &&
+        other.password == password &&
+        other.adminEmail == adminEmail &&
+        other.adminName == adminName &&
+        other.schoolCode == schoolCode &&
+        other.schoolName == schoolName &&
+        other.phoneNumber == phoneNumber &&
+        other.schoolLicenceNumber == schoolLicenceNumber &&
+        other.address == address &&
+        other.place == place &&
+        other.designation == designation &&
+        other.profileImageId == profileImageId &&
+        other.profileImageUrl == profileImageUrl &&
+        other.createdDate == createdDate &&
+        other.verified == verified &&
+        other.userRole == userRole;
   }
 
   @override
   int get hashCode {
     return docid.hashCode ^
-      country.hashCode ^
-      state.hashCode ^
-      city.hashCode ^
-      password.hashCode ^
-      adminEmail.hashCode ^
-      adminName.hashCode ^
-      schoolCode.hashCode ^
-      schoolName.hashCode ^
-      phoneNumber.hashCode ^
-      schoolLicenceNumber.hashCode ^
-      address.hashCode ^
-      place.hashCode ^
-      designation.hashCode ^
-      profileImageId.hashCode ^
-      profileImageUrl.hashCode ^
-      userRole.hashCode;
+        country.hashCode ^
+        state.hashCode ^
+        city.hashCode ^
+        password.hashCode ^
+        adminEmail.hashCode ^
+        adminName.hashCode ^
+        schoolCode.hashCode ^
+        schoolName.hashCode ^
+        phoneNumber.hashCode ^
+        schoolLicenceNumber.hashCode ^
+        address.hashCode ^
+        place.hashCode ^
+        designation.hashCode ^
+        profileImageId.hashCode ^
+        profileImageUrl.hashCode ^
+        createdDate.hashCode ^
+        verified.hashCode ^
+        userRole.hashCode;
   }
 }
