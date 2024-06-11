@@ -2,6 +2,7 @@ import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/student/student_pages/notifications.dart';
 import 'package:new_project_app/view/users/student/student_pages/quick_action/quick_action_part_std.dart';
@@ -79,7 +80,11 @@ class _StudentDashboardState extends State<StudentDashboard> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: CircleAvatar(
-                          backgroundImage: const NetworkImage(" "),
+                          backgroundImage: UserCredentialsController.studentModel?.profileImageUrl == null ||
+                  UserCredentialsController.studentModel!.profileImageUrl.isEmpty
+              ? const NetworkImage(assetImagePathPerson)
+              : NetworkImage(UserCredentialsController.studentModel?.profileImageUrl ?? " ")
+                  as ImageProvider,
                           onBackgroundImageError: (exception, stackTrace) {},
                           radius: 25,
                         ),

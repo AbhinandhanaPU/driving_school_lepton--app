@@ -2,6 +2,7 @@ import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/student/student_pages/notifications.dart';
 import 'package:new_project_app/view/users/student/student_pages/quick_action/quick_action_widgets.dart';
@@ -37,22 +38,19 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                   color: themeColor.withOpacity(0.1),
                   // const Color.fromARGB(255, 218, 247, 229),
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.sp),
-                      topRight: Radius.circular(15.sp)),
+                      topLeft: Radius.circular(15.sp), topRight: Radius.circular(15.sp)),
                 ),
                 child: ListView(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 120.sp, right: 20.sp, left: 20.sp),
+                      padding: EdgeInsets.only(top: 120.sp, right: 20.sp, left: 20.sp),
                       child: const QuickActionPartTeacher(),
                     ),
                     ////////////////////////////////////////////////////////all tab part
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 80.sp, right: 20.sp, left: 20.sp),
+                      padding: EdgeInsets.only(top: 80.sp, right: 20.sp, left: 20.sp),
                       child: const NotificationPartOfStd(),
                     ),
                     //////////////////////////////////////////////////////// notifications
@@ -79,7 +77,14 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: CircleAvatar(
-                          backgroundImage: const NetworkImage(" "),
+                          backgroundImage: UserCredentialsController
+                                          .teacherModel?.profileImageUrl ==
+                                      null ||
+                                  UserCredentialsController.teacherModel!.profileImageUrl.isEmpty
+                              ? const AssetImage(assetImagePathPerson)
+                              : NetworkImage(
+                                      UserCredentialsController.teacherModel?.profileImageUrl ?? "")
+                                  as ImageProvider,
                           onBackgroundImageError: (exception, stackTrace) {},
                           radius: 25,
                         ),
@@ -93,9 +98,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                         child: SizedBox(
                             width: 200,
                             child: Text(
-                              UserCredentialsController
-                                      .teacherModel?.teacherName ??
-                                  "",
+                              UserCredentialsController.teacherModel?.teacherName ?? "",
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
                                 fontSize: 17.sp,

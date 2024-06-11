@@ -11,7 +11,7 @@ import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/controller/image_picker_controlller/image_picker_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/teacher_model/teacher_model.dart';
-import 'package:new_project_app/view/users/student/student_home_page/student_home_page.dart';
+import 'package:new_project_app/view/users/teacher/teacher_home_page/teacher_home_page.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:uuid/uuid.dart';
 
@@ -131,7 +131,7 @@ class TeacherSignUpController extends GetxController {
                             onPressed: () {
                               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                                 builder: (context) {
-                                  return const StudentsMainHomeScreen();
+                                  return const TeachersMainHomeScreen();
                                 },
                               ), (route) => false);
                               TeacherPasswordSaver.teacherEmailID = '';

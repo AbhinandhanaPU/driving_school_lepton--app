@@ -55,6 +55,9 @@ dependencies:
   uuid:
   firebase_storage:
   syncfusion_flutter_pdfviewer: ^25.2.7
+  country_state_city_picker: ^1.2.8
+  file_picker: ^8.0.4
+  percent_indicator: ^4.2.3
   
 
 dev_dependencies:
