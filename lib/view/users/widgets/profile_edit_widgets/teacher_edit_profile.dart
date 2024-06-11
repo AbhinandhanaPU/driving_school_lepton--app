@@ -8,6 +8,7 @@ import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/image_picker_controlller/image_picker_controller.dart';
 import 'package:new_project_app/controller/profile_edit_controllers/teacher_profile_edit_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+// import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/widgets/edit_listile_widgets/student_listtile_widget.dart';
 import 'package:new_project_app/view/widgets/icon_backbutton_widget/icon_backbutton_widget.dart';
 import 'package:new_project_app/view/widgets/image_picker_container_widget/progile_image_picker_container_widget.dart';
@@ -66,7 +67,7 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                       Stack(
                         children: [
                           SingleChildScrollView(
-                            child: StudentCircleAvatarImgeWidget(),
+                            child: TeacherCircleAvatarImgeWidget(),
                           ),
                           const SizedBox(
                             height: 20,
@@ -100,7 +101,7 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                           onPressed: () async {
                             teacherProfileEditController.editvalueController.text =
                                 UserCredentialsController.teacherModel?.teacherName ?? "";
-                            await changeStudentData(
+                            await changeTeacherData(
                               context: context,
                               hintText: 'Name',
                               updateValue: 'Name',
@@ -132,7 +133,7 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                           onPressed: () async {
                             teacherProfileEditController.editvalueController.text =
                                 UserCredentialsController.teacherModel?.phoneNumber ?? "";
-                            await changeStudentData(
+                            await changeTeacherData(
                                 context: context,
                                 hintText: 'Phone Number',
                                 updateValue: 'PhoneNumber',
@@ -180,7 +181,7 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                           onPressed: () async {
                             teacherProfileEditController.editvalueController.text =
                                 UserCredentialsController.teacherModel?.address ?? "";
-                            await changeStudentData(
+                            await changeTeacherData(
                               context: context,
                               hintText: 'Address',
                               updateValue: 'houseName',
@@ -212,7 +213,7 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                           onPressed: () async {
                             teacherProfileEditController.editvalueController.text =
                                 UserCredentialsController.teacherModel?.place ?? "";
-                            await changeStudentData(
+                            await changeTeacherData(
                               context: context,
                               hintText: 'place',
                               updateValue: 'place',
@@ -244,7 +245,7 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                           onPressed: () async {
                             teacherProfileEditController.editvalueController.text =
                                 UserCredentialsController.teacherModel?.guardianName ?? "";
-                            await changeStudentData(
+                            await changeTeacherData(
                               context: context,
                               hintText: 'Guardian name',
                               updateValue: 'Name',
@@ -276,7 +277,7 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                           onPressed: () async {
                             teacherProfileEditController.editvalueController.text =
                                 UserCredentialsController.teacherModel?.dateofBirth ?? "";
-                            await changeStudentData(
+                            await changeTeacherData(
                                 onTapFunction: () async {
                                   teacherProfileEditController.editvalueController.text =
                                       await dateTimePicker(context);
@@ -315,7 +316,7 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                           onPressed: () async {
                             teacherProfileEditController.editvalueController.text =
                                 UserCredentialsController.teacherModel?.rtoName ?? "";
-                            await changeStudentData(
+                            await changeTeacherData(
                               context: context,
                               hintText: 'name',
                               updateValue: 'name',
@@ -350,7 +351,7 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                           onPressed: () async {
                             teacherProfileEditController.editvalueController.text =
                                 UserCredentialsController.teacherModel?.licenceNumber ?? "";
-                            await changeStudentData(
+                            await changeTeacherData(
                               context: context,
                               validator: checkFieldPhoneNumberIsValid,
                               hintText: 'Licence Number',
@@ -376,8 +377,9 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
   }
 }
 
-class StudentCircleAvatarImgeWidget extends StatelessWidget {
-  StudentCircleAvatarImgeWidget({
+
+class TeacherCircleAvatarImgeWidget extends StatelessWidget {
+  TeacherCircleAvatarImgeWidget({
     super.key,
   });
   final GetImage getImageController = Get.put(GetImage());
@@ -386,14 +388,13 @@ class StudentCircleAvatarImgeWidget extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          backgroundImage: const AssetImage(assetImagePathPerson),
-          // UserCredentialsController.studentModel?.profileImageUrl == null ||
-          //         UserCredentialsController
-          //             .studentModel!.profileImageUrl.isEmpty
-          //     ? const NetworkImage(assetImagePathPerson)
-          //     : NetworkImage(
-          //         UserCredentialsController.studentModel?.profileImageUrl ??
-          //             " ") as ImageProvider,
+          backgroundImage:
+ 
+          UserCredentialsController.teacherModel?.profileImageUrl == null ||
+                  UserCredentialsController.teacherModel!.profileImageUrl.isEmpty
+              ? const AssetImage(assetImagePathPerson)
+              : NetworkImage(UserCredentialsController.teacherModel?.profileImageUrl ?? "")
+                  as ImageProvider,
           radius: 60,
           child: Stack(
             children: [
@@ -460,7 +461,7 @@ class StudentCircleAvatarImgeWidget extends StatelessWidget {
   }
 }
 
-changeStudentData({
+changeTeacherData({
   required BuildContext context,
   required String hintText,
   required String updateValue,

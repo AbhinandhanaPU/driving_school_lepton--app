@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/controller/school_controller/school_controller.dart';
+import 'package:new_project_app/view/home/create_school/create_school.dart';
 import 'package:new_project_app/view/home/user_selection_screen/user_selection_screen.dart';
 import 'package:new_project_app/view/widgets/login_button/login_button.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_montserrat.dart';
@@ -65,6 +66,21 @@ class FirstScreen extends StatelessWidget {
                       text: 'LOGIN',
                     ),
                   ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SchoolProfile(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Create School',
+                      style: TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold, color: Colors.orange),
+                    ),
+                  ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,8 +93,7 @@ class FirstScreen extends StatelessWidget {
                             height: 32,
                             width: 32,
                             decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(officialLogo))),
+                                image: DecorationImage(image: AssetImage(officialLogo))),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 10),

@@ -141,7 +141,7 @@ class TeacherProfileCreationScreen extends StatelessWidget {
                         validator: checkFieldEmpty,
                       ),
                       SignUpTextFromFiled(
-                        text: "Licence Number (Not Mandatory)",
+                        text: "Licence Number",
                         hintText: "number",
                         keyboardType: TextInputType.text,
                         textfromController: teacherSignUpController.licenceController,

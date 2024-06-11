@@ -7,6 +7,7 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/image_picker_controlller/image_picker_controller.dart';
 import 'package:new_project_app/controller/profile_edit_controllers/student_profile_edit_controller.dart';
+import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/widgets/edit_listile_widgets/student_listtile_widget.dart';
 import 'package:new_project_app/view/widgets/icon_backbutton_widget/icon_backbutton_widget.dart';
 import 'package:new_project_app/view/widgets/image_picker_container_widget/progile_image_picker_container_widget.dart';
@@ -34,8 +35,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
               height: 300.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(12.h),
-                    bottomRight: Radius.circular(12.h)),
+                    bottomLeft: Radius.circular(12.h), bottomRight: Radius.circular(12.h)),
                 color: themeColor,
                 //const Color.fromARGB(255, 88, 167, 123),
               ),
@@ -88,7 +88,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                     subtitle: Row(
                       children: [
                         GooglePoppinsWidgets(
-                          text: "",
+                          text: UserCredentialsController.studentModel?.studentName ?? "",
                           fontsize: 19.h,
                         ),
                       ],
@@ -98,8 +98,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                         GooglePoppinsWidgets(text: "Name".tr, fontsize: 12.h),
                         IconButton(
                           onPressed: () async {
-                            studentProfileEditController
-                                .editvalueController.text = "";
+                            studentProfileEditController.editvalueController.text = "";
                             await changeStudentData(
                               context: context,
                               hintText: 'Name',
@@ -120,19 +119,17 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                     subtitle: Row(
                       children: [
                         GooglePoppinsWidgets(
-                          text: "",
+                          text: UserCredentialsController.studentModel?.phoneNumber ?? "",
                           fontsize: 19.h,
                         ),
                       ],
                     ),
                     title: Row(
                       children: [
-                        GooglePoppinsWidgets(
-                            text: "Phone No.".tr, fontsize: 12.h),
+                        GooglePoppinsWidgets(text: "Phone No.".tr, fontsize: 12.h),
                         IconButton(
                           onPressed: () async {
-                            studentProfileEditController
-                                .editvalueController.text = "";
+                            studentProfileEditController.editvalueController.text = "";
                             await changeStudentData(
                                 context: context,
                                 hintText: 'Phone Number',
@@ -152,7 +149,9 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                     icon: Icons.email,
                     subtitle: Row(
                       children: [
-                        GooglePoppinsWidgets(text: "", fontsize: 19.h),
+                        GooglePoppinsWidgets(
+                            text: UserCredentialsController.studentModel?.studentemail ?? "",
+                            fontsize: 19.h),
                       ],
                     ),
                     title: Row(
@@ -167,19 +166,17 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                     subtitle: Row(
                       children: [
                         GooglePoppinsWidgets(
-                          text: "",
+                          text: UserCredentialsController.studentModel?.address ?? "",
                           fontsize: 19.h,
                         ),
                       ],
                     ),
                     title: Row(
                       children: [
-                        GooglePoppinsWidgets(
-                            text: "Address".tr, fontsize: 13.h),
+                        GooglePoppinsWidgets(text: "Address".tr, fontsize: 13.h),
                         IconButton(
                           onPressed: () async {
-                            studentProfileEditController
-                                .editvalueController.text = "";
+                            studentProfileEditController.editvalueController.text = "";
                             await changeStudentData(
                               context: context,
                               hintText: 'Address',
@@ -200,7 +197,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                     subtitle: Row(
                       children: [
                         GooglePoppinsWidgets(
-                          text: "",
+                          text: UserCredentialsController.studentModel?.place ?? "",
                           fontsize: 19.h,
                         ),
                       ],
@@ -210,8 +207,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                         GooglePoppinsWidgets(text: "Place".tr, fontsize: 13.h),
                         IconButton(
                           onPressed: () async {
-                            studentProfileEditController
-                                .editvalueController.text = "";
+                            studentProfileEditController.editvalueController.text = "";
                             await changeStudentData(
                               context: context,
                               hintText: 'place',
@@ -232,19 +228,17 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                     subtitle: Row(
                       children: [
                         GooglePoppinsWidgets(
-                          text: "",
+                          text: UserCredentialsController.studentModel?.guardianName ?? "",
                           fontsize: 19.h,
                         ),
                       ],
                     ),
                     title: Row(
                       children: [
-                        GooglePoppinsWidgets(
-                            text: "Father / Spouse Name".tr, fontsize: 13.h),
+                        GooglePoppinsWidgets(text: "Father / Spouse Name".tr, fontsize: 13.h),
                         IconButton(
                           onPressed: () async {
-                            studentProfileEditController
-                                .editvalueController.text = "";
+                            studentProfileEditController.editvalueController.text = "";
                             await changeStudentData(
                               context: context,
                               hintText: 'Name',
@@ -265,7 +259,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                     subtitle: Row(
                       children: [
                         GooglePoppinsWidgets(
-                          text: "",
+                          text: UserCredentialsController.studentModel?.dateofBirth ?? "",
                           fontsize: 19.h,
                         ),
                       ],
@@ -275,13 +269,11 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                         GooglePoppinsWidgets(text: "Dob".tr, fontsize: 13.h),
                         IconButton(
                           onPressed: () async {
-                            studentProfileEditController
-                                .editvalueController.text = "";
+                            studentProfileEditController.editvalueController.text = "";
                             await changeStudentData(
                                 onTapFunction: () async {
-                                  studentProfileEditController
-                                      .editvalueController
-                                      .text = await dateTimePicker(context);
+                                  studentProfileEditController.editvalueController.text =
+                                      await dateTimePicker(context);
                                 },
                                 context: context,
                                 textInputType: TextInputType.none,
@@ -302,7 +294,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                     subtitle: Row(
                       children: [
                         GooglePoppinsWidgets(
-                          text: "",
+                          text: UserCredentialsController.studentModel?.rtoName ?? "",
                           fontsize: 19.h,
                         ),
                       ],
@@ -315,8 +307,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                         ),
                         IconButton(
                           onPressed: () async {
-                            studentProfileEditController
-                                .editvalueController.text = "";
+                            studentProfileEditController.editvalueController.text = "";
                             await changeStudentData(
                               context: context,
                               hintText: 'name',
@@ -337,7 +328,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                     subtitle: Row(
                       children: [
                         GooglePoppinsWidgets(
-                          text: "",
+                          text: UserCredentialsController.studentModel?.licenceNumber ?? "",
                           fontsize: 19.h,
                         ),
                       ],
@@ -350,8 +341,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                         ),
                         IconButton(
                           onPressed: () async {
-                            studentProfileEditController
-                                .editvalueController.text = "";
+                            studentProfileEditController.editvalueController.text = "";
                             await changeStudentData(
                               context: context,
                               validator: checkFieldPhoneNumberIsValid,
@@ -388,14 +378,11 @@ class StudentCircleAvatarImgeWidget extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          backgroundImage: const AssetImage(assetImagePathPerson),
-          // UserCredentialsController.studentModel?.profileImageUrl == null ||
-          //         UserCredentialsController
-          //             .studentModel!.profileImageUrl.isEmpty
-          //     ? const NetworkImage(assetImagePathPerson)
-          //     : NetworkImage(
-          //         UserCredentialsController.studentModel?.profileImageUrl ??
-          //             " ") as ImageProvider,
+          backgroundImage: UserCredentialsController.studentModel?.profileImageUrl == null ||
+                  UserCredentialsController.studentModel!.profileImageUrl.isEmpty
+              ? const NetworkImage(assetImagePathPerson)
+              : NetworkImage(UserCredentialsController.studentModel?.profileImageUrl ?? " ")
+                  as ImageProvider,
           radius: 60,
           child: Stack(
             children: [
@@ -424,8 +411,7 @@ class StudentCircleAvatarImgeWidget extends StatelessWidget {
         isDismissible: false,
         context: context,
         builder: (BuildContext context) {
-          return BottomProfileImageContainerWidget(
-              getImageController: getImageController);
+          return BottomProfileImageContainerWidget(getImageController: getImageController);
         }).then(
       (value) {
         if (getImageController.pickedImage.value.isNotEmpty) {
