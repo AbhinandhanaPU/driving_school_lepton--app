@@ -6,39 +6,39 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/text_hide_controller/text_hide_controller.dart';
-import 'package:new_project_app/controller/user_login_controller/student_login_controller.dart';
-import 'package:new_project_app/view/sign_up/student_sign_up/student_sign_up_page.dart';
+import 'package:new_project_app/controller/user_login_controller/admin_login_controller.dart';
+import 'package:new_project_app/view/widgets/forgot_password_screen/forgot_password.dart';
 import 'package:new_project_app/view/widgets/image_container_widgets/image_container_widgets.dart';
 import 'package:new_project_app/view/widgets/login_button/login_button.dart';
 import 'package:new_project_app/view/widgets/login_text_formfield/login_text_formfield.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_montserrat.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
-class StudentLoginScreen extends StatelessWidget {
+class AdminLoginScreen extends StatelessWidget {
   final PasswordField hideGetxController = Get.put(PasswordField());
-  StudentLoginScreen({super.key});
 
-  final StudentLoginController studentLoginController =
-      Get.put(StudentLoginController());
+  final AdminLoginController adminLoginController =
+      Get.put(AdminLoginController());
+  AdminLoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
-            key: studentLoginController.formKey,
+            key: adminLoginController.formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AssetContainerImage(
-                  height: 340.h,
-                  width: double.infinity,
-                  imagePath: 'assets/images/login.webp',
-                ),
+                    height: 340.h,
+                    width: double.infinity,
+                    imagePath: 'assets/images/login.webp'),
                 GoogleMontserratWidgets(
                   fontsize: 25.w,
-                  text: 'Student Login'.tr,
+                  text: 'Admin Login'.tr,
                   color: cblack,
                   fontWeight: FontWeight.w500,
                   letterSpacing: 0.5,
@@ -50,7 +50,7 @@ class StudentLoginScreen extends StatelessWidget {
                   hintText: 'Email ID'.tr,
                   labelText: 'Enter Mail ID',
                   prefixIcon: const Icon(Icons.mail_outline),
-                  textEditingController: studentLoginController.emailController,
+                  textEditingController: adminLoginController.emailController,
                   validator: checkFieldEmailIsValid,
                 ),
                 kHeight20,
@@ -62,7 +62,7 @@ class StudentLoginScreen extends StatelessWidget {
                     icon: Icons.lock,
                     obscureText: hideGetxController.isObscurefirst.value,
                     textEditingController:
-                        studentLoginController.passwordController,
+                        adminLoginController.passwordController,
                     validator: checkFieldPasswordIsValid,
                     prefixIcon: IconButton(
                       onPressed: () {},
@@ -83,12 +83,11 @@ class StudentLoginScreen extends StatelessWidget {
                   padding: EdgeInsets.only(left: 210.w),
                   child: GestureDetector(
                     onTap: () {
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         const ForgotPasswordScreen(),
-                      //   ),
-                      // );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ForgotPasswordScreen(),
+                        ),
+                      );
                     },
                     child: GooglePoppinsWidgets(
                       fontsize: 15,
@@ -102,13 +101,13 @@ class StudentLoginScreen extends StatelessWidget {
                   padding: EdgeInsets.only(top: 60.h),
                   child: GestureDetector(
                     onTap: () async {
-                      if (studentLoginController.formKey.currentState!
+                      if (adminLoginController.formKey.currentState!
                           .validate()) {
-                        await studentLoginController.studentSignIn(context);
+                        await adminLoginController.adminSignIn(context);
                       }
                     },
                     child: Obx(
-                      () => studentLoginController.isLoading.value
+                      () => adminLoginController.isLoading.value
                           ? circularProgressIndicatotWidget
                           : loginButtonWidget(
                               height: 50,
@@ -118,32 +117,32 @@ class StudentLoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GooglePoppinsWidgets(
-                          text: "Don't Have an account?".tr, fontsize: 15),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => StudentSignUpScreen(),
-                            ),
-                          );
-                        },
-                        child: GooglePoppinsWidgets(
-                          text: ' Sign Up'.tr,
-                          fontsize: 19,
-                          color: themeColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.only(top: 20.h),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       GooglePoppinsWidgets(
+                //           text: "Don't Have an account?".tr, fontsize: 15),
+                //       GestureDetector(
+                //         onTap: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //               builder: (context) => StudentSignUpScreen(),
+                //             ),
+                //           );
+                //         },
+                //         child: GooglePoppinsWidgets(
+                //           text: ' Sign Up'.tr,
+                //           fontsize: 19,
+                //           color: themeColor,
+                //           fontWeight: FontWeight.w600,
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),

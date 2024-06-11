@@ -14,10 +14,9 @@ import 'package:new_project_app/view/widgets/signup_text_formfield/signup_text_f
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 class TeacherProfileCreationScreen extends StatelessWidget {
-  TeacherProfileCreationScreen({super.key});
-
   final teacherSignUpController = Get.put(TeacherSignUpController());
   final GetImage getImageController = Get.put(GetImage());
+  TeacherProfileCreationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +47,14 @@ class TeacherProfileCreationScreen extends StatelessWidget {
               SingleChildScrollView(
                 child: Form(
                   key: teacherSignUpController.formKey1,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Obx(
                         () => CircleAvatar(
-                          backgroundImage: getImageController.pickedImage.value.isEmpty
+                          backgroundImage: getImageController
+                                  .pickedImage.value.isEmpty
                               ? const AssetImage('assets/images/profilebg.png')
                               : FileImage(
                                   File(getImageController.pickedImage.value),
@@ -69,7 +70,8 @@ class TeacherProfileCreationScreen extends StatelessWidget {
                                   alignment: Alignment.bottomRight,
                                   child: CircleAvatar(
                                     radius: 20,
-                                    backgroundColor: const Color.fromARGB(255, 95, 92, 92),
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 95, 92, 92),
                                     child: IconButton(
                                       icon: const Icon(Icons.camera_alt),
                                       color: Colors.white,
@@ -89,7 +91,8 @@ class TeacherProfileCreationScreen extends StatelessWidget {
                         text: "Name *",
                         hintText: "Name",
                         keyboardType: TextInputType.text,
-                        textfromController: teacherSignUpController.nameController,
+                        textfromController:
+                            teacherSignUpController.nameController,
                         validator: checkFieldEmpty,
                       ),
                       SignUpTextFromFiled(
@@ -97,14 +100,16 @@ class TeacherProfileCreationScreen extends StatelessWidget {
                         hintText: "Phone Number",
                         keyboardType: TextInputType.phone,
                         maxLength: 10,
-                        textfromController: teacherSignUpController.phoneController,
+                        textfromController:
+                            teacherSignUpController.phoneController,
                         validator: checkFieldPhoneNumberIsValid,
                       ),
                       SignUpTextFromFiled(
                         text: 'Date of birth'.tr,
                         hintText: 'DOB'.tr,
                         keyboardType: TextInputType.none,
-                        textfromController: teacherSignUpController.dateOfBirthController,
+                        textfromController:
+                            teacherSignUpController.dateOfBirthController,
                         validator: checkFieldEmpty,
                         onTapFunction: () async {
                           teacherSignUpController.dateOfBirthController.text =
@@ -115,14 +120,16 @@ class TeacherProfileCreationScreen extends StatelessWidget {
                         text: "Father/Spouse Name *",
                         hintText: "name",
                         keyboardType: TextInputType.text,
-                        textfromController: teacherSignUpController.fatherSpouseController,
+                        textfromController:
+                            teacherSignUpController.fatherSpouseController,
                         validator: checkFieldEmpty,
                       ),
                       SignUpTextFromFiled(
                         text: "Place *",
                         hintText: "Place",
                         keyboardType: TextInputType.text,
-                        textfromController: teacherSignUpController.placeController,
+                        textfromController:
+                            teacherSignUpController.placeController,
                         validator: checkFieldEmpty,
                       ),
                       SignUpTextFromFiled(
@@ -130,29 +137,34 @@ class TeacherProfileCreationScreen extends StatelessWidget {
                         hintText: "address",
                         maxLines: 3,
                         keyboardType: TextInputType.multiline,
-                        textfromController: teacherSignUpController.addressController,
+                        textfromController:
+                            teacherSignUpController.addressController,
                         validator: checkFieldEmpty,
                       ),
                       SignUpTextFromFiled(
                         text: "RTO Name *",
                         hintText: "Name",
                         keyboardType: TextInputType.text,
-                        textfromController: teacherSignUpController.rtoNameController,
+                        textfromController:
+                            teacherSignUpController.rtoNameController,
                         validator: checkFieldEmpty,
                       ),
                       SignUpTextFromFiled(
                         text: "Licence Number (Not Mandatory)",
                         hintText: "number",
                         keyboardType: TextInputType.text,
-                        textfromController: teacherSignUpController.licenceController,
+                        textfromController:
+                            teacherSignUpController.licenceController,
                       ),
                       kHeight20,
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: GestureDetector(
                           onTap: () async {
-                            if (teacherSignUpController.formKey1.currentState!.validate()) {
-                              await teacherSignUpController.createTeacher(context);
+                            if (teacherSignUpController.formKey1.currentState!
+                                .validate()) {
+                              await teacherSignUpController
+                                  .createTeacher(context);
                             } else {
                               showToast(msg: "All Fields are mandatory");
                               return;
@@ -184,7 +196,8 @@ class TeacherProfileCreationScreen extends StatelessWidget {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return BottomProfileImageContainerWidget(getImageController: getImageController);
+          return BottomProfileImageContainerWidget(
+              getImageController: getImageController);
         });
   }
 }

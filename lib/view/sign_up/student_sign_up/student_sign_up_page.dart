@@ -19,9 +19,9 @@ import 'package:new_project_app/view/widgets/login_text_formfield/login_text_for
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 class StudentSignUpScreen extends StatelessWidget {
-  StudentSignUpScreen({super.key});
   PasswordField hideGetxController = Get.find<PasswordField>();
   final studentSignUpController = Get.put(StudentSignUpController());
+  StudentSignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +43,7 @@ class StudentSignUpScreen extends StatelessWidget {
               kHeight30,
               Form(
                 key: studentSignUpController.formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

@@ -14,10 +14,9 @@ import 'package:new_project_app/view/widgets/signup_text_formfield/signup_text_f
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 class StudentProfileCreationScreen extends StatelessWidget {
-  StudentProfileCreationScreen({super.key});
-
   final studentSignUpController = Get.put(StudentSignUpController());
   final GetImage getImageController = Get.put(GetImage());
+  StudentProfileCreationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +47,7 @@ class StudentProfileCreationScreen extends StatelessWidget {
               SingleChildScrollView(
                 child: Form(
                   key: studentSignUpController.formKey1,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -165,10 +165,7 @@ class StudentProfileCreationScreen extends StatelessWidget {
                                 .validate()) {
                               await studentSignUpController
                                   .createStudent(context);
-                            } else {
-                              showToast(msg: "All Fields are mandatory");
-                              return;
-                            }
+                            } 
                           },
                           child: Obx(
                             () => studentSignUpController.isLoading.value

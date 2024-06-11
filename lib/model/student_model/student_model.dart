@@ -1,8 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// To parse this JSON data, do
-//
-//     final studentModel = studentModelFromJson(jsonString);
-
 import 'dart:convert';
 
 class StudentModel {
