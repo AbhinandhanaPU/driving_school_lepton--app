@@ -129,11 +129,14 @@ class TeacherSignUpController extends GetxController {
                           TextButton(
                             child: const Text('Ok'),
                             onPressed: () {
-                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return const TeachersMainHomeScreen();
-                                },
-                              ), (route) => false);
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const TeachersMainHomeScreen();
+                                  },
+                                ),
+                              );
                               TeacherPasswordSaver.teacherEmailID = '';
                               TeacherPasswordSaver.teacherPassword = '';
                             },

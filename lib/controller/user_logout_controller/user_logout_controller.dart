@@ -33,14 +33,11 @@ class UserLogoutController extends GetxController {
                 await serverAuth.signOut().then((value) async {
                   await SharedPreferencesHelper.clearSharedPreferenceData();
                   UserCredentialsController.clearUserCredentials();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const FirstScreen();
-                      },
-                    ),
-                  );
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                    builder: (context) {
+                      return const FirstScreen();
+                    },
+                  ), (route) => false);
                 });
               },
             ),
