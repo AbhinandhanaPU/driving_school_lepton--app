@@ -4,17 +4,16 @@ import 'dart:io';
 
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:country_state_city_picker/country_state_city_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
-import 'package:new_project_app/controller/add_Newschool/add_new_schhol.dart';
+import 'package:new_project_app/controller/create_school_controller/create_school_controller.dart';
 import 'package:new_project_app/controller/image_picker_controlller/image_picker_controller.dart';
 import 'package:new_project_app/view/widgets/image_picker_container_widget/progile_image_picker_container_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
-import 'package:uuid/uuid.dart';
 
 class SchoolProfile extends StatefulWidget {
   const SchoolProfile({super.key});
@@ -24,7 +23,8 @@ class SchoolProfile extends StatefulWidget {
 }
 
 class _SchoolProfileState extends State<SchoolProfile> {
-  AddNewSchoolController addNewSchoolController = Get.put(AddNewSchoolController());
+  CreateschoolController createschoolController =
+      Get.put(CreateschoolController());
 
   final GetImage getImageController = Get.put(GetImage());
 
@@ -37,7 +37,8 @@ class _SchoolProfileState extends State<SchoolProfile> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Create School",
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: cWhite)),
+              style: TextStyle(
+                  fontSize: 17, fontWeight: FontWeight.bold, color: cWhite)),
           backgroundColor: cblue,
         ),
         body: SingleChildScrollView(
@@ -47,242 +48,236 @@ class _SchoolProfileState extends State<SchoolProfile> {
                 key: _formKey,
                 child: Padding(
                   padding: EdgeInsets.only(left: 10, right: 10),
-                  child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: SelectState(
-                        onCountryChanged: (value) {
-                          addNewSchoolController.countryValue.value = value;
-                        },
-                        onStateChanged: (value) {
-                          addNewSchoolController.stateValue.value = value;
-                        },
-                        onCityChanged: (value) {
-                          addNewSchoolController.cityValue.value = value;
-                        },
-                      ),
-                    ),
-                    SchoolTextFormFieldWidget(
-                      textEditingController: addNewSchoolController.schoolNameController,
-                      function: checkFieldEmpty,
-                      labelText: 'School Name',
-                      icon: Icons.school,
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SchoolTextFormFieldWidget(
-                      textEditingController: addNewSchoolController.schoolCodeController,
-                      function: checkFieldEmpty,
-                      labelText: 'School Code',
-                      icon: Icons.school_outlined,
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SchoolTextFormFieldWidget(
-                      textEditingController: addNewSchoolController.placeController,
-                      function: checkFieldEmpty,
-                      labelText: 'Place',
-                      icon: Icons.place_outlined,
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SchoolTextFormFieldWidget(
-                      textEditingController: addNewSchoolController.adminUserNameController,
-                      function: checkFieldEmpty,
-                      labelText: 'Admin Username',
-                      icon: Icons.admin_panel_settings_outlined,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: TextFormField(
-                        obscureText: true,
-                        validator: checkFieldPasswordIsValid,
-                        controller: addNewSchoolController.adminPasswordController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-                          icon: Icon(
-                            Icons.lock_outline_sharp,
-                            color: const Color.fromARGB(221, 28, 9, 110),
-                          ),
-                          labelText: 'Password',
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: TextFormField(
-                        obscureText: true,
-                        validator: (d) {
-                          if (addNewSchoolController.adminPasswordController.text ==
-                              addNewSchoolController.conformpassController.text) {
-                            return null;
-                          } else {
-                            return 'Check Password';
-                          }
-                        },
-                        controller: addNewSchoolController.conformpassController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-                          icon: Icon(
-                            Icons.lock_outline_sharp,
-                            color: const Color.fromARGB(221, 28, 9, 110),
-                          ),
-                          labelText: 'Confirm Password',
-                        ),
-                      ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: SelectState(
+                            onCountryChanged: (value) {
+                              createschoolController.countryValue.value = value;
+                            },
+                            onStateChanged: (value) {
+                              createschoolController.stateValue.value = value;
+                            },
+                            onCityChanged: (value) {
+                              createschoolController.cityValue.value = value;
+                            },
+                          ),
+                        ),
                         SchoolTextFormFieldWidget(
-                          textEditingController: addNewSchoolController.emailController,
-                          function: checkFieldEmailIsValid,
-                          labelText: 'Enter email',
-                          hintText: "Enter school's official mail ID",
-                          icon: Icons.mail_outline,
+                          textEditingController:
+                              createschoolController.schoolNameController,
+                          function: checkFieldEmpty,
+                          labelText: 'School Name',
+                          icon: Icons.school,
                         ),
-                        GooglePoppinsWidgets(
-                          text: "* You can't edit or change this entry in future ",
-                          fontsize: 13,
-                          color: Color.fromARGB(255, 27, 106, 170),
+                        SizedBox(
+                          height: 10.h,
                         ),
-                      ],
-                    ),
-                    SchoolTextFormFieldWidget(
-                      textEditingController: addNewSchoolController.phoneNumberController,
-                      function: checkFieldPhoneNumberIsValid,
-                      labelText: 'Phone number',
-                      icon: Icons.phone,
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SchoolTextFormFieldWidget(
-                      textEditingController: addNewSchoolController.designationController,
-                      function: checkFieldEmpty,
-                      labelText: 'Designation',
-                      icon: Icons.person_4,
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Obx(
-                      () => CircleAvatar(
-                        backgroundImage: getImageController.pickedImage.value.isEmpty
-                            ? const AssetImage('assets/images/profilebg.png')
-                            : FileImage(
-                                File(getImageController.pickedImage.value),
-                              ) as ImageProvider,
-                        radius: 60,
-                        child: Stack(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                _getCameraAndGallery(context);
-                              },
-                              child: Align(
-                                alignment: Alignment.bottomRight,
-                                child: CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: const Color.fromARGB(255, 95, 92, 92),
-                                  child: IconButton(
-                                    icon: const Icon(Icons.camera_alt),
-                                    color: Colors.white,
-                                    onPressed: () {
-                                      _getCameraAndGallery(context);
-                                    },
-                                  ),
-                                ),
+                        SchoolTextFormFieldWidget(
+                          textEditingController:
+                              createschoolController.schoolCodeController,
+                          function: checkFieldEmpty,
+                          labelText: 'School Code',
+                          icon: Icons.school_outlined,
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        SchoolTextFormFieldWidget(
+                          textEditingController:
+                              createschoolController.placeController,
+                          function: checkFieldEmpty,
+                          labelText: 'Place',
+                          icon: Icons.place_outlined,
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        SchoolTextFormFieldWidget(
+                          textEditingController:
+                              createschoolController.adminUserNameController,
+                          function: checkFieldEmpty,
+                          labelText: 'Admin Username',
+                          icon: Icons.admin_panel_settings_outlined,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: TextFormField(
+                            obscureText: true,
+                            validator: checkFieldPasswordIsValid,
+                            controller:
+                                createschoolController.passwordController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              icon: Icon(
+                                Icons.lock_outline_sharp,
+                                color: const Color.fromARGB(221, 28, 9, 110),
                               ),
+                              labelText: 'Password',
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: TextFormField(
+                            obscureText: true,
+                            validator: (d) {
+                              if (createschoolController
+                                      .passwordController.text ==
+                                  createschoolController
+                                      .confirmPassController.text) {
+                                return null;
+                              } else {
+                                return 'Check Password';
+                              }
+                            },
+                            controller:
+                                createschoolController.confirmPassController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              icon: Icon(
+                                Icons.lock_outline_sharp,
+                                color: const Color.fromARGB(221, 28, 9, 110),
+                              ),
+                              labelText: 'Confirm Password',
+                            ),
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SchoolTextFormFieldWidget(
+                              textEditingController:
+                                  createschoolController.emailController,
+                              function: checkFieldEmailIsValid,
+                              labelText: 'Enter email',
+                              hintText: "Enter school's official mail ID",
+                              icon: Icons.mail_outline,
+                            ),
+                            GooglePoppinsWidgets(
+                              text:
+                                  "* You can't edit or change this entry in future ",
+                              fontsize: 13,
+                              color: Color.fromARGB(255, 27, 106, 170),
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: SizedBox(
-                        height: 50,
-                        width: 150,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 3, 39, 68),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                        SchoolTextFormFieldWidget(
+                          textEditingController:
+                              createschoolController.phoneNumberController,
+                          function: checkFieldPhoneNumberIsValid,
+                          labelText: 'Phone number',
+                          icon: Icons.phone,
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        SchoolTextFormFieldWidget(
+                          textEditingController:
+                              createschoolController.designationController,
+                          function: checkFieldEmpty,
+                          labelText: 'Designation',
+                          icon: Icons.person_4,
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Obx(
+                          () => CircleAvatar(
+                            backgroundImage: getImageController
+                                    .pickedImage.value.isEmpty
+                                ? const AssetImage(
+                                    'assets/images/profilebg.png')
+                                : FileImage(
+                                    File(getImageController.pickedImage.value),
+                                  ) as ImageProvider,
+                            radius: 60,
+                            child: Stack(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    _getCameraAndGallery(context);
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor:
+                                          const Color.fromARGB(255, 95, 92, 92),
+                                      child: IconButton(
+                                        icon: const Icon(Icons.camera_alt),
+                                        color: Colors.white,
+                                        onPressed: () {
+                                          _getCameraAndGallery(context);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          onPressed: () async {
-                            if (getImageController.pickedImage.value == "") {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text('Image'),
-                                      content: Text(
-                                          'Add an image of school before requesting create school'),
-                                      actions: [
-                                        MaterialButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          color: Colors.blue,
-                                          child: Text('OK'),
-                                        )
-                                      ],
-                                    );
-                                  });
-                            } else {
-                              if (_formKey.currentState!.validate()) {
-                                return showDialog(
-                                  context: context,
-                                  barrierDismissible: false, // user must tap button!
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text('Alert'),
-                                      content: SingleChildScrollView(
-                                        child: ListBody(
-                                          children: const <Widget>[
-                                            Text('You are ready to use 7 days free trial')
-                                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: SizedBox(
+                            height: 50,
+                            width: 150,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 3, 39, 68),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (Get.find<GetImage>().pickedImage.isEmpty) {
+                                  showToast(
+                                      msg:
+                                          'Add an image of school before requesting create school');
+                                } else if (_formKey.currentState!.validate()) {
+                                  return showDialog(
+                                    context: context,
+                                    barrierDismissible:
+                                        false, // user must tap button!
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Alert'),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: const <Widget>[
+                                              Text(
+                                                  'You are ready to use 7 days free trial')
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: const Text('OK'),
-                                          onPressed: () async {
-                                            String uid = const Uuid().v1();
-                                            //isImageUpload.value = true;
-                                            UploadTask uploadTask = FirebaseStorage.instance
-                                                .ref()
-                                                .child("files/schooProfile/$uid")
-                                                .putData(file!);
-
-                                            final TaskSnapshot snap = await uploadTask;
-                                            final String downloadUrl =
-                                                await snap.ref.getDownloadURL();
-
-                                            await addNewSchoolController.addNewSchool(
-                                                context, downloadUrl);
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              }
-                            }
-                          },
-                          child: const Text(
-                            "Create",
-                            style: TextStyle(color: cWhite),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Text('OK'),
+                                            onPressed: () async {
+                                              await createschoolController
+                                                  .addNewSchool(context);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                              child: const Text(
+                                "Create",
+                                style: TextStyle(color: cWhite),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ]),
+                      ]),
                 ),
               ),
             ],
@@ -294,7 +289,8 @@ class _SchoolProfileState extends State<SchoolProfile> {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return BottomProfileImageContainerWidget(getImageController: getImageController);
+          return BottomProfileImageContainerWidget(
+              getImageController: getImageController);
         });
   }
 }
