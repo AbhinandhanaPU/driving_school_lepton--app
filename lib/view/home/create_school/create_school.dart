@@ -71,7 +71,7 @@ class _SchoolProfileState extends State<SchoolProfile> {
                       height: 10.h,
                     ),
                     SchoolTextFormFieldWidget(
-                      textEditingController: createschoolController.schoolCodeController,
+                      textEditingController: createschoolController.schoolLicenceNumberController,
                       function: checkFieldEmpty,
                       labelText: 'School Code',
                       icon: Icons.school_outlined,
@@ -80,7 +80,16 @@ class _SchoolProfileState extends State<SchoolProfile> {
                       height: 10.h,
                     ),
                     SchoolTextFormFieldWidget(
-                      textEditingController: createschoolController.placeController,
+                      textEditingController: createschoolController.schoolCodeController,
+                      function: checkFieldEmpty,
+                      labelText: 'School Lisence Number',
+                      icon: Icons.format_list_numbered_rtl_sharp,
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    SchoolTextFormFieldWidget(
+                      textEditingController: createschoolController.addressController,
                       function: checkFieldEmpty,
                       labelText: 'Address',
                       icon: Icons.place_outlined,

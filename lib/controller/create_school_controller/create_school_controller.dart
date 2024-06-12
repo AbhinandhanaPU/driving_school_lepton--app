@@ -23,9 +23,9 @@ class CreateschoolController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
-
   TextEditingController schoolNameController = TextEditingController();
   TextEditingController schoolCodeController = TextEditingController();
+  TextEditingController schoolLisenceNumberController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController placeController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -41,9 +41,8 @@ class CreateschoolController extends GetxController {
     buttonstate.value = ButtonState.loading;
     String profileImageId = "";
     String profileImageUrl = "";
-    String uUID = schoolNameController.text.substring(0, 5) +
-        cityValue.value.substring(0, 5) +
-        uuid.v1();
+    String uUID =
+        schoolNameController.text.substring(0, 5) + cityValue.value.substring(0, 5) + uuid.v1();
     try {
       isLoading.value = true;
       profileImageId = uid;
@@ -72,8 +71,7 @@ class CreateschoolController extends GetxController {
           createdDate: DateTime.now().toString(),
           verified: false,
           userRole: "admin");
-      if (await checkSchoolIsCreated(
-          schoolNameController.text, placeController.text)) {
+      if (await checkSchoolIsCreated(schoolNameController.text, placeController.text)) {
         showToast(msg: 'School Is Already Created');
       } else {
         if (context.mounted) {}
@@ -108,15 +106,13 @@ class CreateschoolController extends GetxController {
   }
 
   Future<bool> checkSchoolIsCreated(String schoolName, String place) async {
-    final schoolListCollection =
-        await server.collection('DrivingSchoolCollection').get();
+    final schoolListCollection = await server.collection('DrivingSchoolCollection').get();
     if (schoolListCollection.docs.isEmpty) {
       return false;
     }
 
     for (var element in schoolListCollection.docs) {
-      if (element.data()["schoolName"] == schoolName &&
-          element.data()["place"] == place) {
+      if (element.data()["schoolName"] == schoolName && element.data()["place"] == place) {
         return true;
       }
     }
