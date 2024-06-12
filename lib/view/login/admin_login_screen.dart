@@ -7,6 +7,7 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/text_hide_controller/text_hide_controller.dart';
 import 'package:new_project_app/controller/user_login_controller/admin_login_controller.dart';
+import 'package:new_project_app/view/sign_up/create_school/create_school.dart';
 import 'package:new_project_app/view/widgets/forgot_password_screen/forgot_password.dart';
 import 'package:new_project_app/view/widgets/image_container_widgets/image_container_widgets.dart';
 import 'package:new_project_app/view/widgets/login_button/login_button.dart';
@@ -117,32 +118,32 @@ class AdminLoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: EdgeInsets.only(top: 20.h),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       GooglePoppinsWidgets(
-                //           text: "Don't Have an account?".tr, fontsize: 15),
-                //       GestureDetector(
-                //         onTap: () {
-                //           Navigator.push(
-                //             context,
-                //             MaterialPageRoute(
-                //               builder: (context) => StudentSignUpScreen(),
-                //             ),
-                //           );
-                //         },
-                //         child: GooglePoppinsWidgets(
-                //           text: ' Sign Up'.tr,
-                //           fontsize: 19,
-                //           color: themeColor,
-                //           fontWeight: FontWeight.w600,
-                //         ),
-                //       )
-                //     ],
-                //   ),
-                // ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GooglePoppinsWidgets(
+                          text: "Don't Have an account?".tr, fontsize: 15),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SchoolProfile(),
+                            ),
+                          );
+                        },
+                        child: GooglePoppinsWidgets(
+                          text: ' Sign Up'.tr,
+                          fontsize: 19,
+                          color: themeColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

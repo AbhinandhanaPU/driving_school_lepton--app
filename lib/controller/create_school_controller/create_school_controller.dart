@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
-import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/image_picker_controlller/image_picker_controller.dart';
 import 'package:new_project_app/model/admin_model/admin_model.dart';
+import 'package:new_project_app/view/login/admin_login_screen.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:uuid/uuid.dart';
 
@@ -41,8 +41,7 @@ class CreateschoolController extends GetxController {
     buttonstate.value = ButtonState.loading;
     String profileImageId = "";
     String profileImageUrl = "";
-    String uUID =
-        schoolNameController.text.substring(0, 5) + cityValue.value.substring(0, 5) + uuid.v1();
+
     try {
       isLoading.value = true;
       profileImageId = uid;
@@ -50,49 +49,50 @@ class CreateschoolController extends GetxController {
           .ref("files/schoolPhotos/$profileImageId")
           .putFile(File(Get.find<GetImage>().pickedImage.value));
       profileImageUrl = await result.ref.getDownloadURL();
-
-      AdminModel adminModel = AdminModel(
-          docid: uUID,
-          country: countryValue.value,
-          state: stateValue.value,
-          city: cityValue.value,
-          password: passwordController.text,
-          adminEmail: emailController.text,
-          adminName: adminUserNameController.text,
-          schoolCode: schoolCodeController.text,
-          schoolName: schoolNameController.text,
-          phoneNumber: phoneNumberController.text,
-          schoolLicenceNumber: schoolLicenceNumberController.text,
-          address: addressController.text,
-          place: placeController.text,
-          designation: designationController.text,
-          profileImageId: profileImageId,
-          profileImageUrl: profileImageUrl,
-          createdDate: DateTime.now().toString(),
-          verified: false,
-          userRole: "admin");
-      if (await checkSchoolIsCreated(schoolNameController.text, placeController.text)) {
+      if (await checkSchoolIsCreated(
+          schoolNameController.text, placeController.text)) {
         showToast(msg: 'School Is Already Created');
       } else {
         if (context.mounted) {}
         serverAuth
             .createUserWithEmailAndPassword(
-              email: emailController.text,
+          email: emailController.text,
+          password: passwordController.text,
+        )
+            .then((authvalue) async {
+          AdminModel adminModel = AdminModel(
+              docid: authvalue.user!.uid,
+              country: countryValue.value,
+              state: stateValue.value,
+              city: cityValue.value,
               password: passwordController.text,
-            )
-            .then(
-              (value) => addRequestedSchools(
-                adminModel,
-                context,
-              ).then((value) {
-                clearFunction();
-                Get.find<GetImage>().pickedImage.value = '';
-              }),
-            );
+              adminEmail: emailController.text,
+              adminName: adminUserNameController.text,
+              schoolCode: schoolCodeController.text,
+              schoolName: schoolNameController.text,
+              phoneNumber: phoneNumberController.text,
+              schoolLicenceNumber: schoolLicenceNumberController.text,
+              address: addressController.text,
+              place: placeController.text,
+              designation: designationController.text,
+              profileImageId: profileImageId,
+              profileImageUrl: profileImageUrl,
+              createdDate: DateTime.now().toString(),
+              verified: false,
+              userRole: "admin");
+
+          await addRequestedSchools(
+            adminModel,
+            context,
+          ).then((value) {
+            clearFunction();
+            Get.find<GetImage>().pickedImage.value = '';
+          });
+        });
       }
-      await server.collection('RequestedSchools').doc(uUID).set(
-            adminModel.toMap(),
-          );
+      // await server.collection('RequestedSchools').doc(uUID).set(
+      //       adminModel.toMap(),
+      //     );
     } on FirebaseAuthException catch (e) {
       showToast(msg: e.code);
     } catch (e) {
@@ -106,13 +106,15 @@ class CreateschoolController extends GetxController {
   }
 
   Future<bool> checkSchoolIsCreated(String schoolName, String place) async {
-    final schoolListCollection = await server.collection('DrivingSchoolCollection').get();
+    final schoolListCollection =
+        await server.collection('DrivingSchoolCollection').get();
     if (schoolListCollection.docs.isEmpty) {
       return false;
     }
 
     for (var element in schoolListCollection.docs) {
-      if (element.data()["schoolName"] == schoolName && element.data()["place"] == place) {
+      if (element.data()["schoolName"] == schoolName &&
+          element.data()["place"] == place) {
         return true;
       }
     }
@@ -148,7 +150,12 @@ class CreateschoolController extends GetxController {
                 TextButton(
                   child: const Text('OK'),
                   onPressed: () async {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AdminLoginScreen(),
+                      ),
+                    );
                     await Future.delayed(const Duration(milliseconds: 500));
                   },
                 ),
