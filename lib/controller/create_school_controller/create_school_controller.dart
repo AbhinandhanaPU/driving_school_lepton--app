@@ -69,7 +69,7 @@ class CreateschoolController extends GetxController {
           designation: designationController.text,
           profileImageId: profileImageId,
           profileImageUrl: profileImageUrl,
-          createdDate: "",
+          createdDate: DateTime.now().toString(),
           verified: false,
           userRole: "admin");
       if (await checkSchoolIsCreated(
@@ -77,13 +77,20 @@ class CreateschoolController extends GetxController {
         showToast(msg: 'School Is Already Created');
       } else {
         if (context.mounted) {}
-        addRequestedSchools(
-          adminModel,
-          context,
-        ).then((value) {
-          clearFunction();
-          Get.find<GetImage>().pickedImage.value = '';
-        });
+        serverAuth
+            .createUserWithEmailAndPassword(
+              email: emailController.text,
+              password: passwordController.text,
+            )
+            .then(
+              (value) => addRequestedSchools(
+                adminModel,
+                context,
+              ).then((value) {
+                clearFunction();
+                Get.find<GetImage>().pickedImage.value = '';
+              }),
+            );
       }
       await server.collection('RequestedSchools').doc(uUID).set(
             adminModel.toMap(),
@@ -119,7 +126,7 @@ class CreateschoolController extends GetxController {
   Future<void> addRequestedSchools(AdminModel adminModel, context) async {
     try {
       server
-          .collection('RequestedSchools')
+          .collection('DrivingSchoolCollection')
           .doc(adminModel.docid)
           .set(adminModel.toMap())
           .then((value) {
@@ -133,9 +140,11 @@ class CreateschoolController extends GetxController {
                 child: ListBody(
                   children: <Widget>[
                     Text(
-                        "Thank you for applying for an account. Your account is currently pending approval \n"
-                        " by the site administrator. In the meantime, a welcome message with further\n"
-                        " instructions has been sent to your e-mail address. "),
+                        "Your account created successfully. Please login again to continue ...")
+                    // Text(
+                    //     "Thank you for applying for an account. Your account is currently pending approval \n"
+                    //     " by the site administrator. In the meantime, a welcome message with further\n"
+                    //     " instructions has been sent to your e-mail address. "),
                   ],
                 ),
               ),
