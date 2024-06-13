@@ -34,7 +34,7 @@ class StudentLoginScreen extends StatelessWidget {
                 AssetContainerImage(
                   height: 340.h,
                   width: double.infinity,
-                  imagePath: 'assets/images/login.webp',
+                  imagePath: 'assets/images/studentDriving.png',
                 ),
                 GoogleMontserratWidgets(
                   fontsize: 25.w,

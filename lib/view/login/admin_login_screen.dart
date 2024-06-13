@@ -18,8 +18,7 @@ import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.da
 class AdminLoginScreen extends StatelessWidget {
   final PasswordField hideGetxController = Get.put(PasswordField());
 
-  final AdminLoginController adminLoginController =
-      Get.put(AdminLoginController());
+  final AdminLoginController adminLoginController = Get.put(AdminLoginController());
   AdminLoginScreen({super.key});
 
   @override
@@ -34,9 +33,7 @@ class AdminLoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AssetContainerImage(
-                    height: 340.h,
-                    width: double.infinity,
-                    imagePath: 'assets/images/login.webp'),
+                    height: 340.h, width: double.infinity, imagePath: 'assets/images/login.webp'),
                 GoogleMontserratWidgets(
                   fontsize: 25.w,
                   text: 'Admin Login'.tr,
@@ -62,8 +59,7 @@ class AdminLoginScreen extends StatelessWidget {
                     labelText: 'Password',
                     icon: Icons.lock,
                     obscureText: hideGetxController.isObscurefirst.value,
-                    textEditingController:
-                        adminLoginController.passwordController,
+                    textEditingController: adminLoginController.passwordController,
                     validator: checkFieldPasswordIsValid,
                     prefixIcon: IconButton(
                       onPressed: () {},
@@ -102,8 +98,7 @@ class AdminLoginScreen extends StatelessWidget {
                   padding: EdgeInsets.only(top: 60.h),
                   child: GestureDetector(
                     onTap: () async {
-                      if (adminLoginController.formKey.currentState!
-                          .validate()) {
+                      if (adminLoginController.formKey.currentState!.validate()) {
                         await adminLoginController.adminSignIn(context);
                       }
                     },
@@ -123,8 +118,7 @@ class AdminLoginScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GooglePoppinsWidgets(
-                          text: "Don't Have an account?".tr, fontsize: 15),
+                      GooglePoppinsWidgets(text: "Don't Have an account?".tr, fontsize: 15),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
