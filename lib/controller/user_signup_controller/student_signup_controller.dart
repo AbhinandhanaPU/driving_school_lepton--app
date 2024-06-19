@@ -19,7 +19,7 @@ class StudentSignUpController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final formKey1 = GlobalKey<FormState>();
 
-  RxBool isLoading = RxBool(false);
+  RxBool isLoading = false.obs;
   Rx<ButtonState> buttonstate = ButtonState.idle.obs;
 
   TextEditingController emailController = TextEditingController();
@@ -47,6 +47,7 @@ class StudentSignUpController extends GetxController {
     addressController.clear();
     rtoNameController.clear();
     licenceController.clear();
+    Get.find<GetImage>().pickedImage.value = "";
   }
 
   String uid = const Uuid().v1();
@@ -55,9 +56,10 @@ class StudentSignUpController extends GetxController {
     buttonstate.value = ButtonState.loading;
     String imageId = "";
     String imageUrl = "";
+    isLoading.value = true;
     try {
       if (Get.find<GetImage>().pickedImage.isNotEmpty) {
-        isLoading.value = true;
+        isLoading.value = false;
         imageId = uid;
         final result = await serverStorage
             .ref(
@@ -106,13 +108,11 @@ class StudentSignUpController extends GetxController {
                   .doc(authvalue.user!.uid)
                   .get();
               if (user.data() != null) {
-                UserCredentialsController.studentModel =
-                    StudentModel.fromMap(user.data()!);
+                UserCredentialsController.studentModel = StudentModel.fromMap(user.data()!);
                 log(UserCredentialsController.studentModel.toString());
               }
 
-              if (UserCredentialsController.studentModel?.userRole ==
-                  "student") {
+              if (UserCredentialsController.studentModel?.userRole == "student") {
                 await SharedPreferencesHelper.setString(
                     SharedPreferencesHelper.currenUserKey, authvalue.user!.uid);
                 await SharedPreferencesHelper.setString(
@@ -127,17 +127,14 @@ class StudentSignUpController extends GetxController {
                         title: const Text('Message'),
                         content: const SingleChildScrollView(
                           child: ListBody(
-                            children: <Widget>[
-                              Text('Your Profile Created Successfully ')
-                            ],
+                            children: <Widget>[Text('Your Profile Created Successfully ')],
                           ),
                         ),
                         actions: <Widget>[
                           TextButton(
                             child: const Text('Ok'),
                             onPressed: () {
-                              Navigator.pushAndRemoveUntil(context,
-                                  MaterialPageRoute(
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                                 builder: (context) {
                                   return const StudentsMainHomeScreen();
                                 },
@@ -164,6 +161,7 @@ class StudentSignUpController extends GetxController {
       showToast(msg: e.code);
     } catch (e) {
       log(e.toString());
+      isLoading.value = false;
       showToast(msg: 'Somthing went wrong please try again');
       buttonstate.value = ButtonState.fail;
       await Future.delayed(const Duration(seconds: 2)).then((value) {

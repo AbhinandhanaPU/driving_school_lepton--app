@@ -53,8 +53,7 @@ class StudentSignUpScreen extends StatelessWidget {
                       hintText: 'Email ID'.tr,
                       labelText: 'Enter Mail ID',
                       prefixIcon: const Icon(Icons.mail_outline),
-                      textEditingController:
-                          studentSignUpController.emailController,
+                      textEditingController: studentSignUpController.emailController,
                       validator: checkFieldEmailIsValid,
                     ),
                     kHeight10,
@@ -79,8 +78,7 @@ class StudentSignUpScreen extends StatelessWidget {
                         obscureText: hideGetxController.isObscurefirst.value,
                         labelText: 'Password',
                         icon: Icons.lock,
-                        textEditingController:
-                            studentSignUpController.passwordController,
+                        textEditingController: studentSignUpController.passwordController,
                         validator: checkFieldPasswordIsValid,
                         prefixIcon: IconButton(
                           onPressed: () {},
@@ -103,8 +101,7 @@ class StudentSignUpScreen extends StatelessWidget {
                         labelText: 'Confirm Password',
                         obscureText: hideGetxController.isObscureSecond.value,
                         icon: Icons.lock,
-                        textEditingController:
-                            studentSignUpController.confirmPasswordController,
+                        textEditingController: studentSignUpController.confirmPasswordController,
                         validator: checkFieldPasswordIsValid,
                         prefixIcon: IconButton(
                           onPressed: () {},
@@ -125,25 +122,17 @@ class StudentSignUpScreen extends StatelessWidget {
                       padding: EdgeInsets.only(top: 20.h),
                       child: GestureDetector(
                         onTap: () {
-                          if (studentSignUpController.formKey.currentState!
-                              .validate()) {
-                            if (studentSignUpController
-                                    .confirmPasswordController.text
-                                    .trim() ==
-                                studentSignUpController.passwordController.text
-                                    .trim()) {
+                          if (studentSignUpController.formKey.currentState!.validate()) {
+                            if (studentSignUpController.confirmPasswordController.text.trim() ==
+                                studentSignUpController.passwordController.text.trim()) {
                               StudentPasswordSaver.studentEmailID =
-                                  studentSignUpController.emailController.text
-                                      .trim();
+                                  studentSignUpController.emailController.text.trim();
                               StudentPasswordSaver.studentPassword =
-                                  studentSignUpController
-                                      .passwordController.text
-                                      .trim();
+                                  studentSignUpController.passwordController.text.trim();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      StudentProfileCreationScreen(),
+                                  builder: (context) => StudentProfileCreationScreen(),
                                 ),
                               );
                             } else {
@@ -193,9 +182,7 @@ class StudentSignUpScreen extends StatelessWidget {
                             "Login".tr,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
-                                fontSize: 19,
-                                color: themeColor,
-                                fontWeight: FontWeight.w600),
+                                fontSize: 19, color: themeColor, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ],

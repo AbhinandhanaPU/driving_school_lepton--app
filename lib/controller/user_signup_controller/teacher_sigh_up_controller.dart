@@ -18,7 +18,8 @@ import 'package:uuid/uuid.dart';
 class TeacherSignUpController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final formKey1 = GlobalKey<FormState>();
-  RxBool isLoading = RxBool(false);
+  RxBool isLoading = false.obs;
+ 
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -44,6 +45,8 @@ class TeacherSignUpController extends GetxController {
     addressController.clear();
     rtoNameController.clear();
     licenceController.clear();
+    Get.find<GetImage>().pickedImage.value = "";
+
   }
 
   String uid = const Uuid().v1();
