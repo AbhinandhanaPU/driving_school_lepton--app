@@ -152,7 +152,11 @@ class StudentSignUpController extends GetxController {
                 isLoading.value = false;
               }
             },
-          ).then((value) => {clearFields()});
+          ).then((value) {
+            clearFields();
+            isLoading.value = false;
+            Get.find<GetImage>().pickedImage.value = '';
+          });
         });
       } else {
         showToast(msg: "Please upload profile image");

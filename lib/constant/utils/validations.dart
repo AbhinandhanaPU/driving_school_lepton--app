@@ -43,7 +43,7 @@ String? checkFieldPhoneNumberIsValid(String? fieldContent) {
   if (fieldContent == null) {
     return 'null';
   }
-  if (fieldContent.length >= 9) {
+  if (fieldContent.length >= 10) {
     return null;
   } else {
     return 'Please enter 10 digit number';

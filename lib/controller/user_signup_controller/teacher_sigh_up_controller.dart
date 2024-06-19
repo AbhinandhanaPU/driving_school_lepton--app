@@ -106,11 +106,13 @@ class TeacherSignUpController extends GetxController {
                   .doc(authvalue.user!.uid)
                   .get();
               if (user.data() != null) {
-                UserCredentialsController.teacherModel = TeacherModel.fromMap(user.data()!);
+                UserCredentialsController.teacherModel =
+                    TeacherModel.fromMap(user.data()!);
                 log(UserCredentialsController.teacherModel.toString());
               }
 
-              if (UserCredentialsController.teacherModel?.userRole == "teacher") {
+              if (UserCredentialsController.teacherModel?.userRole ==
+                  "teacher") {
                 await SharedPreferencesHelper.setString(
                     SharedPreferencesHelper.currenUserKey, authvalue.user!.uid);
                 await SharedPreferencesHelper.setString(
@@ -125,7 +127,9 @@ class TeacherSignUpController extends GetxController {
                         title: const Text('Message'),
                         content: const SingleChildScrollView(
                           child: ListBody(
-                            children: <Widget>[Text('Your Profile Created Successfully ')],
+                            children: <Widget>[
+                              Text('Your Profile Created Successfully ')
+                            ],
                           ),
                         ),
                         actions: <Widget>[
@@ -156,6 +160,7 @@ class TeacherSignUpController extends GetxController {
           ).then((value) {
             clearFields();
             isLoading.value = false;
+            Get.find<GetImage>().pickedImage.value = '';
           });
         });
       } else {
