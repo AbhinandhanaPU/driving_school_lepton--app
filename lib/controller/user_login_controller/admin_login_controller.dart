@@ -28,7 +28,7 @@ class AdminLoginController extends GetxController {
           .then((value) async {
         final user = await server
             .collection('DrivingSchoolCollection')
-            .doc(UserCredentialsController.schoolId)
+            .doc(value.user?.uid)
             .get();
 
         if (user.data() != null) {
