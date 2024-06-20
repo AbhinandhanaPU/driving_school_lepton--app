@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/creare_tutor/create_tutor.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials.dart';
 import 'package:new_project_app/view/users/student/student_pages/notices/notices.dart';
-import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials.dart';
+
 import 'package:new_project_app/view/users/student/student_pages/videos/video_display_page.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
-class QuickActionPartStudent extends StatelessWidget {
-  const QuickActionPartStudent({super.key});
+class QuickActionPartAdmin extends StatelessWidget {
+  const QuickActionPartAdmin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +55,9 @@ class QuickActionPartStudent extends StatelessWidget {
 viewallMenus(BuildContext context) {
   double w = MediaQuery.of(context).size.width;
   int columnCount = 3;
-  final screenNavigationOfStd = [
-    const StudyMaterials(), // Study Materials
+  final screenNavigationOfAdmin = [
+  const CreateTutor(),
+    const AdminStudyMaterials(), // Study Materials
     const AdminVideosList(), // Video
     const AdminNoticePage(), //Notice
   ];
@@ -76,7 +79,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      9,
+                      10,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -90,7 +93,7 @@ viewallMenus(BuildContext context) {
                               child: GestureDetector(
                                 onTap: () => Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
-                                    return screenNavigationOfStd[index];
+                                    return screenNavigationOfAdmin[index];
                                   },
                                 )),
                                 child: Container(
@@ -167,6 +170,7 @@ viewallMenus(BuildContext context) {
 }
 
 List<String> imageStd = [
+  'assets/flaticons/books.png',
   'assets/flaticons/cone.png', // Driving Test
   'assets/flaticons/calendar.png', // practice shedule
   'assets/flaticons/books.png', // study Materials
@@ -178,6 +182,7 @@ List<String> imageStd = [
   'assets/flaticons/hand.png', // fees
 ];
 List<String> stdtext = [
+  'Create Tutor',
   'Driving Test',
   'Practice Shedule',
   'Study Materials',

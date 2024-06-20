@@ -55,8 +55,8 @@ viewallMenus(BuildContext context) {
   int columnCount = 3;
   final screenNavigationOfStd = [
     const StudyMaterials(), // Study Materials
-    const VideosList(), // Video
-    const NoticePage(), //Notice
+    const AdminVideosList(), // Video
+    const AdminNoticePage(), //Notice
   ];
 
   Get.bottomSheet(
@@ -88,24 +88,18 @@ viewallMenus(BuildContext context) {
                             scale: 1.5,
                             child: FadeInAnimation(
                               child: GestureDetector(
-                                onTap: () =>
-                                    Navigator.push(context, MaterialPageRoute(
+                                onTap: () => Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
                                     return screenNavigationOfStd[index];
                                   },
                                 )),
                                 child: Container(
                                   margin: EdgeInsets.only(
-                                      bottom: w / 25,
-                                      left: w / 30,
-                                      right: w / 30,
-                                      top: w / 25),
+                                      bottom: w / 25, left: w / 30, right: w / 30, top: w / 25),
                                   decoration: BoxDecoration(
                                     color: Colors.transparent,
-                                    border: Border.all(
-                                        color: cblack.withOpacity(0.1)),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(7)),
+                                    border: Border.all(color: cblack.withOpacity(0.1)),
+                                    borderRadius: const BorderRadius.all(Radius.circular(7)),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.1),
@@ -134,9 +128,7 @@ viewallMenus(BuildContext context) {
                                             color: themeColor,
                                             // cWhite,
                                             shape: BoxShape.circle,
-                                            border: Border.all(
-                                                color: themeColor
-                                                    .withOpacity(0.5))),
+                                            border: Border.all(color: themeColor.withOpacity(0.5))),
                                         child: Center(
                                           child: Image.asset(
                                             imageStd[index],

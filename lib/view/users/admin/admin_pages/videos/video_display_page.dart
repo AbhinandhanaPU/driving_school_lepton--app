@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 
-class AdminVideosList extends StatefulWidget {
-  const AdminVideosList({
+class VideosList extends StatefulWidget {
+  const VideosList({
     super.key,
   });
 
   @override
-  State<AdminVideosList> createState() => _AdminVideosListState();
+  State<VideosList> createState() => _VideosListState();
 }
 
-class _AdminVideosListState extends State<AdminVideosList> {
+class _VideosListState extends State<VideosList> {
   final ScrollController controller = ScrollController();
   double _scrollPosition = 0.0;
   final double _scrollMax = 1000.0; // adjust this to your content's height
@@ -69,7 +69,8 @@ class _AdminVideosListState extends State<AdminVideosList> {
               child: ListTile(
                 contentPadding: const EdgeInsets.all(0),
                 shape: const BeveledRectangleBorder(
-                    side: BorderSide(color: Color.fromARGB(255, 125, 169, 225), width: 0.2)),
+                    side: BorderSide(
+                        color: Color.fromARGB(255, 125, 169, 225), width: 0.2)),
                 leading: SizedBox(
                   width: 50,
                   child: Row(

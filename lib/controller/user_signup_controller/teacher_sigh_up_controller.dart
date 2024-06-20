@@ -56,6 +56,7 @@ class TeacherSignUpController extends GetxController {
     buttonstate.value = ButtonState.loading;
     String imageId = "";
     String imageUrl = "";
+    
     try {
       if (Get.find<GetImage>().pickedImage.isNotEmpty) {
         isLoading.value = true;
