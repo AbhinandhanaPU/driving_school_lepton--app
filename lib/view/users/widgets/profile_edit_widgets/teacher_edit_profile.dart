@@ -377,7 +377,6 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
   }
 }
 
-
 class TeacherCircleAvatarImgeWidget extends StatelessWidget {
   TeacherCircleAvatarImgeWidget({
     super.key,
@@ -388,10 +387,8 @@ class TeacherCircleAvatarImgeWidget extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          backgroundImage:
- 
-          UserCredentialsController.teacherModel?.profileImageUrl == null ||
-                  UserCredentialsController.teacherModel!.profileImageUrl.isEmpty
+          backgroundImage: UserCredentialsController.teacherModel?.profileImageUrl == null ||
+                  UserCredentialsController.teacherModel!.profileImageUrl!.isEmpty
               ? const AssetImage(assetImagePathPerson)
               : NetworkImage(UserCredentialsController.teacherModel?.profileImageUrl ?? "")
                   as ImageProvider,

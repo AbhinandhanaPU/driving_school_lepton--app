@@ -54,8 +54,7 @@ class TeacherSignUpScreen extends StatelessWidget {
                       hintText: 'Email ID'.tr,
                       labelText: 'Enter Mail ID',
                       prefixIcon: const Icon(Icons.mail_outline),
-                      textEditingController:
-                          teacherSignUpController.emailController,
+                      textEditingController: teacherSignUpController.emailController,
                       validator: checkFieldEmailIsValid,
                     ),
                     kHeight10,
@@ -80,8 +79,7 @@ class TeacherSignUpScreen extends StatelessWidget {
                         obscureText: hideGetxController.isObscurefirst.value,
                         labelText: 'Password',
                         icon: Icons.lock,
-                        textEditingController:
-                            teacherSignUpController.passwordController,
+                        textEditingController: teacherSignUpController.passwordController,
                         validator: checkFieldPasswordIsValid,
                         prefixIcon: IconButton(
                           onPressed: () {},
@@ -104,8 +102,7 @@ class TeacherSignUpScreen extends StatelessWidget {
                         labelText: 'Confirm Password',
                         obscureText: hideGetxController.isObscureSecond.value,
                         icon: Icons.lock,
-                        textEditingController:
-                            teacherSignUpController.confirmpasswordController,
+                        textEditingController: teacherSignUpController.confirmpasswordController,
                         validator: checkFieldPasswordIsValid,
                         prefixIcon: IconButton(
                           onPressed: () {},
@@ -126,28 +123,19 @@ class TeacherSignUpScreen extends StatelessWidget {
                       padding: EdgeInsets.only(top: 20.h),
                       child: GestureDetector(
                         onTap: () async {
-                          if (await teacherSignUpController
-                              .isEmailInTempTeacherList()) {
-                            if (teacherSignUpController.formKey.currentState!
-                                .validate()) {
-                              if (teacherSignUpController
-                                      .confirmpasswordController.text
-                                      .trim() ==
-                                  teacherSignUpController
-                                      .passwordController.text
-                                      .trim()) {
+                          if (await teacherSignUpController.isEmailInTempTeacherList(
+                              teacherSignUpController.emailController.text)) {
+                            if (teacherSignUpController.formKey.currentState!.validate()) {
+                              if (teacherSignUpController.confirmpasswordController.text.trim() ==
+                                  teacherSignUpController.passwordController.text.trim()) {
                                 TeacherPasswordSaver.teacherEmailID =
-                                    teacherSignUpController.emailController.text
-                                        .trim();
+                                    teacherSignUpController.emailController.text.trim();
                                 TeacherPasswordSaver.teacherPassword =
-                                    teacherSignUpController
-                                        .passwordController.text
-                                        .trim();
+                                    teacherSignUpController.passwordController.text.trim();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        TeacherProfileCreationScreen(),
+                                    builder: (context) => TeacherProfileCreationScreen(),
                                   ),
                                 );
                               } else {
@@ -160,8 +148,7 @@ class TeacherSignUpScreen extends StatelessWidget {
                               context: context,
                               builder: (context) => AlertDialog(
                                 shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.zero)),
+                                    borderRadius: BorderRadius.all(Radius.zero)),
                                 content: const Text(
                                     'Email does not match any entry in the TempTeacherList.'),
                                 actions: [
@@ -218,9 +205,7 @@ class TeacherSignUpScreen extends StatelessWidget {
                             "Login".tr,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
-                                fontSize: 19,
-                                color: themeColor,
-                                fontWeight: FontWeight.w600),
+                                fontSize: 19, color: themeColor, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ],

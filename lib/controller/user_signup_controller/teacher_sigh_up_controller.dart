@@ -19,7 +19,6 @@ class TeacherSignUpController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final formKey1 = GlobalKey<FormState>();
   RxBool isLoading = false.obs;
- 
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -46,13 +45,12 @@ class TeacherSignUpController extends GetxController {
     rtoNameController.clear();
     licenceController.clear();
     Get.find<GetImage>().pickedImage.value = "";
-
   }
 
   String uid = const Uuid().v1();
   Rx<ButtonState> buttonstate = ButtonState.idle.obs;
 
-  Future<bool> isEmailInTempTeacherList() async {
+  Future<bool> isEmailInTempTeacherList(String email) async {
     final temTcrList = await server
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
@@ -60,7 +58,7 @@ class TeacherSignUpController extends GetxController {
         .get();
 
     for (var doc in temTcrList.docs) {
-      if (doc['teacheremail'] == emailController.text) {
+      if (doc['teacheremail'] == email) {
         return true;
       }
     }
@@ -71,7 +69,7 @@ class TeacherSignUpController extends GetxController {
     buttonstate.value = ButtonState.loading;
     String imageId = "";
     String imageUrl = "";
-    
+
     try {
       if (Get.find<GetImage>().pickedImage.isNotEmpty) {
         isLoading.value = true;
@@ -122,13 +120,11 @@ class TeacherSignUpController extends GetxController {
                   .doc(authvalue.user!.uid)
                   .get();
               if (user.data() != null) {
-                UserCredentialsController.teacherModel =
-                    TeacherModel.fromMap(user.data()!);
+                UserCredentialsController.teacherModel = TeacherModel.fromMap(user.data()!);
                 log(UserCredentialsController.teacherModel.toString());
               }
 
-              if (UserCredentialsController.teacherModel?.userRole ==
-                  "teacher") {
+              if (UserCredentialsController.teacherModel?.userRole == "teacher") {
                 await SharedPreferencesHelper.setString(
                     SharedPreferencesHelper.currenUserKey, authvalue.user!.uid);
                 await SharedPreferencesHelper.setString(
@@ -143,9 +139,7 @@ class TeacherSignUpController extends GetxController {
                         title: const Text('Message'),
                         content: const SingleChildScrollView(
                           child: ListBody(
-                            children: <Widget>[
-                              Text('Your Profile Created Successfully ')
-                            ],
+                            children: <Widget>[Text('Your Profile Created Successfully ')],
                           ),
                         ),
                         actions: <Widget>[

@@ -11,6 +11,7 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/text_hide_controller/text_hide_controller.dart';
 import 'package:new_project_app/controller/user_signup_controller/student_signup_controller.dart';
+import 'package:new_project_app/controller/user_signup_controller/teacher_sigh_up_controller.dart';
 import 'package:new_project_app/view/login/student_login_screen.dart';
 import 'package:new_project_app/view/sign_up/student_sign_up/student_profile_creation.dart';
 import 'package:new_project_app/view/widgets/image_container_widgets/image_container_widgets.dart';
@@ -21,6 +22,7 @@ import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.da
 class StudentSignUpScreen extends StatelessWidget {
   PasswordField hideGetxController = Get.find<PasswordField>();
   final studentSignUpController = Get.put(StudentSignUpController());
+  final teacherSignUpController = Get.put(TeacherSignUpController());
   StudentSignUpScreen({super.key});
 
   @override
@@ -121,8 +123,26 @@ class StudentSignUpScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(top: 20.h),
                       child: GestureDetector(
-                        onTap: () {
-                          if (studentSignUpController.formKey.currentState!.validate()) {
+                        onTap: () async {
+                          if (await teacherSignUpController.isEmailInTempTeacherList(
+                              studentSignUpController.emailController.text)) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.zero)),
+                                content: const Text("This Email can't used by the User"),
+                                actions: [
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else if (studentSignUpController.formKey.currentState!.validate()) {
                             if (studentSignUpController.confirmPasswordController.text.trim() ==
                                 studentSignUpController.passwordController.text.trim()) {
                               StudentPasswordSaver.studentEmailID =

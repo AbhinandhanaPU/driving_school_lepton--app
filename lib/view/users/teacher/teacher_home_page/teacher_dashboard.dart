@@ -80,7 +80,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                           backgroundImage: UserCredentialsController
                                           .teacherModel?.profileImageUrl ==
                                       null ||
-                                  UserCredentialsController.teacherModel!.profileImageUrl.isEmpty
+                                  UserCredentialsController.teacherModel!.profileImageUrl!.isEmpty
                               ? const AssetImage(assetImagePathPerson)
                               : NetworkImage(
                                       UserCredentialsController.teacherModel?.profileImageUrl ?? "")

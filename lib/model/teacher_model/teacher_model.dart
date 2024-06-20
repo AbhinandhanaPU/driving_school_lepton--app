@@ -1,37 +1,36 @@
 import 'dart:convert';
 
 class TeacherModel {
-  String docid;
-  String password;
-  String teacheremail;
-  String teacherName;
-  String phoneNumber;
-  String dateofBirth;
-  String guardianName;
-  String address;
-  String place;
-  String profileImageId;
-  String profileImageUrl;
-  String rtoName;
-  String licenceNumber;
-
-  String userRole = 'teacher';
+  String? docid;
+  String? password;
+  String? teacheremail;
+  String? teacherName;
+  String? phoneNumber;
+  String? dateofBirth;
+  String? guardianName;
+  String? address;
+  String? place;
+  String? profileImageId;
+  String? profileImageUrl;
+  String? rtoName;
+  String? licenceNumber;
+  String userRole;
 
   TeacherModel({
-    required this.docid,
-    required this.password,
-    required this.teacheremail,
-    required this.teacherName,
-    required this.phoneNumber,
-    required this.dateofBirth,
-    required this.guardianName,
-    required this.address,
-    required this.place,
-    required this.profileImageId,
-    required this.profileImageUrl,
-    required this.rtoName,
-    required this.licenceNumber,
-    required this.userRole,
+    this.docid,
+    this.password,
+    this.teacheremail,
+    this.teacherName,
+    this.phoneNumber,
+    this.dateofBirth,
+    this.guardianName,
+    this.address,
+    this.place,
+    this.profileImageId,
+    this.profileImageUrl,
+    this.rtoName,
+    this.licenceNumber,
+    this.userRole = 'teacher',
   });
 
   TeacherModel copyWith({
@@ -89,20 +88,20 @@ class TeacherModel {
 
   factory TeacherModel.fromMap(Map<String, dynamic> map) {
     return TeacherModel(
-      docid: map['docid'] as String,
-      password: map['password'] as String,
-      teacheremail: map['teacheremail'] as String,
-      teacherName: map['teacherName'] as String,
-      phoneNumber: map['phoneNumber'] as String,
-      dateofBirth: map['dateofBirth'] as String,
-      guardianName: map['guardianName'] as String,
-      address: map['address'] as String,
-      place: map['place'] as String,
-      profileImageId: map['profileImageId'] as String,
-      profileImageUrl: map['profileImageUrl'] as String,
-      rtoName: map['rtoName'] as String,
-      licenceNumber: map['licenceNumber'] as String,
-      userRole: map['userRole'] as String,
+      docid: map['docid'] as String?,
+      password: map['password'] as String?,
+      teacheremail: map['teacheremail'] as String?,
+      teacherName: map['teacherName'] as String?,
+      phoneNumber: map['phoneNumber'] as String?,
+      dateofBirth: map['dateofBirth'] as String?,
+      guardianName: map['guardianName'] as String?,
+      address: map['address'] as String?,
+      place: map['place'] as String?,
+      profileImageId: map['profileImageId'] as String?,
+      profileImageUrl: map['profileImageUrl'] as String?,
+      rtoName: map['rtoName'] as String?,
+      licenceNumber: map['licenceNumber'] as String?,
+      userRole: map['userRole'] as String? ?? 'teacher',
     );
   }
 
