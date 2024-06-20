@@ -52,6 +52,21 @@ class TeacherSignUpController extends GetxController {
   String uid = const Uuid().v1();
   Rx<ButtonState> buttonstate = ButtonState.idle.obs;
 
+  Future<bool> isEmailInTempTeacherList() async {
+    final temTcrList = await server
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('TempTeacherList')
+        .get();
+
+    for (var doc in temTcrList.docs) {
+      if (doc['teacheremail'] == emailController.text) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   Future<void> createTeacher(BuildContext context) async {
     buttonstate.value = ButtonState.loading;
     String imageId = "";
