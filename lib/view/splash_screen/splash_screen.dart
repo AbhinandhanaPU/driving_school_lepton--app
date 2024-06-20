@@ -9,9 +9,11 @@ import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+import 'package:new_project_app/model/admin_model/admin_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/home/first_screen/first_screen.dart';
 import 'package:new_project_app/view/users/student/student_home_page/student_home_page.dart';
+import 'package:new_project_app/view/users/teacher/teacher_home_page/teacher_home_page.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_montserrat.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -108,9 +110,15 @@ nextpage(context) async {
       },
     ));
   } else {
-    if (UserCredentialsController.userRole == 'student') {
+    if (UserCredentialsController.userRole == 'admin') {
+      //getting adminData
+      await checkAdmin(context);
+    } else if (UserCredentialsController.userRole == 'student') {
       //getting studentData
       await checkStudent(context);
+    } else if (UserCredentialsController.userRole == 'teacher') {
+      //getting teaccherData
+      await checkTeacher(context);
     } else {
       Navigator.pushReplacement(context, MaterialPageRoute(
         builder: (context) {
@@ -119,6 +127,32 @@ nextpage(context) async {
       ));
       //Get.offAll(() => const DujoLoginScren());
     }
+  }
+}
+
+Future<void> checkAdmin(
+  context,
+) async {
+  final adminData = await server
+      .collection('DrivingSchoolCollection')
+      .doc(serverAuth.currentUser?.uid)
+      .get();
+
+  if (adminData.data() != null) {
+    UserCredentialsController.adminModel =
+        AdminModel.fromMap(adminData.data()!);
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return const StudentsMainHomeScreen();
+      },
+    ));
+  } else {
+    showToast(msg: "Please login again");
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return const FirstScreen();
+      },
+    ));
   }
 }
 
@@ -138,6 +172,34 @@ Future<void> checkStudent(
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return const StudentsMainHomeScreen();
+      },
+    ));
+  } else {
+    showToast(msg: "Please login again");
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return const FirstScreen();
+      },
+    ));
+  }
+}
+
+Future<void> checkTeacher(
+  context,
+) async {
+  final teacherData = await server
+      .collection('DrivingSchoolCollection')
+      .doc(UserCredentialsController.schoolId)
+      .collection('Teachers')
+      .doc(serverAuth.currentUser?.uid)
+      .get();
+
+  if (teacherData.data() != null) {
+    UserCredentialsController.studentModel =
+        StudentModel.fromMap(teacherData.data()!);
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return const TeachersMainHomeScreen();
       },
     ));
   } else {

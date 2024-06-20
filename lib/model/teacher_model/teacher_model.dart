@@ -72,8 +72,8 @@ class TeacherModel {
     return <String, dynamic>{
       'docid': docid,
       'password': password,
-      'studentemail': teacheremail,
-      'studentName': teacherName,
+      'teacheremail': teacheremail,
+      'teacherName': teacherName,
       'phoneNumber': phoneNumber,
       'dateofBirth': dateofBirth,
       'guardianName': guardianName,
@@ -91,8 +91,8 @@ class TeacherModel {
     return TeacherModel(
       docid: map['docid'] as String,
       password: map['password'] as String,
-      teacheremail: map['studentemail'] as String,
-      teacherName: map['studentName'] as String,
+      teacheremail: map['teacheremail'] as String,
+      teacherName: map['teacherName'] as String,
       phoneNumber: map['phoneNumber'] as String,
       dateofBirth: map['dateofBirth'] as String,
       guardianName: map['guardianName'] as String,
@@ -113,7 +113,7 @@ class TeacherModel {
 
   @override
   String toString() {
-    return 'StudentModel(docid: $docid, password: $password, studentemail: $teacheremail, studentName: $teacherName, phoneNumber: $phoneNumber, dateofBirth: $dateofBirth, guardianName: $guardianName, address: $address, place: $place, profileImageId: $profileImageId, profileImageUrl: $profileImageUrl, rtoName: $rtoName, licenceNumber: $licenceNumber, userRole: $userRole)';
+    return 'teacherModel(docid: $docid, password: $password, teacheremail: $teacheremail, teacherName: $teacherName, phoneNumber: $phoneNumber, dateofBirth: $dateofBirth, guardianName: $guardianName, address: $address, place: $place, profileImageId: $profileImageId, profileImageUrl: $profileImageUrl, rtoName: $rtoName, licenceNumber: $licenceNumber, userRole: $userRole)';
   }
 
   @override

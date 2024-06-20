@@ -125,31 +125,55 @@ class TeacherSignUpScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(top: 20.h),
                       child: GestureDetector(
-                        onTap: () {
-                          if (teacherSignUpController.formKey.currentState!
-                              .validate()) {
-                            if (teacherSignUpController
-                                    .confirmpasswordController.text
-                                    .trim() ==
-                                teacherSignUpController.passwordController.text
-                                    .trim()) {
-                              TeacherPasswordSaver.teacherEmailID =
-                                  teacherSignUpController.emailController.text
-                                      .trim();
-                              TeacherPasswordSaver.teacherPassword =
+                        onTap: () async {
+                          if (await teacherSignUpController
+                              .isEmailInTempTeacherList()) {
+                            if (teacherSignUpController.formKey.currentState!
+                                .validate()) {
+                              if (teacherSignUpController
+                                      .confirmpasswordController.text
+                                      .trim() ==
                                   teacherSignUpController
                                       .passwordController.text
-                                      .trim();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      TeacherProfileCreationScreen(),
-                                ),
-                              );
-                            } else {
-                              showToast(msg: "Password Missmatch");
+                                      .trim()) {
+                                TeacherPasswordSaver.teacherEmailID =
+                                    teacherSignUpController.emailController.text
+                                        .trim();
+                                TeacherPasswordSaver.teacherPassword =
+                                    teacherSignUpController
+                                        .passwordController.text
+                                        .trim();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        TeacherProfileCreationScreen(),
+                                  ),
+                                );
+                              } else {
+                                showToast(msg: "Password Missmatch");
+                              }
                             }
+                          } else {
+                            // Email does not match, show an error message
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.zero)),
+                                content: const Text(
+                                    'Email does not match any entry in the TempTeacherList.'),
+                                actions: [
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
                           }
                         },
                         child: Obx(
