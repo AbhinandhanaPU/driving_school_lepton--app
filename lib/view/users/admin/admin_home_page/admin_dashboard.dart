@@ -4,11 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/quick_action/quick_action_part_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/notifications.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/quick_action/quick_action_part_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/quick_action/quick_action_widgets.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/slider/carousal_slider.dart';
- import 'package:new_project_app/view/users/widgets/profile_edit_widgets/student_edit_profile.dart';
+import 'package:new_project_app/view/users/widgets/profile_edit_widgets/admin_edit_profile.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -38,19 +38,22 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   color: themeColor.withOpacity(0.1),
                   // const Color.fromARGB(255, 218, 247, 229),
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.sp), topRight: Radius.circular(15.sp)),
+                      topLeft: Radius.circular(15.sp),
+                      topRight: Radius.circular(15.sp)),
                 ),
                 child: ListView(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 120.sp, right: 20.sp, left: 20.sp),
+                      padding: EdgeInsets.only(
+                          top: 120.sp, right: 20.sp, left: 20.sp),
                       child: const QuickActionPartAdmin(),
                     ),
                     ////////////////////////////////////////////////////////all tab part
                     Padding(
-                      padding: EdgeInsets.only(top: 80.sp, right: 20.sp, left: 20.sp),
+                      padding: EdgeInsets.only(
+                          top: 80.sp, right: 20.sp, left: 20.sp),
                       child: const NotificationPartOfAdmin(),
                     ),
                     //////////////////////////////////////////////////////// notifications
@@ -77,14 +80,15 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: CircleAvatar(
-                          backgroundImage:
-                              UserCredentialsController.studentModel?.profileImageUrl == null ||
-                                      UserCredentialsController
-                                          .studentModel!.profileImageUrl.isEmpty
-                                  ? const NetworkImage(assetImagePathPerson)
-                                  : NetworkImage(
-                                      UserCredentialsController.studentModel?.profileImageUrl ??
-                                          " ") as ImageProvider,
+                          backgroundImage: UserCredentialsController
+                                          .adminModel?.profileImageUrl ==
+                                      null ||
+                                  UserCredentialsController
+                                      .adminModel!.profileImageUrl.isEmpty
+                              ? const NetworkImage(assetImagePathPerson)
+                              : NetworkImage(UserCredentialsController
+                                      .adminModel?.profileImageUrl ??
+                                  " ") as ImageProvider,
                           onBackgroundImageError: (exception, stackTrace) {},
                           radius: 25,
                         ),
@@ -98,7 +102,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         child: SizedBox(
                             width: 200,
                             child: Text(
-                              UserCredentialsController.studentModel?.studentName ?? "",
+                              UserCredentialsController.adminModel?.adminName ??
+                                  "",
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
                                 fontSize: 17.sp,
@@ -116,7 +121,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return const StudentProfileEditPage();
+                                return const AdminProfileEditPage();
                               },
                             ),
                           );

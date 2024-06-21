@@ -108,11 +108,13 @@ class StudentSignUpController extends GetxController {
                   .doc(authvalue.user!.uid)
                   .get();
               if (user.data() != null) {
-                UserCredentialsController.studentModel = StudentModel.fromMap(user.data()!);
+                UserCredentialsController.studentModel =
+                    StudentModel.fromMap(user.data()!);
                 log(UserCredentialsController.studentModel.toString());
               }
 
-              if (UserCredentialsController.studentModel?.userRole == "student") {
+              if (UserCredentialsController.studentModel?.userRole ==
+                  "student") {
                 await SharedPreferencesHelper.setString(
                     SharedPreferencesHelper.currenUserKey, authvalue.user!.uid);
                 await SharedPreferencesHelper.setString(
@@ -127,14 +129,17 @@ class StudentSignUpController extends GetxController {
                         title: const Text('Message'),
                         content: const SingleChildScrollView(
                           child: ListBody(
-                            children: <Widget>[Text('Your Profile Created Successfully ')],
+                            children: <Widget>[
+                              Text('Your Profile Created Successfully ')
+                            ],
                           ),
                         ),
                         actions: <Widget>[
                           TextButton(
                             child: const Text('Ok'),
                             onPressed: () {
-                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(
                                 builder: (context) {
                                   return const StudentsMainHomeScreen();
                                 },
@@ -148,21 +153,23 @@ class StudentSignUpController extends GetxController {
                     },
                   );
                 });
-
-                isLoading.value = false;
               }
             },
           ).then((value) {
             clearFields();
-            isLoading.value = false;
             Get.find<GetImage>().pickedImage.value = '';
           });
         });
       } else {
         showToast(msg: "Please upload profile image");
+        buttonstate.value = ButtonState.fail;
       }
     } on FirebaseAuthException catch (e) {
       showToast(msg: e.code);
+      buttonstate.value = ButtonState.fail;
+      await Future.delayed(const Duration(seconds: 2)).then((value) {
+        buttonstate.value = ButtonState.idle;
+      });
     } catch (e) {
       log(e.toString());
       isLoading.value = false;

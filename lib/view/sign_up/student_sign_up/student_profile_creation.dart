@@ -9,7 +9,7 @@ import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/image_picker_controlller/image_picker_controller.dart';
 import 'package:new_project_app/controller/user_signup_controller/student_signup_controller.dart';
 import 'package:new_project_app/view/widgets/image_picker_container_widget/progile_image_picker_container_widget.dart';
-import 'package:new_project_app/view/widgets/login_button/login_button.dart';
+import 'package:new_project_app/view/widgets/progess_button/progress_button.dart';
 import 'package:new_project_app/view/widgets/signup_text_formfield/signup_text_formfield.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
@@ -157,26 +157,21 @@ class StudentProfileCreationScreen extends StatelessWidget {
                             studentSignUpController.licenceController,
                       ),
                       kHeight20,
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: GestureDetector(
-                          onTap: () async {
-                            if (studentSignUpController.formKey1.currentState!
-                                .validate()) {
-                              await studentSignUpController
-                                  .createStudent(context);
-                            } 
-                          },
-                          child: Obx(
-                            () => studentSignUpController.isLoading.value
-                                ? circularProgressIndicatotWidget
-                                : loginButtonWidget(
-                                    height: 60,
-                                    width: 180,
-                                    text: 'Submit'.tr,
-                                  ),
-                          ),
-                        ),
+                      Obx(
+                        () => ProgressButtonWidget(
+                            function: () async {
+                              if (studentSignUpController.formKey1.currentState!
+                                  .validate()) {
+                                await studentSignUpController
+                                    .createStudent(context);
+                              } else {
+                                showToast(msg: "All Fields are mandatory");
+                                return;
+                              }
+                            },
+                            buttonstate:
+                                studentSignUpController.buttonstate.value,
+                            text: 'Submit'),
                       ),
                     ],
                   ),

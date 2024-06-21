@@ -3,19 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
-import 'package:new_project_app/controller/profile_edit_controllers/student_profile_edit_controller.dart';
+import 'package:new_project_app/controller/profile_edit_controllers/admin_profile_edit_controller.dart';
 
-class StudentEditListileWidgetEmail extends StatelessWidget {
+class AdminEditListileWidgetEmail extends StatelessWidget {
   final Widget title;
   final Widget subtitle;
   final IconData icon;
   final IconData? editicon;
   String newEmail = "";
 
-  StudentProfileEditController studentProfileEditContrller =
-      Get.put(StudentProfileEditController());
+  AdminProfileEditController adminProfileEditController =
+      Get.put(AdminProfileEditController());
 
-  StudentEditListileWidgetEmail({
+  AdminEditListileWidgetEmail({
     super.key,
     required this.title,
     required this.subtitle,
@@ -57,7 +57,7 @@ class StudentEditListileWidgetEmail extends StatelessWidget {
                           final TextEditingController passwordController =
                               TextEditingController();
                           return Form(
-                            key: studentProfileEditContrller.formKey,
+                            key: adminProfileEditController.formKey,
                             child: AlertDialog(
                               title: Text("Update Mail".tr),
                               content: Column(

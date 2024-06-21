@@ -9,7 +9,7 @@ import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/image_picker_controlller/image_picker_controller.dart';
 import 'package:new_project_app/controller/user_signup_controller/teacher_sigh_up_controller.dart';
 import 'package:new_project_app/view/widgets/image_picker_container_widget/progile_image_picker_container_widget.dart';
-import 'package:new_project_app/view/widgets/login_button/login_button.dart';
+import 'package:new_project_app/view/widgets/progess_button/progress_button.dart';
 import 'package:new_project_app/view/widgets/signup_text_formfield/signup_text_formfield.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
@@ -91,7 +91,6 @@ class TeacherProfileCreationScreen extends StatelessWidget {
                         text: "Name *",
                         hintText: "Name",
                         keyboardType: TextInputType.text,
-                        
                         textfromController:
                             teacherSignUpController.nameController,
                         validator: checkFieldEmpty,
@@ -158,29 +157,21 @@ class TeacherProfileCreationScreen extends StatelessWidget {
                             teacherSignUpController.licenceController,
                       ),
                       kHeight20,
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: GestureDetector(
-                          onTap: () async {
-                            if (teacherSignUpController.formKey1.currentState!
-                                .validate()) {
-                              await teacherSignUpController
-                                  .createTeacher(context);
-                            } else {
-                              showToast(msg: "All Fields are mandatory");
-                              return;
-                            }
-                          },
-                          child: Obx(
-                            () => teacherSignUpController.isLoading.value
-                                ? circularProgressIndicatotWidget
-                                : loginButtonWidget(
-                                    height: 60,
-                                    width: 180,
-                                    text: 'Submit'.tr,
-                                  ),
-                          ),
-                        ),
+                      Obx(
+                        () => ProgressButtonWidget(
+                            function: () async {
+                              if (teacherSignUpController.formKey1.currentState!
+                                  .validate()) {
+                                await teacherSignUpController
+                                    .createTeacher(context);
+                              } else {
+                                showToast(msg: "All Fields are mandatory");
+                                return;
+                              }
+                            },
+                            buttonstate:
+                                teacherSignUpController.buttonstate.value,
+                            text: 'Submit'),
                       ),
                     ],
                   ),

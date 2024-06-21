@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/create_teacher/create_newteachers.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/create_tutor/create_new_tutor.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials.dart';
 import 'package:new_project_app/view/users/student/student_pages/notices/notices.dart';
 import 'package:new_project_app/view/users/student/student_pages/videos/video_display_page.dart';
@@ -55,7 +55,7 @@ viewallMenus(BuildContext context) {
   double w = MediaQuery.of(context).size.width;
   int columnCount = 3;
   final screenNavigationOfAdmin = [
-    createTeacherFunction(context), 
+    CreateTutor(),
     const AdminStudyMaterials(), // Study Materials
     const AdminVideosList(), // Video
     const AdminNoticePage(), //Notice
@@ -90,18 +90,24 @@ viewallMenus(BuildContext context) {
                             scale: 1.5,
                             child: FadeInAnimation(
                               child: GestureDetector(
-                                onTap: () => Navigator.push(context, MaterialPageRoute(
+                                onTap: () =>
+                                    Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
                                     return screenNavigationOfAdmin[index];
                                   },
                                 )),
                                 child: Container(
                                   margin: EdgeInsets.only(
-                                      bottom: w / 25, left: w / 30, right: w / 30, top: w / 25),
+                                      bottom: w / 25,
+                                      left: w / 30,
+                                      right: w / 30,
+                                      top: w / 25),
                                   decoration: BoxDecoration(
                                     color: Colors.transparent,
-                                    border: Border.all(color: cblack.withOpacity(0.1)),
-                                    borderRadius: const BorderRadius.all(Radius.circular(7)),
+                                    border: Border.all(
+                                        color: cblack.withOpacity(0.1)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(7)),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.1),
@@ -130,7 +136,9 @@ viewallMenus(BuildContext context) {
                                             color: themeColor,
                                             // cWhite,
                                             shape: BoxShape.circle,
-                                            border: Border.all(color: themeColor.withOpacity(0.5))),
+                                            border: Border.all(
+                                                color: themeColor
+                                                    .withOpacity(0.5))),
                                         child: Center(
                                           child: Image.asset(
                                             imageStd[index],

@@ -59,6 +59,9 @@ class TeacherSignUpController extends GetxController {
 
     for (var doc in temTcrList.docs) {
       if (doc['teacheremail'] == email) {
+        final TeacherModel teacherModel = TeacherModel.fromMap(doc.data());
+        UserCredentialsController.teacherModel = teacherModel;
+        log(teacherModel.toString());
         return true;
       }
     }
@@ -107,7 +110,14 @@ class TeacherSignUpController extends GetxController {
               .set(
                 teacherModel.toMap(),
               )
-              .then(
+              .then((value) async {
+            await server
+                .collection('DrivingSchoolCollection')
+                .doc(UserCredentialsController.schoolId)
+                .collection('TempTeacherList')
+                .doc(UserCredentialsController.teacherModel!.docid)
+                .delete();
+          }).then(
             (value) async {
               buttonstate.value = ButtonState.success;
               await Future.delayed(const Duration(seconds: 2)).then((vazlue) {
@@ -120,11 +130,13 @@ class TeacherSignUpController extends GetxController {
                   .doc(authvalue.user!.uid)
                   .get();
               if (user.data() != null) {
-                UserCredentialsController.teacherModel = TeacherModel.fromMap(user.data()!);
+                UserCredentialsController.teacherModel =
+                    TeacherModel.fromMap(user.data()!);
                 log(UserCredentialsController.teacherModel.toString());
               }
 
-              if (UserCredentialsController.teacherModel?.userRole == "teacher") {
+              if (UserCredentialsController.teacherModel?.userRole ==
+                  "teacher") {
                 await SharedPreferencesHelper.setString(
                     SharedPreferencesHelper.currenUserKey, authvalue.user!.uid);
                 await SharedPreferencesHelper.setString(
@@ -139,7 +151,9 @@ class TeacherSignUpController extends GetxController {
                         title: const Text('Message'),
                         content: const SingleChildScrollView(
                           child: ListBody(
-                            children: <Widget>[Text('Your Profile Created Successfully ')],
+                            children: <Widget>[
+                              Text('Your Profile Created Successfully ')
+                            ],
                           ),
                         ),
                         actions: <Widget>[
@@ -163,20 +177,22 @@ class TeacherSignUpController extends GetxController {
                     },
                   );
                 });
-
-                isLoading.value = false;
               }
             },
           ).then((value) {
             clearFields();
-            isLoading.value = false;
             Get.find<GetImage>().pickedImage.value = '';
           });
         });
       } else {
+        buttonstate.value = ButtonState.fail;
         showToast(msg: "Please upload profile image");
       }
     } on FirebaseAuthException catch (e) {
+      buttonstate.value = ButtonState.fail;
+      await Future.delayed(const Duration(seconds: 2)).then((value) {
+        buttonstate.value = ButtonState.idle;
+      });
       showToast(msg: e.code);
     } catch (e) {
       log(e.toString());
