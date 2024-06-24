@@ -7,6 +7,7 @@ import 'package:new_project_app/controller/user_logout_controller/user_logout_co
 import 'package:new_project_app/language/language_change_drawer.dart';
 import 'package:new_project_app/view/pages/general_instructions/general_instructions.dart';
 import 'package:new_project_app/view/pages/privacy_policy/dialogs/privacy_policy.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/create_tutor/create_new_tutor.dart';
 
 class AdminHeaderDrawer extends StatelessWidget {
   const AdminHeaderDrawer({super.key});
@@ -38,9 +39,7 @@ class AdminHeaderDrawer extends StatelessWidget {
           Text(
             'Royal Driving',
             style: GoogleFonts.montserrat(
-                color: Colors.black,
-                fontSize: 25.h,
-                fontWeight: FontWeight.w600),
+                color: Colors.black, fontSize: 25.h, fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 10,
@@ -48,9 +47,7 @@ class AdminHeaderDrawer extends StatelessWidget {
           Text(
             "Watch and Guide      \n  Let them Study",
             style: GoogleFonts.poppins(
-                color: Colors.black.withOpacity(0.5),
-                fontSize: 10.h,
-                fontWeight: FontWeight.w600),
+                color: Colors.black.withOpacity(0.5), fontSize: 10.h, fontWeight: FontWeight.w600),
           ),
           TextButton(
             onPressed: () async {
@@ -80,8 +77,7 @@ Widget menuItem(int id, String image, String title, bool selected, onTap) {
               child: Container(
                 height: 30.h,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(image))),
+                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(image))),
               ),
             ),
             Expanded(
@@ -127,7 +123,16 @@ Widget MyDrawerList(context) {
     child: Column(
       // show list  of menu drawer.........................
       children: [
-        menuItem(1, 'assets/images/information.png', 'General Instructions'.tr,
+        menuItem(1, 'assets/flaticons/books.png', 'Create Tutor'.tr,
+            currentPage == DrawerSections.dashboard ? true : false, () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return const CreateTutor();
+            },
+          ));
+          // Get.off(() => const PrivacyPolicy());
+        }),
+        menuItem(2, 'assets/images/information.png', 'General Instructions'.tr,
             currentPage == DrawerSections.dashboard ? true : false, () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
@@ -137,7 +142,7 @@ Widget MyDrawerList(context) {
           // Get.off(
           //   () => GeneralInstruction(),
         }),
-        menuItem(2, 'assets/images/languages.png', 'Change Language'.tr,
+        menuItem(3, 'assets/images/languages.png', 'Change Language'.tr,
             currentPage == DrawerSections.dashboard ? true : false, () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
@@ -146,7 +151,7 @@ Widget MyDrawerList(context) {
           ));
           // Get.off(() => LanguageChangeDrawerPage());
         }),
-        menuItem(3, 'assets/images/attendance.png', 'Privacy Policy'.tr,
+        menuItem(4, 'assets/images/attendance.png', 'Privacy Policy'.tr,
             currentPage == DrawerSections.dashboard ? true : false, () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
@@ -155,6 +160,7 @@ Widget MyDrawerList(context) {
           ));
           // Get.off(() => const PrivacyPolicy());
         }),
+         
         kHeight10,
         kHeight10,
         kHeight10,
@@ -173,8 +179,7 @@ Widget MyDrawerList(context) {
                     children: [
                       Text(
                         "Developed by",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w500),
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
@@ -198,9 +203,7 @@ Widget MyDrawerList(context) {
                     Text(
                       "Lepton Communications",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 11.5),
+                          fontWeight: FontWeight.bold, color: Colors.black, fontSize: 11.5),
                     ),
                   ],
                 )),
@@ -217,8 +220,7 @@ Widget MyDrawerList(context) {
                       ),
                       Text(
                         " Version",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

@@ -17,13 +17,17 @@ import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.da
 
 class TeacherLoginScreen extends StatelessWidget {
   final PasswordField hideGetxController = Get.put(PasswordField());
-  final TeacherLoginController teacherLoginController =
-      Get.put(TeacherLoginController());
+  final TeacherLoginController teacherLoginController = Get.put(TeacherLoginController());
   TeacherLoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        foregroundColor: cWhite,
+        title: Text('Tutor Login'),
+        backgroundColor: themeColor,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
@@ -38,7 +42,7 @@ class TeacherLoginScreen extends StatelessWidget {
                     imagePath: 'assets/images/teacherDriver.png'),
                 GoogleMontserratWidgets(
                   fontsize: 25.w,
-                  text: 'Teacher Login'.tr,
+                  text: 'Tutor Login'.tr,
                   color: cblack,
                   fontWeight: FontWeight.w500,
                   letterSpacing: 0.5,
@@ -61,8 +65,7 @@ class TeacherLoginScreen extends StatelessWidget {
                     labelText: 'Password',
                     icon: Icons.lock,
                     obscureText: hideGetxController.isObscurefirst.value,
-                    textEditingController:
-                        teacherLoginController.passwordController,
+                    textEditingController: teacherLoginController.passwordController,
                     validator: checkFieldPasswordIsValid,
                     prefixIcon: IconButton(
                       onPressed: () {},
@@ -101,8 +104,7 @@ class TeacherLoginScreen extends StatelessWidget {
                   padding: EdgeInsets.only(top: 60.h),
                   child: GestureDetector(
                     onTap: () async {
-                      if (teacherLoginController.formKey.currentState!
-                          .validate()) {
+                      if (teacherLoginController.formKey.currentState!.validate()) {
                         await teacherLoginController.teacherSignIn(context);
                       }
                     },
@@ -122,8 +124,7 @@ class TeacherLoginScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GooglePoppinsWidgets(
-                          text: "Don't Have an account?".tr, fontsize: 15),
+                      GooglePoppinsWidgets(text: "Don't Have an account?".tr, fontsize: 15),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(

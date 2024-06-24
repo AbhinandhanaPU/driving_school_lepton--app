@@ -18,11 +18,15 @@ class StudentLoginScreen extends StatelessWidget {
   final PasswordField hideGetxController = Get.put(PasswordField());
   StudentLoginScreen({super.key});
 
-  final StudentLoginController studentLoginController =
-      Get.put(StudentLoginController());
+  final StudentLoginController studentLoginController = Get.put(StudentLoginController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Student Login'),
+        backgroundColor: themeColor,
+        foregroundColor: cWhite,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
@@ -61,8 +65,7 @@ class StudentLoginScreen extends StatelessWidget {
                     labelText: 'Password',
                     icon: Icons.lock,
                     obscureText: hideGetxController.isObscurefirst.value,
-                    textEditingController:
-                        studentLoginController.passwordController,
+                    textEditingController: studentLoginController.passwordController,
                     validator: checkFieldPasswordIsValid,
                     prefixIcon: IconButton(
                       onPressed: () {},
@@ -102,8 +105,7 @@ class StudentLoginScreen extends StatelessWidget {
                   padding: EdgeInsets.only(top: 60.h),
                   child: GestureDetector(
                     onTap: () async {
-                      if (studentLoginController.formKey.currentState!
-                          .validate()) {
+                      if (studentLoginController.formKey.currentState!.validate()) {
                         await studentLoginController.studentSignIn(context);
                       }
                     },
@@ -123,8 +125,7 @@ class StudentLoginScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GooglePoppinsWidgets(
-                          text: "Don't Have an account?".tr, fontsize: 15),
+                      GooglePoppinsWidgets(text: "Don't Have an account?".tr, fontsize: 15),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(

@@ -81,9 +81,7 @@ class UserSelectionScreen extends StatelessWidget {
                         }
                       },
                       child: UserContainer(
-                          width: width,
-                          imagePath: userIcons[index],
-                          imageText: userList[index]),
+                          width: width, imagePath: userIcons[index], imageText: userList[index]),
                     );
                   },
                 ),
@@ -98,7 +96,7 @@ class UserSelectionScreen extends StatelessWidget {
 
 List<String> userList = [
   'Student'.tr,
-  'Teacher'.tr,
+  'Tutor'.tr,
   'Admin'.tr,
 ];
 
