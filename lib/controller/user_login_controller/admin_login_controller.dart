@@ -8,8 +8,8 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/admin_model/admin_model.dart';
-import 'package:new_project_app/view/users/admin/admin_home_page/admin_home_page.dart';
-
+import 'package:new_project_app/view/users/admin/admin_pages/admin_home_page/admin_home_page.dart';
+ 
 class AdminLoginController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RxBool isLoading = RxBool(false);

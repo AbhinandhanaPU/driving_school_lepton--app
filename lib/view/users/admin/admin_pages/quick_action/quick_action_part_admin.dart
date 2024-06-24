@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/all_students/all_students_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/create_tutor/create_new_tutor.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/learners_test_page/learners_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials.dart';
 import 'package:new_project_app/view/users/student/student_pages/notices/notices.dart';
-import 'package:new_project_app/view/users/student/student_pages/videos/video_display_page.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 class QuickActionPartAdmin extends StatelessWidget {
@@ -56,9 +58,20 @@ viewallMenus(BuildContext context) {
   int columnCount = 3;
   final screenNavigationOfAdmin = [
     CreateTutor(),
+    const DrivingHomePage(), // Video
     const AdminStudyMaterials(), // Study Materials
-    const AdminVideosList(), // Video
+    const AdminNoticePage(),
     const AdminNoticePage(), //Notice
+    const AdminNoticePage(), //Notice
+    const LearnersHomePage(), //Notice
+    const LearnersHomePage(), //Notice
+    const LearnersHomePage(), //Notice
+    const LearnersHomePage(), //Notice
+    const LearnersHomePage(), //Notice
+    const LearnersHomePage(), //Notice
+    const AllStudentsHomePage(), //Notice
+
+    //Notice
   ];
 
   Get.bottomSheet(
@@ -78,7 +91,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      10,
+                      13,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -90,24 +103,18 @@ viewallMenus(BuildContext context) {
                             scale: 1.5,
                             child: FadeInAnimation(
                               child: GestureDetector(
-                                onTap: () =>
-                                    Navigator.push(context, MaterialPageRoute(
+                                onTap: () => Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
                                     return screenNavigationOfAdmin[index];
                                   },
                                 )),
                                 child: Container(
                                   margin: EdgeInsets.only(
-                                      bottom: w / 25,
-                                      left: w / 30,
-                                      right: w / 30,
-                                      top: w / 25),
+                                      bottom: w / 25, left: w / 30, right: w / 30, top: w / 25),
                                   decoration: BoxDecoration(
                                     color: Colors.transparent,
-                                    border: Border.all(
-                                        color: cblack.withOpacity(0.1)),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(7)),
+                                    border: Border.all(color: cblack.withOpacity(0.1)),
+                                    borderRadius: const BorderRadius.all(Radius.circular(7)),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.1),
@@ -136,9 +143,7 @@ viewallMenus(BuildContext context) {
                                             color: themeColor,
                                             // cWhite,
                                             shape: BoxShape.circle,
-                                            border: Border.all(
-                                                color: themeColor
-                                                    .withOpacity(0.5))),
+                                            border: Border.all(color: themeColor.withOpacity(0.5))),
                                         child: Center(
                                           child: Image.asset(
                                             imageStd[index],
@@ -186,7 +191,10 @@ List<String> imageStd = [
   'assets/flaticons/exam.png', // Leaners test
   'assets/flaticons/video.png', // videos
   'assets/flaticons/icons8-notice-100.png', // Notice
+  'assets/flaticons/events.png', // fees
   'assets/flaticons/hand.png', // fees
+  'assets/flaticons/attendance.png',
+  'assets/flaticons/students.png',
 ];
 List<String> stdtext = [
   'Create Tutor',
@@ -198,5 +206,8 @@ List<String> stdtext = [
   'Leaners Test',
   'Videos',
   'Notices',
+  'Events',
   'Fees',
+  'Attendance',
+  'All Students',
 ];

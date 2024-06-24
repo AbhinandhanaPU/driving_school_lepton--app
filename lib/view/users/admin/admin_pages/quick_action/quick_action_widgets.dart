@@ -1,7 +1,8 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
+ import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials.dart';
 
 class QuickActionsWidgetDrivingTestAdmin extends StatelessWidget {
   const QuickActionsWidgetDrivingTestAdmin({
@@ -16,14 +17,11 @@ class QuickActionsWidgetDrivingTestAdmin extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            // onTap: () =>
-            //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //                     return AttendenceBookScreenSelectMonth(
-            //       schoolId: UserCredentialsController.schoolId!,
-            //       batchId: UserCredentialsController.batchId!,
-            //       classID: UserCredentialsController.classId!);
-            // },)),
-
+            onTap: () => Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return const DrivingHomePage();
+              },
+            )),
             child: Container(
               height: 55.h,
               width: 55.w,
