@@ -7,7 +7,7 @@ import 'package:new_project_app/controller/user_logout_controller/user_logout_co
 import 'package:new_project_app/language/language_change_drawer.dart';
 import 'package:new_project_app/view/pages/general_instructions/general_instructions.dart';
 import 'package:new_project_app/view/pages/privacy_policy/dialogs/privacy_policy.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/create_tutor/create_new_tutor.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/create_new_tutor.dart';
 
 class AdminHeaderDrawer extends StatelessWidget {
   const AdminHeaderDrawer({super.key});

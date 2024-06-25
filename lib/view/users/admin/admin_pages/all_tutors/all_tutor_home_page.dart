@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/all_students/student_profile.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/create_new_tutor.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/tutor_profile.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_list.dart';
-
+import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 import 'package:new_project_app/view/widgets/catagory_table_header_widget/catagory_table_header_widget.dart';
+import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
-class AllStudentsHomePage extends StatelessWidget {
-  const AllStudentsHomePage({super.key});
+class AllTutorsHomePage extends StatelessWidget {
+  const AllTutorsHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Students'),
+        title: const Text('All Tutors'),
         foregroundColor: cWhite,
         backgroundColor: themeColor,
       ),
@@ -25,6 +27,34 @@ class AllStudentsHomePage extends StatelessWidget {
             width: 600,
             child: Column(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    // BackButton(),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return CreateTutor();
+                          },
+                        ));
+                      },
+                      child: ButtonContainerWidget(
+                          curving: 30,
+                          colorindex: 0,
+                          height: 40,
+                          width: 140,
+                          child: const Center(
+                            child: TextFontWidgetRouter(
+                              text: 'Create Tutor',
+                              fontsize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: cWhite,
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Container(
@@ -76,10 +106,10 @@ class AllStudentsHomePage extends StatelessWidget {
                           return GestureDetector(
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return StudentProfile();
-                            },
-                          ));
+                                builder: (context) {
+                                  return TutorProfile();
+                                },
+                              ));
                             },
                             child: DrivingTestStudentList(index: index
                                 // data: data,

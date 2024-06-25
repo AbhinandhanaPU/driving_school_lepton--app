@@ -49,7 +49,7 @@ class CreateTutor extends StatelessWidget {
               }
             },
             buttonstate: teacherController.buttonstate.value,
-            text: 'Create Teacher '),
+            text: 'Create Tutor '),
       ),
     ];
 

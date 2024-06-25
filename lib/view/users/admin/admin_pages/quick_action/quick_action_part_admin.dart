@@ -4,7 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/all_students_homepage.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/create_tutor/create_new_tutor.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/all_tutor_home_page.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/learners_test_page/learners_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials.dart';
@@ -57,7 +57,7 @@ viewallMenus(BuildContext context) {
   double w = MediaQuery.of(context).size.width;
   int columnCount = 3;
   final screenNavigationOfAdmin = [
-    CreateTutor(),
+    const AllTutorsHomePage(),
     const DrivingHomePage(), // Video
     const AdminStudyMaterials(), // Study Materials
     const AdminNoticePage(),
@@ -70,8 +70,6 @@ viewallMenus(BuildContext context) {
     const LearnersHomePage(), //Notice
     const LearnersHomePage(), //Notice
     const AllStudentsHomePage(), //Notice
-
-    //Notice
   ];
 
   Get.bottomSheet(
@@ -91,7 +89,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      13,
+                      14,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -195,6 +193,7 @@ List<String> imageStd = [
   'assets/flaticons/hand.png', // fees
   'assets/flaticons/attendance.png',
   'assets/flaticons/students.png',
+  'assets/flaticons/students.png',
 ];
 List<String> stdtext = [
   'Create Tutor',
@@ -210,4 +209,5 @@ List<String> stdtext = [
   'Fees',
   'Attendance',
   'All Students',
+  'create test'
 ];
