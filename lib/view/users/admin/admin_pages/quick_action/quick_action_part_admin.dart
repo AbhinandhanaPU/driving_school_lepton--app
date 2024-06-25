@@ -5,8 +5,11 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/all_students_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/all_tutor_home_page.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/create_test/create_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/learners_test_page/learners_home.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_shedule_home.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/road_test/road_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials.dart';
 import 'package:new_project_app/view/users/student/student_pages/notices/notices.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
@@ -59,17 +62,18 @@ viewallMenus(BuildContext context) {
   final screenNavigationOfAdmin = [
     const AllTutorsHomePage(),
     const DrivingHomePage(), // Video
+    const PracticeSheduleHome(),
     const AdminStudyMaterials(), // Study Materials
-    const AdminNoticePage(),
     const AdminNoticePage(), //Notice
-    const AdminNoticePage(), //Notice
+    const RoadTestHomePage(), //Notice
     const LearnersHomePage(), //Notice
     const LearnersHomePage(), //Notice
     const LearnersHomePage(), //Notice
     const LearnersHomePage(), //Notice
     const LearnersHomePage(), //Notice
     const LearnersHomePage(), //Notice
-    const AllStudentsHomePage(), //Notice
+    const AllStudentsHomePage(),
+    CreateTest(),
   ];
 
   Get.bottomSheet(

@@ -46,7 +46,7 @@ class StudentProfile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 250),
+                padding: const EdgeInsets.only(bottom: 200),
                 child: ListView(
                   shrinkWrap: true,
                   children: [

@@ -6,13 +6,13 @@ import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
 class ProgressButtonWidget extends StatelessWidget {
-  final ButtonState buttonstate;
+  final ButtonState? buttonstate;
   final String text;
   final Function? function;
 
   const ProgressButtonWidget({
     super.key,
-    required this.buttonstate,
+      this.buttonstate,
     required this.text,
     this.function,
   });

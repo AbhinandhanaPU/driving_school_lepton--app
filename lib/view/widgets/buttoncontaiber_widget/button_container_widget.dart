@@ -48,6 +48,51 @@ class ButtonContainerWidget extends StatelessWidget {
   }
 }
 
+class ButtonContainerWidgetRed extends StatelessWidget {
+  EdgeInsetsGeometry? margin;
+  double curving;
+  int colorindex;
+  double height;
+  double width;
+  Widget? child;
+
+  ButtonContainerWidgetRed({
+    required this.curving,
+    this.child,
+    required this.colorindex,
+    required this.height,
+    required this.width,
+    this.margin,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: margin,
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: containerColor[colorindex].first.withOpacity(0.4),
+            blurRadius: 8,
+            spreadRadius: 2,
+            offset: const Offset(4, 4),
+          ),
+        ],
+        border: Border.all(color: Color.fromARGB(255, 211, 52, 76)),
+        borderRadius: BorderRadius.all(
+          Radius.circular(curving),
+        ),
+        // Change here to use a solid red color
+        color: Color.fromARGB(255, 238, 86, 75),
+      ),
+      child: child,
+    );
+  }
+}
+
 const containerColor = [
   [Color(0xff6448fe), Color(0xff5fc6ff)],
   [Color(0xFF26A69A), Color(0xFF26A69A)],
