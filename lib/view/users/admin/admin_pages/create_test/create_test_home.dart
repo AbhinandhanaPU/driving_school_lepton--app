@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/view/widgets/progess_button/progress_button.dart';
+import 'package:progress_state_button/progress_button.dart';
 
 class CreateTest extends StatelessWidget {
   const CreateTest({super.key});
@@ -17,7 +18,6 @@ class CreateTest extends StatelessWidget {
         title: 'Course Name',
         validator: checkFieldEmpty,
         formField: TextFormField(
-          // controller: teacherController.teacherNameController,
           decoration: InputDecoration(hintText: "Enter course Name"),
           validator: checkFieldEmpty,
         ),
@@ -43,7 +43,6 @@ class CreateTest extends StatelessWidget {
         title: 'Tutor Email',
         validator: checkFieldEmailIsValid,
         formField: TextFormField(
-          // controller: teacherController.teacherEmailController,
           decoration: InputDecoration(hintText: "Enter Duration"),
           validator: checkFieldEmailIsValid,
         ),
@@ -53,27 +52,19 @@ class CreateTest extends StatelessWidget {
         title: 'Fee',
         validator: checkFieldEmailIsValid,
         formField: TextFormField(
-          // controller: teacherController.teacherEmailController,
           decoration: InputDecoration(hintText: "Enter Fee"),
           validator: checkFieldEmailIsValid,
         ),
       ),
-      ProgressButtonWidget(
-        text: 'Create Test',
-        // function: () async {
-        //   if (teacherController.formKey.currentState!.validate()) {
-        //     teacherController
-        //         .createNewTeacher(TeacherModel(
-        //           teacherName: teacherController.teacherNameController.text,
-        //           teacheremail:
-        //               teacherController.teacherEmailController.text,
-        //           phoneNumber:
-        //               teacherController.teacherPhoneNumeber.text.trim(),
-        //         ))
-        //         .then((value) => Get.back());
-        //   }
-        // },
-        // buttonstate: teacherController.buttonstate.value,
+      Padding(
+        padding: const EdgeInsets.only(top: 30),
+        child: ProgressButtonWidget(
+          text: 'Create Test',
+          function: () {
+            print("Create Test button pressed");
+          },
+          buttonstate: ButtonState.idle, // Ensure buttonstate is not null
+        ),
       ),
     ];
 
@@ -90,15 +81,11 @@ class CreateTest extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.only(left: 18, right: 18, top: 30),
-          child: Form(
-            // key: teacherController.formKey,
-            child: Column(
-              children: [
-                createTutorList[0],
-                createTutorList[1],
-                createTutorList[2],
-                createTutorList[3],
-              ],
+          child: SingleChildScrollView(
+            child: Form(
+              child: Column(
+                children: createTutorList,
+              ),
             ),
           ),
         ),

@@ -18,7 +18,7 @@ class NoticePage extends StatelessWidget {
         SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Notices".tr),
+          title: Text("Notice".tr),
           flexibleSpace: const AppBarColorWidget(),
           foregroundColor: cWhite,
         ),
@@ -32,8 +32,8 @@ class NoticePage extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w),
               child: Card(
                 child: ListTile(
-                  shape: BeveledRectangleBorder(
-                      side: BorderSide(color: Colors.grey.withOpacity(0.2))),
+                  shape:
+                      BeveledRectangleBorder(side: BorderSide(color: Colors.grey.withOpacity(0.2))),
                   leading: const Image(
                       image: NetworkImage(
                           "https://media.istockphoto.com/id/926144358/photo/portrait-of-a-little-bird-tit-flying-wide-spread-wings-and-flushing-feathers-on-white-isolated.jpg?b=1&s=170667a&w=0&k=20&c=DEARMqqAI_YoA5kXtRTyYTYU9CKzDZMqSIiBjOmqDNY=")),

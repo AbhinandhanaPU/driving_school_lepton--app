@@ -66,7 +66,7 @@ class TutorProfile extends StatelessWidget {
                     ),
                     kHeight30,
                     AllClassTestDetailsWidget(
-                      testName: "Salery",
+                      testName: "Salary",
                       testDetails: "",
                     ),
                     kHeight30,
