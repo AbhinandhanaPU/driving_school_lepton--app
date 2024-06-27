@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/Recorded_vedio/recorded_vedio_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/all_students_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/all_tutor_home_page.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/create_test/create_test_home.dart';
@@ -70,7 +71,7 @@ viewallMenus(BuildContext context) {
     const LearnersHomePage(), //Notice
     const RoadTestHomePage(), //Notice
     const LearnersHomePage(), //Notice
-    const LearnersHomePage(), //Notice
+      RecordedClassUploadPage(), //Notice
     const AdminNoticePage(), //Notice
     const EventList(), //Notice
     const FeesHomePage(), //Notice
@@ -215,5 +216,5 @@ List<String> stdtext = [
   'Events',
   'Fees',
   'Attendance',
-  'Create test'
-]; 
+  'Create Course'
+];

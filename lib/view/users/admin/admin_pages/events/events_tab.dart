@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/events/events_home.dart';
@@ -30,11 +30,11 @@ class SchoolLevelPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => EventsHomePage(
-                              // eventData: {
-                              //   'eventName': 'Dummy Event $index',
-                              //   'eventDate': '2023-12-31'
-                              // },
-                            ),
+                                // eventData: {
+                                //   'eventName': 'Dummy Event $index',
+                                //   'eventDate': '2023-12-31'
+                                // },
+                                ),
                           ),
                         );
                       },
@@ -54,7 +54,7 @@ class SchoolLevelPage extends StatelessWidget {
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(height: 5,);
+          return SizedBox(height: 1);
         },
       ),
     );

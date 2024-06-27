@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
+import 'package:new_project_app/controller/create_cource_controller/create_cource_controller.dart';
+// import 'package:new_project_app/controller/create_cource_controller/create_cource_controller.dart';
 import 'package:new_project_app/view/widgets/progess_button/progress_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
@@ -10,14 +12,15 @@ class CreateTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CreateCourceController createCourceController = Get.put(CreateCourceController());
     final tutorNames = ['Tutor 1', 'Tutor 2', 'Tutor 3'];
 
     final createTutorList = [
       TextFormFiledBlueContainerWidgetWithOutColor(
         hintText: "Enter course Name",
         title: 'Course Name',
-        validator: checkFieldEmpty,
         formField: TextFormField(
+          controller: createCourceController.courcenameController,
           decoration: InputDecoration(hintText: "Enter course Name"),
           validator: checkFieldEmpty,
         ),
@@ -25,7 +28,6 @@ class CreateTest extends StatelessWidget {
       TextFormFiledBlueContainerWidgetWithOutColor(
         hintText: "Select Tutor Name",
         title: 'Tutor Name',
-        validator: checkFieldPhoneNumberIsValid,
         formField: DropdownButtonFormField<String>(
           decoration: InputDecoration(hintText: "Select Tutor Name"),
           items: tutorNames.map((String value) {
@@ -34,34 +36,49 @@ class CreateTest extends StatelessWidget {
               child: Text(value),
             );
           }).toList(),
-          onChanged: (newValue) {},
+          onChanged: (newValue) {
+            createCourceController.tutornameController.text = newValue!;
+          },
           validator: (value) => value == null ? 'Please select a tutor' : null,
         ),
       ),
       TextFormFiledBlueContainerWidgetWithOutColor(
         hintText: "Enter Duration",
-        title: 'Tutor Email',
-        validator: checkFieldEmailIsValid,
+        title: 'Duration',
         formField: TextFormField(
+          controller: createCourceController.durationController,
           decoration: InputDecoration(hintText: "Enter Duration"),
-          validator: checkFieldEmailIsValid,
+          validator: checkFieldEmpty,
         ),
       ),
       TextFormFiledBlueContainerWidgetWithOutColor(
         hintText: "Enter Fee",
         title: 'Fee',
-        validator: checkFieldEmailIsValid,
         formField: TextFormField(
+          controller: createCourceController.feeController,
           decoration: InputDecoration(hintText: "Enter Fee"),
-          validator: checkFieldEmailIsValid,
+          validator: checkFieldEmpty,
+        ),
+      ),
+      TextFormFiledBlueContainerWidgetWithOutColor(
+        hintText: "Enter Description",
+        title: 'Description',
+        formField: TextFormField(
+          controller: createCourceController.descriptionController,
+          decoration: InputDecoration(hintText: "Enter Description"),
+          validator: checkFieldEmpty,
         ),
       ),
       Padding(
         padding: const EdgeInsets.only(top: 30),
         child: ProgressButtonWidget(
-          text: 'Create Test',
+          text: 'Create Course',
           function: () {
-            print("Create Test button pressed");
+            if (createCourceController.formKey.currentState!.validate()) {
+              print("Create Course button pressed");
+
+              createCourceController.clearTextFields();
+            }
           },
           buttonstate: ButtonState.idle, // Ensure buttonstate is not null
         ),
@@ -74,7 +91,7 @@ class CreateTest extends StatelessWidget {
         appBar: AppBar(
           title: Row(
             children: [
-              Text("Create Test".tr),
+              Text("Create Course".tr),
             ],
           ),
           backgroundColor: themeColor,
@@ -83,6 +100,7 @@ class CreateTest extends StatelessWidget {
           padding: const EdgeInsets.only(left: 18, right: 18, top: 30),
           child: SingleChildScrollView(
             child: Form(
+              key: createCourceController.formKey,
               child: Column(
                 children: createTutorList,
               ),
@@ -97,14 +115,12 @@ class CreateTest extends StatelessWidget {
 class TextFormFiledBlueContainerWidgetWithOutColor extends StatelessWidget {
   final String hintText;
   final String title;
-  final String? Function(String?) validator;
   final Widget formField;
 
   const TextFormFiledBlueContainerWidgetWithOutColor({
     super.key,
     required this.hintText,
     required this.title,
-    required this.validator,
     required this.formField,
   });
 
