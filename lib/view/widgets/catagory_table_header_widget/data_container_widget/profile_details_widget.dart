@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/responsive.dart';
 
-class AllClassTestDetailsWidget extends StatelessWidget {
-  const AllClassTestDetailsWidget({
+class ProfileDetailsWidget extends StatelessWidget {
+  const ProfileDetailsWidget({
     super.key,
     required this.testName,
     required this.testDetails,
@@ -20,13 +20,13 @@ class AllClassTestDetailsWidget extends StatelessWidget {
             width: ResponsiveApp.width / 2,
             child: Text(
               testName,
-              style: TextStyle(fontSize: ResponsiveApp.width * .048),
+              style: TextStyle(fontSize: ResponsiveApp.width * .04),
             ),
           ),
         ),
         const Flexible(child: Text(":")),
         SizedBox(
-          width: ResponsiveApp.width / 5,
+          width: ResponsiveApp.width / 2.5,
           child: Text(
             testDetails,
             style: TextStyle(fontSize: ResponsiveApp.width * .04),

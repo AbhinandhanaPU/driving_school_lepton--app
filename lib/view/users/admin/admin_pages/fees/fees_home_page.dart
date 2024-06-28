@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/tutor_profile.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/fees/fees_list.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 import 'package:new_project_app/view/widgets/catagory_table_header_widget/catagory_table_header_widget.dart';
@@ -37,50 +36,38 @@ class FeesHomePage extends StatelessWidget {
                           children: [
                             Expanded(
                                 flex: 4,
-                                child: CatrgoryTableHeaderWidget(
-                                    headerTitle: 'Student Name')),
+                                child: CatrgoryTableHeaderWidget(headerTitle: 'Student Name')),
                             SizedBox(
                               width: 2,
                             ),
-                            Expanded(
-                                flex: 3,
-                                child: CatrgoryTableHeaderWidget(
-                                    headerTitle: 'Fee')),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Expanded(
-                                flex: 6,
-                                child: CatrgoryTableHeaderWidget(
-                                    headerTitle: 'Advance Amount')),
+                            Expanded(flex: 3, child: CatrgoryTableHeaderWidget(headerTitle: 'Fee')),
                             SizedBox(
                               width: 2,
                             ),
                             Expanded(
                                 flex: 6,
-                                child: CatrgoryTableHeaderWidget(
-                                    headerTitle: 'Pending Amount')),
+                                child: CatrgoryTableHeaderWidget(headerTitle: 'Advance Amount')),
                             SizedBox(
                               width: 2,
                             ),
                             Expanded(
-                                flex: 4,
-                                child: CatrgoryTableHeaderWidget(
-                                    headerTitle: 'Due Date')),
+                                flex: 6,
+                                child: CatrgoryTableHeaderWidget(headerTitle: 'Pending Amount')),
                             SizedBox(
                               width: 2,
                             ),
                             Expanded(
-                                flex: 4,
-                                child: CatrgoryTableHeaderWidget(
-                                    headerTitle: 'Status')),
+                                flex: 4, child: CatrgoryTableHeaderWidget(headerTitle: 'Due Date')),
                             SizedBox(
                               width: 2,
                             ),
                             Expanded(
-                                flex: 4,
-                                child: CatrgoryTableHeaderWidget(
-                                    headerTitle: 'Paid')),
+                                flex: 4, child: CatrgoryTableHeaderWidget(headerTitle: 'Status')),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Expanded(
+                                flex: 4, child: CatrgoryTableHeaderWidget(headerTitle: 'Paid')),
                           ],
                         ),
                       ),
@@ -97,18 +84,9 @@ class FeesHomePage extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 5, right: 5),
                           child: ListView.separated(
                             itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return TutorProfile();
-                                    },
-                                  ));
-                                },
-                                child: FeesList(
-                                  index: index,
-                                  // data: data,
-                                ),
+                              return FeesList(
+                                index: index,
+                                // data: data,
                               );
                             },
                             separatorBuilder: (context, index) {

@@ -10,13 +10,12 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:uuid/uuid.dart';
 
-class RecordedClassController {
+class VideosController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController videoNameController = TextEditingController();
   TextEditingController videoDesController = TextEditingController();
   TextEditingController videoCategoryController = TextEditingController();
-
 
   RxBool isLoading = RxBool(false);
   RxBool chapterIsLoading = RxBool(false);

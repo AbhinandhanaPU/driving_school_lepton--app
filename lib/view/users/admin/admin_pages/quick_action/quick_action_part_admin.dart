@@ -6,8 +6,9 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/Recorded_vedio/recorded_vedio_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/all_students_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/all_tutor_home_page.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/create_admin/admin_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/create_test/create_test_home.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart'; 
+import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/events/events_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/fees/fees_home_page.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/learners_test_page/learners_home.dart';
@@ -65,13 +66,14 @@ viewallMenus(BuildContext context) {
   final screenNavigationOfAdmin = [
     const AllTutorsHomePage(),
     const AllStudentsHomePage(),
+    AdminList(),
     const DrivingHomePage(), // Video
     const PracticeSheduleHome(),
     const AdminStudyMaterials(), // Study Materials
     const LearnersHomePage(), //Notice
     const RoadTestHomePage(), //Notice
     const LearnersHomePage(), //Notice
-      RecordedClassUploadPage(), //Notice
+    VideosUploadPage(), //Notice
     const AdminNoticePage(), //Notice
     const EventList(), //Notice
     const FeesHomePage(), //Notice
@@ -188,7 +190,8 @@ viewallMenus(BuildContext context) {
 
 List<String> imageStd = [
   'assets/flaticons/books.png',
-  'assets/flaticons/students.png',
+  'assets/flaticons/students.png', // students
+  'assets/flaticons/createadmin.png', // admin
   'assets/flaticons/cone.png', // Driving Test
   'assets/flaticons/calendar.png', // practice shedule
   'assets/flaticons/books.png', // study Materials
@@ -199,12 +202,13 @@ List<String> imageStd = [
   'assets/flaticons/icons8-notice-100.png', // Notice
   'assets/flaticons/events.png', // fees
   'assets/flaticons/hand.png', // fees
-  'assets/flaticons/attendance.png',
+  'assets/flaticons/attendance.png', // Attendance
   'assets/flaticons/setting.png',
 ];
 List<String> stdtext = [
   'All Tutors',
   'All Students',
+  'All Admins',
   'Driving Test',
   'Practice Shedule',
   'Study Materials',

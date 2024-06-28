@@ -10,36 +10,20 @@ import 'package:new_project_app/controller/recorded_class_controller/recorded_cl
 import 'package:new_project_app/view/users/admin/admin_pages/Recorded_vedio/recorded_vedio_uploading.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 
-class RecordedClassUploadPage extends StatelessWidget {
-  RecordedClassUploadPage({
+class VideosUploadPage extends StatelessWidget {
+  VideosUploadPage({
     super.key,
   });
 
-  final RecordedClassController recordedClsCtr = Get.put(RecordedClassController());
+  final VideosController recordedClsCtr = Get.put(VideosController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: cblack,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        backgroundColor: Colors.white,
-        title: Text(
-          "Recorded Classes",
-          style: GoogleFonts.montserrat(
-            color: Colors.grey,
-            fontSize: 20,
-          ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: cblack),
+        title: const Text('Videos'),
+        foregroundColor: cWhite,
+        backgroundColor: themeColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -74,14 +58,13 @@ class RecordedClassUploadPage extends StatelessWidget {
                         controller: recordedClsCtr.videoDesController,
                         decoration: const InputDecoration(hintText: 'Enter Description'),
                       ),
-                       kHeight20,
+                      kHeight20,
                       TextFormField(
                         validator: checkFieldEmpty,
                         controller: recordedClsCtr.videoCategoryController,
                         decoration: const InputDecoration(hintText: 'Enter Category'),
                       ),
                       kHeight40,
-
                       GestureDetector(
                           onTap: () async {
                             if (recordedClsCtr.formKey.currentState?.validate() ?? false) {
@@ -96,7 +79,7 @@ class RecordedClassUploadPage extends StatelessWidget {
                           },
                           child: ButtonContainerWidget(
                             curving: 18,
-                            colorindex: 2,
+                            colorindex: 0,
                             height: 60.w,
                             width: 300.w,
                             child: Center(child: Obx(() {
@@ -144,12 +127,12 @@ class RecordedClassUploadPage extends StatelessWidget {
                         },
                         child: ButtonContainerWidget(
                           curving: 18,
-                          colorindex: 2,
+                          colorindex: 0,
                           height: 60.w,
                           width: 300.w,
                           child: Center(
                             child: Text(
-                              "Uploaded Recorded Classes",
+                              "Uploaded Videos",
                               style: GoogleFonts.montserrat(
                                   color: Colors.white, fontSize: 13, fontWeight: FontWeight.w700),
                             ),
@@ -174,7 +157,7 @@ class RecordedClassUploadWidget extends StatelessWidget {
     super.key,
   });
 
-  final RecordedClassController _recordedClassController = Get.put(RecordedClassController());
+  final VideosController _recordedClassController = Get.put(VideosController());
 
   @override
   Widget build(BuildContext context) {

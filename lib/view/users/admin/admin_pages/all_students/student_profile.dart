@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/constant/responsive.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/view/colors/colors.dart';
-import 'package:new_project_app/view/widgets/catagory_table_header_widget/data_container_widget/allclasstestdetailswidget.dart';
+import 'package:new_project_app/view/widgets/catagory_table_header_widget/data_container_widget/profile_details_widget.dart';
 
 class StudentProfile extends StatelessWidget {
   const StudentProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Initialize ResponsiveApp with context
-    ResponsiveApp.init(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Student Profile'),
@@ -60,17 +56,17 @@ class StudentProfile extends StatelessWidget {
                       ),
                     ),
                     kHeight50,
-                    AllClassTestDetailsWidget(
+                    ProfileDetailsWidget(
                       testName: "Permission Status",
                       testDetails: "",
                     ),
                     kHeight20,
-                    AllClassTestDetailsWidget(
+                    ProfileDetailsWidget(
                       testName: "Test Status",
                       testDetails: "",
                     ),
                     kHeight20,
-                    AllClassTestDetailsWidget(testName: "Phone Number", testDetails: ""),
+                    ProfileDetailsWidget(testName: "Phone Number", testDetails: ""),
                   ],
                 ),
               ),

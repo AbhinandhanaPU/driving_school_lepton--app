@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ResponsiveApp {
-  static late double width;
-  static late double height;
+  static late MediaQueryData _mediaQueryData;
 
-  static void init(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    width = mediaQueryData.size.width;
-    height = mediaQueryData.size.height;
+  static MediaQueryData get mq => _mediaQueryData;
+  static Size get size => _mediaQueryData.size;
+  static double get width => _mediaQueryData.size.width;
+  static double get height => _mediaQueryData.size.height;
+  static void serMq(BuildContext context) {
+    _mediaQueryData = MediaQuery.of(context);
   }
 }

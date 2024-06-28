@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/constant/responsive.dart';
 import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/firebase_options.dart';
 import 'package:new_project_app/view/splash_screen/splash_screen.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
     return ResponsiveLayout(
       designSize: const Size(423.5294196844927, 945.8823706287004),
       builder: (context) {
+        ResponsiveApp.serMq(context);
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
