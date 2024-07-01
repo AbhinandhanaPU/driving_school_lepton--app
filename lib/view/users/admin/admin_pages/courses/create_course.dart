@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
-import 'package:new_project_app/controller/create_cource_controller/create_cource_controller.dart';
-// import 'package:new_project_app/controller/create_cource_controller/create_cource_controller.dart';
+import 'package:new_project_app/controller/course_controller/course_controller.dart';
+import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/progess_button/progress_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
-class CreateTest extends StatelessWidget {
-  const CreateTest({super.key});
+class CreateCourses extends StatelessWidget {
+  const CreateCourses({super.key});
 
   @override
   Widget build(BuildContext context) {
-    CreateCourceController createCourceController = Get.put(CreateCourceController());
+    CourseController createCourceController = Get.put(CourseController());
     final tutorNames = ['Tutor 1', 'Tutor 2', 'Tutor 3'];
 
     final createTutorList = [
@@ -20,7 +20,7 @@ class CreateTest extends StatelessWidget {
         hintText: "Enter course Name",
         title: 'Course Name',
         formField: TextFormField(
-          controller: createCourceController.courcenameController,
+          controller: createCourceController.coursenameController,
           decoration: InputDecoration(hintText: "Enter course Name"),
           validator: checkFieldEmpty,
         ),
@@ -89,12 +89,11 @@ class CreateTest extends StatelessWidget {
       child: Scaffold(
         backgroundColor: screenContainerbackgroundColor,
         appBar: AppBar(
-          title: Row(
-            children: [
-              Text("Create Course".tr),
-            ],
+          foregroundColor: cWhite,
+          title: Text(
+            "Create Course".tr,
           ),
-          backgroundColor: themeColor,
+          flexibleSpace: const AppBarColorWidget(),
         ),
         body: Padding(
           padding: const EdgeInsets.only(left: 18, right: 18, top: 30),

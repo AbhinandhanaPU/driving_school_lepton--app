@@ -1,7 +1,6 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/teacher_model/teacher_model.dart';
@@ -26,7 +25,6 @@ class AllTutorsHomePage extends StatelessWidget {
           children: [
             Column(
               children: [
-                kHeight10,
                 Expanded(
                   child: StreamBuilder(
                     stream: server
@@ -36,13 +34,11 @@ class AllTutorsHomePage extends StatelessWidget {
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return ListView.separated(
+                        return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
-                          separatorBuilder: ((context, index) {
-                            return kHeight10;
-                          }),
                           itemBuilder: (BuildContext context, int index) {
-                            final data = TeacherModel.fromMap(snapshot.data!.docs[index].data());
+                            final data = TeacherModel.fromMap(
+                                snapshot.data!.docs[index].data());
                             return GestureDetector(
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(
@@ -55,90 +51,107 @@ class AllTutorsHomePage extends StatelessWidget {
                               },
                               child: Column(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 15, right: 15),
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(color: cblack.withOpacity(0.2))),
-                                      height: 150,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                flex: 1,
-                                                child: CircleAvatar(
-                                                  radius: 30,
-                                                  backgroundImage: data.profileImageUrl == ''
-                                                      ? const NetworkImage(
-                                                          'https://firebasestorage.googleapis.com/v0/b/vidya-veechi-8-feb-2024.appspot.com/o/important***%2Fteacher-avathar2.png?alt=media&token=3db0d66c-225d-429b-a34e-f71b6b7dde7d')
-                                                      : NetworkImage(
-                                                          data.profileImageUrl!,
-                                                        ),
-                                                  onBackgroundImageError:
-                                                      (exception, stackTrace) {},
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 5,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(left: 10.h),
-                                                  child: TextFontWidget(
-                                                    text: data.teacherName!,
-                                                    fontsize: 21.h,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(top: 10.h),
-                                              child: Row(
-                                                children: [
-                                                  TextFontWidget(
-                                                    text: '✉️  Email :  ',
-                                                    fontsize: 15.h,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: cblack,
-                                                  ),
-                                                  TextFontWidget(
-                                                    text: data.teacheremail!,
-                                                    fontsize: 14.h,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.blue,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(top: 10.h),
-                                              child: Row(
-                                                children: [
-                                                  TextFontWidget(
-                                                    text: '📞  Phone No  :  ',
-                                                    fontsize: 15.h,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: cblack,
-                                                  ),
-                                                  TextFontWidget(
-                                                    text: data.phoneNumber!,
-                                                    fontsize: 14.h,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.blue,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      top: 15,
+                                      left: 15,
+                                      right: 15,
+                                      bottom: 8,
                                     ),
-                                  ),
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: cWhite,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: cblack.withOpacity(0.1),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(0, 3),
+                                          // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    height: 150,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: CircleAvatar(
+                                                radius: 30,
+                                                backgroundImage: data
+                                                            .profileImageUrl ==
+                                                        ''
+                                                    ? const NetworkImage(
+                                                        'https://firebasestorage.googleapis.com/v0/b/vidya-veechi-8-feb-2024.appspot.com/o/important***%2Fteacher-avathar2.png?alt=media&token=3db0d66c-225d-429b-a34e-f71b6b7dde7d')
+                                                    : NetworkImage(
+                                                        data.profileImageUrl!,
+                                                      ),
+                                                onBackgroundImageError:
+                                                    (exception, stackTrace) {},
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 5,
+                                              child: Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 10.h),
+                                                child: TextFontWidget(
+                                                  text: data.teacherName!,
+                                                  fontsize: 21.h,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(top: 10.h),
+                                            child: Row(
+                                              children: [
+                                                TextFontWidget(
+                                                  text: '✉️  Email :  ',
+                                                  fontsize: 15.h,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: cblack,
+                                                ),
+                                                TextFontWidget(
+                                                  text: data.teacheremail!,
+                                                  fontsize: 14.h,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.blue,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(top: 10.h),
+                                            child: Row(
+                                              children: [
+                                                TextFontWidget(
+                                                  text: '📞  Phone No  :  ',
+                                                  fontsize: 15.h,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: cblack,
+                                                ),
+                                                TextFontWidget(
+                                                  text: data.phoneNumber!,
+                                                  fontsize: 14.h,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.blue,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
                             );

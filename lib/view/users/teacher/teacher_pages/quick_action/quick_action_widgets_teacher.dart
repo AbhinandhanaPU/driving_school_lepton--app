@@ -1,7 +1,7 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/study_materials/study_materials_teacher.dart';
 
 class QuickActionsWidgetDrivingTest extends StatelessWidget {
   const QuickActionsWidgetDrivingTest({
@@ -101,7 +101,7 @@ class QuickActionsWidgetSM extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return const StudyMaterials();
+                return const StudyMaterialsTeacher();
               },
             )),
             child: Container(

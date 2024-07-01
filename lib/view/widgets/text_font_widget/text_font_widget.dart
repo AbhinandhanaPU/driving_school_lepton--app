@@ -8,8 +8,9 @@ class TextFontWidget extends StatelessWidget {
   final double? letterSpacing;
   final Color? color;
   final TextOverflow? overflow;
- final String? Function(String?)? validator;
-   const TextFontWidget({
+  final int? maxLines;
+  final String? Function(String?)? validator;
+  const TextFontWidget({
     this.validator,
     required this.text,
     required this.fontsize,
@@ -17,7 +18,9 @@ class TextFontWidget extends StatelessWidget {
     this.color,
     this.letterSpacing,
     this.overflow,
-    super.key, this.index,
+    this.index,
+    this.maxLines,
+    super.key,
   });
 
   @override
@@ -25,13 +28,13 @@ class TextFontWidget extends StatelessWidget {
     return Text(
       text,
       overflow: overflow,
-      // maxLines: 1,
+      maxLines: maxLines,
       style: TextStyle(
         decoration: TextDecoration.none,
         letterSpacing: letterSpacing,
         fontSize: fontsize,
         fontWeight: fontWeight,
-        color:color ?? Colors.black,
+        color: color ?? Colors.black,
       ),
     );
   }

@@ -2,7 +2,7 @@ import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
- import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
 
 class QuickActionsWidgetDrivingTestAdmin extends StatelessWidget {
   const QuickActionsWidgetDrivingTestAdmin({
@@ -22,7 +22,6 @@ class QuickActionsWidgetDrivingTestAdmin extends StatelessWidget {
                 return const DrivingHomePage();
               },
             )),
-
             child: Container(
               height: 55.h,
               width: 55.w,
@@ -35,7 +34,6 @@ class QuickActionsWidgetDrivingTestAdmin extends StatelessWidget {
                 scale: 2.5,
               ),
             ),
-            
           ),
           Text(
             "Driving Test",
@@ -101,7 +99,7 @@ class QuickActionsWidgetSM extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return const StudyMaterials();
+                return const AdminStudyMaterials();
               },
             )),
             child: Container(

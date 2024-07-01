@@ -6,16 +6,14 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
-import 'package:new_project_app/controller/recorded_class_controller/recorded_class_controller.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/Recorded_vedio/recorded_vedio_uploading.dart';
+import 'package:new_project_app/controller/video_controller/video_controller.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/videos/video_list_admin.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 
 class VideosUploadPage extends StatelessWidget {
-  VideosUploadPage({
-    super.key,
-  });
+  VideosUploadPage({super.key});
 
-  final VideosController recordedClsCtr = Get.put(VideosController());
+  final VideosController videosController = Get.put(VideosController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,43 +33,49 @@ class VideosUploadPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Form(
-                  key: recordedClsCtr.formKey,
+                  key: videosController.formKey,
                   child: Column(
                     children: [
                       Text(
-                        'Recorded class upload',
+                        'Video Upload',
                         style: GoogleFonts.montserrat(
-                            color: Colors.black, fontSize: 13.h, fontWeight: FontWeight.w700),
+                            color: Colors.black,
+                            fontSize: 13.h,
+                            fontWeight: FontWeight.w700),
                       ),
                       kWidth20,
-                      RecordedClassUploadWidget(),
+                      VideosUploadWidget(),
                       kWidth20,
                       kHeight20,
                       TextFormField(
                         validator: checkFieldEmpty,
-                        controller: recordedClsCtr.videoNameController,
-                        decoration: const InputDecoration(hintText: 'Enter Name'),
+                        controller: videosController.videoNameController,
+                        decoration:
+                            const InputDecoration(hintText: 'Enter Name'),
                       ),
                       kHeight20,
                       TextFormField(
                         validator: checkFieldEmpty,
-                        controller: recordedClsCtr.videoDesController,
-                        decoration: const InputDecoration(hintText: 'Enter Description'),
+                        controller: videosController.videoDesController,
+                        decoration: const InputDecoration(
+                            hintText: 'Enter Description'),
                       ),
                       kHeight20,
                       TextFormField(
                         validator: checkFieldEmpty,
-                        controller: recordedClsCtr.videoCategoryController,
-                        decoration: const InputDecoration(hintText: 'Enter Category'),
+                        controller: videosController.videoCategoryController,
+                        decoration:
+                            const InputDecoration(hintText: 'Enter Category'),
                       ),
                       kHeight40,
                       GestureDetector(
                           onTap: () async {
-                            if (recordedClsCtr.formKey.currentState?.validate() ?? false) {
-                              if (recordedClsCtr.file.value != null) {
-                                recordedClsCtr.uploadToFirebase(
-                                  context: context,
-                                );
+                            if (videosController.formKey.currentState
+                                    ?.validate() ??
+                                false) {
+                              if (videosController.file.value != null) {
+                                videosController.uploadToFirebase(
+                                 );
                               } else {
                                 showToast(msg: "Please Select File");
                               }
@@ -83,26 +87,33 @@ class VideosUploadPage extends StatelessWidget {
                             height: 60.w,
                             width: 300.w,
                             child: Center(child: Obx(() {
-                              if (recordedClsCtr.isLoading.value) {
-                                final progress = (recordedClsCtr.progressData.value * 100).toInt();
-                                return Stack(alignment: Alignment.center, children: [
-                                  Center(
-                                    child: CircularProgressIndicator(
-                                      value: recordedClsCtr.progressData.value,
-                                      valueColor: const AlwaysStoppedAnimation<Color>(
-                                        Colors.white,
+                              if (videosController.isLoading.value) {
+                                final progress =
+                                    (videosController.progressData.value * 100)
+                                        .toInt();
+                                return Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Center(
+                                        child: CircularProgressIndicator(
+                                          value:
+                                              videosController.progressData.value,
+                                          valueColor:
+                                              const AlwaysStoppedAnimation<
+                                                  Color>(
+                                            Colors.white,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Text(
-                                    '$progress%',
-                                    style: GoogleFonts.montserrat(
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  )
-                                ]);
+                                      Text(
+                                        '$progress%',
+                                        style: GoogleFonts.montserrat(
+                                          color: Colors.white,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      )
+                                    ]);
                               } else {
                                 return Text(
                                   "Submit",
@@ -121,7 +132,7 @@ class VideosUploadPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => RecordedClassesShowsPage(),
+                              builder: (context) => VideosListAdmin(),
                             ),
                           );
                         },
@@ -134,7 +145,9 @@ class VideosUploadPage extends StatelessWidget {
                             child: Text(
                               "Uploaded Videos",
                               style: GoogleFonts.montserrat(
-                                  color: Colors.white, fontSize: 13, fontWeight: FontWeight.w700),
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700),
                             ),
                           ),
                         ),
@@ -152,18 +165,18 @@ class VideosUploadPage extends StatelessWidget {
   }
 }
 
-class RecordedClassUploadWidget extends StatelessWidget {
-  RecordedClassUploadWidget({
+class VideosUploadWidget extends StatelessWidget {
+  VideosUploadWidget({
     super.key,
   });
 
-  final VideosController _recordedClassController = Get.put(VideosController());
+  final VideosController _videosController = Get.put(VideosController());
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        await _recordedClassController.pickFile();
+        await _videosController.pickFile();
       },
       child: Container(
         height: 130.h,
@@ -178,17 +191,23 @@ class RecordedClassUploadWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FittedBox(
-              child: Icon(Icons.attach_file_rounded, color: cblue, size: 30.w, weight: 10),
+              child: Icon(Icons.attach_file_rounded,
+                  color: cblue, size: 30.w, weight: 10),
             ),
             FittedBox(
               child: Obx(
                 () {
-                  String textData = _recordedClassController.file.value == null
+                  String textData = _videosController.file.value == null
                       ? 'Upload file here'
-                      : _recordedClassController.file.value!.path.split('/').last;
+                      : _videosController.file.value!.path
+                          .split('/')
+                          .last;
                   return Text(
                     textData,
-                    style: const TextStyle(fontSize: 15, color: cblue, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 15,
+                        color: cblue,
+                        fontWeight: FontWeight.bold),
                   );
                 },
               ),
