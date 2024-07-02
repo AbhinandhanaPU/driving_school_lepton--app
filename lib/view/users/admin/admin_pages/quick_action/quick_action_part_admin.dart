@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/videos/video_upload.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/all_students_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/all_tutor_home_page.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/attendence/attendence_book_status_month.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/courses/courses_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/create_admin/admin_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
@@ -15,6 +15,7 @@ import 'package:new_project_app/view/users/admin/admin_pages/learners_test_page/
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_shedule_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/road_test/road_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/videos/video_upload.dart';
 import 'package:new_project_app/view/users/student/student_pages/notices/notices.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
@@ -77,7 +78,7 @@ viewallMenus(BuildContext context) {
     const AdminNoticePage(), // Notice
     const EventList(), // Events
     const FeesHomePage(), // Fee
-    const LearnersHomePage(), // Attendance
+    const AttendenceBookScreenSelectMonth(), // Attendance
     CourseList(), // Course
   ];
 
