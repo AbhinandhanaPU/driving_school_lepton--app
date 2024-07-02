@@ -4,14 +4,12 @@ import 'dart:convert';
 class CourseModel {
   String courseName;
   String courseDes;
-  String tutor;
   String duration;
   String rate;
   String courseId;
   CourseModel({
     required this.courseName,
     required this.courseDes,
-    required this.tutor,
     required this.duration,
     required this.rate,
     required this.courseId,
@@ -20,7 +18,6 @@ class CourseModel {
   CourseModel copyWith({
     String? courseName,
     String? courseDes,
-    String? tutor,
     String? duration,
     String? rate,
     String? courseId,
@@ -28,7 +25,6 @@ class CourseModel {
     return CourseModel(
       courseName: courseName ?? this.courseName,
       courseDes: courseDes ?? this.courseDes,
-      tutor: tutor ?? this.tutor,
       duration: duration ?? this.duration,
       rate: rate ?? this.rate,
       courseId: courseId ?? this.courseId,
@@ -39,7 +35,6 @@ class CourseModel {
     return <String, dynamic>{
       'courseName': courseName,
       'courseDes': courseDes,
-      'tutor': tutor,
       'duration': duration,
       'rate': rate,
       'courseId': courseId,
@@ -50,7 +45,6 @@ class CourseModel {
     return CourseModel(
       courseName: map['courseName'] as String,
       courseDes: map['courseDes'] as String,
-      tutor: map['tutor'] as String,
       duration: map['duration'] as String,
       rate: map['rate'] as String,
       courseId: map['courseId'] as String,
@@ -64,7 +58,7 @@ class CourseModel {
 
   @override
   String toString() {
-    return 'CourseModel(courseName: $courseName, courseDes: $courseDes, tutor: $tutor, duration: $duration, rate: $rate, courseId: $courseId)';
+    return 'CourseModel(courseName: $courseName, courseDes: $courseDes, duration: $duration, rate: $rate, courseId: $courseId)';
   }
 
   @override
@@ -73,7 +67,6 @@ class CourseModel {
 
     return other.courseName == courseName &&
         other.courseDes == courseDes &&
-        other.tutor == tutor &&
         other.duration == duration &&
         other.rate == rate &&
         other.courseId == courseId;
@@ -83,7 +76,6 @@ class CourseModel {
   int get hashCode {
     return courseName.hashCode ^
         courseDes.hashCode ^
-        tutor.hashCode ^
         duration.hashCode ^
         rate.hashCode ^
         courseId.hashCode;

@@ -5,48 +5,29 @@ import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/course_controller/course_controller.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/progess_button/progress_button.dart';
-import 'package:progress_state_button/progress_button.dart';
 
 class CreateCourses extends StatelessWidget {
   const CreateCourses({super.key});
 
   @override
   Widget build(BuildContext context) {
-    CourseController createCourceController = Get.put(CourseController());
-    final tutorNames = ['Tutor 1', 'Tutor 2', 'Tutor 3'];
+    CourseController courseController = Get.put(CourseController());
 
     final createTutorList = [
       TextFormFiledBlueContainerWidgetWithOutColor(
         hintText: "Enter course Name",
         title: 'Course Name',
         formField: TextFormField(
-          controller: createCourceController.coursenameController,
+          controller: courseController.coursenameController,
           decoration: InputDecoration(hintText: "Enter course Name"),
           validator: checkFieldEmpty,
-        ),
-      ),
-      TextFormFiledBlueContainerWidgetWithOutColor(
-        hintText: "Select Tutor Name",
-        title: 'Tutor Name',
-        formField: DropdownButtonFormField<String>(
-          decoration: InputDecoration(hintText: "Select Tutor Name"),
-          items: tutorNames.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (newValue) {
-            createCourceController.tutornameController.text = newValue!;
-          },
-          validator: (value) => value == null ? 'Please select a tutor' : null,
         ),
       ),
       TextFormFiledBlueContainerWidgetWithOutColor(
         hintText: "Enter Duration",
         title: 'Duration',
         formField: TextFormField(
-          controller: createCourceController.durationController,
+          controller: courseController.courseDurationController,
           decoration: InputDecoration(hintText: "Enter Duration"),
           validator: checkFieldEmpty,
         ),
@@ -55,7 +36,7 @@ class CreateCourses extends StatelessWidget {
         hintText: "Enter Fee",
         title: 'Fee',
         formField: TextFormField(
-          controller: createCourceController.feeController,
+          controller: courseController.courseFeeController,
           decoration: InputDecoration(hintText: "Enter Fee"),
           validator: checkFieldEmpty,
         ),
@@ -64,23 +45,24 @@ class CreateCourses extends StatelessWidget {
         hintText: "Enter Description",
         title: 'Description',
         formField: TextFormField(
-          controller: createCourceController.descriptionController,
+          controller: courseController.courseDesController,
           decoration: InputDecoration(hintText: "Enter Description"),
           validator: checkFieldEmpty,
         ),
       ),
       Padding(
         padding: const EdgeInsets.only(top: 30),
-        child: ProgressButtonWidget(
-          text: 'Create Course',
-          function: () {
-            if (createCourceController.formKey.currentState!.validate()) {
-              print("Create Course button pressed");
-
-              createCourceController.clearTextFields();
-            }
-          },
-          buttonstate: ButtonState.idle, // Ensure buttonstate is not null
+        child: Obx(
+          () => ProgressButtonWidget(
+              function: () async {
+                if (courseController.formKey.currentState!.validate()) {
+                  courseController
+                      .createCourses()
+                      .then((value) => Navigator.pop(context));
+                }
+              },
+              buttonstate: courseController.buttonstate.value,
+              text: 'Create Courses'),
         ),
       ),
     ];
@@ -99,7 +81,7 @@ class CreateCourses extends StatelessWidget {
           padding: const EdgeInsets.only(left: 18, right: 18, top: 30),
           child: SingleChildScrollView(
             child: Form(
-              key: createCourceController.formKey,
+              key: courseController.formKey,
               child: Column(
                 children: createTutorList,
               ),
