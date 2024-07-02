@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
-import 'package:new_project_app/view/colors/colors.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
@@ -20,7 +19,8 @@ class GeneralInstruction extends StatelessWidget {
           flexibleSpace: const AppBarColorWidget(),
           foregroundColor: cWhite,
           //backgroundColor: adminePrimayColor,
-          title: GooglePoppinsWidgets(text: "General Instructions".tr, fontsize: 20.h),
+          title: GooglePoppinsWidgets(
+              text: "General Instructions".tr, fontsize: 20.h),
         ),
         body:
             // StreamBuilder(
@@ -52,46 +52,49 @@ class GeneralInstruction extends StatelessWidget {
             Container(
               height: 200,
               color: Colors.lightBlue[900],
-              child: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                // child: ClipPath(
-                //   clipper: WaveClipper(),
-                //   child: Container(
-                //     color: Colors.white,
-                //     height: 150,
-                //   ),
-                // )
+              child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // child: ClipPath(
+                    //   clipper: WaveClipper(),
+                    //   child: Container(
+                    //     color: Colors.white,
+                    //     height: 150,
+                    //   ),
+                    // )
 
-                // ClipPath(
-                //   clipper: WaveClipper(),
-                //   child: Container(
-                //     color: Colors.blueGrey,
-                //     height: 130,
-                //     alignment: Alignment.bottomCenter,
-                //   ),
-                // ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20, left: 20),
-                  child: CircleAvatar(
-                    maxRadius: 40,
-                  ),
-                ),
-                // Obx(() => Align(
-                //       alignment: Alignment.bottomCenter,
-                //       child: Padding(
-                //         padding: const EdgeInsets.only(bottom: 20),
-                //         child: Text(
-                //           '=======',
-                //           style: GoogleFonts.adamina(fontSize: 20, color: Colors.white),
-                //         ),
-                //       ),
-                //     )),
-              ]),
+                    // ClipPath(
+                    //   clipper: WaveClipper(),
+                    //   child: Container(
+                    //     color: Colors.blueGrey,
+                    //     height: 130,
+                    //     alignment: Alignment.bottomCenter,
+                    //   ),
+                    // ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20, left: 20),
+                      child: CircleAvatar(
+                        maxRadius: 40,
+                      ),
+                    ),
+                    // Obx(() => Align(
+                    //       alignment: Alignment.bottomCenter,
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.only(bottom: 20),
+                    //         child: Text(
+                    //           '=======',
+                    //           style: GoogleFonts.adamina(fontSize: 20, color: Colors.white),
+                    //         ),
+                    //       ),
+                    //     )),
+                  ]),
             ),
             kHeight40,
             Center(
                 child: Text(
               "General Instructions",
-              style: GoogleFonts.poppins(fontSize: 20, decoration: TextDecoration.underline),
+              style: GoogleFonts.poppins(
+                  fontSize: 20, decoration: TextDecoration.underline),
             )),
             kHeight20,
             Padding(
@@ -118,7 +121,9 @@ class GeneralInstruction extends StatelessWidget {
                                 child: const Text(
                                   "Tomorrow class will start at 6AM ",
                                   // .instruction,
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
                                   softWrap: true,
                                 ),
                               ),
@@ -136,7 +141,7 @@ class GeneralInstruction extends StatelessWidget {
             kHeight20,
             Container(
               width: double.infinity,
-              color: adminePrimayColor,
+              color: themeColor,
               child: const Align(
                   alignment: Alignment.bottomRight,
                   child: Padding(

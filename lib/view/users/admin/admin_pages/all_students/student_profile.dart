@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
-import 'package:new_project_app/view/colors/colors.dart';
 import 'package:new_project_app/view/widgets/catagory_table_header_widget/data_container_widget/profile_details_widget.dart';
 
 class StudentProfile extends StatelessWidget {
@@ -38,7 +37,7 @@ class StudentProfile extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: cgrey1,
+                color: cgreylite,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Padding(
@@ -52,7 +51,8 @@ class StudentProfile extends StatelessWidget {
                       child: const Text(
                         "Student Details",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),
                       ),
                     ),
                     kHeight50,
@@ -66,7 +66,8 @@ class StudentProfile extends StatelessWidget {
                       testDetails: "",
                     ),
                     kHeight20,
-                    ProfileDetailsWidget(testName: "Phone Number", testDetails: ""),
+                    ProfileDetailsWidget(
+                        testName: "Phone Number", testDetails: ""),
                   ],
                 ),
               ),
