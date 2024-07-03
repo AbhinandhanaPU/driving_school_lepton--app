@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/users/student/student_pages/notices/notices.dart';
+import 'package:new_project_app/view/users/student/student_pages/notices/notices_student.dart';
 import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials_student.dart';
 import 'package:new_project_app/view/users/student/student_pages/videos/video_list_student.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
@@ -56,7 +56,7 @@ viewallMenus(BuildContext context) {
   final screenNavigationOfStd = [
     const StudyMaterialsStudent(), // Study Materials
     const VideosListStudent(), // Video
-    const AdminNoticePage(), //Notice
+    const NoticePageStudent(), //Notice
   ];
 
   Get.bottomSheet(

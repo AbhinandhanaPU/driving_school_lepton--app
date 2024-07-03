@@ -21,12 +21,12 @@ class ListTileCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.grey[200],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
+      // color: Colors.grey[200],
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(15),
+      // ),
       child: ListTile(
-        contentPadding: EdgeInsets.only(left: 8),
+        contentPadding: EdgeInsets.only(left: 8, right: 8),
         onTap: onTap,
         leading: leading,
         title: title,

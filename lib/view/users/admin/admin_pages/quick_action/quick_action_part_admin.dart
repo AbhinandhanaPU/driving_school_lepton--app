@@ -9,14 +9,14 @@ import 'package:new_project_app/view/users/admin/admin_pages/attendence/attenden
 import 'package:new_project_app/view/users/admin/admin_pages/courses/courses_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/create_admin/admin_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/events/events_list.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/events/events_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/fees/fees_home_page.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/learners_test_page/learners_home.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/notices/notices_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_shedule_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/road_test/road_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/videos/video_upload.dart';
-import 'package:new_project_app/view/users/student/student_pages/notices/notices.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 class QuickActionPartAdmin extends StatelessWidget {
@@ -75,8 +75,8 @@ viewallMenus(BuildContext context) {
     const RoadTestHomePage(), // Road Test
     const LearnersHomePage(), // Learners Test
     VideosUploadPage(), // Videos
-    const AdminNoticePage(), // Notice
-    const EventList(), // Events
+    NoticePageAdmin(), // Notice
+    EventsListAdmin(), // Events
     const FeesHomePage(), // Fee
     const AttendenceBookScreenSelectMonth(), // Attendance
     CourseList(), // Course

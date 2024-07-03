@@ -14,7 +14,7 @@ Future<String> dateTimePicker(BuildContext context) async {
       firstDate: DateTime(1900),
       lastDate: DateTime(2025));
   if (dateTime != null) {
-    return DateFormat("dd-M-yyyy").format(dateTime);
+    return DateFormat("dd-MM-yyyy").format(dateTime);
   } else {
     return '';
   }

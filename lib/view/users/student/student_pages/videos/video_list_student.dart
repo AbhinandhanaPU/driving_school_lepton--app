@@ -10,8 +10,7 @@ import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_wi
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class VideosListStudent extends StatelessWidget {
-  const VideosListStudent({super.key, });
- 
+  const VideosListStudent({super.key});
 
   @override
   Widget build(BuildContext context) {

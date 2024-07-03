@@ -368,68 +368,65 @@ class TextFormFiledHeightnoColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 75,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFontWidget(text: '$title *', fontsize: 12.5),
-              widget == null ? const SizedBox() : widget!,
-            ],
-          ),
-          const SizedBox(
-            height: 05,
-          ),
-          Container(
-            // height: 40,
-            width: width,
-            color: screenContainerbackgroundColor,
-            child: Center(
-              child: TextFormField(
-                readOnly: readOnly ?? false,
-                maxLines: maxLines,
-                onChanged: onChanged,
-                autofillHints: autofillHints,
-                onTap: onTap,
-                validator: validator,
-                keyboardType: keyboardType,
-                controller: controller,
-                decoration: InputDecoration(
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 01, horizontal: 01),
-                  errorBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(0)),
-                      borderSide: BorderSide(
-                        width: 1,
-                        style: BorderStyle.none,
-                        color: Colors.red,
-                      )),
-                  focusedErrorBorder: const OutlineInputBorder(
-                    // borderRadius: BorderRadius.all(Radius.circular(4)),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFontWidget(text: '$title *', fontsize: 12.5),
+            widget == null ? const SizedBox() : widget!,
+          ],
+        ),
+        const SizedBox(
+          height: 05,
+        ),
+        Container(
+          // height: 40,
+          width: width,
+          color: screenContainerbackgroundColor,
+          child: Center(
+            child: TextFormField(
+              readOnly: readOnly ?? false,
+              maxLines: maxLines,
+              onChanged: onChanged,
+              autofillHints: autofillHints,
+              onTap: onTap,
+              validator: validator,
+              keyboardType: keyboardType,
+              controller: controller,
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 01, horizontal: 01),
+                errorBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
                     borderSide: BorderSide(
                       width: 1,
                       style: BorderStyle.none,
                       color: Colors.red,
-                    ),
+                    )),
+                focusedErrorBorder: const OutlineInputBorder(
+                  // borderRadius: BorderRadius.all(Radius.circular(4)),
+                  borderSide: BorderSide(
+                    width: 1,
+                    style: BorderStyle.none,
+                    color: Colors.red,
                   ),
-                  // contentPadding: const EdgeInsets.all(8.0),
-                  enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(width: 0.4)),
-                  hintStyle: const TextStyle(fontSize: 13),
-                  hintText: hintText,
-                  focusedBorder: const OutlineInputBorder(
-                    //<-- SEE HERE
-                    borderSide: BorderSide(width: 1, color: Colors.green),
-                  ),
+                ),
+                // contentPadding: const EdgeInsets.all(8.0),
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(width: 0.4)),
+                hintStyle: const TextStyle(fontSize: 13),
+                hintText: hintText,
+                focusedBorder: const OutlineInputBorder(
+                  //<-- SEE HERE
+                  borderSide: BorderSide(width: 1, color: Colors.green),
                 ),
               ),
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 }
