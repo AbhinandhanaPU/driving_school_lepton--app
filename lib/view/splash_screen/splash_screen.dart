@@ -12,7 +12,7 @@ import 'package:new_project_app/controller/user_credentials/user_credentials_con
 import 'package:new_project_app/model/admin_model/admin_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/home/first_screen/first_screen.dart';
- import 'package:new_project_app/view/users/admin/admin_pages/admin_home_page/admin_home_page.dart';
+ import 'package:new_project_app/view/users/admin/admin_home_page/admin_home_page.dart';
 import 'package:new_project_app/view/users/student/student_home_page/student_home_page.dart';
 import 'package:new_project_app/view/users/teacher/teacher_home_page/teacher_home_page.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_montserrat.dart';

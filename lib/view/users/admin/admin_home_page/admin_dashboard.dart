@@ -4,10 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/notifications.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/quick_action/quick_action_part_admin.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/quick_action/quick_action_widgets.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/slider/carousal_slider.dart';
+import 'package:new_project_app/view/users/admin/notifications/notifications.dart';
+import 'package:new_project_app/view/users/admin/quick_action/quick_action_part_admin.dart';
+import 'package:new_project_app/view/users/admin/quick_action/quick_action_widgets.dart';
+import 'package:new_project_app/view/users/admin/slider/carousal_slider.dart';
 import 'package:new_project_app/view/users/widgets/profile_edit_widgets/admin_edit_profile.dart';
 
 class AdminDashboard extends StatefulWidget {

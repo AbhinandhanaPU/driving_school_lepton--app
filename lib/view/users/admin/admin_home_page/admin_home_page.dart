@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/admin_home_page/admin_dashboard.dart';
+import 'package:new_project_app/view/users/admin/admin_home_page/admin_dashboard.dart';
 import 'package:new_project_app/view/users/admin/drawer/admin_header_drawer.dart';
  
  
