@@ -63,7 +63,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 60.sp, right: 10.sp, left: 10.sp),
-              child: const CarouselSliderAdmin(),
+              child: CarouselSliderAdmin(),
             ),
             //////////////////////////////////////////////////////details showing graph
             SizedBox(
