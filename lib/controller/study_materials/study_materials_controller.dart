@@ -14,9 +14,9 @@ import 'package:uuid/uuid.dart';
 class StudyMaterialController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
-  TextEditingController videoTitleController = TextEditingController();
-  TextEditingController videoDesController = TextEditingController();
-  TextEditingController videoCateController = TextEditingController();
+  TextEditingController studyMTitleController = TextEditingController();
+  TextEditingController studyMDesController = TextEditingController();
+  TextEditingController studyMCateController = TextEditingController();
 
   RxBool isLoading = RxBool(false);
   Uuid uuid = const Uuid();
@@ -83,9 +83,9 @@ class StudyMaterialController extends GetxController {
           .collection('StudyMaterials')
           .doc(uid)
           .set({
-        'title': videoTitleController.text,
-        'des': videoDesController.text,
-        'category': videoCateController.text,
+        'title': studyMTitleController.text,
+        'des': studyMDesController.text,
+        'category': studyMCateController.text,
         'downloadUrl': downloadUrl,
         'fileName': fileName.value,
         'docId': uid,
@@ -93,9 +93,9 @@ class StudyMaterialController extends GetxController {
         filee = null;
         fileBytes.value = null;
         fileName.value = '';
-        videoTitleController.clear();
-        videoDesController.clear();
-        videoCateController.clear();
+        studyMTitleController.clear();
+        studyMDesController.clear();
+        studyMCateController.clear();
         showToast(msg: "Uploaded Successfully");
         log("Uploaded Successfully");
         Get.back();
@@ -106,6 +106,49 @@ class StudyMaterialController extends GetxController {
       log(e.toString(), name: "StudyMaterialsController");
       showToast(msg: "Something Went Wrong");
       isLoading.value = false;
+    }
+  }
+
+  Future<void> deleteSM({required String docId}) async {
+    try {
+      await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('StudyMaterials')
+          .doc(docId)
+          .delete()
+          .then((value) {
+        showToast(msg: "Deleted Successfully");
+        log("Deleted Successfully");
+        Get.back();
+      });
+    } catch (e) {
+      log(e.toString(), name: "StudyMaterials");
+    }
+  }
+
+  Future<void> updateSM(String SMId, BuildContext context) async {
+    try {
+      server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('StudyMaterials')
+          .doc(SMId)
+          .update({
+            'title': studyMTitleController.text,
+            'des': studyMDesController.text,
+            'category': studyMCateController.text,
+          })
+          .then((value) {
+            studyMTitleController.clear();
+            studyMDesController.clear();
+            studyMCateController.clear();
+          })
+          .then((value) => Navigator.pop(context))
+          .then((value) => showToast(msg: 'StudyMaterials Updated!'));
+    } catch (e) {
+      showToast(msg: 'StudyMaterials Updation failed.Try Again');
+      log("StudyMaterials Updation failed $e");
     }
   }
 }

@@ -63,21 +63,22 @@ class _UploadStudyMaterialState extends State<UploadStudyMaterial> {
                       TextFormField(
                         validator: checkFieldEmpty,
                         controller:
-                            studyMaterialController.videoTitleController,
+                            studyMaterialController.studyMTitleController,
                         decoration:
                             const InputDecoration(hintText: 'Enter Name'),
                       ),
                       kHeight20,
                       TextFormField(
                         validator: checkFieldEmpty,
-                        controller: studyMaterialController.videoDesController,
+                        controller: studyMaterialController.studyMDesController,
                         decoration: const InputDecoration(
                             hintText: 'Enter Description'),
                       ),
                       kHeight20,
                       TextFormField(
                         validator: checkFieldEmpty,
-                        controller: studyMaterialController.videoCateController,
+                        controller:
+                            studyMaterialController.studyMCateController,
                         decoration:
                             const InputDecoration(hintText: 'Enter Category'),
                       ),

@@ -17,7 +17,6 @@ import 'package:new_project_app/view/users/admin/admin_pages/notices/notices_adm
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_shedule_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/videos/video_list_admin.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/videos/video_upload.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 class QuickActionPartAdmin extends StatelessWidget {
@@ -74,7 +73,7 @@ viewallMenus(BuildContext context) {
     const PracticeSheduleHome(), // Practice shedule
     const FeesHomePage(), // Fee
     const AttendenceBookScreenSelectMonth(), // Attendance
-    const AdminStudyMaterials(), // Study Materials
+    AdminStudyMaterials(), // Study Materials
     VideosListAdmin(), // Videos
     NoticePageAdmin(), // Notice
     EventsListAdmin(), // Events

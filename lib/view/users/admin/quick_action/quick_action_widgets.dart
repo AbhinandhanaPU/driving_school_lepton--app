@@ -99,7 +99,7 @@ class QuickActionsWidgetSM extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return const AdminStudyMaterials();
+                return AdminStudyMaterials();
               },
             )),
             child: Container(
