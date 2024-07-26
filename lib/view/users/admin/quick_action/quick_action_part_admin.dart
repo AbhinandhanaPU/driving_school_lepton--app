@@ -16,6 +16,7 @@ import 'package:new_project_app/view/users/admin/admin_pages/login_history/login
 import 'package:new_project_app/view/users/admin/admin_pages/notices/notices_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_shedule_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/videos/video_list_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/videos/video_upload.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
@@ -74,7 +75,7 @@ viewallMenus(BuildContext context) {
     const FeesHomePage(), // Fee
     const AttendenceBookScreenSelectMonth(), // Attendance
     const AdminStudyMaterials(), // Study Materials
-    VideosUploadPage(), // Videos
+    VideosListAdmin(), // Videos
     NoticePageAdmin(), // Notice
     EventsListAdmin(), // Events
     NoticePageAdmin(), // notifications

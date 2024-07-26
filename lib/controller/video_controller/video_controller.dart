@@ -13,12 +13,13 @@ import 'package:uuid/uuid.dart';
 class VideosController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  TextEditingController videoNameController = TextEditingController();
-  TextEditingController videoCategoryController = TextEditingController();
-
   TextEditingController videoTitleController = TextEditingController();
   TextEditingController videoDesController = TextEditingController();
   TextEditingController videoCateController = TextEditingController();
+
+  TextEditingController editVideoTitleController = TextEditingController();
+  TextEditingController editVideoDesController = TextEditingController();
+  TextEditingController editVideoCateController = TextEditingController();
   RxBool isLoading = RxBool(false);
   Uuid uuid = const Uuid();
   String downloadUrl = '';
@@ -26,6 +27,15 @@ class VideosController {
   RxString fileName = "".obs;
 
   Rxn<File?> file = Rxn();
+
+  clearFields() {
+    videoTitleController.clear();
+    videoDesController.clear();
+    videoCateController.clear();
+    editVideoTitleController.clear();
+    editVideoDesController.clear();
+    editVideoCateController.clear();
+  }
 
   Future<void> uploadToFirebase() async {
     try {
@@ -59,9 +69,8 @@ class VideosController {
         'fileName': fileName.value,
         'docId': uid,
       }).then((value) {
-        videoTitleController.clear();
-        videoDesController.clear();
-        videoCateController.clear();
+        clearFields();
+        file.value = null;
         showToast(msg: "Uploaded Successfully");
         log("Uploaded Successfully");
         Get.back();
@@ -90,6 +99,29 @@ class VideosController {
       });
     } catch (e) {
       log(e.toString(), name: "VideosController");
+    }
+  }
+
+  Future<void> updateVideo(String videoId, BuildContext context) async {
+    try {
+      server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Videos')
+          .doc(videoId)
+          .update({
+            'videoTitle': editVideoTitleController.text,
+            'videoDes': editVideoDesController.text,
+            'videoCategory': videoCateController.text,
+          })
+          .then((value) {
+            clearFields();
+          })
+          .then((value) => Navigator.pop(context))
+          .then((value) => showToast(msg: 'Video Updated!'));
+    } catch (e) {
+      showToast(msg: 'Video  Updation failed.Try Again');
+      log("Video Updation failed $e");
     }
   }
 
