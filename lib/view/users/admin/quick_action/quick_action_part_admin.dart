@@ -14,6 +14,7 @@ import 'package:new_project_app/view/users/admin/admin_pages/fees/fees_home_page
 import 'package:new_project_app/view/users/admin/admin_pages/learners_test_page/learners_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/login_history/login_history.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/notices/notices_admin.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/notifications/notifications.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_shedule_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/videos/video_list_admin.dart';
@@ -77,7 +78,7 @@ viewallMenus(BuildContext context) {
     VideosListAdmin(), // Videos
     NoticePageAdmin(), // Notice
     EventsListAdmin(), // Events
-    NoticePageAdmin(), // notifications
+    Notifications(), // notifications
     const LearnersHomePage(), // Chat
     const LearnersHomePage(), // Learners Test
     const LoginHistory(), // Login history
