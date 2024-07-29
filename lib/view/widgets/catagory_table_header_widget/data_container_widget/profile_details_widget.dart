@@ -4,11 +4,11 @@ import 'package:new_project_app/constant/responsive.dart';
 class ProfileDetailsWidget extends StatelessWidget {
   const ProfileDetailsWidget({
     super.key,
-    required this.testName,
-    required this.testDetails,
+    required this.title,
+    required this.content,
   });
-  final String testName;
-  final String testDetails;
+  final String title;
+  final String content;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,11 @@ class ProfileDetailsWidget extends StatelessWidget {
           child: SizedBox(
             width: ResponsiveApp.width / 2,
             child: Text(
-              testName,
-              style: TextStyle(fontSize: ResponsiveApp.width * .04),
+              title,
+              style: TextStyle(
+                fontSize: ResponsiveApp.width * .045,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ),
@@ -28,7 +31,7 @@ class ProfileDetailsWidget extends StatelessWidget {
         SizedBox(
           width: ResponsiveApp.width / 2.5,
           child: Text(
-            testDetails,
+            content,
             style: TextStyle(fontSize: ResponsiveApp.width * .04),
           ),
         ),

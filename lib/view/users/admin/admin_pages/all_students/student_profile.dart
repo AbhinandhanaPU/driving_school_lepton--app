@@ -57,17 +57,16 @@ class StudentProfile extends StatelessWidget {
                     ),
                     kHeight50,
                     ProfileDetailsWidget(
-                      testName: "Permission Status",
-                      testDetails: "",
+                      title: "Permission Status",
+                      content: "",
                     ),
                     kHeight20,
                     ProfileDetailsWidget(
-                      testName: "Test Status",
-                      testDetails: "",
+                      title: "Test Status",
+                      content: "",
                     ),
                     kHeight20,
-                    ProfileDetailsWidget(
-                        testName: "Phone Number", testDetails: ""),
+                    ProfileDetailsWidget(title: "Phone Number", content: ""),
                   ],
                 ),
               ),
