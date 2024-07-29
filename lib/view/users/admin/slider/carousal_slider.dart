@@ -6,7 +6,7 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/courses/course_details.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/courses/course_list/course_details.dart';
 
 class CarouselSliderAdmin extends StatelessWidget {
   CarouselSliderAdmin({super.key});
