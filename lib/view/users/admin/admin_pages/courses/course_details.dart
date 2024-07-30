@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/responsive.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
+import 'package:new_project_app/constant/utils/firebase/firebase.dart';
+import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
@@ -23,104 +25,115 @@ class CourseDetails extends StatelessWidget {
         ),
         flexibleSpace: const AppBarColorWidget(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 25),
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: StreamBuilder(
+        stream: server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Courses')
+          .doc(data.courseId)
+          .collection("Students")
+          .snapshots(),
+        builder: (context, snapshot) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 25),
+            child: Stack(
               children: [
-                // course details
-                Container(
-                  padding:
-                      EdgeInsets.only(left: 25, right: 25, top: 25, bottom: 20),
-                  decoration: BoxDecoration(
-                    color: themeColor.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Course Name
-                      Center(
-                        child: Text(
-                          data.courseName,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: cblack,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // course details
+                    Container(
+                      padding:
+                          EdgeInsets.only(left: 25, right: 25, top: 25, bottom: 20),
+                      decoration: BoxDecoration(
+                        color: themeColor.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Course Name
+                          Center(
+                            child: Text(
+                              data.courseName,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: cblack,
+                              ),
+                            ),
                           ),
-                        ),
+                          kHeight30,
+                          // Course Rate
+                          ProfileDetailsWidget(
+                            title: 'Fee',
+                            content: data.rate,
+                          ),
+                          kHeight10, // Course Duration
+                          ProfileDetailsWidget(
+                            title: 'Duration',
+                            content: "${data.duration} Days",
+                          ),
+                          kHeight20, // Course Description
+                          Text(
+                            "Description",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            data.courseDes,
+                            style: TextStyle(
+                              fontSize: ResponsiveApp.width * .04,
+                            ),
+                          ),
+                        ],
                       ),
-                      kHeight30,
-                      // Course Rate
-                      ProfileDetailsWidget(
-                        title: 'Fee',
-                        content: data.rate,
-                      ),
-                      kHeight10, // Course Duration
-                      ProfileDetailsWidget(
-                        title: 'Duration',
-                        content: "${data.duration} Days",
-                      ),
-                      kHeight20, // Course Description
-                      Text(
-                        "Description",
+                    ),
+                    //  Students details
+                    kHeight40,
+                    Center(
+                      child: Text(
+                        "Students Details",
                         style: TextStyle(
-                          fontSize: 16,
                           fontWeight: FontWeight.w600,
+                          fontSize: 19,
                         ),
                       ),
-                      SizedBox(height: 5),
-                      Text(
-                        data.courseDes,
-                        style: TextStyle(
-                          fontSize: ResponsiveApp.width * .04,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    kHeight40,
+                    ProfileDetailsWidget(title: "Total ", content: '50'),
+                    kHeight20,
+                    ProfileDetailsWidget(title: "Course Completed", content: '50'),
+                    kHeight20,
+                    ProfileDetailsWidget(title: "Pending Students", content: '50'),
+                  ],
                 ),
-                //  Students details
-                kHeight40,
-                Center(
-                  child: Text(
-                    "Students Details",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 19,
+                Positioned(
+                  bottom: 30,
+                  right: 40,
+                  left: 40,
+                  child: ButtonContainerWidget(
+                    curving: 30,
+                    colorindex: 0,
+                    height: 60,
+                    width: 140,
+                    child: const Center(
+                      child: TextFontWidgetRouter(
+                        text: 'Subsciptions',
+                        fontsize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: cWhite,
+                      ),
                     ),
                   ),
-                ),
-                kHeight40,
-                ProfileDetailsWidget(title: "Total ", content: '50'),
-                kHeight20,
-                ProfileDetailsWidget(title: "Course Completed", content: '50'),
-                kHeight20,
-                ProfileDetailsWidget(title: "Pending Students", content: '50'),
+                )
               ],
             ),
-            Positioned(
-              bottom: 30,
-              right: 40,
-              left: 40,
-              child: ButtonContainerWidget(
-                curving: 30,
-                colorindex: 0,
-                height: 60,
-                width: 140,
-                child: const Center(
-                  child: TextFontWidgetRouter(
-                    text: 'Subsciptions',
-                    fontsize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: cWhite,
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
+          );
+        }
       ),
     );
   }
