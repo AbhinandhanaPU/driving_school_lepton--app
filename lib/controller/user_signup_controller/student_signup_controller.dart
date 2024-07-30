@@ -141,7 +141,7 @@ class StudentSignUpController extends GetxController {
                               Navigator.pushAndRemoveUntil(context,
                                   MaterialPageRoute(
                                 builder: (context) {
-                                  return const StudentsMainHomeScreen();
+                                  return  StudentsMainHomeScreen();
                                 },
                               ), (route) => false);
                               StudentPasswordSaver.studentEmailID = '';
