@@ -2,6 +2,8 @@ import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/notifications/notifications.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_shedule_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
 
 class QuickActionsWidgetDrivingTestAdmin extends StatelessWidget {
@@ -58,9 +60,14 @@ class QuickActionsWidgetPractice extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //  return const ViewHomeWorks();
-            // },)),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const PracticeSheduleHome();
+                },
+              ),
+            ),
             child: Container(
               height: 55.h,
               width: 55.w,
@@ -99,7 +106,7 @@ class QuickActionsWidgetSM extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return const AdminStudyMaterials();
+                return AdminStudyMaterials();
               },
             )),
             child: Container(
@@ -138,9 +145,14 @@ class QuickActionsWidgetChat extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //  return const  StudentChatScreen();
-            // },)),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return Notifications();
+                },
+              ),
+            ),
             child: Container(
               height: 55.h,
               width: 55.w,
@@ -149,13 +161,13 @@ class QuickActionsWidgetChat extends StatelessWidget {
                   border: Border.all(color: cblack.withOpacity(0.2)),
                   borderRadius: BorderRadius.circular(10)),
               child: Image.asset(
-                'assets/flaticons/icons8-chat-100.png',
+                'assets/flaticons/mobile-notification.png',
                 scale: 2.5,
               ),
             ),
           ),
           Text(
-            "Chat",
+            "NOtification",
             style: TextStyle(fontSize: 12.sp),
           )
         ],

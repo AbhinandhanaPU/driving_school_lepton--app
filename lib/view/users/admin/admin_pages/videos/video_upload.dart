@@ -7,7 +7,6 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/video_controller/video_controller.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/videos/video_list_admin.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 
 class VideosUploadPage extends StatelessWidget {
@@ -49,7 +48,7 @@ class VideosUploadPage extends StatelessWidget {
                       kHeight20,
                       TextFormField(
                         validator: checkFieldEmpty,
-                        controller: videosController.videoNameController,
+                        controller: videosController.videoTitleController,
                         decoration:
                             const InputDecoration(hintText: 'Enter Name'),
                       ),
@@ -63,78 +62,22 @@ class VideosUploadPage extends StatelessWidget {
                       kHeight20,
                       TextFormField(
                         validator: checkFieldEmpty,
-                        controller: videosController.videoCategoryController,
+                        controller: videosController.videoCateController,
                         decoration:
                             const InputDecoration(hintText: 'Enter Category'),
                       ),
                       kHeight40,
                       GestureDetector(
-                          onTap: () async {
-                            if (videosController.formKey.currentState
-                                    ?.validate() ??
-                                false) {
-                              if (videosController.file.value != null) {
-                                videosController.uploadToFirebase(
-                                 );
-                              } else {
-                                showToast(msg: "Please Select File");
-                              }
-                            }
-                          },
-                          child: ButtonContainerWidget(
-                            curving: 18,
-                            colorindex: 0,
-                            height: 60.w,
-                            width: 300.w,
-                            child: Center(child: Obx(() {
-                              if (videosController.isLoading.value) {
-                                final progress =
-                                    (videosController.progressData.value * 100)
-                                        .toInt();
-                                return Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Center(
-                                        child: CircularProgressIndicator(
-                                          value:
-                                              videosController.progressData.value,
-                                          valueColor:
-                                              const AlwaysStoppedAnimation<
-                                                  Color>(
-                                            Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        '$progress%',
-                                        style: GoogleFonts.montserrat(
-                                          color: Colors.white,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      )
-                                    ]);
-                              } else {
-                                return Text(
-                                  "Submit",
-                                  style: GoogleFonts.montserrat(
-                                    color: Colors.white,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                );
-                              }
-                            })),
-                          )),
-                      kHeight20,
-                      GestureDetector(
                         onTap: () async {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => VideosListAdmin(),
-                            ),
-                          );
+                          if (videosController.formKey.currentState
+                                  ?.validate() ??
+                              false) {
+                            if (videosController.file.value != null) {
+                              videosController.uploadToFirebase();
+                            } else {
+                              showToast(msg: "Please Select File");
+                            }
+                          }
                         },
                         child: ButtonContainerWidget(
                           curving: 18,
@@ -142,22 +85,56 @@ class VideosUploadPage extends StatelessWidget {
                           height: 60.w,
                           width: 300.w,
                           child: Center(
-                            child: Text(
-                              "Uploaded Videos",
-                              style: GoogleFonts.montserrat(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700),
+                            child: Obx(
+                              () {
+                                if (videosController.isLoading.value) {
+                                  final progress =
+                                      (videosController.progressData.value *
+                                              100)
+                                          .toInt();
+                                  return Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Center(
+                                          child: CircularProgressIndicator(
+                                            value: videosController
+                                                .progressData.value,
+                                            valueColor:
+                                                const AlwaysStoppedAnimation<
+                                                    Color>(
+                                              Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          '$progress%',
+                                          style: GoogleFonts.montserrat(
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        )
+                                      ]);
+                                } else {
+                                  return Text(
+                                    "Submit",
+                                    style: GoogleFonts.montserrat(
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  );
+                                }
+                              },
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
-            kHeight30,
           ],
         ),
       ),
@@ -199,9 +176,7 @@ class VideosUploadWidget extends StatelessWidget {
                 () {
                   String textData = _videosController.file.value == null
                       ? 'Upload file here'
-                      : _videosController.file.value!.path
-                          .split('/')
-                          .last;
+                      : _videosController.file.value!.path.split('/').last;
                   return Text(
                     textData,
                     style: const TextStyle(

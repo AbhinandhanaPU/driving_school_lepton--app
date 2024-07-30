@@ -7,15 +7,20 @@ import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
+import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:uuid/uuid.dart';
 
 class CourseController extends GetxController {
   TextEditingController coursenameController = TextEditingController();
-  TextEditingController tutornameController = TextEditingController();
   TextEditingController courseDurationController = TextEditingController();
   TextEditingController courseFeeController = TextEditingController();
   TextEditingController courseDesController = TextEditingController();
+
+  TextEditingController editcourseNameController = TextEditingController();
+  TextEditingController editcourseDesController = TextEditingController();
+  TextEditingController editcourseDurationController = TextEditingController();
+  TextEditingController editcourseRateController = TextEditingController();
 
   RxInt totalStudents = 0.obs;
 
@@ -23,12 +28,30 @@ class CourseController extends GetxController {
 
   final formKey = GlobalKey<FormState>();
 
+  RxBool ontapStudentDetail = false.obs;
+  RxString studentDocID = ''.obs;
+  RxString studentName = ''.obs;
+  RxString courseName = ''.obs;
+  RxString courseId = ''.obs;
+  RxString courseDocID = 'dd'.obs;
+  List<StudentModel> allstudentList = [];
+  List<CourseModel> allcourseList = [];
+  Rxn<CourseModel> courseModelData = Rxn<CourseModel>();
+
+  void setCourseData(CourseModel course) {
+    courseModelData.value = course;
+  }
+
   void clearFields() {
     coursenameController.clear();
-    tutornameController.clear();
     courseDurationController.clear();
     courseFeeController.clear();
     courseDesController.clear();
+
+    editcourseNameController.clear();
+    editcourseDesController.clear();
+    editcourseDurationController.clear();
+    editcourseRateController.clear();
   }
 
   Future<void> createCourses() async {
@@ -79,6 +102,74 @@ class CourseController extends GetxController {
       });
     } catch (e) {
       log("Courses delete$e");
+    }
+  }
+
+  Future<void> updateCourse(String courseId, BuildContext context) async {
+    try {
+      await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Courses')
+          .doc(courseId)
+          .update({
+        'courseName': editcourseNameController.text,
+        'courseDes': editcourseDesController.text,
+        'duration': editcourseDurationController.text,
+        'rate': editcourseRateController.text,
+      }).then((value) {
+        clearFields();
+        Navigator.pop(context);
+      }).then((value) => showToast(msg: 'Course Updated!'));
+    } catch (e) {
+      log("Course Updation failed");
+    }
+  }
+
+  Future<List<StudentModel>> fetchAllStudents() async {
+    final firebase = await server
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Students')
+        .get();
+
+    for (var i = 0; i < firebase.docs.length; i++) {
+      final list =
+          firebase.docs.map((e) => StudentModel.fromMap(e.data())).toList();
+      allstudentList.add(list[i]);
+    }
+    return allstudentList;
+  }
+
+  Future<void> addStudentToCourseController(String courseID) async {
+    try {
+      log("studentDocID.value ${studentDocID.value}");
+      log("scourseID $courseID");
+      final studentResult = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Students')
+          .doc(studentDocID.value)
+          .get();
+      if (studentDocID.value != '') {
+        final data = StudentModel.fromMap(studentResult.data()!);
+        await server
+            .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection('Courses')
+            .doc(courseID)
+            .collection('Students')
+            .doc(studentDocID.value)
+            .set(data.toMap())
+            .then((value) async {
+          showToast(msg: 'Added');
+          allstudentList.clear();
+        });
+      }
+    } catch (e) {
+      log(e.toString());
+      showToast(msg: 'Somthing went wrong please try again');
+      allstudentList.clear();
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
@@ -11,6 +12,19 @@ String stringTimeToDateConvert(String date) {
   } catch (e) {
     if (kDebugMode) {
       print(e);
+    }
+  }
+  return '';
+}
+
+String timeConvert(DateTime date) {
+  try {
+    String formattedTime = DateFormat('hh:mm:a').format(date);
+    return formattedTime;
+  } catch (e) {
+    // Handle any potential errors
+    if (kDebugMode) {
+      print('Error converting time: $e');
     }
   }
   return '';

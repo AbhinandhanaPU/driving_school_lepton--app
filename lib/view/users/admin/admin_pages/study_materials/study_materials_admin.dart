@@ -4,16 +4,20 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
+import 'package:new_project_app/controller/study_materials/study_materials_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_edit.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/upload_studymaterial.dart';
 import 'package:new_project_app/view/users/widgets/listcard_widget/listcard_widget.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
+import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class AdminStudyMaterials extends StatelessWidget {
-  const AdminStudyMaterials({super.key});
+  AdminStudyMaterials({super.key});
 
+  final studyMaterialController = Get.put(StudyMaterialController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -85,10 +89,48 @@ class AdminStudyMaterials extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            trailing: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.more_vert),
-                              padding: EdgeInsets.all(0),
+                            trailing: PopupMenuButton(
+                              itemBuilder: (context) {
+                                return [
+                                  PopupMenuItem(
+                                    onTap: () {
+                                      studyMaterialController
+                                          .studyMTitleController
+                                          .text = data['title'];
+                                      studyMaterialController
+                                          .studyMDesController
+                                          .text = data['des'];
+                                      studyMaterialController
+                                          .studyMCateController
+                                          .text = data['category'];
+                                      editFunctionOfSM(context, data);
+                                    },
+                                    child: const Text(
+                                      "Edit",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                  PopupMenuItem(
+                                    onTap: () {
+                                      customDeleteShowDialog(
+                                        context: context,
+                                        onTap: () {
+                                          studyMaterialController.deleteSM(
+                                              docId: data['docId']);
+                                        },
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Delete",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  )
+                                ];
+                              },
                             ),
                           ),
                         );
