@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/notifications/notifications.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_shedule_home.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_schedule/practice_shedule_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
 
 class QuickActionsWidgetDrivingTestAdmin extends StatelessWidget {
