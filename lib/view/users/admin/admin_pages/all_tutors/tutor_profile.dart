@@ -69,13 +69,13 @@ class TutorProfile extends StatelessWidget {
                     ),
                     kHeight20,
                     ProfileDetailsWidget(
-                      title: "Joining Date",
-                      content: "",
+                      title: "Licence Number",
+                      content: data.licenceNumber!,
                     ),
                     kHeight20,
                     ProfileDetailsWidget(
-                      title: "Licence Number",
-                      content: data.licenceNumber!,
+                      title: "Date of Birth",
+                      content: data.dateofBirth!,
                     ),
                     kHeight20,
                     ProfileDetailsWidget(
@@ -91,6 +91,11 @@ class TutorProfile extends StatelessWidget {
                     ProfileDetailsWidget(
                       title: "Guardian Name",
                       content: data.guardianName!,
+                    ),
+                    kHeight20,
+                    ProfileDetailsWidget(
+                      title: "RTO Name",
+                      content: data.rtoName!,
                     ),
                     kHeight20,
                   ],

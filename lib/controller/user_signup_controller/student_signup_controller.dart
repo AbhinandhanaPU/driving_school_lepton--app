@@ -85,6 +85,8 @@ class StudentSignUpController extends GetxController {
             profileImageUrl: imageUrl,
             rtoName: rtoNameController.text,
             licenceNumber: licenceController.text,
+            joiningDate: DateTime.now().toString(),
+            status: 'Inactive', //change
             userRole: "student",
           );
           await server
