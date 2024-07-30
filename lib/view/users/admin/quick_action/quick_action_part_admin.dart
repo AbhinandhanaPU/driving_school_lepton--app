@@ -71,7 +71,7 @@ viewallMenus(BuildContext context) {
     AdminList(), // All admins
     CourseList(), // Course
     const DrivingHomePage(), // Driving Test
-    const PracticeSheduleHome(), // Practice shedule
+    PracticeSheduleHome(), // Practice shedule
     const FeesHomePage(), // Fee
     const AttendenceBookScreenSelectMonth(), // Attendance
     AdminStudyMaterials(), // Study Materials

@@ -64,7 +64,7 @@ class QuickActionsWidgetPractice extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return const PracticeSheduleHome();
+                  return PracticeSheduleHome();
                 },
               ),
             ),
