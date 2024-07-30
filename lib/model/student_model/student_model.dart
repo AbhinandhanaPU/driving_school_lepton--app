@@ -14,6 +14,8 @@ class StudentModel {
   String profileImageUrl;
   String rtoName;
   String licenceNumber;
+  String joiningDate;
+  String status; //
 
   String userRole = 'student';
 
@@ -31,6 +33,8 @@ class StudentModel {
     required this.profileImageUrl,
     required this.rtoName,
     required this.licenceNumber,
+    required this.joiningDate,
+    required this.status,
     required this.userRole,
   });
 
@@ -48,6 +52,8 @@ class StudentModel {
     String? profileImageUrl,
     String? rtoName,
     String? licenceNumber,
+    String? joiningDate,
+    String? status,
     String? userRole,
   }) {
     return StudentModel(
@@ -64,6 +70,8 @@ class StudentModel {
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
       rtoName: rtoName ?? this.rtoName,
       licenceNumber: licenceNumber ?? this.licenceNumber,
+      joiningDate: joiningDate ?? this.joiningDate,
+      status: status ?? this.status,
       userRole: userRole ?? this.userRole,
     );
   }
@@ -83,26 +91,30 @@ class StudentModel {
       'profileImageUrl': profileImageUrl,
       'rtoName': rtoName,
       'licenceNumber': licenceNumber,
+      'joiningDate': joiningDate,
+      'status': status,
       'userRole': userRole,
     };
   }
 
   factory StudentModel.fromMap(Map<String, dynamic> map) {
     return StudentModel(
-      docid: map['docid'] as String,
-      password: map['password'] as String,
-      studentemail: map['studentemail'] as String,
-      studentName: map['studentName'] as String,
-      phoneNumber: map['phoneNumber'] as String,
-      dateofBirth: map['dateofBirth'] as String,
-      guardianName: map['guardianName'] as String,
-      address: map['address'] as String,
-      place: map['place'] as String,
-      profileImageId: map['profileImageId'] as String,
-      profileImageUrl: map['profileImageUrl'] as String,
-      rtoName: map['rtoName'] as String,
-      licenceNumber: map['licenceNumber'] as String,
-      userRole: map['userRole'] as String,
+      docid: map['docid'] ?? "",
+      password: map['password'] ?? "",
+      studentemail: map['studentemail'] ?? "",
+      studentName: map['studentName'] ?? "",
+      phoneNumber: map['phoneNumber'] ?? "",
+      dateofBirth: map['dateofBirth'] ?? "",
+      guardianName: map['guardianName'] ?? "",
+      address: map['address'] ?? "",
+      place: map['place'] ?? "",
+      profileImageId: map['profileImageId'] ?? "",
+      profileImageUrl: map['profileImageUrl'] ?? "",
+      rtoName: map['rtoName'] ?? "",
+      licenceNumber: map['licenceNumber'] ?? "",
+      joiningDate: map['joiningDate'] ?? "",
+      status: map['status'] ?? "",
+      userRole: map['userRole'] ?? "",
     );
   }
 
@@ -113,7 +125,7 @@ class StudentModel {
 
   @override
   String toString() {
-    return 'StudentModel(docid: $docid, password: $password, studentemail: $studentemail, studentName: $studentName, phoneNumber: $phoneNumber, dateofBirth: $dateofBirth, guardianName: $guardianName, address: $address, place: $place, profileImageId: $profileImageId, profileImageUrl: $profileImageUrl, rtoName: $rtoName, licenceNumber: $licenceNumber, userRole: $userRole)';
+    return 'StudentModel(docid: $docid, password: $password, studentemail: $studentemail, studentName: $studentName, phoneNumber: $phoneNumber, dateofBirth: $dateofBirth, guardianName: $guardianName, address: $address, place: $place, profileImageId: $profileImageId, profileImageUrl: $profileImageUrl, rtoName: $rtoName, licenceNumber: $licenceNumber, joiningDate: $joiningDate, status: $status, userRole: $userRole)';
   }
 
   @override
@@ -133,6 +145,8 @@ class StudentModel {
         other.profileImageUrl == profileImageUrl &&
         other.rtoName == rtoName &&
         other.licenceNumber == licenceNumber &&
+        other.joiningDate == joiningDate &&
+        other.status == status &&
         other.userRole == userRole;
   }
 
@@ -151,6 +165,8 @@ class StudentModel {
         profileImageUrl.hashCode ^
         rtoName.hashCode ^
         licenceNumber.hashCode ^
+        joiningDate.hashCode ^
+        status.hashCode ^
         userRole.hashCode;
   }
 }

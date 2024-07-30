@@ -27,9 +27,10 @@ class TutorProfile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 40, bottom: 20),
               child: CircleAvatar(
-                radius: 60,
-                backgroundImage: AssetImage("assets/images/profilebg.png"),
-              ),
+                  radius: 60,
+                  backgroundImage: NetworkImage(data.profileImageUrl!)
+                  // AssetImage("assets/images/profilebg.png"),
+                  ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -40,7 +41,6 @@ class TutorProfile extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.all(10),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: cgrey.withOpacity(0.2),
@@ -49,7 +49,7 @@ class TutorProfile extends StatelessWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(top: 10),
                       child: const Text(
                         "Tutor Details",
                         textAlign: TextAlign.center,
@@ -69,18 +69,13 @@ class TutorProfile extends StatelessWidget {
                     ),
                     kHeight20,
                     ProfileDetailsWidget(
-                      title: "Joining Date",
-                      content: "",
-                    ),
-                    kHeight20,
-                    ProfileDetailsWidget(
-                      title: "Salary",
-                      content: "",
-                    ),
-                    kHeight20,
-                    ProfileDetailsWidget(
                       title: "Licence Number",
                       content: data.licenceNumber!,
+                    ),
+                    kHeight20,
+                    ProfileDetailsWidget(
+                      title: "Date of Birth",
+                      content: data.dateofBirth!,
                     ),
                     kHeight20,
                     ProfileDetailsWidget(
@@ -96,6 +91,11 @@ class TutorProfile extends StatelessWidget {
                     ProfileDetailsWidget(
                       title: "Guardian Name",
                       content: data.guardianName!,
+                    ),
+                    kHeight20,
+                    ProfileDetailsWidget(
+                      title: "RTO Name",
+                      content: data.rtoName!,
                     ),
                     kHeight20,
                   ],

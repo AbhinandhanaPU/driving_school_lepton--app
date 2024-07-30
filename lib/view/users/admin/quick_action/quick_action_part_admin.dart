@@ -6,17 +6,18 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/all_students_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/all_tutor_home_page.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/attendence/attendence_book_status_month.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/courses/courses_list.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/courses/course_list/courses_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/create_admin/admin_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/events/events_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/fees/fees_home_page.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/learners_test_page/learners_home.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/login_history/login_history.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/notices/notices_admin.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_shedule_home.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/road_test/road_test_home.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/notifications/notifications.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_schedule/practice_shedule_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/videos/video_upload.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/videos/video_list_admin.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 class QuickActionPartAdmin extends StatelessWidget {
@@ -68,18 +69,19 @@ viewallMenus(BuildContext context) {
     const AllTutorsHomePage(), // All Tutors
     const AllStudentsHomePage(), // All Students
     AdminList(), // All admins
+    CourseList(), // Course
     const DrivingHomePage(), // Driving Test
-    const PracticeSheduleHome(), // Practice shedule
-    const AdminStudyMaterials(), // Study Materials
-    const LearnersHomePage(), // Chat
-    const RoadTestHomePage(), // Road Test
-    const LearnersHomePage(), // Learners Test
-    VideosUploadPage(), // Videos
-    NoticePageAdmin(), // Notice
-    EventsListAdmin(), // Events
+    PracticeSheduleHome(), // Practice shedule
     const FeesHomePage(), // Fee
     const AttendenceBookScreenSelectMonth(), // Attendance
-    CourseList(), // Course
+    AdminStudyMaterials(), // Study Materials
+    VideosListAdmin(), // Videos
+    NoticePageAdmin(), // Notice
+    EventsListAdmin(), // Events
+    Notifications(), // notifications
+    const LearnersHomePage(), // Chat
+    const LearnersHomePage(), // Learners Test
+    const LoginHistory(), // Login history
   ];
 
   Get.bottomSheet(
@@ -99,7 +101,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      15,
+                      16,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -198,36 +200,38 @@ viewallMenus(BuildContext context) {
 }
 
 List<String> imageStd = [
-  'assets/flaticons/books.png',
+  'assets/flaticons/books.png', // tutor
   'assets/flaticons/students.png', // students
   'assets/flaticons/createadmin.png', // admin
+  'assets/flaticons/setting.png', // course
   'assets/flaticons/cone.png', // Driving Test
   'assets/flaticons/calendar.png', // practice shedule
-  'assets/flaticons/books.png', // study Materials
-  'assets/flaticons/icons8-chat-100.png', // chats
-  'assets/flaticons/road-trip.png', // road tests
-  'assets/flaticons/exam.png', // Leaners test
-  'assets/flaticons/video.png', // videos
-  'assets/flaticons/icons8-notice-100.png', // Notice
-  'assets/flaticons/events.png', // fees
   'assets/flaticons/hand.png', // fees
   'assets/flaticons/attendance.png', // Attendance
-  'assets/flaticons/setting.png',
+  'assets/flaticons/books.png', // study Materials
+  'assets/flaticons/video.png', // videos
+  'assets/flaticons/icons8-notice-100.png', // Notice
+  'assets/flaticons/events.png', // events
+  'assets/flaticons/mobile-notification.png', // Notification
+  'assets/flaticons/icons8-chat-100.png', // chats
+  'assets/flaticons/exam.png', // Leaners test
+  'assets/flaticons/user-access.png', // Login History
 ];
 List<String> stdtext = [
   'All Tutors',
   'All Students',
   'All Admins',
+  'Courses',
   'Driving Test',
   'Practice Shedule',
+  'Fees',
+  'Attendance',
   'Study Materials',
-  'Chats',
-  'Road Test',
-  'Leaners Test',
   'Videos',
   'Notices',
   'Events',
-  'Fees',
-  'Attendance',
-  'Create Course'
+  'Notification',
+  'Chats',
+  'Leaners Test',
+  'Login History',
 ];

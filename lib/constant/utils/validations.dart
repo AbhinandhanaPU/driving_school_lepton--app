@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
@@ -11,6 +13,19 @@ String stringTimeToDateConvert(String date) {
   } catch (e) {
     if (kDebugMode) {
       print(e);
+    }
+  }
+  return '';
+}
+
+String timeConvert(DateTime date) {
+  try {
+    String formattedTime = DateFormat('hh:mm:a').format(date);
+    return formattedTime;
+  } catch (e) {
+    // Handle any potential errors
+    if (kDebugMode) {
+      print('Error converting time: $e');
     }
   }
   return '';
@@ -90,4 +105,53 @@ String? checkFieldDateIsValid(String? fieldContent) {
   }
 
   return 'Date is not valid (dd-mm-yyyy)';
+}
+
+String? checkFieldTimeIsValid(String? fieldContent) {
+  if (fieldContent == null) {
+    return 'null';
+  }
+  // Define a regular expression pattern to match a time in the "h:mm am/pm" format
+  String pattern = r'^(0?[1-9]|1[0-2]):[0-5][0-9] (am|pm)$';
+  RegExp regex = RegExp(pattern, caseSensitive: false);
+
+  if (regex.hasMatch(fieldContent)) {
+    // If the time matches the pattern, further validate it for valid time values.
+    try {
+      final parts = fieldContent.split(' ');
+      final timeParts = parts[0].split(':');
+      final hour = int.tryParse(timeParts[0]);
+      final minute = int.tryParse(timeParts[1]);
+      final period = parts[1].toLowerCase();
+
+      if (hour != null && minute != null) {
+        if (hour >= 1 && hour <= 12 && minute >= 0 && minute <= 59) {
+          if (period == 'am' || period == 'pm') {
+            return null; // Valid time
+          }
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
+  return 'Time is not valid (h:mm am/pm)';
+}
+
+Future<String> timePicker(BuildContext context) async {
+  TimeOfDay? time = await showTimePicker(
+    context: context,
+    initialTime: TimeOfDay.now(),
+  );
+  if (time != null) {
+    final now = DateTime.now();
+    final formattedTime = DateFormat("h:mm a")
+        .format(DateTime(now.year, now.month, now.day, time.hour, time.minute));
+    return formattedTime;
+  } else {
+    return '';
+  }
 }
