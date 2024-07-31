@@ -6,8 +6,10 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/controller/study_materials/study_materials_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+import 'package:new_project_app/view/pages/pdf_section_screen/pdf_section_screen.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_edit.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/upload_studymaterial.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/study_materials/view_study_material/view_st_mtrl.dart';
 import 'package:new_project_app/view/users/widgets/listcard_widget/listcard_widget.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
@@ -15,7 +17,7 @@ import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_del
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class AdminStudyMaterials extends StatelessWidget {
-  AdminStudyMaterials({super.key});
+  AdminStudyMaterials({super.key}); 
 
   final studyMaterialController = Get.put(StudyMaterialController());
   @override
@@ -52,7 +54,16 @@ class AdminStudyMaterials extends StatelessWidget {
                           padding: const EdgeInsets.only(
                               left: 12, right: 12, top: 10),
                           child: ListTileCardWidget(
-                            onTap: () {},
+                            onTap: () {
+                               Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PDFSectionScreen(
+                                              urlPdf: snapshot.data!.docs[index]
+                                                  ['downloadUrl'],
+                                            )));
+                            },
                             leading: Icon(
                               Icons.note,
                               color: cblack.withOpacity(0.5),
