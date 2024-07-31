@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/responsive.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
+import 'package:new_project_app/controller/course_controller/course_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
@@ -10,8 +11,9 @@ import 'package:new_project_app/view/widgets/catagory_table_header_widget/data_c
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class CourseDetails extends StatelessWidget {
-  const CourseDetails({super.key, required this.data});
+  CourseDetails({super.key, required this.data});
   final CourseModel data;
+  final CourseController courseController = Get.put(CourseController());
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +95,17 @@ class CourseDetails extends StatelessWidget {
                   ),
                 ),
                 kHeight40,
-                ProfileDetailsWidget(title: "Total ", content: '50'),
+                StreamBuilder<int>(
+                  stream: courseController.fetchTotalStudents(data.courseId),
+                  builder: (context, snapshot) {
+                    return ProfileDetailsWidget(
+                      title: "Total students",
+                      content:
+                          snapshot.hasData ? snapshot.data.toString() : '0',
+                    );
+                  },
+                ),
+
                 kHeight20,
                 ProfileDetailsWidget(title: "Course Completed", content: '50'),
                 kHeight20,

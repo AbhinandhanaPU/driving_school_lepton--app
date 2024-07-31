@@ -39,7 +39,7 @@ class CarouselSliderAdmin extends StatelessWidget {
                     },
                     child: Container(
                       padding: EdgeInsets.only(
-                          top: 20, bottom: 20, left: 15, right: 15),
+                          top: 20, bottom: 20, left: 20, right: 20),
                       decoration: const BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -53,16 +53,16 @@ class CarouselSliderAdmin extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Flexible(
                                 child: Text(
                                   '${data.courseName}',
                                   style: TextStyle(
-                                      fontSize: 16.sp,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              Spacer(),
                               Icon(
                                 Icons.group,
                                 color: themeColor,
@@ -77,58 +77,52 @@ class CarouselSliderAdmin extends StatelessWidget {
                           //       fontSize: 15.sp,
                           //       fontWeight: FontWeight.bold),
                           // ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15, right: 15),
-                            child: Row(
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      '${data.duration} Days',
-                                      style: TextStyle(
-                                          color: themeColor,
-                                          fontSize: 20.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      'Duration',
-                                      style: TextStyle(
-                                          color: cgrey,
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                Column(
-                                  children: [
-                                    Text(
-                                      '${data.rate} /-',
-                                      style: TextStyle(
-                                          color: themeColor,
-                                          fontSize: 20.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      'Fee',
-                                      style: TextStyle(
-                                          color: cgrey,
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    '${data.duration} Days',
+                                    style: TextStyle(
+                                        color: themeColor,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    'Duration',
+                                    style: TextStyle(
+                                        color: cgrey,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                              Column(
+                                children: [
+                                  Text(
+                                    '${data.rate} /-',
+                                    style: TextStyle(
+                                        color: themeColor,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    'Fee',
+                                    style: TextStyle(
+                                        color: cgrey,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
                   ),
                 ),
-                Text(
-                  "Tap to View",
-                )
               ],
             );
           }).toList();

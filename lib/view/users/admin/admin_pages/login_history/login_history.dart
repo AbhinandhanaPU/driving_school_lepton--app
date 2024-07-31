@@ -22,8 +22,6 @@ class LoginHistory extends StatefulWidget {
 }
 
 class _LoginHistoryState extends State<LoginHistory> {
-  final adminLoginHistroyController = Get.find<AdminLoginHistroyController>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,19 +76,23 @@ class _LoginHistoryState extends State<LoginHistory> {
             ),
             Expanded(
               child: Obx(() {
-                final monthValue =
-                    adminLoginHistroyController.loginHMonthValue.value;
-                final dayValue =
-                    adminLoginHistroyController.loginHDayValue.value;
                 return StreamBuilder(
                   stream: server
                       .collection('DrivingSchoolCollection')
                       .doc(UserCredentialsController.schoolId)
                       .collection('LoginHistory')
-                      .doc(monthValue)
-                      .collection(monthValue)
-                      .doc(dayValue)
-                      .collection(dayValue)
+                      .doc(Get.find<AdminLoginHistroyController>()
+                          .loginHMonthValue
+                          .value)
+                      .collection(Get.find<AdminLoginHistroyController>()
+                          .loginHMonthValue
+                          .value)
+                      .doc(Get.find<AdminLoginHistroyController>()
+                          .loginHDayValue
+                          .value)
+                      .collection(Get.find<AdminLoginHistroyController>()
+                          .loginHDayValue
+                          .value)
                       .orderBy('loginTime', descending: true)
                       .snapshots(),
                   builder: (context, snapshot) {
