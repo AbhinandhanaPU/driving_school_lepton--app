@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
+
 import 'package:new_project_app/view/users/student/drawer/student_header_drawer.dart';
 import 'package:new_project_app/view/users/student/student_home_page/student_dashboard.dart';
 
 class StudentsMainHomeScreen extends StatefulWidget {
-  const StudentsMainHomeScreen({super.key});
+   StudentsMainHomeScreen({super.key});
 
   @override
   State<StudentsMainHomeScreen> createState() => _StudentsMainHomeScreenState();
@@ -14,6 +16,7 @@ class StudentsMainHomeScreen extends StatefulWidget {
 class _StudentsMainHomeScreenState extends State<StudentsMainHomeScreen> {
   @override
   void initState() {
+    
     super.initState();
   }
 
@@ -27,7 +30,7 @@ class _StudentsMainHomeScreenState extends State<StudentsMainHomeScreen> {
             foregroundColor: cWhite,
             title: const Text("Driving School"),
             backgroundColor: themeColor),
-        body: const StudentDashboard(),
+        body:    StudentDashboard(),
         drawer: Drawer(
           backgroundColor: Colors.white,
           child: SingleChildScrollView(

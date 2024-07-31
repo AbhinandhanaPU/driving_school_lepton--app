@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:new_project_app/constant/images/images.dart';
@@ -11,8 +12,9 @@ import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/admin_model/admin_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
+import 'package:new_project_app/service/push_notifications/notification_services.dart';
 import 'package:new_project_app/view/home/first_screen/first_screen.dart';
- import 'package:new_project_app/view/users/admin/admin_home_page/admin_home_page.dart';
+import 'package:new_project_app/view/users/admin/admin_home_page/admin_home_page.dart';
 import 'package:new_project_app/view/users/student/student_home_page/student_home_page.dart';
 import 'package:new_project_app/view/users/teacher/teacher_home_page/teacher_home_page.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_montserrat.dart';
@@ -25,10 +27,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  NotificationServices notificationServices = NotificationServices();
   @override
   void initState() {
     super.initState();
     nextpage(context);
+    userRequestPermission();
+    notificationServices.firebaseInit(context);
+    notificationServices.setupInteractMessage(context);
   }
 
   @override
@@ -172,7 +178,7 @@ Future<void> checkStudent(
         StudentModel.fromMap(studentData.data()!);
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
-        return const StudentsMainHomeScreen();
+        return StudentsMainHomeScreen();
       },
     ));
   } else {
@@ -210,5 +216,26 @@ Future<void> checkTeacher(
         return const FirstScreen();
       },
     ));
+  }
+}
+
+void userRequestPermission() async {
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    log('User granted permission');
+  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+    log('User granted provisional permission');
+  } else {
+    log('User declined or has not accepted permission');
   }
 }
