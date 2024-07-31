@@ -133,7 +133,7 @@ class CarouselSliderAdmin extends StatelessWidget {
               enableInfiniteScroll: false,
               height: 200.w,
               enlargeCenterPage: true,
-              autoPlay: false,
+              autoPlay: true,
               autoPlayInterval: const Duration(seconds: 2),
               autoPlayAnimationDuration: const Duration(milliseconds: 800),
               autoPlayCurve: Curves.fastOutSlowIn,

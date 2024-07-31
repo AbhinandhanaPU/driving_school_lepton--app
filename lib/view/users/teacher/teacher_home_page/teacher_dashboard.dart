@@ -1,8 +1,10 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
+import 'package:new_project_app/controller/push_notificationController/pushnotificationController.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/student/student_pages/notifications.dart';
 import 'package:new_project_app/view/users/student/student_pages/quick_action/quick_action_widgets.dart';
@@ -18,6 +20,8 @@ class TeacherDashboard extends StatefulWidget {
 }
 
 class _TeacherDashboardState extends State<TeacherDashboard> {
+    final PushNotificationController pushNotificationController =
+      Get.put(PushNotificationController());
   @override
   void initState() {
     super.initState();
@@ -25,6 +29,11 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
 
   @override
   Widget build(BuildContext context) {
+            pushNotificationController.getUserDeviceID().then((value) {
+      pushNotificationController.allUSerDeviceID(
+          UserCredentialsController.userRole!,
+          UserCredentialsController.currentUSerID!);
+    });
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 244, 244, 244),
       body: SafeArea(

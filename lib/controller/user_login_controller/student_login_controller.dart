@@ -49,7 +49,7 @@ class StudentLoginController extends GetxController {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return const StudentsMainHomeScreen();
+                  return  StudentsMainHomeScreen();
                 },
               ),
             );
