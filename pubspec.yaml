@@ -51,7 +51,7 @@ dependencies:
   carousel_slider:
   firebase_core:
   firebase_auth:
-  firebase_ui_auth: 
+  firebase_ui_auth:
   cloud_firestore:
   progress_state_button:
   uuid:
