@@ -23,8 +23,8 @@ class PracticeSheduleController extends GetxController {
   TextEditingController startTimeController = TextEditingController();
   TextEditingController endTimeController = TextEditingController();
 
-  RxBool onTapSchedule = false.obs;
   RxString scheduleId = ''.obs;
+  List<StudentModel> studentList = [];
 
   Future<void> createPracticeShedule() async {
     final uuid = const Uuid().v1();
@@ -159,5 +159,23 @@ class PracticeSheduleController extends GetxController {
         .collection('Students');
 
     return coursesRef.snapshots().map((snapshot) => snapshot.docs.length);
+  }
+
+  Future<void> fetchStudents(String courseId) async {
+    try {
+      log("fetchStudents......................");
+      final data = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('PracticeSchedule')
+          .doc(courseId)
+          .collection('Students')
+          .get();
+      studentList =
+          data.docs.map((e) => StudentModel.fromMap(e.data())).toList();
+      log(studentList[0].toString());
+    } catch (e) {
+      showToast(msg: "User Data Error");
+    }
   }
 }

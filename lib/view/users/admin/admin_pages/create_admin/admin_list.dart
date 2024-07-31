@@ -162,7 +162,7 @@ class AdminList extends StatelessWidget {
                   },
                 ));
               },
-              child: ButtonContainerWidgetRed(
+              child: ButtonContainerWidget(
                   curving: 30,
                   colorindex: 0,
                   height: 40,

@@ -51,7 +51,6 @@ class ButtonContainerWidget extends StatelessWidget {
 class ButtonContainerWidgetRed extends StatelessWidget {
   EdgeInsetsGeometry? margin;
   double curving;
-  int colorindex;
   double height;
   double width;
   Widget? child;
@@ -59,7 +58,6 @@ class ButtonContainerWidgetRed extends StatelessWidget {
   ButtonContainerWidgetRed({
     required this.curving,
     this.child,
-    required this.colorindex,
     required this.height,
     required this.width,
     this.margin,
@@ -75,7 +73,7 @@ class ButtonContainerWidgetRed extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: containerColor[colorindex].first.withOpacity(0.4),
+            color: Color.fromARGB(255, 211, 52, 76).withOpacity(0.4),
             blurRadius: 8,
             spreadRadius: 2,
             offset: const Offset(4, 4),

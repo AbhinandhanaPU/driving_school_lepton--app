@@ -4,18 +4,21 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
+import 'package:new_project_app/controller/practice_shedule_controller/practice_shedule_controller.dart';
 import 'package:new_project_app/controller/student_controller/student_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
-class AllStudentList extends StatelessWidget {
+class StudentDataList extends StatelessWidget {
   final StudentModel data;
 
-  AllStudentList({
+  StudentDataList({
     super.key,
     required this.data,
   });
+  final PracticeSheduleController practiceSheduleController =
+      Get.put(PracticeSheduleController());
   final StudentController studentController = Get.put(StudentController());
 
   @override
@@ -52,40 +55,43 @@ class AllStudentList extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              Row(
-                children: [
-                  Transform.scale(
-                    scale: 0.65,
-                    child: Switch(
-                      activeColor: Colors.green,
-                      value: data.status == 'active',
-                      onChanged: (value) {
-                        final newStatus = value ? 'active' : 'inactive';
-                        studentController.updateStudentStatus(data, newStatus);
-                      },
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      customDeleteShowDialog(
-                        context: context,
-                        onTap: () {
-                          studentController
-                              .deleteStudents(data)
-                              .then((value) => Navigator.pop(context));
-                        },
-                      );
+              IconButton(
+                onPressed: () {
+                  customDeleteShowDialog(
+                    context: context,
+                    onTap: () {
+                      practiceSheduleController
+                          .deleteStudent(docId: data.docid)
+                          .then((value) => Navigator.pop(context));
                     },
-                    icon: Icon(Icons.delete_outline),
-                    iconSize: 25,
-                    color: cred,
-                    padding: EdgeInsets.all(0),
-                  ),
-                ],
+                  );
+                },
+                icon: Icon(Icons.delete_outline),
+                iconSize: 25,
+                color: cred,
+                padding: EdgeInsets.all(0),
               ),
             ],
           ),
           kHeight10,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFontWidget(
+                text: 'Completed Days : ',
+                fontsize: 17.h,
+                fontWeight: FontWeight.w400,
+                color: cblack,
+              ),
+              TextFontWidget(
+                text: '0',
+                fontsize: 18.h,
+                fontWeight: FontWeight.bold,
+                color: themeColor,
+              ),
+            ],
+          ),
+          kHeight20,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

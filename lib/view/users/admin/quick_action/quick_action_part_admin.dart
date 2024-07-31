@@ -67,7 +67,7 @@ viewallMenus(BuildContext context) {
   int columnCount = 3;
   final screenNavigationOfAdmin = [
     const AllTutorsHomePage(), // All Tutors
-    const AllStudentsHomePage(), // All Students
+    AllStudentsHomePage(), // All Students
     AdminList(), // All admins
     CourseList(), // Course
     const DrivingHomePage(), // Driving Test
