@@ -32,7 +32,7 @@ class ProfileDetailsWidget extends StatelessWidget {
           width: ResponsiveApp.width / 2.5,
           child: Text(
             content,
-            style: TextStyle(fontSize: ResponsiveApp.width * .04),
+            style: TextStyle(fontSize: ResponsiveApp.width * .040),
           ),
         ),
       ],
