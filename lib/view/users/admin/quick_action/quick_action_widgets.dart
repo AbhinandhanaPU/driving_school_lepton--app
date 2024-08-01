@@ -1,8 +1,8 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/batch/batch_files/batch_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/notifications/notifications.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_schedule/practice_shedule_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
 
@@ -149,7 +149,7 @@ class QuickActionsWidgetChat extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return Notifications();
+                  return BatchHome();
                 },
               ),
             ),
@@ -161,13 +161,13 @@ class QuickActionsWidgetChat extends StatelessWidget {
                   border: Border.all(color: cblack.withOpacity(0.2)),
                   borderRadius: BorderRadius.circular(10)),
               child: Image.asset(
-                'assets/flaticons/mobile-notification.png',
+                'assets/flaticons/batch-processing.png',
                 scale: 2.5,
               ),
             ),
           ),
           Text(
-            "NOtification",
+            "Batches",
             style: TextStyle(fontSize: 12.sp),
           )
         ],
