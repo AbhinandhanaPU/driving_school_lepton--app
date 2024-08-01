@@ -43,11 +43,11 @@ class CourseModel {
 
   factory CourseModel.fromMap(Map<String, dynamic> map) {
     return CourseModel(
-      courseName: map['courseName'] as String,
-      courseDes: map['courseDes'] as String,
-      duration: map['duration'] as String,
-      rate: map['rate'] as String,
-      courseId: map['courseId'] as String,
+      courseName: map['courseName'] ??"",
+      courseDes: map['courseDes'] ??"",
+      duration: map['duration'] ??"",
+      rate: map['rate'] ??"",
+      courseId: map['courseId'] ??"",
     );
   }
 
