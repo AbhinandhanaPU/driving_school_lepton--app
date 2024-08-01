@@ -23,6 +23,7 @@ class CourseController extends GetxController {
   TextEditingController editcourseRateController = TextEditingController();
 
   RxInt totalStudents = 0.obs;
+  List<StudentModel> studentList = [];
 
   Rx<ButtonState> buttonstate = ButtonState.idle.obs;
 
@@ -182,5 +183,48 @@ class CourseController extends GetxController {
         .collection('Students');
 
     return coursesRef.snapshots().map((snapshot) => snapshot.docs.length);
+  }
+
+  Future<void> deleteStudentsFromCourse(StudentModel studentModel) async {
+    try {
+      final data = courseModelData.value;
+      if (data!.courseId != '') {
+        // Delete the student from each course
+        await server
+            .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection("Courses")
+            .doc(data.courseId)
+            .collection('Students')
+            .doc(studentModel.docid)
+            .delete()
+            .then((value) {
+          log("Student deleted from course: ${data.courseId}");
+          Get.back();
+        });
+      } else {
+        log("No courses found");
+      }
+    } catch (e) {
+      log("Student deletion error:$e");
+    }
+  }
+
+  Future<void> fetchStudentsCourse(String courseId) async {
+    try {
+      log("fetchStudents......................");
+      final data = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Courses')
+          .doc(courseId)
+          .collection('Students')
+          .get();
+      studentList =
+          data.docs.map((e) => StudentModel.fromMap(e.data())).toList();
+      log(studentList[0].toString());
+    } catch (e) {
+      showToast(msg: "User Data Error");
+    }
   }
 }

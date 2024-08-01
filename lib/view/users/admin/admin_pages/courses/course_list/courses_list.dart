@@ -50,6 +50,7 @@ class CourseList extends StatelessWidget {
                               snapshot.data!.docs[index].data());
                           return GestureDetector(
                             onTap: () {
+                              courseController.setCourseData(data);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
+import 'package:new_project_app/controller/course_controller/course_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/courses/course_list/course_details.dart';
 
 class CarouselSliderAdmin extends StatelessWidget {
   CarouselSliderAdmin({super.key});
+
+  final CourseController courseController = Get.put(CourseController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +31,8 @@ class CarouselSliderAdmin extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
+                      courseController.setCourseData(data);
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -130,7 +135,7 @@ class CarouselSliderAdmin extends StatelessWidget {
           return CarouselSlider(
             items: courses,
             options: CarouselOptions(
-              enableInfiniteScroll: false,
+              enableInfiniteScroll: true,
               height: 200.w,
               enlargeCenterPage: true,
               autoPlay: true,
