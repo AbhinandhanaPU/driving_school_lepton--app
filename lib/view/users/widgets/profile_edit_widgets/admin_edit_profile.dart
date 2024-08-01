@@ -396,8 +396,8 @@ class AdminCircleAvatarImgeWidget extends StatelessWidget {
                         actions: [
                           TextButton(
                               onPressed: () {
-                                // Get.find<AdminProfileEditController>()
-                                //     .updateprofilePicture();
+                                Get.find<AdminProfileEditController>()
+                                    .updateStudentProfilePicture();
                               },
                               child: Text('Update'.tr)),
                           TextButton(
