@@ -36,38 +36,50 @@ class FeesHomePage extends StatelessWidget {
                           children: [
                             Expanded(
                                 flex: 4,
-                                child: CatrgoryTableHeaderWidget(headerTitle: 'Student Name')),
+                                child: CatrgoryTableHeaderWidget(
+                                    headerTitle: 'Student Name')),
                             SizedBox(
                               width: 2,
                             ),
-                            Expanded(flex: 3, child: CatrgoryTableHeaderWidget(headerTitle: 'Fee')),
+                            Expanded(
+                                flex: 3,
+                                child: CatrgoryTableHeaderWidget(
+                                    headerTitle: 'Fee')),
                             SizedBox(
                               width: 2,
                             ),
                             Expanded(
                                 flex: 6,
-                                child: CatrgoryTableHeaderWidget(headerTitle: 'Advance Amount')),
+                                child: CatrgoryTableHeaderWidget(
+                                    headerTitle: 'Advance Amount')),
                             SizedBox(
                               width: 2,
                             ),
                             Expanded(
                                 flex: 6,
-                                child: CatrgoryTableHeaderWidget(headerTitle: 'Pending Amount')),
+                                child: CatrgoryTableHeaderWidget(
+                                    headerTitle: 'Pending Amount')),
                             SizedBox(
                               width: 2,
                             ),
                             Expanded(
-                                flex: 4, child: CatrgoryTableHeaderWidget(headerTitle: 'Due Date')),
+                                flex: 4,
+                                child: CatrgoryTableHeaderWidget(
+                                    headerTitle: 'Due Date')),
                             SizedBox(
                               width: 2,
                             ),
                             Expanded(
-                                flex: 4, child: CatrgoryTableHeaderWidget(headerTitle: 'Status')),
+                                flex: 4,
+                                child: CatrgoryTableHeaderWidget(
+                                    headerTitle: 'Status')),
                             SizedBox(
                               width: 2,
                             ),
                             Expanded(
-                                flex: 4, child: CatrgoryTableHeaderWidget(headerTitle: 'Paid')),
+                                flex: 4,
+                                child: CatrgoryTableHeaderWidget(
+                                    headerTitle: 'Paid')),
                           ],
                         ),
                       ),
@@ -117,7 +129,6 @@ class FeesHomePage extends StatelessWidget {
               },
               child: ButtonContainerWidgetRed(
                 curving: 30,
-                colorindex: 0,
                 height: 40,
                 width: 140,
                 child: const Center(

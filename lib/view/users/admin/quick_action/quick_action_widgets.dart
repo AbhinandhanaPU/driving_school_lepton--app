@@ -21,7 +21,7 @@ class QuickActionsWidgetDrivingTestAdmin extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return const DrivingHomePage();
+                return  DrivingHomePage();
               },
             )),
             child: Container(

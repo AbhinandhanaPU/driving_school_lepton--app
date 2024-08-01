@@ -1,106 +1,87 @@
-import 'package:flutter/material.dart';
-import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/all_students/student_profile.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_list.dart';
+// ignore_for_file: must_be_immutable
 
-import 'package:new_project_app/view/widgets/catagory_table_header_widget/catagory_table_header_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/constant/sizes/sizes.dart';
+import 'package:new_project_app/constant/utils/firebase/firebase.dart';
+import 'package:new_project_app/controller/student_controller/student_controller.dart';
+import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+import 'package:new_project_app/model/student_model/student_model.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/all_students/all_students_list.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/all_students/search_students/search_student_name.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/all_students/student_profile.dart';
+import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
+import 'package:new_project_app/view/widgets/loading_widget/loading_widget.dart';
 
 class AllStudentsHomePage extends StatelessWidget {
-  const AllStudentsHomePage({super.key});
+  AllStudentsHomePage({super.key});
+  final StudentController studentController = Get.put(StudentController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Students'),
         foregroundColor: cWhite,
-        backgroundColor: themeColor,
+        title: Text(
+          "All Students".tr,
+        ),
+        flexibleSpace: const AppBarColorWidget(),
+        actions: [
+          IconButton(
+            onPressed: () {
+              searchStudentsByName(context);
+            },
+            icon: Icon(Icons.search),
+            iconSize: 30,
+          ),
+          kWidth20
+        ],
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
-          child: Container(
-            height: 1200,
-            width: 600,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Container(
-                    color: cWhite,
-                    height: 40,
-                    child: const Row(
-                      children: [
-                        Expanded(flex: 4, child: CatrgoryTableHeaderWidget(headerTitle: 'Name')),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Expanded(
-                            flex: 6, child: CatrgoryTableHeaderWidget(headerTitle: 'Joining Date')),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Expanded(
-                            flex: 6,
-                            child: CatrgoryTableHeaderWidget(headerTitle: 'Completed Days')),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Expanded(
-                            flex: 6, child: CatrgoryTableHeaderWidget(headerTitle: 'Test Date')),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Expanded(flex: 4, child: CatrgoryTableHeaderWidget(headerTitle: 'Review')),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Expanded(flex: 4, child: CatrgoryTableHeaderWidget(headerTitle: 'Result')),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  // Use Expanded to take up remaining space for the list
-                  child: Container(
-                    // width: 1200,
-                    decoration: BoxDecoration(
-                      color: cWhite,
-                      border: Border.all(color: cWhite),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5, right: 5),
-                      child: ListView.separated(
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return StudentProfile();
-                            },
-                          ));
-                            },
-                            child: DrivingTestStudentList(index: index
-                                // data: data,
-                                ),
+      body: Column(
+        children: [
+          Expanded(
+            child: StreamBuilder(
+              stream: server
+                  .collection('DrivingSchoolCollection')
+                  .doc(UserCredentialsController.schoolId)
+                  .collection('Students')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final data = StudentModel.fromMap(
+                          snapshot.data!.docs[index].data());
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StudentProfile(
+                                data: data,
+                              ),
+                            ),
                           );
                         },
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(
-                            height: 2,
-                          );
-                        },
-                        itemCount: 2, // Replace this with the actual number of items
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                        child: AllStudentList(data: data),
+                      );
+                    },
+                  );
+                } else {
+                  return const LoadingWidget();
+                }
+              },
             ),
           ),
-        ),
+        ],
       ),
     );
+  }
+
+  Future<void> searchStudentsByName(BuildContext context) async {
+    studentController.fetchAllStudents();
+    await showSearch(context: context, delegate: AllStudentSearchByName());
   }
 }
