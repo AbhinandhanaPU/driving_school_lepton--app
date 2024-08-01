@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
@@ -43,7 +42,7 @@ class AdminProfileEditController extends GetxController {
     }
   }
 
-  Future<void> updateStudentProfilePicture() async {
+  Future<void> updateProfilePicture() async {
     try {
       if (Get.find<GetImage>().pickedImage.value.isNotEmpty) {
         isLoading.value = true;
@@ -55,23 +54,18 @@ class AdminProfileEditController extends GetxController {
         await server
             .collection("DrivingSchoolCollection")
             .doc(UserCredentialsController.schoolId)
-            .update({"profileImageUrl": imageUrl});
+            .update({"profileImageUrl": imageUrl}).then((value) async {
+          isLoading.value = false;
+          Get.find<GetImage>().pickedImage.value = "";
+          final studentData = await server
+              .collection("DrivingSchoolCollection")
+              .doc(UserCredentialsController.schoolId)
+              .get();
 
-        FirebaseFirestore.instance
-            .collection("DrivingSchoolCollection")
-            .doc(UserCredentialsController.schoolId)
-            .update({"profileImageUrl": imageUrl});
-        showToast(msg: "Update successfully");
-        isLoading.value = false;
-        Get.find<GetImage>().pickedImage.value = "";
-        final studentData = await server
-            .collection("DrivingSchoolCollection")
-            .doc(UserCredentialsController.schoolId)
-            .get();
-
-        if (studentData.data() != null) {
-          UserCredentialsController.adminModel = AdminModel.fromMap(studentData.data()!);
-        }
+          if (studentData.data() != null) {
+            UserCredentialsController.adminModel = AdminModel.fromMap(studentData.data()!);
+          }
+        });
       }
     } catch (e) {
       isLoading.value = false;
