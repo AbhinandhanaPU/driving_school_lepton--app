@@ -6,7 +6,6 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/controller/practice_shedule_controller/practice_shedule_controller.dart';
 import 'package:new_project_app/model/practice_shedule_model/practice_shedule_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/crud_functions/practice_shedule_edit.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practise_std_list/all_practise_stdlist.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
@@ -23,9 +22,9 @@ class PracticeSheduleList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.to(()=>AllPractiseScheduleStudentList(id: data));
-      },
+      // onTap: () {
+      //   Get.to(()=>AllPractiseScheduleStudentList(id: data));
+      // },
       child: Container(
         margin: EdgeInsets.only(
           top: 15,
@@ -69,8 +68,8 @@ class PracticeSheduleList extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          practiceshedulecontroller.practiceNameController.text =
-                              data.practiceName;
+                          practiceshedulecontroller
+                              .practiceNameController.text = data.practiceName;
                           practiceshedulecontroller.startTimeController.text =
                               data.startTime;
                           practiceshedulecontroller.endTimeController.text =
