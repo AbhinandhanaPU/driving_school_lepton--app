@@ -6,10 +6,10 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/push_notificationController/pushnotificationController.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/users/student/student_pages/notifications.dart';
-import 'package:new_project_app/view/users/student/student_pages/quick_action/quick_action_widgets.dart';
-import 'package:new_project_app/view/users/student/student_pages/slider/carousal_slider.dart';
-import 'package:new_project_app/view/users/teacher/teacher_pages/quick_action/quick_action_part_teacher.dart';
+import 'package:new_project_app/view/users/teacher/quick_action/quick_action_part_teacher.dart';
+import 'package:new_project_app/view/users/teacher/quick_action/quick_action_widgets_teacher.dart';
+import 'package:new_project_app/view/users/teacher/slider/carousal_slider.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/notifications.dart';
 import 'package:new_project_app/view/users/widgets/profile_edit_widgets/teacher_edit_profile.dart';
 
 class TeacherDashboard extends StatefulWidget {
@@ -20,7 +20,7 @@ class TeacherDashboard extends StatefulWidget {
 }
 
 class _TeacherDashboardState extends State<TeacherDashboard> {
-    final PushNotificationController pushNotificationController =
+  final PushNotificationController pushNotificationController =
       Get.put(PushNotificationController());
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
 
   @override
   Widget build(BuildContext context) {
-            pushNotificationController.getUserDeviceID().then((value) {
+    pushNotificationController.getUserDeviceID().then((value) {
       pushNotificationController.allUSerDeviceID(
           UserCredentialsController.userRole!,
           UserCredentialsController.currentUSerID!);
@@ -47,20 +47,23 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                   color: themeColor.withOpacity(0.1),
                   // const Color.fromARGB(255, 218, 247, 229),
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.sp), topRight: Radius.circular(15.sp)),
+                      topLeft: Radius.circular(15.sp),
+                      topRight: Radius.circular(15.sp)),
                 ),
                 child: ListView(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 120.sp, right: 20.sp, left: 20.sp),
+                      padding: EdgeInsets.only(
+                          top: 120.sp, right: 20.sp, left: 20.sp),
                       child: const QuickActionPartTeacher(),
                     ),
                     ////////////////////////////////////////////////////////all tab part
                     Padding(
-                      padding: EdgeInsets.only(top: 80.sp, right: 20.sp, left: 20.sp),
-                      child: const NotificationPartOfStd(),
+                      padding: EdgeInsets.only(
+                          top: 80.sp, right: 20.sp, left: 20.sp),
+                      child: const NotificationPartOfTcr(),
                     ),
                     //////////////////////////////////////////////////////// notifications
                   ],
@@ -69,7 +72,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 60.sp, right: 10.sp, left: 10.sp),
-              child: const CarouselSliderStd(),
+              child: const CarouselSliderTcr(),
             ),
             //////////////////////////////////////////////////////details showing graph
             SizedBox(
@@ -89,11 +92,12 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                           backgroundImage: UserCredentialsController
                                           .teacherModel?.profileImageUrl ==
                                       null ||
-                                  UserCredentialsController.teacherModel!.profileImageUrl!.isEmpty
+                                  UserCredentialsController
+                                      .teacherModel!.profileImageUrl!.isEmpty
                               ? const AssetImage(assetImagePathPerson)
-                              : NetworkImage(
-                                      UserCredentialsController.teacherModel?.profileImageUrl ?? "")
-                                  as ImageProvider,
+                              : NetworkImage(UserCredentialsController
+                                      .teacherModel?.profileImageUrl ??
+                                  "") as ImageProvider,
                           onBackgroundImageError: (exception, stackTrace) {},
                           radius: 25,
                         ),
@@ -107,7 +111,9 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                         child: SizedBox(
                             width: 200,
                             child: Text(
-                              UserCredentialsController.teacherModel?.teacherName ?? "",
+                              UserCredentialsController
+                                      .teacherModel?.teacherName ??
+                                  "",
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
                                 fontSize: 17.sp,
