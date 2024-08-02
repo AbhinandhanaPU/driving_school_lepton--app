@@ -4,21 +4,20 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
-import 'package:new_project_app/controller/practice_shedule_controller/practice_shedule_controller.dart';
+import 'package:new_project_app/controller/course_controller/course_controller.dart';
 import 'package:new_project_app/controller/student_controller/student_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
-class StudentDataList extends StatelessWidget {
+class CourseStudentDataList extends StatelessWidget {
   final StudentModel data;
 
-  StudentDataList({
+  CourseStudentDataList({
     super.key,
     required this.data,
   });
-  final PracticeSheduleController practiceSheduleController =
-      Get.put(PracticeSheduleController());
+  final CourseController courseController = Get.put(CourseController());
   final StudentController studentController = Get.put(StudentController());
 
   @override
@@ -60,8 +59,8 @@ class StudentDataList extends StatelessWidget {
                   customDeleteShowDialog(
                     context: context,
                     onTap: () {
-                      practiceSheduleController
-                          .deleteStudent(docId: data.docid)
+                      courseController
+                          .deleteStudentsFromCourse(data)
                           .then((value) => Navigator.pop(context));
                     },
                   );

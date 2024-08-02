@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:new_project_app/controller/practice_shedule_controller/practice_shedule_controller.dart';
+import 'package:new_project_app/controller/course_controller/course_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/student_profile.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/students_list/practise_std_datalist.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/courses/course_std_list/course_std_datalist.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
-class SearchStudentByNamePS extends SearchDelegate {
+class SearchCourseStudents extends SearchDelegate {
   @override
   List<Widget>? buildActions(BuildContext context) {
     IconButton(
@@ -34,9 +34,9 @@ class SearchStudentByNamePS extends SearchDelegate {
     final List<StudentModel> suggestionList;
 
     if (query.isEmpty) {
-      suggestionList = Get.find<PracticeSheduleController>().studentList;
+      suggestionList = Get.find<CourseController>().studentList;
     } else {
-      suggestionList = Get.find<PracticeSheduleController>()
+      suggestionList = Get.find<CourseController>()
           .studentList
           .where((item) =>
               item.studentName.toLowerCase().contains(query.toLowerCase()))
@@ -67,7 +67,7 @@ class SearchStudentByNamePS extends SearchDelegate {
                   ),
                 );
               },
-              child: PracticeStudentDataList(data: data),
+              child: CourseStudentDataList(data: data),
             );
           },
           separatorBuilder: (context, index) {

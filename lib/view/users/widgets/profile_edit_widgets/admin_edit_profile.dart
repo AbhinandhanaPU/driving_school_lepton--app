@@ -106,6 +106,7 @@ class _AdminProfileEditPageState extends State<AdminProfileEditPage> {
                               updateValue: 'adminName',
                               validator: checkFieldEmpty,
                             );
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -133,11 +134,13 @@ class _AdminProfileEditPageState extends State<AdminProfileEditPage> {
                             adminProfileEditController.textEditingController.text =
                                 UserCredentialsController.adminModel?.phoneNumber ?? "";
                             await changeAdminData(
-                                context: context,
-                                hintText: 'Phone Number',
-                                updateValue: 'phoneNumber',
-                                validator: checkFieldPhoneNumberIsValid,
-                                textInputType: TextInputType.number);
+                              context: context,
+                              hintText: 'Phone Number',
+                              updateValue: 'phoneNumber',
+                              validator: checkFieldPhoneNumberIsValid,
+                              textInputType: TextInputType.number,
+                            );
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -186,6 +189,7 @@ class _AdminProfileEditPageState extends State<AdminProfileEditPage> {
                               updateValue: 'address',
                               validator: checkFieldEmpty,
                             );
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -218,6 +222,7 @@ class _AdminProfileEditPageState extends State<AdminProfileEditPage> {
                               updateValue: 'place',
                               validator: checkFieldEmpty,
                             );
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -250,6 +255,7 @@ class _AdminProfileEditPageState extends State<AdminProfileEditPage> {
                               updateValue: 'schoolName',
                               validator: checkFieldEmpty,
                             );
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -282,6 +288,7 @@ class _AdminProfileEditPageState extends State<AdminProfileEditPage> {
                               updateValue: 'schoolCode',
                               validator: checkFieldEmpty,
                             );
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -318,6 +325,7 @@ class _AdminProfileEditPageState extends State<AdminProfileEditPage> {
                               updateValue: 'schoolLicenceNumber',
                               textInputType: TextInputType.number,
                             );
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -396,8 +404,12 @@ class AdminCircleAvatarImgeWidget extends StatelessWidget {
                         actions: [
                           TextButton(
                               onPressed: () {
-                                // Get.find<AdminProfileEditController>()
-                                //     .updateprofilePicture();
+                                Get.find<AdminProfileEditController>()
+                                    .updateProfilePicture()
+                                    .then((value) {
+                                  Get.back();
+                                  Get.back();
+                                });
                               },
                               child: Text('Update'.tr)),
                           TextButton(
@@ -452,7 +464,7 @@ changeAdminData({
           actions: <Widget>[
             TextButton(
               child: const Text('Cancel'),
-              onPressed: () {
+              onPressed: () {    
                 Navigator.of(context).pop();
               },
             ),

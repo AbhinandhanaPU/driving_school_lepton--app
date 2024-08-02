@@ -10,7 +10,7 @@ import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/student_profile.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/crud_functions/add_std_practise.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/crud_functions/search_student_name.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/students_list/students_datalist.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/students_list/practise_std_datalist.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 import 'package:new_project_app/view/widgets/loading_widget/loading_widget.dart';
@@ -96,7 +96,7 @@ class PracticalStudentsList extends StatelessWidget {
                                 ),
                               );
                             },
-                            child: StudentDataList(
+                            child: PracticeStudentDataList(
                               data: data,
                             ),
                           );
@@ -136,6 +136,6 @@ class PracticalStudentsList extends StatelessWidget {
   Future<void> searchStudentsByName(
       BuildContext context, String practiceId) async {
     practiceSheduleController.fetchStudents(practiceId);
-    await showSearch(context: context, delegate: SearchStudentByName());
+    await showSearch(context: context, delegate: SearchStudentByNamePS());
   }
 }
