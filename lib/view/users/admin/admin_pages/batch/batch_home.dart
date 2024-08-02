@@ -25,7 +25,7 @@ class BatchHome extends StatelessWidget {
       appBar: AppBar(
         foregroundColor: cWhite,
         title: Text(
-          "Batch".tr,
+          "All Batch".tr,
         ),
         flexibleSpace: const AppBarColorWidget(),
       ),

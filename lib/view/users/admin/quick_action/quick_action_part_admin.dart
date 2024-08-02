@@ -6,7 +6,7 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/all_students_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/all_tutor_home_page.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/attendence/attendence_book_status_month.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/batch/batch_files/batch_home.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/batch/batch_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/courses/course_list/courses_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/create_admin/admin_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
