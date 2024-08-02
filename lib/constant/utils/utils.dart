@@ -20,6 +20,30 @@ Future<String> dateTimePicker(BuildContext context) async {
   }
 }
 
+void showToast1({required String msg}) {
+  Fluttertoast.showToast(
+    msg: msg,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.CENTER,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Color.fromARGB(255, 92, 198, 95),
+    textColor: Colors.white,
+    fontSize: 16.0.sp,
+  );
+}
+
+void showToast2({required String msg}) {
+  Fluttertoast.showToast(
+    msg: msg,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.CENTER,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Color.fromARGB(255, 224, 65, 54),
+    textColor: Colors.white,
+    fontSize: 16.0.sp,
+  );
+}
+
 void showToast({required String msg}) {
   Fluttertoast.showToast(
     msg: msg,
@@ -41,9 +65,7 @@ Future<bool> onbackbuttonpressed(BuildContext context) async {
         title: const Text('Alert'),
         content: const SingleChildScrollView(
           child: ListBody(
-            children: <Widget>[
-              Text('Do you want to exit from Driving School?')
-            ],
+            children: <Widget>[Text('Do you want to exit from Driving School?')],
           ),
         ),
         actions: <Widget>[
