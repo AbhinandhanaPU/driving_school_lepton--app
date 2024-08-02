@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:new_project_app/controller/practice_shedule_controller/practice_shedule_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/student_profile.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/students_list/students_datalist.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/batch/students_list/students_datalist.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 class SearchStudentByName extends SearchDelegate {
