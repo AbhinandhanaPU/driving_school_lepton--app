@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
@@ -40,5 +41,33 @@ class PushNotificationController extends GetxController {
     } catch (e) {
       log(e.toString());
     }
+  }
+    Future<void> removeAllNotification() async {
+    await server
+        .collection("AllUsersDeviceID")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("Notification_Message")
+        .get()
+        .then((value) async {
+      for (var i = 0; i < value.docs.length; i++) {
+        await server
+            .collection("AllUsersDeviceID")
+            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .collection("Notification_Message")
+            .doc(value.docs[i].data()['docid'])
+            .delete();
+      }
+      Get.back();
+    });
+  }
+  
+  Future<void> removeSingleNotification(String docid) async {
+    await server
+        .collection("AllUsersDeviceID")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection('Notification_Message')
+        .doc(docid)
+        .delete()
+        .then((value) => Get.back());
   }
 }

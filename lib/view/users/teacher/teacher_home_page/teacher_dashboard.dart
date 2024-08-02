@@ -6,10 +6,10 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/push_notificationController/pushnotificationController.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/users/student/student_pages/notifications.dart';
-import 'package:new_project_app/view/users/student/student_pages/quick_action/quick_action_widgets.dart';
-import 'package:new_project_app/view/users/student/student_pages/slider/carousal_slider.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/notifications.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/quick_action/quick_action_part_teacher.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/quick_action/quick_action_widgets_teacher.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/slider/carousal_slider.dart';
 import 'package:new_project_app/view/users/widgets/profile_edit_widgets/teacher_edit_profile.dart';
 
 class TeacherDashboard extends StatefulWidget {
@@ -60,7 +60,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                     ////////////////////////////////////////////////////////all tab part
                     Padding(
                       padding: EdgeInsets.only(top: 80.sp, right: 20.sp, left: 20.sp),
-                      child: const NotificationPartOfStd(),
+                      child:  NotificationPartOfTr(),
                     ),
                     //////////////////////////////////////////////////////// notifications
                   ],
@@ -69,7 +69,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 60.sp, right: 10.sp, left: 10.sp),
-              child: const CarouselSliderStd(),
+              child:  CarouselSliderTutor(),
             ),
             //////////////////////////////////////////////////////details showing graph
             SizedBox(
@@ -142,10 +142,10 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
               padding: EdgeInsets.only(top: 340.sp, left: 40),
               child: const Row(
                 children: [
-                  QuickActionsWidgetDrivingTest(),
-                  QuickActionsWidgetPractice(),
-                  QuickActionsWidgetSM(),
-                  QuickActionsWidgetChat(),
+                  QuickActionsWidgetDrivingTestTr(),
+                  QuickActionsWidgetPracticeTr(),
+                  QuickActionsWidgetSMTR(),
+                  QuickActionsWidgetChatTr(),
                 ],
               ),
             ), /////////////////////////////////////quick action

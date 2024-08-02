@@ -1,106 +1,159 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
+import 'package:new_project_app/constant/utils/firebase/firebase.dart';
+import 'package:new_project_app/controller/course_controller/course_controller.dart';
+import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+import 'package:new_project_app/model/course_model/course_model.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/slider/course_details_tutor/course_details_tr.dart';
 
-class CarouselSliderStd extends StatelessWidget {
-  const CarouselSliderStd({super.key});
+class CarouselSliderTutor extends StatelessWidget {
+  CarouselSliderTutor({super.key});
+
+  final CourseController courseController = Get.put(CourseController());
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider(
-      items: [
-        Container(
-          height: 100.h,
-          decoration: const BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: cblack,
-                ),
-              ],
-              color: cWhite,
-              borderRadius: BorderRadius.all(Radius.circular(20))),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 08),
-                      child: Row(
+    return StreamBuilder(
+      stream: server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Courses')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          var courses = snapshot.data!.docs.map((doc) {
+            CourseModel data = CourseModel.fromMap(doc.data());
+            return Column(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      courseController.setCourseData(data);
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CourseDetailsToTutor(
+                            data: data,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(
+                          top: 20, bottom: 20, left: 20, right: 20),
+                      decoration: const BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: cblack,
+                            ),
+                          ],
+                          color: cWhite,
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // SizedBox(
-                          //   height: 40.h,
-                          //   child: Image.asset(
-                          //       'assets/flaticons/icons8-attendance-100.png'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  '${data.courseName}',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Icon(
+                                Icons.group,
+                                color: themeColor,
+                                size: 28,
+                              )
+                            ],
+                          ),
+                          // Text(
+                          //   '${data.courseDes}',
+                          //   style: TextStyle(
+                          //       color: cblack.withOpacity(0.5),
+                          //       fontSize: 15.sp,
+                          //       fontWeight: FontWeight.bold),
                           // ),
-                          Text(
-                            '  Cource Number',
-                            style: TextStyle(
-                                color: const Color.fromARGB(255, 11, 2, 74),
-                                //const Color.fromARGB(255, 48, 88, 86),
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold),
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    '${data.duration} Days',
+                                    style: TextStyle(
+                                        color: themeColor,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    'Duration',
+                                    style: TextStyle(
+                                        color: cgrey,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                              Column(
+                                children: [
+                                  Text(
+                                    '${data.rate} /-',
+                                    style: TextStyle(
+                                        color: themeColor,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    'Fee',
+                                    style: TextStyle(
+                                        color: cgrey,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 05, left: 20),
-                      child: Text(
-                        'Type',
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 228, 173, 21),
-                            fontSize: 26.sp,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 05, left: 25),
-                      child: Text(
-                        '2000/-',
-                        style: TextStyle(
-                            fontSize: 30.sp, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 25, top: 05),
-                      child: GooglePoppinsWidgets(
-                          text: "Click To View",
-                          fontsize: 13,
-                          fontWeight: FontWeight.w500),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Image.asset("assets/images/2wheeler.jpg"),
-                ),
-              ),
-            ],
-          ),
-        ),
+              ],
+            );
+          }).toList();
 
-        // GraphShowingPartStdAttendance(),
-        // GraphShowingPartStdExamResult(),
-        // GraphShowingPartStdHomework(),
-        // GraphShowingPartStdAssignProject()
-      ],
-      options: CarouselOptions(
-        height: 200.w,
-        enlargeCenterPage: true,
-        autoPlay: false,
-        autoPlayInterval: const Duration(seconds: 2),
-        autoPlayAnimationDuration: const Duration(milliseconds: 800),
-        autoPlayCurve: Curves.fastOutSlowIn,
-      ),
+          return CarouselSlider(
+            items: courses,
+            options: CarouselOptions(
+              enableInfiniteScroll: true,
+              height: 200.w,
+              enlargeCenterPage: true,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 2),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+            ),
+          );
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return Center(
+            child: Text('No Courses Available Yet!'.tr),
+          );
+        }
+      },
     );
   }
 }

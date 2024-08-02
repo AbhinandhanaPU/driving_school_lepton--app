@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/users/teacher/teacher_pages/notices/notices_tcr.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/Tutor_batch/tutor_batch_home.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/driving_test_tutor/driving_test_home.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/events_tutor/events_tutor.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/notices_tutor/notices_tutor.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/practice_shedule_tutor/practice_schedule_tr/practice_shedule_home_tr.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/study_materials/study_materials_teacher.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/videos/video_list_teacher.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
@@ -53,10 +57,16 @@ class QuickActionPartTeacher extends StatelessWidget {
 viewallMenus(BuildContext context) {
   double w = MediaQuery.of(context).size.width;
   int columnCount = 3;
-  final screenNavigationOfStd = [
+  final screenNavigationOfTutor = [
+    TutorDrivingHomePage(),//dr
+    TutorPracticeSheduleHome(),
+    AllBatchHomeOfTutor(),
     const StudyMaterialsTeacher(), // Study Materials
-    const VideosListTeacher(), // Video
-    const NoticePageTeacher(), //Notice
+   const StudyMaterialsTeacher(), // Study Materials
+    EventsListOfTutor(),//event
+     const VideosListTeacher(), // Video
+      const VideosListTeacher(), // Video
+     NoticePageTutor(), //Notice
   ];
 
   Get.bottomSheet(
@@ -76,7 +86,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      9,
+                      10,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -91,7 +101,7 @@ viewallMenus(BuildContext context) {
                                 onTap: () =>
                                     Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
-                                    return screenNavigationOfStd[index];
+                                    return screenNavigationOfTutor[index];
                                   },
                                 )),
                                 child: Container(
@@ -177,9 +187,10 @@ viewallMenus(BuildContext context) {
 List<String> imageStd = [
   'assets/flaticons/cone.png', // Driving Test
   'assets/flaticons/calendar.png', // practice shedule
+  'assets/flaticons/batch-processing.png',//bacth
   'assets/flaticons/books.png', // study Materials
   'assets/flaticons/icons8-chat-100.png', // chats
-  'assets/flaticons/road-trip.png', // road tests
+  'assets/flaticons/events.png', // events
   'assets/flaticons/exam.png', // Leaners test
   'assets/flaticons/video.png', // videos
   'assets/flaticons/icons8-notice-100.png', // Notice
@@ -188,9 +199,10 @@ List<String> imageStd = [
 List<String> stdtext = [
   'Driving Test',
   'Practice Shedule',
+  'Batches',
   'Study Materials',
   'Chats',
-  'Road Test',
+  'Events',
   'Leaners Test',
   'Videos',
   'Notices',
