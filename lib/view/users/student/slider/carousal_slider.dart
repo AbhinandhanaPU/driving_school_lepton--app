@@ -7,10 +7,10 @@ import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/controller/course_controller/course_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/courses/course_list/course_details.dart';
+import 'package:new_project_app/view/users/student/student_pages/course/course_details.dart';
 
 class CarouselSliderStd extends StatelessWidget {
-   CarouselSliderStd({super.key});
+  CarouselSliderStd({super.key});
 
   final CourseController courseController = Get.put(CourseController());
 
@@ -36,23 +36,19 @@ class CarouselSliderStd extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CourseDetails(
+                          builder: (context) => CourseDetailsStd(
                             data: data,
                           ),
                         ),
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.only(
-                          top: 20, bottom: 20, left: 20, right: 20),
-                      decoration: const BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: cblack,
-                            ),
-                          ],
-                          color: cWhite,
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
+                      decoration: const BoxDecoration(boxShadow: [
+                        BoxShadow(
+                          color: cblack,
+                        ),
+                      ], color: cWhite, borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,9 +59,7 @@ class CarouselSliderStd extends StatelessWidget {
                               Flexible(
                                 child: Text(
                                   '${data.courseName}',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                 ),
                               ),
                               Icon(
@@ -96,9 +90,7 @@ class CarouselSliderStd extends StatelessWidget {
                                   Text(
                                     'Duration',
                                     style: TextStyle(
-                                        color: cgrey,
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold),
+                                        color: cgrey, fontSize: 15.sp, fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -115,9 +107,7 @@ class CarouselSliderStd extends StatelessWidget {
                                   Text(
                                     'Fee',
                                     style: TextStyle(
-                                        color: cgrey,
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold),
+                                        color: cgrey, fontSize: 15.sp, fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
