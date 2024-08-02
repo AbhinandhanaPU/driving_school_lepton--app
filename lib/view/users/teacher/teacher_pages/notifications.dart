@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:shimmer/shimmer.dart';
 
-class NotificationPartOfStd extends StatelessWidget {
-  const NotificationPartOfStd({super.key});
+class NotificationPartOfTcr extends StatelessWidget {
+  const NotificationPartOfTcr({super.key});
   @override
   Widget build(BuildContext context) {
     return Column(
