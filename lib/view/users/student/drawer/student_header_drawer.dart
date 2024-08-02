@@ -7,6 +7,7 @@ import 'package:new_project_app/controller/user_logout_controller/user_logout_co
 import 'package:new_project_app/language/language_change_drawer.dart';
 import 'package:new_project_app/view/pages/general_instructions/general_instructions.dart';
 import 'package:new_project_app/view/pages/privacy_policy/dialogs/privacy_policy.dart';
+import 'package:new_project_app/view/users/student/drawer/drawer_items/documents/documents/documents_std.dart';
 
 class StudentsHeaderDrawer extends StatelessWidget {
   const StudentsHeaderDrawer({super.key});
@@ -127,34 +128,70 @@ Widget MyDrawerList(context) {
     child: Column(
       // show list  of menu drawer.........................
       children: [
-        menuItem(1, 'assets/images/information.png', 'General Instructions'.tr,
-            currentPage == DrawerSections.dashboard ? true : false, () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return const GeneralInstruction();
-            },
-          ));
-          // Get.off(
-          //   () => GeneralInstruction(),
-        }),
-        menuItem(2, 'assets/images/languages.png', 'Change Language'.tr,
-            currentPage == DrawerSections.dashboard ? true : false, () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return LanguageChangeDrawerPage();
-            },
-          ));
-          // Get.off(() => LanguageChangeDrawerPage());
-        }),
-        menuItem(3, 'assets/images/attendance.png', 'Privacy Policy'.tr,
-            currentPage == DrawerSections.dashboard ? true : false, () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return const PrivacyPolicy();
-            },
-          ));
-          // Get.off(() => const PrivacyPolicy());
-        }),
+        menuItem(
+          1,
+          'assets/images/documents.png',
+          'Documents'.tr,
+          currentPage == DrawerSections.dashboard ? true : false,
+          () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return DocumentsStd();
+                },
+              ),
+            );
+          },
+        ),
+        menuItem(
+          2,
+          'assets/images/information.png',
+          'General Instructions'.tr,
+          currentPage == DrawerSections.dashboard ? true : false,
+          () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const GeneralInstruction();
+                },
+              ),
+            );
+          },
+        ),
+        menuItem(
+          3,
+          'assets/images/languages.png',
+          'Change Language'.tr,
+          currentPage == DrawerSections.dashboard ? true : false,
+          () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return LanguageChangeDrawerPage();
+                },
+              ),
+            );
+          },
+        ),
+        menuItem(
+          4,
+          'assets/images/attendance.png',
+          'Privacy Policy'.tr,
+          currentPage == DrawerSections.dashboard ? true : false,
+          () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const PrivacyPolicy();
+                },
+              ),
+            );
+          },
+        ),
         kHeight10,
         kHeight10,
         kHeight10,
