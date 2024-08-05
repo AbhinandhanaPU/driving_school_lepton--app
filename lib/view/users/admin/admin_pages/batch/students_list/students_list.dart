@@ -23,8 +23,8 @@ class BatchStudentsList extends StatelessWidget {
     super.key,
     required this.data,
   });
-  
-final  BatchController batchController =Get.put(BatchController());
+
+  final BatchController batchController = Get.put(BatchController());
 
   @override
   Widget build(BuildContext context) {

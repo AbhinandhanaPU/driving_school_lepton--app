@@ -6,10 +6,10 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/push_notificationController/pushnotificationController.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+import 'package:new_project_app/view/users/student/quick_action/quick_action_part_std.dart';
+import 'package:new_project_app/view/users/student/quick_action/quick_action_widgets.dart';
+import 'package:new_project_app/view/users/student/slider/carousal_slider.dart';
 import 'package:new_project_app/view/users/student/student_pages/notifications.dart';
-import 'package:new_project_app/view/users/student/student_pages/quick_action/quick_action_part_std.dart';
-import 'package:new_project_app/view/users/student/student_pages/quick_action/quick_action_widgets.dart';
-import 'package:new_project_app/view/users/student/student_pages/slider/carousal_slider.dart';
 import 'package:new_project_app/view/users/widgets/profile_edit_widgets/student_edit_profile.dart';
 
 class StudentDashboard extends StatefulWidget {
@@ -73,7 +73,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 60.sp, right: 10.sp, left: 10.sp),
-              child: const CarouselSliderStd(),
+              child:   CarouselSliderStd(),
             ),
             //////////////////////////////////////////////////////details showing graph
             SizedBox(
