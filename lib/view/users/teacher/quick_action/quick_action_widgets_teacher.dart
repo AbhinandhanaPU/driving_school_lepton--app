@@ -1,10 +1,13 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/Tutor_batch/tutor_batch_home.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/driving_test_tutor/driving_test_home.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/practice_shedule_tutor/practice_schedule_tr/practice_shedule_home_tr.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/study_materials/study_materials_teacher.dart';
 
-class QuickActionsWidgetDrivingTest extends StatelessWidget {
-  const QuickActionsWidgetDrivingTest({
+class QuickActionsWidgetDrivingTestTr extends StatelessWidget {
+  const QuickActionsWidgetDrivingTestTr({
     super.key,
   });
 
@@ -16,13 +19,10 @@ class QuickActionsWidgetDrivingTest extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            // onTap: () =>
-            //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //                     return AttendenceBookScreenSelectMonth(
-            //       schoolId: UserCredentialsController.schoolId!,
-            //       batchId: UserCredentialsController.batchId!,
-            //       classID: UserCredentialsController.classId!);
-            // },)),
+            onTap: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return     TutorDrivingHomePage();
+            },)),
 
             child: Container(
               height: 55.h,
@@ -47,8 +47,8 @@ class QuickActionsWidgetDrivingTest extends StatelessWidget {
   }
 }
 
-class QuickActionsWidgetPractice extends StatelessWidget {
-  const QuickActionsWidgetPractice({
+class QuickActionsWidgetPracticeTr extends StatelessWidget {
+  const QuickActionsWidgetPracticeTr({
     super.key,
   });
 
@@ -60,9 +60,10 @@ class QuickActionsWidgetPractice extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //  return const ViewHomeWorks();
-            // },)),
+            onTap: () => Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return   TutorPracticeSheduleHome();
+            },)),
             child: Container(
               height: 55.h,
               width: 55.w,
@@ -86,8 +87,8 @@ class QuickActionsWidgetPractice extends StatelessWidget {
   }
 }
 
-class QuickActionsWidgetSM extends StatelessWidget {
-  const QuickActionsWidgetSM({
+class QuickActionsWidgetSMTR extends StatelessWidget {
+  const QuickActionsWidgetSMTR({
     super.key,
   });
 
@@ -127,8 +128,8 @@ class QuickActionsWidgetSM extends StatelessWidget {
   }
 }
 
-class QuickActionsWidgetChat extends StatelessWidget {
-  const QuickActionsWidgetChat({
+class QuickActionsWidgetChatTr extends StatelessWidget {
+  const QuickActionsWidgetChatTr({
     super.key,
   });
 
@@ -140,9 +141,9 @@ class QuickActionsWidgetChat extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //  return const  StudentChatScreen();
-            // },)),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+             return   AllBatchHomeOfTutor();
+            },)),
             child: Container(
               height: 55.h,
               width: 55.w,
@@ -151,13 +152,13 @@ class QuickActionsWidgetChat extends StatelessWidget {
                   border: Border.all(color: cblack.withOpacity(0.2)),
                   borderRadius: BorderRadius.circular(10)),
               child: Image.asset(
-                'assets/flaticons/icons8-chat-100.png',
+                      'assets/flaticons/batch-processing.png',//bacth
                 scale: 2.5,
               ),
             ),
           ),
           Text(
-            "Chat",
+            "Batch",
             style: TextStyle(fontSize: 12.sp),
           )
         ],
