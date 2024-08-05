@@ -7,15 +7,12 @@ import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/controller/event_controller/event_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/event_model/events_model.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/events/event_create.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/events/event_edit.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/events_tutor/event_display_tutor.dart';
 import 'package:new_project_app/view/users/widgets/listcard_widget/listcard_widget.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
-import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
 import 'package:new_project_app/view/widgets/loading_widget/loading_widget.dart';
-import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 class EventsListOfTutor extends StatelessWidget {
@@ -140,33 +137,33 @@ class EventsListOfTutor extends StatelessWidget {
                   return const LoadingWidget();
                 }
               }),
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) {
-                    return EventCreate();
-                  },
-                ));
-              },
-              child: ButtonContainerWidget(
-                curving: 30,
-                colorindex: 0,
-                height: 40,
-                width: 140,
-                child: const Center(
-                  child: TextFontWidgetRouter(
-                    text: 'Create Event',
-                    fontsize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: cWhite,
-                  ),
-                ),
-              ),
-            ),
-          )
+          // Positioned(
+          //   bottom: 20,
+          //   right: 20,
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       Navigator.push(context, MaterialPageRoute(
+          //         builder: (context) {
+          //           return EventCreate();
+          //         },
+          //       ));
+          //     },
+          //     child: ButtonContainerWidget(
+          //       curving: 30,
+          //       colorindex: 0,
+          //       height: 40,
+          //       width: 140,
+          //       child: const Center(
+          //         child: TextFontWidgetRouter(
+          //           text: 'Create Event',
+          //           fontsize: 14,
+          //           fontWeight: FontWeight.bold,
+          //           color: cWhite,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
