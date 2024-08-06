@@ -180,7 +180,7 @@ class DocumentsController extends GetxController {
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('File downloaded to $filePath'),
+              content: Text('File downloaded'),
             ),
           );
           log(filePath);
