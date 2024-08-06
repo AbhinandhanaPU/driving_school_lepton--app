@@ -115,45 +115,66 @@ class DocumentsStd extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            trailing: PopupMenuButton(
-                              itemBuilder: (context) {
-                                return [
-                                  PopupMenuItem(
+                            trailing: SizedBox(
+                              width: 72,
+                              child: Row(
+                                children: [
+                                  GestureDetector(
                                     onTap: () {
-                                      documentsController.titleController.text =
-                                          data['title'];
-                                      documentsController.desController.text =
-                                          data['des'];
-                                      documentsController.cateController.text =
-                                          data['category'];
-                                      editFunctionOfDocuments(context, data);
-                                    },
-                                    child: const Text(
-                                      "Edit",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                  PopupMenuItem(
-                                    onTap: () {
-                                      customDeleteShowDialog(
-                                        context: context,
-                                        onTap: () {
-                                          documentsController.deleteDocuments(
-                                              docId: data['docId']);
-                                        },
+                                      String url = data['downloadUrl'];
+                                      String fileName = data['title'];
+                                      documentsController.downloadFile(
+                                        url,
+                                        fileName,
+                                        context,
                                       );
                                     },
-                                    child: const Text(
-                                      "Delete",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  )
-                                ];
-                              },
+                                    child: Icon(Icons.download),
+                                  ),
+                                  PopupMenuButton(
+                                    itemBuilder: (context) {
+                                      return [
+                                        PopupMenuItem(
+                                          onTap: () {
+                                            documentsController.titleController
+                                                .text = data['title'];
+                                            documentsController.desController
+                                                .text = data['des'];
+                                            documentsController.cateController
+                                                .text = data['category'];
+                                            editFunctionOfDocuments(
+                                                context, data);
+                                          },
+                                          child: const Text(
+                                            "Edit",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ),
+                                        PopupMenuItem(
+                                          onTap: () {
+                                            customDeleteShowDialog(
+                                              context: context,
+                                              onTap: () {
+                                                documentsController
+                                                    .deleteDocuments(
+                                                        docId: data['docId']);
+                                              },
+                                            );
+                                          },
+                                          child: const Text(
+                                            "Delete",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        )
+                                      ];
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );

@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
 class DocumentsController extends GetxController {
@@ -25,6 +28,7 @@ class DocumentsController extends GetxController {
   RxString fileName = "".obs;
   Rxn<Uint8List> fileBytes = Rxn<Uint8List>();
   File? filee;
+  Dio dio = Dio();
 
   Future<void> pickAFile() async {
     try {
@@ -36,7 +40,7 @@ class DocumentsController extends GetxController {
           'docx',
           'jpg',
           'jpeg',
-          'png',''
+          'png',
         ],
         type: FileType.custom,
         allowCompression: true,
@@ -155,6 +159,46 @@ class DocumentsController extends GetxController {
     } catch (e) {
       showToast(msg: 'Documents Updation failed.Try Again');
       log("Documents Updation failed $e");
+    }
+  }
+
+  Future<void> downloadFile(
+    String url,
+    String fileName,
+    BuildContext context,
+  ) async {
+    try {
+      var status = await Permission.storage.request();
+      if (status.isGranted) {
+        Directory? appDocDir = await getExternalStorageDirectory();
+        if (appDocDir != null) {
+          String appDocPath = appDocDir.path;
+
+          String filePath = '$appDocPath/$fileName';
+
+          await dio.download(url, filePath);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('File downloaded to $filePath'),
+            ),
+          );
+          log(filePath);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Could not get the storage directory')),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Storage permission denied')),
+        );
+      }
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error downloading file: $e')),
+      );
     }
   }
 }

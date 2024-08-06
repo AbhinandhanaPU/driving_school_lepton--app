@@ -11,7 +11,8 @@ import 'package:new_project_app/constant/responsive.dart';
 import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/firebase_options.dart';
 import 'package:new_project_app/service/pushnotification_service/pushnotification_service.dart';
-import 'package:new_project_app/view/home/first_screen/first_screen.dart';
+import 'package:new_project_app/view/splash_screen/splash_screen.dart';
+
 final navigatorKey = GlobalKey<NavigatorState>();
 Future _firebasebackgrounMessage(RemoteMessage message) async {
   if (message.notification != null) {
@@ -30,7 +31,7 @@ Future<void> main(List<String> args) async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-    await FirebaseMessaging.instance.getInitialMessage();
+  await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   //creating shared preference
   await SharedPreferencesHelper.initPrefs();
@@ -79,20 +80,19 @@ class MyApp extends StatelessWidget {
       builder: (context) {
         ResponsiveApp.serMq(context);
         return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            tabBarTheme: TabBarTheme(
-              unselectedLabelColor: cWhite,
-              labelColor: Colors.blue[100],
-              indicatorColor: Colors.green,
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              tabBarTheme: TabBarTheme(
+                unselectedLabelColor: cWhite,
+                labelColor: Colors.blue[100],
+                indicatorColor: Colors.green,
+              ),
+              appBarTheme: const AppBarTheme(foregroundColor: cWhite),
             ),
-            appBarTheme: const AppBarTheme(foregroundColor: cWhite),
-          ),
-          home: FirstScreen()
-          // Scaffold(body: QuestionWidget()),
-        );
+            home: SplashScreen()
+            // Scaffold(body: QuestionWidget()),
+            );
       },
     );
   }
 }
-
