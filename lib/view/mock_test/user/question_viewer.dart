@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/view/mock_test/user/options_widget.dart';
-import 'package:new_project_app/view/widgets/custom_show_dialogbox/custom_show_dialouge.dart';
 
 class QuestionWidget extends StatefulWidget {
   QuestionWidget({super.key});
@@ -34,23 +32,23 @@ class _QuestionWidgetState extends State<QuestionWidget> {
       setState(() {
         _secondsElapsed--;
         print('Seconds elapsed: $_secondsElapsed');
-        if (_secondsElapsed == 0) {
-          if (_questionNumber < question.length) {
-            _controller.nextPage(duration: Duration(milliseconds: 250), curve: Curves.easeInExpo);
-            _questionNumber++;
-            _secondsElapsed = 10; // Reset the timer for the next question
-          } else {
-            _timer!.cancel(); // Stop the timer after the last question
-            customShowDilogBox(
-              context: context,
-              title: 'Result',
-              children: [Text('check your score')],
-              doyouwantActionButton: true,
-              actiontext: "view",
-              actiononTapfuction: () {},
-            );
-          }
-        }
+        // if (_secondsElapsed == 0) {
+        //   if (_questionNumber < question.length) {
+        //     _controller.nextPage(duration: Duration(milliseconds: 250), curve: Curves.easeInExpo);
+        //     _questionNumber++;
+        //     _secondsElapsed = 10; // Reset the timer for the next question
+        //   } else {
+        //     _timer!.cancel(); // Stop the timer after the last question
+        //     customShowDilogBox(
+        //       context: context,
+        //       title: 'Result',
+        //       children: [Text('check your score')],
+        //       doyouwantActionButton: true,
+        //       actiontext: "view",
+        //       actiononTapfuction: () {},
+        //     );
+        //   }
+        // }
       });
     });
   }
@@ -73,7 +71,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           children: [
             Text(
               "Exam",
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30),
             ),
             Row(
               children: [
@@ -81,12 +79,20 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                 kWidth20,
                 Container(
                   padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: cgreen),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.yellow),
                   child: Row(
                     children: [
-                      Icon(Icons.timer_sharp),
+                      Icon(
+                        Icons.timer_sharp,
+                        color: cblack,
+                      ),
                       kWidth10,
-                      Text(_secondsElapsed.toString()),
+                      Text(
+                        "30 s",
+                        // "${_secondsElapsed} s",
+                        style: TextStyle(color: cblack),
+                      ),
                     ],
                   ),
                 ),
@@ -111,53 +117,101 @@ class _QuestionWidgetState extends State<QuestionWidget> {
               },
             )),
 
-            GestureDetector(
-              onTap: () {
-                {
-                  if (_questionNumber < question.length) {
-                    _controller.nextPage(
-                        duration: Duration(milliseconds: 250), curve: Curves.easeInExpo);
-
-                    setState(() {
-                      _questionNumber++;
-                      _secondsElapsed = 10;
-                      startTimer();
-                    });
-                  }
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: _questionNumber < question.length
-                      ? cgrey.withOpacity(0.5)
-                      : cblue.withOpacity(0.8),
-                ),
-                height: 50,
-                width: 200,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 13),
-                  child: Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween, // Ensures text and icon are spaced properly
-                    children: [
-                      Text(
-                        _questionNumber < question.length ? 'NEXT QUESTION' : 'RESULT',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: _questionNumber < question.length ? cblack : cWhite,
-                        ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(222, 134, 240, 88),
+                          borderRadius: BorderRadius.horizontal(left: Radius.circular(50))),
+                      child: Row(
+                        children: [
+                          Icon(Icons.check, color: Colors.white),
+                          SizedBox(width: 10),
+                          Text(
+                            '0',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
                       ),
-                      Icon(
-                        Icons.navigate_next,
-                        size: 30,
-                        color: Colors.black,
-                      )
-                    ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+                      decoration: BoxDecoration(
+                          color: Colors.redAccent.shade100,
+                          borderRadius: BorderRadius.horizontal(right: Radius.circular(50))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.close, color: Colors.white),
+                          SizedBox(width: 10),
+                          Text(
+                            '0',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                GestureDetector(
+                  onTap: () {
+                    {
+                      if (_questionNumber < question.length) {
+                        _controller.nextPage(
+                            duration: Duration(milliseconds: 250), curve: Curves.easeInExpo);
+
+                        setState(() {
+                          _questionNumber++;
+                          _secondsElapsed = 10;
+                          startTimer();
+                        });
+                      }
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: _questionNumber < question.length ? Colors.yellow : cred,
+                    ),
+                    height: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 13),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            _questionNumber < question.length ? 'NEXT QUESTION' : 'RESULT',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: _questionNumber < question.length ? cblack : cWhite,
+                            ),
+                          ),
+                          kWidth10,
+                          Icon(
+                            Icons.navigate_next,
+                            size: 30,
+                            color: _questionNumber < question.length ? cblack : cWhite,
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
             // buildElevatedButton(),
             SizedBox(
@@ -177,8 +231,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           height: 32,
         ),
         Text(
-          question.text,
-          style: TextStyle(fontSize: 25),
+          'Q. ${question.text}',
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
         SizedBox(
           height: 32,
