@@ -4,39 +4,43 @@ import 'package:flutter/material.dart';
 class Optionswidget extends StatelessWidget {
   final Question question;
   final ValueChanged<Option> onclickOption;
-  const Optionswidget(
-      {super.key, required this.question, required this.onclickOption});
+  const Optionswidget({super.key, required this.question, required this.onclickOption});
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
         child: Column(
           children: question.options
-              .map((option) => buildOption(context, option))
+              .asMap()
+              .entries
+              .map((entry) => buildOption(context, entry.key, entry.value))
               .toList(),
         ),
       );
-  Widget buildOption(BuildContext context, Option option) {
+  Widget buildOption(BuildContext context, int index, Option option) {
     final color = getColorForOption(option, question);
     return GestureDetector(
       onTap: () => onclickOption(option),
-      child: Container(
-        height: 50,
-        padding: EdgeInsets.all(12),
-        margin: EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              option.text,
-              style: TextStyle(fontSize: 20),
-            ),
-            getIconForOption(option, question)
-          ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: 50,
+          padding: EdgeInsets.all(12),
+          margin: EdgeInsets.symmetric(vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: color),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '${index + 1}. ${option.text}',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+              getIconForOption(option, question)
+            ],
+          ),
         ),
       ),
     );
