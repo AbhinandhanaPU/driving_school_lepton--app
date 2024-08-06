@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class StudentModel {
@@ -16,6 +17,7 @@ class StudentModel {
   String licenceNumber;
   String joiningDate;
   String status; //
+  String level; //
 
   String userRole = 'student';
 
@@ -35,6 +37,7 @@ class StudentModel {
     required this.licenceNumber,
     required this.joiningDate,
     required this.status,
+    required this.level,
     required this.userRole,
   });
 
@@ -54,6 +57,7 @@ class StudentModel {
     String? licenceNumber,
     String? joiningDate,
     String? status,
+    String? level,
     String? userRole,
   }) {
     return StudentModel(
@@ -72,6 +76,7 @@ class StudentModel {
       licenceNumber: licenceNumber ?? this.licenceNumber,
       joiningDate: joiningDate ?? this.joiningDate,
       status: status ?? this.status,
+      level: level ?? this.level,
       userRole: userRole ?? this.userRole,
     );
   }
@@ -93,6 +98,7 @@ class StudentModel {
       'licenceNumber': licenceNumber,
       'joiningDate': joiningDate,
       'status': status,
+      'level': level,
       'userRole': userRole,
     };
   }
@@ -114,6 +120,7 @@ class StudentModel {
       licenceNumber: map['licenceNumber'] ?? "",
       joiningDate: map['joiningDate'] ?? "",
       status: map['status'] ?? "",
+      level: map['level'] ?? "",
       userRole: map['userRole'] ?? "",
     );
   }
@@ -125,7 +132,7 @@ class StudentModel {
 
   @override
   String toString() {
-    return 'StudentModel(docid: $docid, password: $password, studentemail: $studentemail, studentName: $studentName, phoneNumber: $phoneNumber, dateofBirth: $dateofBirth, guardianName: $guardianName, address: $address, place: $place, profileImageId: $profileImageId, profileImageUrl: $profileImageUrl, rtoName: $rtoName, licenceNumber: $licenceNumber, joiningDate: $joiningDate, status: $status, userRole: $userRole)';
+    return 'StudentModel(docid: $docid, password: $password, studentemail: $studentemail, studentName: $studentName, phoneNumber: $phoneNumber, dateofBirth: $dateofBirth, guardianName: $guardianName, address: $address, place: $place, profileImageId: $profileImageId, profileImageUrl: $profileImageUrl, rtoName: $rtoName, licenceNumber: $licenceNumber, joiningDate: $joiningDate, status: $status, level: $level, userRole: $userRole)';
   }
 
   @override
@@ -147,6 +154,7 @@ class StudentModel {
         other.licenceNumber == licenceNumber &&
         other.joiningDate == joiningDate &&
         other.status == status &&
+        other.level == level &&
         other.userRole == userRole;
   }
 
@@ -167,6 +175,7 @@ class StudentModel {
         licenceNumber.hashCode ^
         joiningDate.hashCode ^
         status.hashCode ^
+        level.hashCode ^
         userRole.hashCode;
   }
 }
