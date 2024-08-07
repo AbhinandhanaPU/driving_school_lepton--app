@@ -8,6 +8,7 @@ import 'package:new_project_app/controller/batch_controller/batch_controller.dar
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/batch_model/batch_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/batch/batch_files/batch_list.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/batch/crud_functions/batch_shift.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/batch/crud_functions/create_batch.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/batch/students_list/students_list.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
@@ -24,8 +25,18 @@ class BatchHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: cWhite,
-        title: Text(
-          "All Batch".tr,
+        title: Row(
+          children: [
+            Text(
+              "All Batch".tr,
+            ),
+            Spacer(),
+            GestureDetector(
+              onTap:() {
+                batchShift(context);
+              },
+              child: Icon(Icons.cached_rounded))
+          ],
         ),
         flexibleSpace: const AppBarColorWidget(),
       ),

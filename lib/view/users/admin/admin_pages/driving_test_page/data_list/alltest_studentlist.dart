@@ -168,7 +168,7 @@ class AllTestStudentList extends StatelessWidget {
                                                     } else {
                                                       String courses = snapshot
                                                           .data!
-                                                          .join(', ');
+                                                          .join(',\n ');
                                                       return TextFontWidget(
                                                         text: courses,
                                                         fontsize: 14.h,

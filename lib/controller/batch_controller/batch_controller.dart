@@ -3,14 +3,14 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:progress_state_button/progress_button.dart';
-import 'package:uuid/uuid.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/course_controller/course_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/model/batch_model/batch_model.dart';
+import 'package:new_project_app/model/student_model/student_model.dart';
+import 'package:progress_state_button/progress_button.dart';
+import 'package:uuid/uuid.dart';
 
 class BatchController extends GetxController {
   final courseCtrl = Get.put(CourseController());
@@ -22,7 +22,7 @@ class BatchController extends GetxController {
   TextEditingController batchNameController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   
-
+RxList<BatchModel> batches = RxList<BatchModel>();
   Rxn<BatchModel> batchModelData = Rxn<BatchModel>();
     RxString ontapBatchName= 'dd'.obs;
   RxBool onTapBtach = false.obs;
@@ -104,6 +104,7 @@ class BatchController extends GetxController {
           .doc(courseCtrl.studentDocID.value)
           .get();
       if (courseCtrl.studentDocID.value != '') {
+        log("Batch Id${batchId.value}");
         final data = StudentModel.fromMap(studentResult.data()!);
         await server
             .collection('DrivingSchoolCollection')
@@ -170,4 +171,71 @@ class BatchController extends GetxController {
 
     return coursesRef.snapshots().map((snapshot) => snapshot.docs.length);
   }
+
+  
+  Future<void> shiftStudentToAnotherBatch({
+  required String studentDocId,
+  required String oldBatchId,
+  required String newBatchId,
+}) async {
+  try {
+    // Fetch the student data from the old batch
+    final studentSnapshot = await server
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Batch')
+        .doc(oldBatchId)
+        .collection('Students')
+        .doc(studentDocId)
+        .get();
+
+    if (studentSnapshot.exists) {
+      final studentData = StudentModel.fromMap(studentSnapshot.data()!);
+
+      // Add the student to the new batch
+      await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Batch')
+          .doc(newBatchId)
+          .collection('Students')
+          .doc(studentDocId)
+          .set(studentData.toMap());
+
+      // Remove the student from the old batch
+      await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Batch')
+          .doc(oldBatchId)
+          .collection('Students')
+          .doc(studentDocId)
+          .delete();
+
+      showToast(msg: "Student shifted successfully");
+    } else {
+      showToast(msg: "Student not found in the old batch");
+    }
+  } catch (e) {
+    showToast(msg: "Error shifting student. Please try again.");
+    log("Error shifting student: $e", name: "Batch");
+  }
+}
+
+  Future<void> fetchBatches() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Batch')
+          .get();
+
+      batches.value = snapshot.docs
+          .map((doc) => BatchModel.fromMap(doc.data()))
+          .toList();
+    } catch (e) {
+      log("Error fetching batches: $e");
+    }
+  }
+
 }

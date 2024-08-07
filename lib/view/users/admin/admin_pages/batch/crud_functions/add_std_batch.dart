@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:new_project_app/controller/practice_shedule_controller/practice_shedule_controller.dart';
+import 'package:new_project_app/controller/batch_controller/batch_controller.dart';
 import 'package:new_project_app/view/widgets/custom_show_dialogbox/custom_showdilog.dart';
 import 'package:new_project_app/view/widgets/student_dropdown/all_students.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 addStudentToBatch(BuildContext context, ) {
-  final PracticeSheduleController practiceshedulecontroller =
-      Get.put(PracticeSheduleController());
+
+  final BatchController batchController = Get.put(BatchController());
   customShowDilogBox2(
       context: context,
       title: 'All Student',
       children: [
         Form(
-          key: practiceshedulecontroller.formKey,
+          key: batchController.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -33,8 +33,8 @@ addStudentToBatch(BuildContext context, ) {
       ],
       doyouwantActionButton: true,
       actiononTapfuction: () async {
-        if (practiceshedulecontroller.formKey.currentState!.validate()) {
-          practiceshedulecontroller
+        if (batchController.formKey.currentState!.validate()) {
+          batchController
               .addStudent()
               .then((value) => Navigator.pop(context));
         }

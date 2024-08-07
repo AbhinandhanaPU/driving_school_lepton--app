@@ -113,7 +113,7 @@ class TutorPracticeStudentDataList extends StatelessWidget {
                           color: cblack,
                         );
                       } else {
-                        String courses = snapshot.data!.join(', ');
+                        String courses = snapshot.data!.join(',\n ');
                         return TextFontWidget(
                           text: courses,
                           fontsize: 18.h,
