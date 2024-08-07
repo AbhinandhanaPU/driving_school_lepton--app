@@ -35,7 +35,14 @@ class BatchHome extends StatelessWidget {
               onTap:() {
                 batchShift(context);
               },
-              child: Icon(Icons.cached_rounded))
+              child: Row(
+                children: [
+                  TextFontWidget(text: "Shift Student ", 
+                  fontsize: 12,fontWeight: FontWeight.w500,
+                   color: cWhite,),
+                  Icon(Icons.cached_rounded),
+                ],
+              ))
           ],
         ),
         flexibleSpace: const AppBarColorWidget(),
