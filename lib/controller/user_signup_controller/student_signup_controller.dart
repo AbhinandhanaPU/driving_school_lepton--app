@@ -87,6 +87,7 @@ class StudentSignUpController extends GetxController {
             licenceNumber: licenceController.text,
             joiningDate: DateTime.now().toString(),
             status: 'Inactive', //change
+            level: "Beginner",
             userRole: "student",
           );
           await server
@@ -143,7 +144,7 @@ class StudentSignUpController extends GetxController {
                               Navigator.pushAndRemoveUntil(context,
                                   MaterialPageRoute(
                                 builder: (context) {
-                                  return  StudentsMainHomeScreen();
+                                  return StudentsMainHomeScreen();
                                 },
                               ), (route) => false);
                               StudentPasswordSaver.studentEmailID = '';

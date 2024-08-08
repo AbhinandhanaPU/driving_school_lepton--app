@@ -63,7 +63,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                     Padding(
                       padding: EdgeInsets.only(
                           top: 80.sp, right: 20.sp, left: 20.sp),
-                      child: const NotificationPartOfTcr(),
+                      child: NotificationPartOfTr(),
                     ),
                     //////////////////////////////////////////////////////// notifications
                   ],
@@ -72,7 +72,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 60.sp, right: 10.sp, left: 10.sp),
-              child: const CarouselSliderTcr(),
+              child: CarouselSliderTutor(),
             ),
             //////////////////////////////////////////////////////details showing graph
             SizedBox(
@@ -148,10 +148,10 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
               padding: EdgeInsets.only(top: 340.sp, left: 40),
               child: const Row(
                 children: [
-                  QuickActionsWidgetDrivingTest(),
-                  QuickActionsWidgetPractice(),
-                  QuickActionsWidgetSM(),
-                  QuickActionsWidgetChat(),
+                  QuickActionsWidgetDrivingTestTr(),
+                  QuickActionsWidgetPracticeTr(),
+                  QuickActionsWidgetSMTR(),
+                  QuickActionsWidgetChatTr(),
                 ],
               ),
             ), /////////////////////////////////////quick action

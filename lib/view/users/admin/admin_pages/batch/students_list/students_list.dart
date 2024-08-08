@@ -8,6 +8,7 @@ import 'package:new_project_app/controller/user_credentials/user_credentials_con
 import 'package:new_project_app/model/batch_model/batch_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/student_profile.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/batch/crud_functions/add_std_batch.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/batch/crud_functions/search_student_name.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/batch/students_list/students_datalist.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/crud_functions/add_std_practise.dart';
@@ -45,7 +46,7 @@ class BatchStudentsList extends StatelessWidget {
           kWidth20,
           GestureDetector(
             onTap: () {
-              addStudentToPractise(context);
+              addStudentToBatch(context);
             },
             child: Icon(Icons.person_add),
           ),

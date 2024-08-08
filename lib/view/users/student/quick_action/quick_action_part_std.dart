@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/view/users/student/drawer/drawer_items/documents/documents/documents_std.dart';
+import 'package:new_project_app/view/users/student/student_pages/events_std/events_student.dart';
 import 'package:new_project_app/view/users/student/student_pages/notices/notices_student.dart';
 import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials_student.dart';
 import 'package:new_project_app/view/users/student/student_pages/videos/video_list_student.dart';
@@ -54,9 +56,18 @@ viewallMenus(BuildContext context) {
   double w = MediaQuery.of(context).size.width;
   int columnCount = 3;
   final screenNavigationOfStd = [
+
+    DocumentsStd(),
+    const StudyMaterialsStudent(), 
+    const StudyMaterialsStudent(), 
     const StudyMaterialsStudent(), // Study Materials
-    const VideosListStudent(), // Video
+    EventsListOfStudent(),///
+    EventsListOfStudent(),///event
+    const VideosListStudent(),
+    const VideosListStudent(), /// Video
     const NoticePageStudent(), //Notice
+    const NoticePageStudent(), //
+    
   ];
 
   Get.bottomSheet(
@@ -76,7 +87,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      9,
+                      10,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -175,22 +186,24 @@ viewallMenus(BuildContext context) {
 }
 
 List<String> imageStd = [
+  'assets/images/documents.png',//upload document
   'assets/flaticons/cone.png', // Driving Test
   'assets/flaticons/calendar.png', // practice shedule
   'assets/flaticons/books.png', // study Materials
   'assets/flaticons/icons8-chat-100.png', // chats
-  'assets/flaticons/road-trip.png', // road tests
+  'assets/flaticons/events.png', // events
   'assets/flaticons/exam.png', // Leaners test
   'assets/flaticons/video.png', // videos
   'assets/flaticons/icons8-notice-100.png', // Notice
   'assets/flaticons/hand.png', // fees
 ];
 List<String> stdtext = [
+  'Upload Document',
   'Driving Test',
   'Practice Shedule',
   'Study Materials',
   'Chats',
-  'Road Test',
+  'Events',
   'Leaners Test',
   'Videos',
   'Notices',
