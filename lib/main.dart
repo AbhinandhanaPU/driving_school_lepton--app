@@ -56,8 +56,7 @@ Future<void> main(List<String> args) async {
     }
   });
   ///////////for handling the terminated state
-  final RemoteMessage? message =
-      await FirebaseMessaging.instance.getInitialMessage();
+  final RemoteMessage? message = await FirebaseMessaging.instance.getInitialMessage();
 
   if (message != null) {
     log('Launched from terminated state');
@@ -80,18 +79,17 @@ class MyApp extends StatelessWidget {
       builder: (context) {
         ResponsiveApp.serMq(context);
         return GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              tabBarTheme: TabBarTheme(
-                unselectedLabelColor: cWhite,
-                labelColor: Colors.blue[100],
-                indicatorColor: Colors.green,
-              ),
-              appBarTheme: const AppBarTheme(foregroundColor: cWhite),
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            tabBarTheme: TabBarTheme(
+              unselectedLabelColor: cWhite,
+              labelColor: Colors.blue[100],
+              indicatorColor: Colors.green,
             ),
-            home: SplashScreen()
-            // Scaffold(body: QuestionWidget()),
-            );
+            appBarTheme: const AppBarTheme(foregroundColor: cWhite),
+          ),
+          home: Scaffold(body: SplashScreen()),
+        );
       },
     );
   }

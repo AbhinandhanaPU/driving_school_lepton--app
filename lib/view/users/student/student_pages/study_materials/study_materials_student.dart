@@ -41,8 +41,7 @@ class StudyMaterialsStudent extends StatelessWidget {
                     String fileName = data['fileName'];
                     String fileExtension = fileName.split('.').last;
                     return Padding(
-                      padding:
-                          const EdgeInsets.only(left: 12, right: 12, top: 10),
+                      padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
                       child: ListTileCardWidget(
                         onTap: () {},
                         leading: Icon(
@@ -90,8 +89,7 @@ class StudyMaterialsStudent extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               }
-              return Center(
-                  child: Text('No Study materiales Uploaded Yet!'.tr));
+              return Center(child: Text('No Study materiales Uploaded Yet!'.tr));
             }),
       ),
     );
