@@ -25,7 +25,7 @@ class GeneralInstruction extends StatelessWidget {
         body:
             // StreamBuilder(
             //     stream:FirebaseFirestore.instance
-            //     .collection('SchoolListCollection')
+            //     .collection('DrivingSchoolCollection')
             //                       .doc(UserCredentialsController.schoolId)
             //                       .collection(UserCredentialsController.batchId!)
             //                       .doc(UserCredentialsController.batchId!)

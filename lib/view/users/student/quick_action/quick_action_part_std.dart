@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/view/pages/chat/student_section/student_chat_screen.dart';
 import 'package:new_project_app/view/users/student/drawer/drawer_items/documents/documents/documents_std.dart';
 import 'package:new_project_app/view/users/student/student_pages/events_std/events_student.dart';
 import 'package:new_project_app/view/users/student/student_pages/notices/notices_student.dart';
@@ -61,7 +62,7 @@ viewallMenus(BuildContext context) {
     const StudyMaterialsStudent(), 
     const StudyMaterialsStudent(), 
     const StudyMaterialsStudent(), // Study Materials
-    EventsListOfStudent(),///
+    StudentChatScreen(),///chat
     EventsListOfStudent(),///event
     const VideosListStudent(),
     const VideosListStudent(), /// Video

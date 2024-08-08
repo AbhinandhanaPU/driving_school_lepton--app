@@ -12,3 +12,5 @@ const Color cgreylite = Color.fromARGB(255, 117, 117, 117);
 const Color cblue = Colors.blue;
 const Color cbluelight = Color.fromARGB(255, 124, 194, 244);
 const Color screenContainerbackgroundColor = Color.fromARGB(255, 240, 241, 243);
+
+const Color adminePrimayColor = Color.fromARGB(255, 27, 92, 176);

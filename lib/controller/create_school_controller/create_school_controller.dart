@@ -106,13 +106,13 @@ class CreateschoolController extends GetxController {
   }
 
   Future<bool> checkSchoolIsCreated(String schoolName, String place) async {
-    final schoolListCollection =
+    final DrivingSchoolCollection =
         await server.collection('DrivingSchoolCollection').get();
-    if (schoolListCollection.docs.isEmpty) {
+    if (DrivingSchoolCollection.docs.isEmpty) {
       return false;
     }
 
-    for (var element in schoolListCollection.docs) {
+    for (var element in DrivingSchoolCollection.docs) {
       if (element.data()["schoolName"] == schoolName &&
           element.data()["place"] == place) {
         return true;
