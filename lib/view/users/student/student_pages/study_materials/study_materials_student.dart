@@ -41,9 +41,9 @@ class StudyMaterialsStudent extends StatelessWidget {
                     String fileName = data['fileName'];
                     String fileExtension = fileName.split('.').last;
                     return Padding(
-                      padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
+                      padding:
+                          const EdgeInsets.only(left: 12, right: 12, top: 10),
                       child: ListTileCardWidget(
-                        onTap: () {},
                         leading: Icon(
                           Icons.note,
                           color: cblack.withOpacity(0.5),
@@ -80,6 +80,15 @@ class StudyMaterialsStudent extends StatelessWidget {
                             ],
                           ),
                         ),
+                        trailing: GestureDetector(
+                          onTap: () {},
+                          child: TextFontWidget(
+                            fontsize: 15.h,
+                            text: 'View',
+                            color: cbluelight,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ),
                     );
                   },
@@ -89,7 +98,8 @@ class StudyMaterialsStudent extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               }
-              return Center(child: Text('No Study materiales Uploaded Yet!'.tr));
+              return Center(
+                  child: Text('No Study materiales Uploaded Yet!'.tr));
             }),
       ),
     );

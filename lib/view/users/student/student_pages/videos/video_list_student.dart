@@ -6,6 +6,7 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/widgets/listcard_widget/listcard_widget.dart';
+import 'package:new_project_app/view/users/widgets/video_player/play_video.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
@@ -44,7 +45,6 @@ class VideosListStudent extends StatelessWidget {
                       padding:
                           const EdgeInsets.only(left: 12, right: 12, top: 10),
                       child: ListTileCardWidget(
-                        onTap: () {},
                         leading: Icon(Icons.ondemand_video_outlined),
                         title: Row(
                           children: [
@@ -80,14 +80,22 @@ class VideosListStudent extends StatelessWidget {
                             ],
                           ),
                         ),
-                        trailing: Column(
-                          children: [
-                            IconButton(
-                              padding: EdgeInsets.all(0),
-                              onPressed: () {},
-                              icon: Icon(Icons.more_vert),
-                            ),
-                          ],
+                        trailing: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PlayVideoFlicker(
+                                    videoUrl: data['downloadUrl']),
+                              ),
+                            );
+                          },
+                          child: TextFontWidget(
+                            fontsize: 15.h,
+                            text: 'View',
+                            color: cbluelight,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
                     );

@@ -2,6 +2,7 @@ import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/view/users/student/drawer/drawer_items/documents/documents/documents_std.dart';
+import 'package:new_project_app/view/users/student/student_pages/driving_test/driving_test.dart';
 import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials_student.dart';
 import 'package:new_project_app/view/users/student/student_pages/videos/video_list_student.dart';
 
@@ -18,14 +19,14 @@ class QuickActionsWidgetDrivingTest extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            // onTap: () =>
-            //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //                     return AttendenceBookScreenSelectMonth(
-            //       schoolId: UserCredentialsController.schoolId!,
-            //       batchId: UserCredentialsController.batchId!,
-            //       classID: UserCredentialsController.classId!);
-            // },)),
-
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => StudentDrivingTest(),
+                ),
+              );
+            },
             child: Container(
               height: 55.h,
               width: 55.w,
@@ -62,9 +63,11 @@ class QuickActionsWidgetPractice extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-             return  DocumentsStd();
-            },)),
+            onTap: () => Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return DocumentsStd();
+              },
+            )),
             child: Container(
               height: 55.h,
               width: 55.w,
@@ -73,7 +76,7 @@ class QuickActionsWidgetPractice extends StatelessWidget {
                   border: Border.all(color: cblack.withOpacity(0.2)),
                   borderRadius: BorderRadius.circular(10)),
               child: Image.asset(
-               'assets/images/documents.png',
+                'assets/images/documents.png',
                 scale: 2.5,
               ),
             ),
@@ -142,9 +145,11 @@ class QuickActionsWidgetChat extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-             return const  VideosListStudent();
-            },)),
+            onTap: () => Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return const VideosListStudent();
+              },
+            )),
             child: Container(
               height: 55.h,
               width: 55.w,
