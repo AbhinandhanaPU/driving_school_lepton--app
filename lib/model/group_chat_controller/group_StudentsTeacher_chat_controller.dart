@@ -491,7 +491,7 @@ class TeacherGroupChatController extends GetxController {
                                         child: SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: TextFontWidget(
-                                            text: adminDetails.username!,
+                                            text: adminDetails.username,
                                             fontsize: 11,
                                             fontWeight: FontWeight.w600,
                                           ),

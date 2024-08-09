@@ -11,7 +11,6 @@ import 'package:new_project_app/view/users/admin/admin_pages/all_students/studen
 import 'package:new_project_app/view/users/admin/admin_pages/batch/crud_functions/add_std_batch.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/batch/crud_functions/search_student_name.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/batch/students_list/students_datalist.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/crud_functions/add_std_practise.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 import 'package:new_project_app/view/widgets/loading_widget/loading_widget.dart';
