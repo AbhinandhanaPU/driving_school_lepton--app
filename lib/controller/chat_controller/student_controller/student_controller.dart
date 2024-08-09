@@ -11,7 +11,6 @@ import 'package:new_project_app/controller/user_credentials/user_credentials_con
 import 'package:new_project_app/model/admin_model/admin_model.dart';
 
 import '../../../model/chat_model/chat_model.dart';
-import '../../../model/teacher_model/teacher_model.dart';
 
 class StudentChatController extends GetxController {
   final TextEditingController messageController = TextEditingController();
