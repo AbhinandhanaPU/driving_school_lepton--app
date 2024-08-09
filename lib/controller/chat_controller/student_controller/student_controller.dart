@@ -308,6 +308,7 @@ class StudentChatController extends GetxController {
               .get();
       searchAdmin =
           snapshot.docs.map((e) => AdminModel.fromMap(e.data())).toList();
+          
     } catch (e) {
       showToast(msg: "Admin Data Error");
     }

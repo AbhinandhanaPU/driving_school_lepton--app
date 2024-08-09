@@ -20,8 +20,8 @@ class StudentDashboard extends StatefulWidget {
 }
 
 class _StudentDashboardState extends State<StudentDashboard> {
-  final PushNotificationController pushNotificationController =
-      Get.put(PushNotificationController());
+  // final PushNotificationController pushNotificationController =
+  //     Get.put(PushNotificationController());
 
   @override
   void initState() {
@@ -30,11 +30,11 @@ class _StudentDashboardState extends State<StudentDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    pushNotificationController.getUserDeviceID().then((value) {
-      pushNotificationController.allUSerDeviceID(
-          UserCredentialsController.userRole!,
-          UserCredentialsController.currentUSerID!);
-    });
+    // pushNotificationController.getUserDeviceID().then((value) {
+    //   pushNotificationController.allUSerDeviceID(
+    //       UserCredentialsController.userRole!,
+    //       UserCredentialsController.currentUSerID!);
+    // });
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 244, 244, 244),
       body: SafeArea(
