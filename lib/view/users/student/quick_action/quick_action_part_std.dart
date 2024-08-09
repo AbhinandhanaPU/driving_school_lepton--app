@@ -7,6 +7,7 @@ import 'package:new_project_app/view/pages/chat/student_section/student_chat_scr
 import 'package:new_project_app/view/users/student/drawer/drawer_items/documents/documents/documents_std.dart';
 import 'package:new_project_app/view/users/student/student_pages/driving_test/driving_test.dart';
 import 'package:new_project_app/view/users/student/student_pages/events_std/events_student.dart';
+import 'package:new_project_app/view/users/student/student_pages/fees/driving_test.dart';
 import 'package:new_project_app/view/users/student/student_pages/notices/notices_student.dart';
 import 'package:new_project_app/view/users/student/student_pages/practise_schedule/practise_schedule.dart';
 import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials_student.dart';
@@ -68,7 +69,7 @@ viewallMenus(BuildContext context) {
     const VideosListStudent(),
     const VideosListStudent(), // Video
     const NoticePageStudent(), //Notice
-    const NoticePageStudent(), //
+    StudentFeeStatus(), //
   ];
 
   Get.bottomSheet(
@@ -100,24 +101,18 @@ viewallMenus(BuildContext context) {
                             scale: 1.5,
                             child: FadeInAnimation(
                               child: GestureDetector(
-                                onTap: () =>
-                                    Navigator.push(context, MaterialPageRoute(
+                                onTap: () => Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
                                     return screenNavigationOfStd[index];
                                   },
                                 )),
                                 child: Container(
                                   margin: EdgeInsets.only(
-                                      bottom: w / 25,
-                                      left: w / 30,
-                                      right: w / 30,
-                                      top: w / 25),
+                                      bottom: w / 25, left: w / 30, right: w / 30, top: w / 25),
                                   decoration: BoxDecoration(
                                     color: Colors.transparent,
-                                    border: Border.all(
-                                        color: cblack.withOpacity(0.1)),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(7)),
+                                    border: Border.all(color: cblack.withOpacity(0.1)),
+                                    borderRadius: const BorderRadius.all(Radius.circular(7)),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.1),
@@ -146,9 +141,7 @@ viewallMenus(BuildContext context) {
                                             color: themeColor,
                                             // cWhite,
                                             shape: BoxShape.circle,
-                                            border: Border.all(
-                                                color: themeColor
-                                                    .withOpacity(0.5))),
+                                            border: Border.all(color: themeColor.withOpacity(0.5))),
                                         child: Center(
                                           child: Image.asset(
                                             imageStd[index],
