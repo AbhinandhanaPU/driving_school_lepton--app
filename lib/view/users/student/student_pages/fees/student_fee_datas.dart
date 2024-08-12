@@ -8,11 +8,11 @@ import 'package:new_project_app/model/course_model/course_model.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class StudentFeeDatas extends StatelessWidget {
-  final Map<String, dynamic> data;
+  final Map<String, dynamic> dataa;
 
   StudentFeeDatas({
     super.key,
-    required this.data,
+    required this.dataa,
   });
 
   @override
@@ -52,7 +52,7 @@ class StudentFeeDatas extends StatelessWidget {
                     .collection('DrivingSchoolCollection')
                     .doc(UserCredentialsController.schoolId)
                     .collection('Courses')
-                    .doc(data['courseID'])
+                    .doc(dataa['courseID'])
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -104,7 +104,7 @@ class StudentFeeDatas extends StatelessWidget {
                   ),
                   kHeight10,
                   TextFontWidget(
-                    text: data['feeStatus'],
+                    text: dataa['feeStatus'],
                     fontsize: 18.h,
                     fontWeight: FontWeight.bold,
                     color: cblue,
@@ -122,10 +122,33 @@ class StudentFeeDatas extends StatelessWidget {
                   ),
                   kHeight10,
                   TextFontWidget(
-                    text: data['pendingAmount'],
+                    text: dataa['pendingAmount'],
                     fontsize: 18.h,
                     fontWeight: FontWeight.bold,
                     color: cblue,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextFontWidget(
+                    text: 'Fee Status',
+                    fontsize: 14.h,
+                    fontWeight: FontWeight.bold,
+                    color: cblack.withOpacity(0.7),
+                  ),
+                  kHeight10,
+                  TextFontWidget(
+                    text: dataa['feeStatus'],
+                    fontsize: 18.h,
+                    fontWeight: FontWeight.bold,
+                    color: cblack.withOpacity(0.7),
                   ),
                 ],
               ),

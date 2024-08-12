@@ -120,6 +120,8 @@ nextpage(context) async {
     if (UserCredentialsController.userRole == 'admin') {
       //getting adminData
       await checkAdmin(context);
+    } else if (UserCredentialsController.userRole == 'secondoryAdmin') {
+      await checkSecondoryAdmin(context);
     } else if (UserCredentialsController.userRole == 'student') {
       //getting studentData
       await checkStudent(context);
@@ -140,14 +142,11 @@ nextpage(context) async {
 Future<void> checkAdmin(
   context,
 ) async {
-  final adminData = await server
-      .collection('DrivingSchoolCollection')
-      .doc(serverAuth.currentUser?.uid)
-      .get();
+  final adminData =
+      await server.collection('DrivingSchoolCollection').doc(serverAuth.currentUser?.uid).get();
 
   if (adminData.data() != null) {
-    UserCredentialsController.adminModel =
-        AdminModel.fromMap(adminData.data()!);
+    UserCredentialsController.adminModel = AdminModel.fromMap(adminData.data()!);
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return const AdminMainHomeScreen();
@@ -174,8 +173,7 @@ Future<void> checkStudent(
       .get();
 
   if (studentData.data() != null) {
-    UserCredentialsController.studentModel =
-        StudentModel.fromMap(studentData.data()!);
+    UserCredentialsController.studentModel = StudentModel.fromMap(studentData.data()!);
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return StudentsMainHomeScreen();
@@ -202,8 +200,7 @@ Future<void> checkTeacher(
       .get();
 
   if (teacherData.data() != null) {
-    UserCredentialsController.studentModel =
-        StudentModel.fromMap(teacherData.data()!);
+    UserCredentialsController.studentModel = StudentModel.fromMap(teacherData.data()!);
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return const TeachersMainHomeScreen();
@@ -237,5 +234,34 @@ void userRequestPermission() async {
     log('User granted provisional permission');
   } else {
     log('User declined or has not accepted permission');
+  }
+}
+
+Future<void> checkSecondoryAdmin(
+  context,
+) async {
+  log("userlogin ID :  ${FirebaseAuth.instance.currentUser?.uid}");
+  log("userrole :  ${UserCredentialsController.userRole}");
+  final adminData = await server
+      .collection('DrivingSchoolCollection')
+      .doc(UserCredentialsController.schoolId)
+      .collection('Admins')
+      .doc(serverAuth.currentUser!.uid)
+      .get();
+
+  if (adminData.data() != null) {
+    // UserCredentialsController.adminModel = AdminModel.fromMap(adminData.data()!);
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return const AdminMainHomeScreen();
+      },
+    ));
+  } else {
+    showToast(msg: "Please login again");
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return const FirstScreen();
+      },
+    ));
   }
 }
