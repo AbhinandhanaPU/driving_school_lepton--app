@@ -31,7 +31,7 @@ class StudentFeeStatus extends StatelessWidget {
             final data = snapshot.data!.data();
             return ListView.builder(
               itemCount: 1,
-              itemBuilder: (context, index) => StudentFeeDatas(data: data!),
+              itemBuilder: (context, index) => StudentFeeDatas(dataa: data!),
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
