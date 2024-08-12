@@ -9,6 +9,7 @@ import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_wi
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 import 'package:new_project_app/view/widgets/catagory_table_header_widget/data_container_widget/profile_details_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
+import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 class CourseDetailsStd extends StatelessWidget {
   CourseDetailsStd({super.key, required this.data});
@@ -34,7 +35,8 @@ class CourseDetailsStd extends StatelessWidget {
               children: [
                 // course details
                 Container(
-                  padding: EdgeInsets.only(left: 25, right: 25, top: 25, bottom: 20),
+                  padding:
+                      EdgeInsets.only(left: 25, right: 25, top: 25, bottom: 20),
                   decoration: BoxDecoration(
                     color: themeColor.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(15),
@@ -91,7 +93,89 @@ class CourseDetailsStd extends StatelessWidget {
               left: 40,
               child: GestureDetector(
                 onTap: () {
-                  studentController.addStudentToCourse(data.courseId);
+                  // studentController.addStudentToCourse(data.courseId);
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)),
+                      title: Center(
+                        child: Text(
+                          'Payment Mode',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      actions: [
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                height: 40,
+                                width: 250,
+                                decoration: const BoxDecoration(
+                                  color: themeColor,
+                                ),
+                                child: Center(
+                                  child: GooglePoppinsWidgets(
+                                      text: 'Online Payment',
+                                      color: cWhite,
+                                      fontsize: 15,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Get.back();
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text('Message'),
+                                      content: const SingleChildScrollView(
+                                        child: ListBody(
+                                          children: <Widget>[
+                                            Text(
+                                                'Your payment request sent Successfully ')
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('OK'),
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 250,
+                                decoration: const BoxDecoration(
+                                  color: themeColor,
+                                ),
+                                child: Center(
+                                  child: GooglePoppinsWidgets(
+                                      text: 'Sent Ofline Payment Request',
+                                      color: cWhite,
+                                      fontsize: 15,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
                 },
                 child: ButtonContainerWidget(
                   curving: 30,
