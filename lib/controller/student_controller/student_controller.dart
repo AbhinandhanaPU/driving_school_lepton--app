@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
@@ -9,14 +10,16 @@ import 'package:new_project_app/model/student_model/student_model.dart';
 class StudentController extends GetxController {
   List<StudentModel> studentProfileList = [];
 
-  final _fbServer =
-      server.collection('DrivingSchoolCollection').doc(UserCredentialsController.schoolId);
+  final _fbServer = server
+      .collection('DrivingSchoolCollection')
+      .doc(UserCredentialsController.schoolId);
 
   Future<void> fetchAllStudents() async {
     try {
       log("fetchAllStudents......................");
       final data = await _fbServer.collection('Students').get();
-      studentProfileList = data.docs.map((e) => StudentModel.fromMap(e.data())).toList();
+      studentProfileList =
+          data.docs.map((e) => StudentModel.fromMap(e.data())).toList();
       log(studentProfileList[0].toString());
     } catch (e) {
       showToast(msg: "User Data Error");
@@ -56,7 +59,8 @@ class StudentController extends GetxController {
     }
   }
 
-  Future<void> updateStudentStatus(StudentModel studentModel, String newStatus) async {
+  Future<void> updateStudentStatus(
+      StudentModel studentModel, String newStatus) async {
     try {
       await server
           .collection('DrivingSchoolCollection')
@@ -122,40 +126,51 @@ class StudentController extends GetxController {
     }
   }
 
-  Future<void> addStudentToCourse(String courseID) async {
+  Future<void> addStudentToCourse(String courseID, BuildContext context) async {
     try {
       log("UserCredentialsController.studentModel!.docid ${UserCredentialsController.studentModel!.docid}");
       log("std course id $courseID");
-      final courseStd = await server
+      final studentResult = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Students')
+          .doc(UserCredentialsController.studentModel!.docid)
+          .get();
+      final stdData = StudentModel.fromMap(studentResult.data()!);
+      await server
           .collection('DrivingSchoolCollection')
           .doc(UserCredentialsController.schoolId)
           .collection('Courses')
           .doc(courseID)
-          .collection('Students')
+          .collection('RequestedStudents')
           .doc(UserCredentialsController.studentModel!.docid)
-          .get();
-      if (!courseStd.exists) {
-        final studentResult = await server
-            .collection('DrivingSchoolCollection')
-            .doc(UserCredentialsController.schoolId)
-            .collection('Students')
-            .doc(UserCredentialsController.studentModel!.docid)
-            .get();
-        final data = StudentModel.fromMap(studentResult.data()!);
-        await server
-            .collection('DrivingSchoolCollection')
-            .doc(UserCredentialsController.schoolId)
-            .collection('Courses')
-            .doc(courseID)
-            .collection('Students')
-            .doc(UserCredentialsController.studentModel!.docid)
-            .set(data.toMap())
-            .then((value) async {
-          showToast1(msg: 'You are successfully entered');
-        });
-      } else {
-        showToast2(msg: 'You are already added');
-      }
+          .set(stdData.toMap())
+          .then((value) {
+        Navigator.pop(context);
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Message'),
+              content: const SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text('Your payment request sent Successfully ')
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      });
     } catch (e) {
       log(e.toString(), name: 'StudentController');
       showToast(msg: 'Somthing went wrong please try again');
