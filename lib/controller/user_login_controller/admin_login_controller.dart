@@ -110,7 +110,7 @@ class AdminLoginController extends GetxController {
         if (error is FirebaseAuthException) {
           isLoading.value = false;
           handleFirebaseError(error);
-        }
+        } 
       });
     } catch (e) {
       isLoading.value = false;
