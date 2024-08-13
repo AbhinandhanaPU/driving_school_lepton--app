@@ -11,7 +11,7 @@ import 'package:new_project_app/constant/responsive.dart';
 import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/firebase_options.dart';
 import 'package:new_project_app/service/pushnotification_service/pushnotification_service.dart';
-import 'package:new_project_app/view/splash_screen/splash_screen.dart';
+import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 Future _firebasebackgrounMessage(RemoteMessage message) async {
@@ -89,8 +89,8 @@ class MyApp extends StatelessWidget {
               ),
               appBarTheme: const AppBarTheme(foregroundColor: cWhite),
             ),
-            home: SplashScreen()
-            // Scaffold(body: QuestionWidget()),
+           home:
+            Scaffold(body: QuestionWidget()),
             );
       },
     );
