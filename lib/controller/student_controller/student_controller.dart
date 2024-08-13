@@ -126,7 +126,10 @@ class StudentController extends GetxController {
     }
   }
 
-  Future<void> addStudentToCourse(String courseID, BuildContext context) async {
+  Future<void> addStudentReqToCourse(
+    String courseID,
+    BuildContext context,
+  ) async {
     try {
       log("UserCredentialsController.studentModel!.docid ${UserCredentialsController.studentModel!.docid}");
       log("std course id $courseID");
@@ -157,6 +160,74 @@ class StudentController extends GetxController {
                   children: <Widget>[
                     Text('Your payment request sent Successfully ')
                   ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      });
+    } catch (e) {
+      log(e.toString(), name: 'StudentController');
+      showToast(msg: 'Somthing went wrong please try again');
+    }
+  }
+
+  Future<void> addStudentToCourseOnline(
+      String courseID, BuildContext context) async {
+    try {
+      log("UserCredentialsController.studentModel!.docid ${UserCredentialsController.studentModel!.docid}");
+      log("std course id $courseID");
+      final studentResult = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Students')
+          .doc(UserCredentialsController.studentModel!.docid)
+          .get();
+      final stdData = StudentModel.fromMap(studentResult.data()!);
+      await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Courses')
+          .doc(courseID)
+          .collection('Students')
+          .doc(UserCredentialsController.studentModel!.docid)
+          .set(stdData.toMap())
+          .then((value) async {
+        final reqCourseStd = await server
+            .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection('Courses')
+            .doc(courseID)
+            .collection('RequestedStudents')
+            .doc(UserCredentialsController.studentModel!.docid)
+            .get();
+        if (reqCourseStd.exists) {
+          await server
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection('Courses')
+              .doc(courseID)
+              .collection('RequestedStudents')
+              .doc(UserCredentialsController.studentModel!.docid)
+              .delete();
+        }
+        Navigator.pop(context);
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Message'),
+              content: const SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[Text('Your Successfully added to course')],
                 ),
               ),
               actions: <Widget>[

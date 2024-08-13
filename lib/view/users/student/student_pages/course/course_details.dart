@@ -129,7 +129,10 @@ class CourseDetailsStd extends StatelessWidget {
                             Column(
                               children: [
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    studentController.addStudentToCourseOnline(
+                                        data.courseId, context);
+                                  },
                                   child: Container(
                                     height: 40,
                                     width: 250,
@@ -150,7 +153,7 @@ class CourseDetailsStd extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    studentController.addStudentToCourse(
+                                    studentController.addStudentReqToCourse(
                                         data.courseId, context);
                                   },
                                   child: Container(
@@ -197,7 +200,8 @@ class CourseDetailsStd extends StatelessWidget {
                               TextButton(
                                 child: const Text('Pay Online'),
                                 onPressed: () {
-                                  Get.back();
+                                  studentController.addStudentToCourseOnline(
+                                      data.courseId, context);
                                 },
                               ),
                             ],
