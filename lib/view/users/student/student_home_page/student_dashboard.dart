@@ -6,7 +6,7 @@ import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/student/quick_action/quick_action_part_std.dart';
 import 'package:new_project_app/view/users/student/quick_action/quick_action_widgets.dart';
-import 'package:new_project_app/view/users/student/slider/carousal_slider.dart';
+import 'package:new_project_app/view/users/student/slider/carousal_slider_std.dart';
 import 'package:new_project_app/view/users/student/student_pages/notifications.dart';
 import 'package:new_project_app/view/users/widgets/profile_edit_widgets/student_edit_profile.dart';
 
@@ -62,7 +62,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
                     Padding(
                       padding: EdgeInsets.only(
                           top: 80.sp, right: 20.sp, left: 20.sp),
-                      child: const NotificationPartOfStd(),
+                      child:  NotificationPartOfStd(),
                     ),
                     //////////////////////////////////////////////////////// notifications
                   ],

@@ -23,7 +23,7 @@ import 'package:new_project_app/view/users/admin/admin_pages/videos/video_list_a
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 class QuickActionPartAdmin extends StatelessWidget {
-  const QuickActionPartAdmin({super.key});
+  const   QuickActionPartAdmin({super.key});
 
   @override
   Widget build(BuildContext context) {
