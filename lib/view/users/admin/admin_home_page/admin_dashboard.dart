@@ -6,7 +6,6 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/push_notificationController/pushnotificationController.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
 import 'package:new_project_app/view/users/admin/notifications/notifications.dart';
 import 'package:new_project_app/view/users/admin/quick_action/quick_action_part_admin.dart';
 import 'package:new_project_app/view/users/admin/quick_action/quick_action_widgets.dart';
@@ -21,7 +20,7 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
-    final PushNotificationController pushNotificationController =
+  final PushNotificationController pushNotificationController =
       Get.put(PushNotificationController());
   @override
   void initState() {
@@ -30,10 +29,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   @override
   Widget build(BuildContext context) {
-        pushNotificationController.getUserDeviceID().then((value) {
+    pushNotificationController.getUserDeviceID().then((value) {
       pushNotificationController.allUSerDeviceID(
-          UserCredentialsController.userRole!,
-          UserCredentialsController.currentUSerID!);
+          UserCredentialsController.userRole!, UserCredentialsController.currentUSerID!);
     });
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 244, 244, 244),
@@ -48,22 +46,19 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   color: themeColor.withOpacity(0.1),
                   // const Color.fromARGB(255, 218, 247, 229),
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.sp),
-                      topRight: Radius.circular(15.sp)),
+                      topLeft: Radius.circular(15.sp), topRight: Radius.circular(15.sp)),
                 ),
                 child: ListView(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 120.sp, right: 20.sp, left: 20.sp),
+                      padding: EdgeInsets.only(top: 120.sp, right: 20.sp, left: 20.sp),
                       child: const QuickActionPartAdmin(),
                     ),
                     ////////////////////////////////////////////////////////all tab part
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 80.sp, right: 20.sp, left: 20.sp),
+                      padding: EdgeInsets.only(top: 80.sp, right: 20.sp, left: 20.sp),
                       child: const NotificationPartOfAdmin(),
                     ),
                     //////////////////////////////////////////////////////// notifications
@@ -90,15 +85,13 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: CircleAvatar(
-                          backgroundImage: UserCredentialsController
-                                          .adminModel?.profileImageUrl ==
+                          backgroundImage: UserCredentialsController.adminModel?.profileImageUrl ==
                                       null ||
-                                  UserCredentialsController
-                                      .adminModel!.profileImageUrl.isEmpty
+                                  UserCredentialsController.adminModel!.profileImageUrl.isEmpty
                               ? const NetworkImage(assetImagePathPerson)
-                              : NetworkImage(UserCredentialsController
-                                      .adminModel?.profileImageUrl ??
-                                  " ") as ImageProvider,
+                              : NetworkImage(
+                                      UserCredentialsController.adminModel?.profileImageUrl ?? " ")
+                                  as ImageProvider,
                           onBackgroundImageError: (exception, stackTrace) {},
                           radius: 25,
                         ),
@@ -112,8 +105,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         child: SizedBox(
                             width: 200,
                             child: Text(
-                              UserCredentialsController.adminModel?.adminName ??
-                                  "",
+                              UserCredentialsController.adminModel?.adminName ?? "",
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
                                 fontSize: 17.sp,
@@ -146,10 +138,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 340.sp, left: 40),
-              child:  Row(
+              child: Row(
                 children: [
-                  QuestionWidget(),
-                  // QuickActionsWidgetDrivingTestAdmin(),
+                  // QuestionWidget(),
+                  QuickActionsWidgetDrivingTestAdmin(),
                   QuickActionsWidgetPractice(),
                   QuickActionsWidgetSM(),
                   QuickActionsWidgetChat(),

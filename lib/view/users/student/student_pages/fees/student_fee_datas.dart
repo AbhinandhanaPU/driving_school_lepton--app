@@ -131,29 +131,6 @@ class StudentFeeDatas extends StatelessWidget {
               ),
             ],
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextFontWidget(
-                    text: 'Fee Status',
-                    fontsize: 14.h,
-                    fontWeight: FontWeight.bold,
-                    color: cblack.withOpacity(0.7),
-                  ),
-                  kHeight10,
-                  TextFontWidget(
-                    text: dataa['feeStatus'],
-                    fontsize: 18.h,
-                    fontWeight: FontWeight.bold,
-                    color: cblack.withOpacity(0.7),
-                  ),
-                ],
-              ),
-            ],
-          ),
         ],
       ),
     );

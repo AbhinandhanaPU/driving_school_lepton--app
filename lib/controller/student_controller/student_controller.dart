@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
@@ -10,16 +11,14 @@ import 'package:new_project_app/model/student_model/student_model.dart';
 class StudentController extends GetxController {
   List<StudentModel> studentProfileList = [];
 
-  final _fbServer = server
-      .collection('DrivingSchoolCollection')
-      .doc(UserCredentialsController.schoolId);
+  final _fbServer =
+      server.collection('DrivingSchoolCollection').doc(UserCredentialsController.schoolId);
 
   Future<void> fetchAllStudents() async {
     try {
       log("fetchAllStudents......................");
       final data = await _fbServer.collection('Students').get();
-      studentProfileList =
-          data.docs.map((e) => StudentModel.fromMap(e.data())).toList();
+      studentProfileList = data.docs.map((e) => StudentModel.fromMap(e.data())).toList();
       log(studentProfileList[0].toString());
     } catch (e) {
       showToast(msg: "User Data Error");
@@ -59,8 +58,7 @@ class StudentController extends GetxController {
     }
   }
 
-  Future<void> updateStudentStatus(
-      StudentModel studentModel, String newStatus) async {
+  Future<void> updateStudentStatus(StudentModel studentModel, String newStatus) async {
     try {
       await server
           .collection('DrivingSchoolCollection')
@@ -157,9 +155,7 @@ class StudentController extends GetxController {
               title: const Text('Message'),
               content: const SingleChildScrollView(
                 child: ListBody(
-                  children: <Widget>[
-                    Text('Your payment request sent Successfully ')
-                  ],
+                  children: <Widget>[Text('Your payment request sent Successfully ')],
                 ),
               ),
               actions: <Widget>[
@@ -180,8 +176,7 @@ class StudentController extends GetxController {
     }
   }
 
-  Future<void> addStudentToCourseOnline(
-      String courseID, BuildContext context) async {
+  Future<void> addStudentToCourseOnline(String courseID, BuildContext context) async {
     try {
       log("UserCredentialsController.studentModel!.docid ${UserCredentialsController.studentModel!.docid}");
       log("std course id $courseID");
@@ -245,6 +240,45 @@ class StudentController extends GetxController {
     } catch (e) {
       log(e.toString(), name: 'StudentController');
       showToast(msg: 'Somthing went wrong please try again');
+    }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchStdFeeStatus() async* {
+    try {
+      final docOfFee = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('FeeCollection')
+          .get();
+
+      if (docOfFee.docs.isNotEmpty) {
+        for (var courseDoc in docOfFee.docs) {
+          final courseDocId = courseDoc.id;
+          final studentDocSnapshot = await server
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection("FeeCollection")
+              .doc(courseDocId)
+              .collection('Students')
+              .doc(UserCredentialsController.studentModel!.docid)
+              .get();
+
+          if (studentDocSnapshot.exists) {
+            yield* server
+                .collection('DrivingSchoolCollection')
+                .doc(UserCredentialsController.schoolId)
+                .collection("FeeCollection")
+                .doc(courseDocId)
+                .collection('Students')
+                .where(UserCredentialsController.studentModel!.docid)
+                .snapshots();
+          }
+        }
+      } else {
+        log('No fee data available');
+      }
+    } catch (error) {
+      log('Student fee fetching error $error');
     }
   }
 }

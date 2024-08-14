@@ -15,8 +15,7 @@ class QuestionWidget extends StatefulWidget {
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
-  QuizTestAdminSideController quizTestAdminSideController =
-      Get.put(QuizTestAdminSideController());
+  QuizTestAdminSideController quizTestAdminSideController = Get.put(QuizTestAdminSideController());
   late PageController _controller;
   int _questionNumber = 1;
   // int _secondsElapsed = 10;
@@ -35,7 +34,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         builder: (context, questionSnap) {
           if (quizTestAdminSideController.selectedQuestions.isEmpty ||
               questionSnap.connectionState == ConnectionState.waiting) {
-            return const LoadingWidget();
+            return Scaffold(body: const LoadingWidget());
           } else {
             return Scaffold(
               appBar: AppBar(
@@ -47,10 +46,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   children: [
                     Text(
                       "Exam",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30),
+                      style:
+                          TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30),
                     ),
                     Row(
                       children: [
@@ -61,8 +58,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                         Container(
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.yellow),
+                              borderRadius: BorderRadius.circular(20), color: Colors.yellow),
                           child: Row(
                             children: [
                               Icon(
@@ -91,12 +87,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                     Expanded(
                         child: PageView.builder(
                       controller: _controller,
-                      itemCount:
-                          quizTestAdminSideController.selectedQuestions.length,
+                      itemCount: quizTestAdminSideController.selectedQuestions.length,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        final _question = quizTestAdminSideController
-                            .selectedQuestions[index];
+                        final _question = quizTestAdminSideController.selectedQuestions[index];
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -105,8 +99,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                             ),
                             Text(
                               'Q. ${_question.question}',
-                              style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
                               height: 32,
@@ -118,8 +111,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                                       width: 150,
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
-                                              image: NetworkImage(
-                                                  _question.imageID!))),
+                                              image: NetworkImage(_question.imageID!))),
                                     ),
                                   )
                                 : SizedBox(),
@@ -138,63 +130,44 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                                         return ListView.separated(
                                             itemBuilder: (context, index) {
                                               return Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: const EdgeInsets.all(8.0),
                                                 child: GestureDetector(
                                                   onTap: () async {
-                                                    final MockQuestionAnswerModel
-                                                        data =
+                                                    final MockQuestionAnswerModel data =
                                                         MockQuestionAnswerModel(
-                                                            dataModel:
-                                                                _question,
+                                                            dataModel: _question,
                                                             lockoption: true,
                                                             questionNo: index,
-                                                            ansIsTrue: optionsnapshot
-                                                                            .data
-                                                                            ?.docs[index]
-                                                                        [
-                                                                        'isCorrect'] ==
-                                                                    true
-                                                                ? true
-                                                                : false,
-                                                            selectedOption:
-                                                                optionsnapshot
-                                                                            .data
-                                                                            ?.docs[
-                                                                        index][
-                                                                    'options']);
+                                                            ansIsTrue:
+                                                                optionsnapshot.data?.docs[index]
+                                                                            ['isCorrect'] ==
+                                                                        true
+                                                                    ? true
+                                                                    : false,
+                                                            selectedOption: optionsnapshot
+                                                                .data?.docs[index]['options']);
 
-                                                    quizTestAdminSideController
-                                                        .userQuestionAnsList
+                                                    quizTestAdminSideController.userQuestionAnsList
                                                         .add(data);
                                                   },
                                                   child: Container(
                                                     height: 50,
                                                     padding: EdgeInsets.all(12),
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 8),
+                                                    margin: EdgeInsets.symmetric(vertical: 8),
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          Colors.grey.shade200,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                      border: Border.all(
-                                                          color: cgrey),
+                                                      color: Colors.grey.shade200,
+                                                      borderRadius: BorderRadius.circular(5),
+                                                      border: Border.all(color: cgrey),
                                                     ),
                                                     child: Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
+                                                          MainAxisAlignment.spaceBetween,
                                                       children: [
                                                         Text(
                                                           '${index + 1}. ${optionsnapshot.data?.docs[index]['options']}',
                                                           style: TextStyle(
                                                               fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
+                                                              fontWeight: FontWeight.w500),
                                                         ),
                                                         // getIconForOption(option, question)
                                                       ],
@@ -206,8 +179,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                                             separatorBuilder: (context, index) {
                                               return SizedBox();
                                             },
-                                            itemCount: optionsnapshot
-                                                .data!.docs.length);
+                                            itemCount: optionsnapshot.data!.docs.length);
                                       } else {
                                         return LoadingWidget();
                                       }
@@ -224,12 +196,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 8, bottom: 8),
+                              padding: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
                               decoration: BoxDecoration(
                                   color: Color.fromARGB(222, 134, 240, 88),
-                                  borderRadius: BorderRadius.horizontal(
-                                      left: Radius.circular(50))),
+                                  borderRadius: BorderRadius.horizontal(left: Radius.circular(50))),
                               child: Row(
                                 children: [
                                   Icon(Icons.check, color: Colors.white),
@@ -246,12 +216,11 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 8, bottom: 8),
+                              padding: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
                               decoration: BoxDecoration(
                                   color: Colors.redAccent.shade100,
-                                  borderRadius: BorderRadius.horizontal(
-                                      right: Radius.circular(50))),
+                                  borderRadius:
+                                      BorderRadius.horizontal(right: Radius.circular(50))),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -274,8 +243,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                           onTap: () {
                             {
                               if (_questionNumber <
-                                  quizTestAdminSideController
-                                      .selectedQuestions.length) {
+                                  quizTestAdminSideController.selectedQuestions.length) {
                                 _controller.nextPage(
                                     duration: Duration(milliseconds: 250),
                                     curve: Curves.easeInExpo);
@@ -290,8 +258,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: _questionNumber <
-                                      quizTestAdminSideController
-                                          .selectedQuestions.length
+                                      quizTestAdminSideController.selectedQuestions.length
                                   ? Colors.yellow
                                   : cred,
                             ),
@@ -299,21 +266,18 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 13),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     _questionNumber <
-                                            quizTestAdminSideController
-                                                .selectedQuestions.length
+                                            quizTestAdminSideController.selectedQuestions.length
                                         ? 'NEXT QUESTION'
                                         : 'RESULT',
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: _questionNumber <
-                                              quizTestAdminSideController
-                                                  .selectedQuestions.length
+                                              quizTestAdminSideController.selectedQuestions.length
                                           ? cblack
                                           : cWhite,
                                     ),
@@ -323,8 +287,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                                     Icons.navigate_next,
                                     size: 30,
                                     color: _questionNumber <
-                                            quizTestAdminSideController
-                                                .selectedQuestions.length
+                                            quizTestAdminSideController.selectedQuestions.length
                                         ? cblack
                                         : cWhite,
                                   )
