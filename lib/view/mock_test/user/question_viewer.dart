@@ -43,7 +43,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                 elevation: 9.0,
                 shadowColor: Colors.black45,
                 title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,                                                                                                                                                                                                                                                          
                   children: [
                     Text(
                       "Exam",
