@@ -6,6 +6,7 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/push_notificationController/pushnotificationController.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
 import 'package:new_project_app/view/users/admin/notifications/notifications.dart';
 import 'package:new_project_app/view/users/admin/quick_action/quick_action_part_admin.dart';
 import 'package:new_project_app/view/users/admin/quick_action/quick_action_widgets.dart';
@@ -145,9 +146,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 340.sp, left: 40),
-              child: const Row(
+              child:  Row(
                 children: [
-                  QuickActionsWidgetDrivingTestAdmin(),
+                  QuestionWidget(),
+                  // QuickActionsWidgetDrivingTestAdmin(),
                   QuickActionsWidgetPractice(),
                   QuickActionsWidgetSM(),
                   QuickActionsWidgetChat(),
