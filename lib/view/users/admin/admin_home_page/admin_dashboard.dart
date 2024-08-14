@@ -10,31 +10,19 @@ import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
 import 'package:new_project_app/view/users/admin/notifications/notifications.dart';
 import 'package:new_project_app/view/users/admin/quick_action/quick_action_part_admin.dart';
 import 'package:new_project_app/view/users/admin/quick_action/quick_action_widgets.dart';
-import 'package:new_project_app/view/users/admin/slider/carousal_slider.dart';
+import 'package:new_project_app/view/users/admin/slider_admin/carousal_slider_admin.dart';
 import 'package:new_project_app/view/users/widgets/profile_edit_widgets/admin_edit_profile.dart';
 
-class AdminDashboard extends StatefulWidget {
+class AdminDashboard extends StatelessWidget {
   const AdminDashboard({super.key});
 
   @override
-  State<AdminDashboard> createState() => _AdminDashboardState();
-}
-
-class _AdminDashboardState extends State<AdminDashboard> {
-    final PushNotificationController pushNotificationController =
-      Get.put(PushNotificationController());
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-        pushNotificationController.getUserDeviceID().then((value) {
-      pushNotificationController.allUSerDeviceID(
-          UserCredentialsController.userRole!,
-          UserCredentialsController.currentUSerID!);
-    });
+      //   pushNotificationController.getUserDeviceID().then((value) {
+      // pushNotificationController.allUSerDeviceID(
+      //     UserCredentialsController.userRole!,
+      //     UserCredentialsController.currentUSerID!);
+ //   });
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 244, 244, 244),
       body: SafeArea(
