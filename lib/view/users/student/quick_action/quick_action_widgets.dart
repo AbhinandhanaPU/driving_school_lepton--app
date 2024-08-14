@@ -1,10 +1,10 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
 import 'package:new_project_app/view/users/student/drawer/drawer_items/documents/documents/documents_std.dart';
 import 'package:new_project_app/view/users/student/student_pages/driving_test/driving_test.dart';
 import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials_student.dart';
-import 'package:new_project_app/view/users/student/student_pages/videos/video_list_student.dart';
 
 class QuickActionsWidgetDrivingTest extends StatelessWidget {
   const QuickActionsWidgetDrivingTest({
@@ -147,7 +147,7 @@ class QuickActionsWidgetChat extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return const VideosListStudent();
+                return  QuestionWidget();
               },
             )),
             child: Container(
@@ -158,13 +158,13 @@ class QuickActionsWidgetChat extends StatelessWidget {
                   border: Border.all(color: cblack.withOpacity(0.2)),
                   borderRadius: BorderRadius.circular(10)),
               child: Image.asset(
-                'assets/flaticons/video.png',
+                'assets/flaticons/exam.png',
                 scale: 2.5,
               ),
             ),
           ),
           Text(
-            "Videos",
+            "Mock Test",
             style: TextStyle(fontSize: 12.sp),
           )
         ],
