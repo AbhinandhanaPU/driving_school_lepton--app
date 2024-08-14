@@ -1,10 +1,8 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
-import 'package:new_project_app/controller/push_notificationController/pushnotificationController.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/student/quick_action/quick_action_part_std.dart';
 import 'package:new_project_app/view/users/student/quick_action/quick_action_widgets.dart';
@@ -73,7 +71,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 60.sp, right: 10.sp, left: 10.sp),
-              child:   CarouselSliderStd(),
+              child: CarouselSliderStd(),
             ),
             //////////////////////////////////////////////////////details showing graph
             SizedBox(

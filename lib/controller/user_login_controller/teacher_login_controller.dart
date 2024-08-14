@@ -8,7 +8,7 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/teacher_model/teacher_model.dart';
-import 'package:new_project_app/view/users/teacher/teacher_home_page/teacher_home_page.dart';
+import 'package:new_project_app/view/splash_screen/splash_screen.dart';
 
 class TeacherLoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -47,7 +47,7 @@ class TeacherLoginController extends GetxController {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return const TeachersMainHomeScreen();
+                  return const SplashScreen();
                 },
               ),
             );
