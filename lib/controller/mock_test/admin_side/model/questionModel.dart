@@ -3,29 +3,29 @@ import 'dart:convert';
 
 class QuizTestQuestionModel {
   String docid;
+  int questionNo;
   String question;
-  String answerID;
   String? imageID;
   bool? imageQuestion;
   QuizTestQuestionModel({
     required this.docid,
+    required this.questionNo,
     required this.question,
-    required this.answerID,
     this.imageID,
     this.imageQuestion,
   });
 
   QuizTestQuestionModel copyWith({
     String? docid,
+    int? questionNo,
     String? question,
-    String? answerID,
     String? imageID,
     bool? imageQuestion,
   }) {
     return QuizTestQuestionModel(
       docid: docid ?? this.docid,
+      questionNo: questionNo ?? this.questionNo,
       question: question ?? this.question,
-      answerID: answerID ?? this.answerID,
       imageID: imageID ?? this.imageID,
       imageQuestion: imageQuestion ?? this.imageQuestion,
     );
@@ -34,8 +34,8 @@ class QuizTestQuestionModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'docid': docid,
+      'questionNo': questionNo,
       'question': question,
-      'answerID': answerID,
       'imageID': imageID,
       'imageQuestion': imageQuestion,
     };
@@ -44,10 +44,10 @@ class QuizTestQuestionModel {
   factory QuizTestQuestionModel.fromMap(Map<String, dynamic> map) {
     return QuizTestQuestionModel(
       docid: map['docid'] ??'',
+      questionNo: map['questionNo']??0,
       question: map['question'] ??'',
-      answerID: map['answerID'] ??'',
       imageID: map['imageID'] != null ? map['imageID'] ??'' : null,
-      imageQuestion: map['imageQuestion'] != null ? map['imageQuestion'] ?? false : null,
+      imageQuestion: map['imageQuestion'] != null ? map['imageQuestion'] ??false : null,
     );
   }
 
@@ -57,7 +57,7 @@ class QuizTestQuestionModel {
 
   @override
   String toString() {
-    return 'QuizTestQuestionModel(docid: $docid, question: $question, answerID: $answerID, imageID: $imageID, imageQuestion: $imageQuestion)';
+    return 'QuizTestQuestionModel(docid: $docid, questionNo: $questionNo, question: $question, imageID: $imageID, imageQuestion: $imageQuestion)';
   }
 
   @override
@@ -66,8 +66,8 @@ class QuizTestQuestionModel {
   
     return 
       other.docid == docid &&
+      other.questionNo == questionNo &&
       other.question == question &&
-      other.answerID == answerID &&
       other.imageID == imageID &&
       other.imageQuestion == imageQuestion;
   }
@@ -75,8 +75,8 @@ class QuizTestQuestionModel {
   @override
   int get hashCode {
     return docid.hashCode ^
+      questionNo.hashCode ^
       question.hashCode ^
-      answerID.hashCode ^
       imageID.hashCode ^
       imageQuestion.hashCode;
   }
