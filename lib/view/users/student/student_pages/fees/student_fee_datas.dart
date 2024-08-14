@@ -104,7 +104,7 @@ class StudentFeeDatas extends StatelessWidget {
                   ),
                   kHeight10,
                   TextFontWidget(
-                    text: dataa['feeStatus'],
+                    text: dataa['feeStatus']??"Not Found",
                     fontsize: 18.h,
                     fontWeight: FontWeight.bold,
                     color: cblue,
@@ -122,7 +122,7 @@ class StudentFeeDatas extends StatelessWidget {
                   ),
                   kHeight10,
                   TextFontWidget(
-                    text: dataa['pendingAmount'],
+                    text: dataa['pendingAmount']??"Not Found",
                     fontsize: 18.h,
                     fontWeight: FontWeight.bold,
                     color: cblue,
@@ -145,7 +145,7 @@ class StudentFeeDatas extends StatelessWidget {
                   ),
                   kHeight10,
                   TextFontWidget(
-                    text: dataa['feeStatus'],
+                    text: dataa['feeStatus']??"",
                     fontsize: 18.h,
                     fontWeight: FontWeight.bold,
                     color: cblack.withOpacity(0.7),

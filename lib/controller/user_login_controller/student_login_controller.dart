@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,6 @@ import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/splash_screen/splash_screen.dart';
-import 'package:new_project_app/view/users/student/student_home_page/student_home_page.dart';
 
 class StudentLoginController extends GetxController {
   final formKey = GlobalKey<FormState>();

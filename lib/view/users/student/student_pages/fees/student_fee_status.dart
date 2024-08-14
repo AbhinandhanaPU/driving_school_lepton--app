@@ -29,9 +29,14 @@ class StudentFeeStatus extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final data = snapshot.data!.data();
+             if (data == null) {
+        return Center(
+          child: Text('You have no pending'),
+        );
+      }
             return ListView.builder(
               itemCount: 1,
-              itemBuilder: (context, index) => StudentFeeDatas(dataa: data!),
+              itemBuilder: (context, index) => StudentFeeDatas(dataa: data),
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -39,7 +44,7 @@ class StudentFeeStatus extends StatelessWidget {
             );
           }
           return Center(
-            child: Text('You are not added to any driving test!'.tr),
+            child: Text('No data'.tr),
           );
         },
       ),
