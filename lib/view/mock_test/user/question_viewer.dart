@@ -108,9 +108,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                               style: TextStyle(
                                   fontSize: 25, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(
-                              height: 32,
-                            ),
+                            SizedBox(  height: 32, ),
                             _question.imageQuestion == true
                                 ? Center(
                                     child: Container(
@@ -118,8 +116,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                                       width: 150,
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
-                                              image: NetworkImage(
-                                                  _question.imageID!))),
+                                              image: NetworkImage( _question.imageID!))),
                                     ),
                                   )
                                 : SizedBox(),
@@ -138,76 +135,72 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                                         return ListView.separated(
                                             itemBuilder: (context, index) {
                                               return Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding:   const EdgeInsets.all(8.0),
                                                 child: GestureDetector(
-                                                  onTap: () async {
-                                                    final MockQuestionAnswerModel
-                                                        data =
-                                                        MockQuestionAnswerModel(
-                                                            dataModel:
-                                                                _question,
-                                                            lockoption: true,
-                                                            questionNo: index,
-                                                            ansIsTrue: optionsnapshot
-                                                                            .data
-                                                                            ?.docs[index]
-                                                                        [
-                                                                        'isCorrect'] ==
-                                                                    true
-                                                                ? true
-                                                                : false,
-                                                            selectedOption:
-                                                                optionsnapshot
-                                                                            .data
-                                                                            ?.docs[
-                                                                        index][
-                                                                    'options']);
+                                                    onTap: () async {
+                                                  final MockQuestionAnswerModel data =
+                                                      MockQuestionAnswerModel(
+                                                          dataModel: _question,
+                                                          lockoption: true,
+                                                          questionNo: index,
+                                                          ansIsTrue: optionsnapshot .data ?.docs[index]
+                                                                      [ 'isCorrect'] == true? true : false,
+                                                          selectedOption:
+                                                              optionsnapshot.data?.docs[ index]['options']);
 
-                                                    quizTestAdminSideController
-                                                        .userQuestionAnsList
-                                                        .add(data);
+                                                  quizTestAdminSideController
+                                                      .userQuestionAnsList
+                                                      .add(data);
+                                                }, 
+                                                child: LayoutBuilder(
+                                                  builder:(context, constraints) {
+                                                    final text = '${index + 1}. ${optionsnapshot.data?.docs[index]['options']}';
+                                                    final textSpan = TextSpan(
+                                                      text: text,
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight: FontWeight.w500),
+                                                    );
+                                                    final textPainter =
+                                                        TextPainter(
+                                                      text: textSpan,maxLines: 1,
+                                                      textDirection: TextDirection.ltr,
+                                                    );
+                                                    textPainter.layout(
+                                                        maxWidth: constraints .maxWidth - 24); // Considering padding
+                                                    final isOverflowing =
+                                                        textPainter .didExceedMaxLines;
+
+                                                    return Container(
+                                                      padding:EdgeInsets.all(12),
+                                                      margin: EdgeInsets.symmetric( vertical: 8),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors .grey.shade200,
+                                                        borderRadius:BorderRadius .circular(5),
+                                                        border: Border.all( color: cgrey),
+                                                      ),
+                                                      height: isOverflowing ? null: 50, // Increase height if overflowing
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Text( text,
+                                                              style: TextStyle(
+                                                                  fontSize: 20,
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
                                                   },
-                                                  child: Container(
-                                                    height: 50,
-                                                    padding: EdgeInsets.all(12),
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 8),
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          Colors.grey.shade200,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                      border: Border.all(
-                                                          color: cgrey),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          '${index + 1}. ${optionsnapshot.data?.docs[index]['options']}',
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-                                                        // getIconForOption(option, question)
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
+                                                )),
                                               );
                                             },
                                             separatorBuilder: (context, index) {
                                               return SizedBox();
                                             },
-                                            itemCount: optionsnapshot
-                                                .data!.docs.length);
+                                            itemCount: optionsnapshot .data!.docs.length);
                                       } else {
                                         return LoadingWidget();
                                       }
@@ -234,8 +227,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                                 children: [
                                   Icon(Icons.check, color: Colors.white),
                                   SizedBox(width: 10),
-                                  Text(
-                                    '0',
+                                  Text( '0',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
