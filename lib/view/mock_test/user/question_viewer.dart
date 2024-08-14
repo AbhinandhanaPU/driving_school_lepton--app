@@ -44,18 +44,18 @@ class QuestionWidget extends StatelessWidget {
                 quizTestAdminSideController.resetTimer();
                 quizTestAdminSideController.startTimer();
               }
-              if (quizTestAdminSideController.initquestionNumber.value ==
-                  quizTestAdminSideController.selectedQuestions.length) {
-                quizTestAdminSideController.startTimer();
-                Future.delayed(Duration(seconds: 30), () {})
-                    .then((value) async {
-                  quizTestAdminSideController.wrongAns.value++;
-                  showToast(msg: 'No Answer Selected');
-                  quizTestAdminSideController.stopTimer();
-                  quizTestAdminSideController.resetTimer();
-                  quizTestAdminSideController.showResult();
-                });
-              }
+              // if (quizTestAdminSideController.initquestionNumber.value ==
+              //     quizTestAdminSideController.selectedQuestions.length) {
+              //   quizTestAdminSideController.startTimer();
+              //   Future.delayed(Duration(seconds: 30), () {})
+              //       .then((value) async {
+              //     quizTestAdminSideController.wrongAns.value++;
+              //     showToast(msg: 'No Answer Selected');
+              //     quizTestAdminSideController.stopTimer();
+              //     quizTestAdminSideController.resetTimer();
+              //     quizTestAdminSideController.showResult();
+              //   });
+              // }
 
               return Scaffold(
                 appBar: AppBar(
@@ -78,7 +78,10 @@ class QuestionWidget extends StatelessWidget {
                               '${quizTestAdminSideController.initquestionNumber.value}/${quizTestAdminSideController.selectedQuestions.length}',
                               style: TextStyle(color: Colors.black)),
                           kWidth20,
-                          Container(
+                         quizTestAdminSideController
+                                          .initquestionNumber.value ==
+                                      quizTestAdminSideController
+                                          .selectedQuestions.length?SizedBox(): Container(
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
@@ -389,8 +392,11 @@ class QuestionWidget extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
+                            
+
                               if (quizTestAdminSideController
-                                  .optionSelected.value == false) {
+                                      .optionSelected.value ==
+                                  false) {
                                 quizTestAdminSideController.wrongAns.value++;
                               }
                               if (quizTestAdminSideController
