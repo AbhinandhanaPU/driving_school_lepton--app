@@ -6,7 +6,6 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/admin/admin_home_page/admin_dashboard.dart';
 import 'package:new_project_app/view/users/admin/drawer/admin_header_drawer.dart';
-import 'package:new_project_app/view/users/student/student_home_page/student_dashboard.dart';
 import 'package:new_project_app/view/widgets/loading_widget/loading_widget.dart';
 
 class AdminMainHomeScreen extends StatefulWidget {

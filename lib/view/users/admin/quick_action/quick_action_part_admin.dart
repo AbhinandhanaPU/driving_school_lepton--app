@@ -82,8 +82,8 @@ viewallMenus(BuildContext context) {
     NoticePageAdmin(), // Notice
     EventsListAdmin(), // Events
     Notifications(), // notifications
-    const TeacherChatScreen(), // Chat
-    const LearnersHomePage(), // Learners Test
+    const AdminChatScreen(), // Chat
+    //const LearnersHomePage(), // Learners Test
     const LoginHistory(), // Login history
   ];
 
@@ -104,7 +104,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      17,
+                      16,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -218,7 +218,7 @@ List<String> imageStd = [
   'assets/flaticons/events.png', // events
   'assets/flaticons/mobile-notification.png', // Notification
   'assets/flaticons/icons8-chat-100.png', // chats
-  'assets/flaticons/exam.png', // Leaners test
+ // 'assets/flaticons/exam.png', // Leaners test
   'assets/flaticons/user-access.png', // Login History
 ];
 List<String> stdtext = [
@@ -237,6 +237,6 @@ List<String> stdtext = [
   'Events',
   'Notification',
   'Chats',
-  'Leaners Test',
+ // 'Leaners Test',
   'Login History',
 ];
