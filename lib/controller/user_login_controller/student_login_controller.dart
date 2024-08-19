@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,22 +34,20 @@ class StudentLoginController extends GetxController {
             .get();
 
         if (user.data() != null) {
-          UserCredentialsController.studentModel =
-              StudentModel.fromMap(user.data()!);
+          UserCredentialsController.studentModel = StudentModel.fromMap(user.data()!);
           log(UserCredentialsController.studentModel.toString());
         }
 
         if (UserCredentialsController.studentModel?.userRole == "student") {
           await SharedPreferencesHelper.setString(
               SharedPreferencesHelper.currenUserKey, value.user!.uid);
-          await SharedPreferencesHelper.setString(
-                  SharedPreferencesHelper.userRoleKey, 'student')
+          await SharedPreferencesHelper.setString(SharedPreferencesHelper.userRoleKey, 'student')
               .then((value) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return  SplashScreen();
+                  return SplashScreen();
                 },
               ),
             );
