@@ -6,6 +6,7 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
 import 'package:new_project_app/view/pages/chat/student_section/student_chat_screen.dart';
 import 'package:new_project_app/view/users/student/drawer/drawer_items/documents/documents/documents_std.dart';
+import 'package:new_project_app/view/users/student/student_pages/attendance/attendance_home.dart';
 import 'package:new_project_app/view/users/student/student_pages/driving_test/driving_test.dart';
 import 'package:new_project_app/view/users/student/student_pages/events_std/events_student.dart';
 import 'package:new_project_app/view/users/student/student_pages/fees/student_fee_status.dart';
@@ -70,7 +71,9 @@ viewallMenus(BuildContext context) {
      QuestionWidget(),
     const VideosListStudent(), // Video
     const NoticePageStudent(), //Notice
-    StudentFeeStatus(), //
+    StudentFeeStatus(),
+    AttendanceHomePage(), //
+    //
   ];
 
   Get.bottomSheet(
@@ -90,7 +93,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      10,
+                      11,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -191,6 +194,7 @@ List<String> imageStd = [
   'assets/flaticons/video.png', // videos
   'assets/flaticons/icons8-notice-100.png', // Notice
   'assets/flaticons/hand.png', // fees
+  'assets/flaticons/attendance.png',
 ];
 List<String> stdtext = [
   'Upload Document',
@@ -203,4 +207,5 @@ List<String> stdtext = [
   'Videos',
   'Notices',
   'Fees',
+  "Attendance"
 ];

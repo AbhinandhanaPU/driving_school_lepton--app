@@ -11,7 +11,6 @@ import 'package:new_project_app/constant/responsive.dart';
 import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/firebase_options.dart';
 import 'package:new_project_app/service/pushnotification_service/pushnotification_service.dart';
-import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
 import 'package:new_project_app/view/splash_screen/splash_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -57,8 +56,7 @@ Future<void> main(List<String> args) async {
     }
   });
   ///////////for handling the terminated state
-  final RemoteMessage? message =
-      await FirebaseMessaging.instance.getInitialMessage();
+  final RemoteMessage? message = await FirebaseMessaging.instance.getInitialMessage();
 
   if (message != null) {
     log('Launched from terminated state');
@@ -81,18 +79,17 @@ class MyApp extends StatelessWidget {
       builder: (context) {
         ResponsiveApp.serMq(context);
         return GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              tabBarTheme: TabBarTheme(
-                unselectedLabelColor: cWhite,
-                labelColor: Colors.blue[100],
-                indicatorColor: Colors.green,
-              ),
-              appBarTheme: const AppBarTheme(foregroundColor: cWhite),
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            tabBarTheme: TabBarTheme(
+              unselectedLabelColor: cWhite,
+              labelColor: Colors.blue[100],
+              indicatorColor: Colors.green,
             ),
-           home:SplashScreen()
-           // Scaffold(body: QuestionWidget()),
-            );
+            appBarTheme: const AppBarTheme(foregroundColor: cWhite),
+          ),
+          home: Scaffold(body: SplashScreen()),
+        );
       },
     );
   }

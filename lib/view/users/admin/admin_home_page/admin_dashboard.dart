@@ -1,8 +1,10 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
+import 'package:new_project_app/controller/push_notificationController/pushnotificationController.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/admin/notifications/notifications.dart';
 import 'package:new_project_app/view/users/admin/quick_action/quick_action_part_admin.dart';
@@ -10,16 +12,28 @@ import 'package:new_project_app/view/users/admin/quick_action/quick_action_widge
 import 'package:new_project_app/view/users/admin/slider_admin/carousal_slider_admin.dart';
 import 'package:new_project_app/view/users/widgets/profile_edit_widgets/admin_edit_profile.dart';
 
-class AdminDashboard extends StatelessWidget {
+class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
 
   @override
+  State<AdminDashboard> createState() => _AdminDashboardState();
+}
+
+class _AdminDashboardState extends State<AdminDashboard> {
+  final PushNotificationController pushNotificationController =
+      Get.put(PushNotificationController());
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-      //   pushNotificationController.getUserDeviceID().then((value) {
-      // pushNotificationController.allUSerDeviceID(
-      //     UserCredentialsController.userRole!,
-      //     UserCredentialsController.currentUSerID!);
- //   });
+    pushNotificationController.getUserDeviceID().then((value) {
+      pushNotificationController.allUSerDeviceID(
+          UserCredentialsController.userRole!,
+          UserCredentialsController.currentUSerID!);
+    });
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 244, 244, 244),
       body: SafeArea(
@@ -131,9 +145,10 @@ class AdminDashboard extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(top: 340.sp, left: 40),
-              child:  Row(
+              child: Row(
                 children: [
-                   QuickActionsWidgetDrivingTestAdmin(),
+                  // QuestionWidget(),
+                  QuickActionsWidgetDrivingTestAdmin(),
                   QuickActionsWidgetPractice(),
                   QuickActionsWidgetSM(),
                   QuickActionsWidgetChat(),

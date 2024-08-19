@@ -8,6 +8,7 @@ import 'package:new_project_app/view/users/teacher/teacher_pages/driving_test_tu
 import 'package:new_project_app/view/users/teacher/teacher_pages/events_tutor/events_tutor.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/notices_tutor/notices_tutor.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/practice_shedule_tutor/practice_schedule_tr/practice_shedule_home_tr.dart';
+import 'package:new_project_app/view/users/teacher/teacher_pages/student_review/student_review_home.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/study_materials/study_materials_teacher.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/videos/video_list_teacher.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
@@ -58,15 +59,17 @@ viewallMenus(BuildContext context) {
   double w = MediaQuery.of(context).size.width;
   int columnCount = 3;
   final screenNavigationOfTutor = [
-    TutorDrivingHomePage(),//dr
+    StudentReviewHome(), //Notice
+    TutorDrivingHomePage(), //dr
     TutorPracticeSheduleHome(),
     AllBatchHomeOfTutor(),
     const StudyMaterialsTeacher(), // Study Materials
-   const StudyMaterialsTeacher(), // Study Materials
-    EventsListOfTutor(),//event
-     const VideosListTeacher(), // Video
-      const VideosListTeacher(), // Video
-     NoticePageTutor(), //Notice
+    const StudyMaterialsTeacher(), // Study Materials
+    EventsListOfTutor(), //event
+    const VideosListTeacher(), // Video
+    const VideosListTeacher(), // Video
+    NoticePageTutor(),
+    NoticePageTutor(), //Notice
   ];
 
   Get.bottomSheet(
@@ -86,7 +89,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      10,
+                      11,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -98,24 +101,18 @@ viewallMenus(BuildContext context) {
                             scale: 1.5,
                             child: FadeInAnimation(
                               child: GestureDetector(
-                                onTap: () =>
-                                    Navigator.push(context, MaterialPageRoute(
+                                onTap: () => Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
                                     return screenNavigationOfTutor[index];
                                   },
                                 )),
                                 child: Container(
                                   margin: EdgeInsets.only(
-                                      bottom: w / 25,
-                                      left: w / 30,
-                                      right: w / 30,
-                                      top: w / 25),
+                                      bottom: w / 25, left: w / 30, right: w / 30, top: w / 25),
                                   decoration: BoxDecoration(
                                     color: Colors.transparent,
-                                    border: Border.all(
-                                        color: cblack.withOpacity(0.1)),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(7)),
+                                    border: Border.all(color: cblack.withOpacity(0.1)),
+                                    borderRadius: const BorderRadius.all(Radius.circular(7)),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.1),
@@ -144,9 +141,7 @@ viewallMenus(BuildContext context) {
                                             color: themeColor,
                                             // cWhite,
                                             shape: BoxShape.circle,
-                                            border: Border.all(
-                                                color: themeColor
-                                                    .withOpacity(0.5))),
+                                            border: Border.all(color: themeColor.withOpacity(0.5))),
                                         child: Center(
                                           child: Image.asset(
                                             imageStd[index],
@@ -185,9 +180,10 @@ viewallMenus(BuildContext context) {
 }
 
 List<String> imageStd = [
+  'assets/flaticons/students.png', // students
   'assets/flaticons/cone.png', // Driving Test
   'assets/flaticons/calendar.png', // practice shedule
-  'assets/flaticons/batch-processing.png',//bacth
+  'assets/flaticons/batch-processing.png', //bacth
   'assets/flaticons/books.png', // study Materials
   'assets/flaticons/icons8-chat-100.png', // chats
   'assets/flaticons/events.png', // events
@@ -197,6 +193,7 @@ List<String> imageStd = [
   'assets/flaticons/hand.png', // fees
 ];
 List<String> stdtext = [
+  'Student Review',
   'Driving Test',
   'Practice Shedule',
   'Batches',
