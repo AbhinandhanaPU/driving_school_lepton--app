@@ -489,6 +489,14 @@ class TeacherGroupChatController extends GetxController {
                   .collection('Students')
                   .get(),
               builder: (context, studentsSnaps) {
+                 if (studentsSnaps.data!.docs.length == 0) {
+                      return const Center(
+                        child: Text(
+                         'No Students',
+                          style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                         ));
+                      }
                 if (studentsSnaps.hasData) {
                   return ListView.separated(
                     itemBuilder: (context, index) {
