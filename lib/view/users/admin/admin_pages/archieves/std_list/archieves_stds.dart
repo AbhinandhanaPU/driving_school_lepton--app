@@ -6,14 +6,12 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/student_controller/student_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/archieves/crud/archive_std.dart';
-import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
-class AllStudentList extends StatelessWidget {
+class ArchiveStdDataList extends StatelessWidget {
   final StudentModel data;
 
-  AllStudentList({
+  ArchiveStdDataList({
     super.key,
     required this.data,
   });
@@ -52,62 +50,6 @@ class AllStudentList extends StatelessWidget {
                   fontsize: 21.h,
                   fontWeight: FontWeight.w500,
                 ),
-              ),
-              Row(
-                children: [
-                  Transform.scale(
-                    scale: 0.65,
-                    child: Switch(
-                      activeColor: Colors.green,
-                      value: data.status == 'active',
-                      onChanged: (value) {
-                        final newStatus = value ? 'active' : 'inactive';
-                        studentController.updateStudentStatus(data, newStatus);
-                      },
-                    ),
-                  ),
-                  // IconButton(
-                  //   onPressed: () {
-                  //     customDeleteShowDialog(
-                  //       context: context,
-                  //       onTap: () {
-                  //         studentController
-                  //             .deleteStudents(data)
-                  //             .then((value) => Navigator.pop(context));
-                  //       },
-                  //     );
-                  //   },
-                  //   icon: Icon(Icons.delete_outline),
-                  //   iconSize: 25,
-                  //   color: cred,
-                  //   padding: EdgeInsets.all(0),
-                  // ),
-                  PopupMenuButton(
-                    itemBuilder: (context) {
-                      return [
-                        PopupMenuItem(
-                          child: Text('Archive'),
-                          onTap: () {
-                            archivesStudentsFunction(context, data);
-                          },
-                        ),
-                        PopupMenuItem(
-                          child: Text('Delete'),
-                          onTap: () {
-                            customDeleteShowDialog(
-                              context: context,
-                              onTap: () {
-                                studentController
-                                    .deleteStudents(data)
-                                    .then((value) => Navigator.pop(context));
-                              },
-                            );
-                          },
-                        ),
-                      ];
-                    },
-                  )
-                ],
               ),
             ],
           ),
