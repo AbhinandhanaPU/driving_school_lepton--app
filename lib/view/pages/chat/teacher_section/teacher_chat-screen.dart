@@ -12,8 +12,8 @@ import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_wi
 
 import '../group_chats/group_chat.dart';
 
-class TeacherChatScreen extends StatelessWidget {
-  const TeacherChatScreen({super.key});
+class AdminChatScreen extends StatelessWidget {
+  const AdminChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +203,7 @@ class TeacherChatScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             const StudentsMessagesScreen(),
-            GroupChatScreenForTeachers(),
+            GroupChatScreenForAdmin(),
           ],
         ),
       ),

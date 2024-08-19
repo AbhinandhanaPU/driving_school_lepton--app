@@ -6,6 +6,7 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/admin/admin_home_page/admin_dashboard.dart';
 import 'package:new_project_app/view/users/admin/drawer/admin_header_drawer.dart';
+import 'package:new_project_app/view/widgets/loading_widget/loading_widget.dart';
 
 class AdminMainHomeScreen extends StatefulWidget {
   const AdminMainHomeScreen({super.key});
@@ -69,7 +70,7 @@ class _AdminMainHomeScreenState extends State<AdminMainHomeScreen> {
                     foregroundColor: cWhite,
                     title: const Text("Driving School"),
                     backgroundColor: themeColor),
-                body: const AdminDashboard(),
+                body: AdminDashboard(),
                 drawer: Drawer(
                   backgroundColor: Colors.white,
                   child: SingleChildScrollView(
@@ -83,9 +84,7 @@ class _AdminMainHomeScreenState extends State<AdminMainHomeScreen> {
                 ),
               );
             } else {
-              return const Scaffold(
-                body: SizedBox(),
-              );
+              return const Scaffold(body: LoadingWidget());
             }
           }),
     );
