@@ -13,7 +13,6 @@ import 'package:new_project_app/view/users/admin/admin_pages/create_admin/admin_
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/events/events_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/fees/fees_home_page.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/learners_test_page/learners_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/login_history/login_history.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/notices/notices_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/notifications/notifications.dart';

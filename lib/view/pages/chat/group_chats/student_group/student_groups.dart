@@ -1,10 +1,8 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-
 import 'chats/students_chats.dart';
 
 class StudentsGroupsMessagesScreen extends StatelessWidget {
@@ -35,21 +33,18 @@ class StudentsGroupsMessagesScreen extends StatelessWidget {
                                 .collection('DrivingSchoolCollection')
                                 .doc(UserCredentialsController.schoolId)
                                 .get();
-                            if (firebase.data()!['classTeacherdocid'] ==
+                            if (firebase.data()!['docid'] ==///
                                 FirebaseAuth.instance.currentUser!.uid) {
-                              // ignore: use_build_context_synchronously
                               return showDialog(
                                 context: context,
-                                barrierDismissible:
-                                    false, // user must tap button!
+                                barrierDismissible:false, // user must tap button!
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: const Text('Alert'),
                                     content: const SingleChildScrollView(
                                       child: ListBody(
                                         children: <Widget>[
-                                          Text(
-                                              'Do you want to Remove this Group ?')
+                                          Text(  'Do you want to Remove this Group ?')
                                         ],
                                       ),
                                     ),
@@ -58,15 +53,12 @@ class StudentsGroupsMessagesScreen extends StatelessWidget {
                                         child: const Text('ok'),
                                         onPressed: () async {
                                           await FirebaseFirestore.instance
-                                              .collection(
-                                                  'DrivingSchoolCollection')
-                                              .doc(UserCredentialsController
-                                                  .schoolId)
+                                              .collection( 'DrivingSchoolCollection')
+                                              .doc(UserCredentialsController.schoolId)
                                               .collection('ChatGroups')
                                               .doc('ChatGroups')
                                               .collection("Students")
-                                              .doc(snapshots.data?.docs[index]
-                                                  ['docid'])
+                                              .doc(snapshots.data?.docs[index] ['docid'])
                                               .delete()
                                               .then((value) {
                                             Navigator.of(context).pop();
@@ -89,17 +81,14 @@ class StudentsGroupsMessagesScreen extends StatelessWidget {
                             height: 70,
                             child: ListTile(
                               onTap: () async {
-                                final firebase = await FirebaseFirestore
-                                    .instance
+                                final firebase = await FirebaseFirestore.instance
                                     .collection('DrivingSchoolCollection')
                                     .doc(UserCredentialsController.schoolId)
                                     .get();
-                                if (snapshots.data!.docs[index]['teacherId'] ==
-                                        FirebaseAuth
-                                            .instance.currentUser!.uid ||
-                                    firebase.data()!['classTeacherdocid'] ==
-                                        FirebaseAuth
-                                            .instance.currentUser!.uid) {
+                                if (snapshots.data!.docs[index]['docid'] ==//////
+                                        FirebaseAuth .instance.currentUser!.uid ||
+                                        firebase.data()!['classTeacherdocid'] ==
+                                        FirebaseAuth .instance.currentUser!.uid) {
                                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                                 return StudentsGroupChats(
                                         groupId: snapshots.data!.docs[index]
@@ -107,18 +96,11 @@ class StudentsGroupsMessagesScreen extends StatelessWidget {
                                         groupName: snapshots.data!.docs[index]
                                             ['groupName'],
                                       );
-                                              },));
-                                  // Get.off(() => StudentsGroupChats(
-                                  //       groupId: snapshots.data!.docs[index]
-                                  //           ['docid'],
-                                  //       groupName: snapshots.data!.docs[index]
-                                  //           ['groupName'],
-                                  //     ));
+                                 },));
                                 } else {
                                   showDialog(
                                     context: context,
-                                    barrierDismissible:
-                                        false, // user must tap button!
+                                    barrierDismissible:  false, // user must tap button!
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         title: const Text('Alert'),
@@ -142,40 +124,12 @@ class StudentsGroupsMessagesScreen extends StatelessWidget {
                                   );
                                 }
                               },
-                              leading: const CircleAvatar(
-                                radius: 30,
-                              ),
+                              leading: const CircleAvatar(  radius: 30, ),
                               title: Text(
                                   snapshots.data!.docs[index]['groupName'],
                                   style: const TextStyle(color: Colors.black)),
                               contentPadding:
                                   const EdgeInsetsDirectional.all(1),
-                              // subtitle: FutureBuilder(
-                              //     future: FirebaseFirestore.instance
-                              //         .collection('DrivingSchoolCollection')
-                              //         .doc(UserCredentialsController.schoolId)
-                              //         .get(),
-                              //     builder: (context, futuredata) {
-                              //       if (futuredata.hasData) {
-                              //         return Row(
-                              //           children: [
-                              //             const Text(
-                              //               'Group ',
-                              //               style:
-                              //                   TextStyle(color: Colors.black),
-                              //             ),
-                              //             // Text(
-                              //             //   futuredata.data
-                              //             //       ?.data()?['className'],
-                              //             //   style: const TextStyle(
-                              //             //       color: Colors.black),
-                              //             // ),
-                              //           ],
-                              //         );
-                              //       } else {
-                              //         return const Center();
-                              //       }
-                              //     }),
                               trailing: StreamBuilder(
                                   stream: FirebaseFirestore.instance
                                       .collection('DrivingSchoolCollection')
@@ -185,35 +139,27 @@ class StudentsGroupsMessagesScreen extends StatelessWidget {
                                       .collection("Students")
                                       .doc(snapshots.data?.docs[index]['docid'])
                                       .collection('Participants')
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser?.uid)
+                                      .doc(FirebaseAuth.instance.currentUser?.uid)
                                       .snapshots(),
                                   builder: (context, messagesnaps) {
                                     if (messagesnaps.hasData) {
-                                      if (messagesnaps.data!
-                                              .data()?['messageIndex'] ==
-                                          null) {
+                                      if (messagesnaps.data! .data()?['messageIndex'] == null) {
                                         return const Text('');
                                       } else {
                                         return Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 20),
-                                          child: messagesnaps.data!.data()?[
-                                                      'messageIndex'] ==
-                                                  0
+                                          padding:   const EdgeInsets.only(right: 20),
+                                          child: messagesnaps.data!.data()?['messageIndex'] == 0
                                               ? const Text('')
                                               : CircleAvatar(
                                                   radius: 14,
                                                   backgroundColor:
-                                                      const Color.fromARGB(
-                                                          255, 118, 229, 121),
+                                                      const Color.fromARGB( 255, 118, 229, 121),
                                                   child: Text(
                                                     '${messagesnaps.data!.data()?['messageIndex']}',
                                                     style: const TextStyle(
                                                         color: Colors.black,
                                                         fontSize: 10,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                        fontWeight: FontWeight.bold),
                                                   ),
                                                 ),
                                         );
@@ -227,7 +173,7 @@ class StudentsGroupsMessagesScreen extends StatelessWidget {
                         );
                       },
                       separatorBuilder: (context, index) {
-                        return const Divider();
+                         return const Divider();
                       },
                       itemCount: snapshots.data!.docs.length),
                 ),
@@ -257,6 +203,6 @@ addteacherTopaticipance(String groupId, String groupName,
       .set({
     'docid': FirebaseAuth.instance.currentUser!.uid,
     adminParameter:
-        '${UserCredentialsController.adminModel!.adminName} a d'
+        '${UserCredentialsController.adminModel!.adminName} Admin'
   });
 }

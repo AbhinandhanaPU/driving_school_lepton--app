@@ -90,8 +90,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         padding: const EdgeInsets.only(left: 10),
                         child: CircleAvatar(
                           backgroundImage: UserCredentialsController
-                                          .adminModel?.profileImageUrl ==
-                                      null ||
+                                          .adminModel?.profileImageUrl ==  null ||
                                   UserCredentialsController
                                       .adminModel!.profileImageUrl.isEmpty
                               ? const NetworkImage(assetImagePathPerson)

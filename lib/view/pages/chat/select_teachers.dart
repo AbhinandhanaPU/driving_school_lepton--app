@@ -38,7 +38,7 @@ class _GetSchoolAdminListDropDownButtonState
                       style: TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0), fontSize: 18),
                     )
-                  : Text(adminNameListValue!["AdminName"]),
+                  : Text(adminNameListValue!["username"]),
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderSide:
@@ -55,17 +55,17 @@ class _GetSchoolAdminListDropDownButtonState
               items: snapshot.data!.docs.map(
                 (val) {
                   return DropdownMenuItem(
-                    value: val["AdminName"],
-                    child: Text(val["AdminName"]),
+                    value: val["username"],
+                    child: Text(val["username"]),
                   );
                 },
               ).toList(),
               onChanged: (val) {
                 var categoryIDObject = snapshot.data!.docs
-                    .where((element) => element["AdminName"] == val)
+                    .where((element) => element["username"] == val)
                     .toList()
                     .first;
-                log(categoryIDObject["AdminName"]);
+                log(categoryIDObject["username"]);
 
                 setState(
                   () {
