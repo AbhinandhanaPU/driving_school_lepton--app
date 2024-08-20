@@ -8,10 +8,10 @@ import 'package:new_project_app/controller/user_credentials/user_credentials_con
 import 'package:new_project_app/model/group_chat_controller/group_StudentsTeacher_chat_controller.dart';
 import 'package:new_project_app/view/pages/chat/group_chats/student_group/student_groups.dart';
 
-class GroupChatScreenForTeachers extends StatelessWidget {
+class GroupChatScreenForAdmin extends StatelessWidget {
   final TeacherGroupChatController teacherGroupChatController =
       Get.put(TeacherGroupChatController());
-  GroupChatScreenForTeachers({super.key});
+  GroupChatScreenForAdmin({super.key});
 
   @override
   Widget build(BuildContext context) {

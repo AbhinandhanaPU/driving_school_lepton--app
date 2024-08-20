@@ -17,22 +17,34 @@ showStudentsGroupAppBar(
 ) async {
   Navigator.push(context, MaterialPageRoute(
     builder: (context) {
-      return BootomSheet(groupID: groupID, groupName: groupName, totalStudents: totalStudents);
+      return BootomSheet(
+          groupID: groupID, groupName: groupName, totalStudents: totalStudents);
     },
   ));
   // Get.off(() => BootomSheet(
   //     groupID: groupID, groupName: groupName, totalStudents: totalStudents));
 }
 
-class BootomSheet extends StatelessWidget {
-  final TeacherGroupChatController teacherGroupChatController =
-      Get.put(TeacherGroupChatController());
+class BootomSheet extends StatefulWidget {
   final String groupName;
   final String totalStudents;
   final String groupID;
   BootomSheet(
-      {required this.groupID, required this.groupName, required this.totalStudents, super.key});
+      {required this.groupID,
+      required this.groupName,
+      required this.totalStudents,
+      super.key});
 
+  @override
+  State<BootomSheet> createState() => _BootomSheetState();
+}
+
+class _BootomSheetState extends State<BootomSheet> {
+  final TeacherGroupChatController teacherGroupChatController =
+      Get.put(TeacherGroupChatController());
+
+  bool showAdminList = false;
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +55,7 @@ class BootomSheet extends StatelessWidget {
               .collection('ChatGroups')
               .doc('ChatGroups')
               .collection("Students")
-              .doc(groupID)
+              .doc(widget.groupID)
               .collection('Participants')
               .snapshots(),
           builder: (context, snaps) {
@@ -62,11 +74,11 @@ class BootomSheet extends StatelessWidget {
                         radius: 40,
                       ),
                       TextFontWidget(
-                        text: groupName,
+                        text: widget.groupName,
                         fontsize: 20,
                         fontWeight: FontWeight.bold,
                       ),
-                      Text("Group ${snaps.data!.docs.length} participants"),
+                      Text("${snaps.data!.docs.length} Students & Admins"),
                       Row(
                         children: [
                           Padding(
@@ -78,10 +90,13 @@ class BootomSheet extends StatelessWidget {
                                   barrierDismissible: false, // user must tap button!
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: const Text('Select teacher to Transfer group'),
+                                      title: const Text(
+                                          'Select admin to Transfer group'),
                                       content: const SingleChildScrollView(
                                         child: ListBody(
-                                          children: <Widget>[GetSchoolAdminListDropDownButton()],
+                                          children: <Widget>[
+                                            GetSchoolAdminListDropDownButton()
+                                          ],
                                         ),
                                       ),
                                       actions: <Widget>[
@@ -94,7 +109,7 @@ class BootomSheet extends StatelessWidget {
                                                 .collection('ChatGroups')
                                                 .doc('ChatGroups')
                                                 .collection("Students")
-                                                .doc(groupID)
+                                                .doc(widget.groupID)
                                                 .update({
                                               'adminId': adminNameListValue!['docid']
                                             }).then((value) {
@@ -117,7 +132,8 @@ class BootomSheet extends StatelessWidget {
                               child: Container(
                                 decoration: BoxDecoration(
                                     color: adminePrimayColor.withOpacity(0.3),
-                                    border: Border.all(color: adminePrimayColor),
+                                    border:
+                                        Border.all(color: adminePrimayColor),
                                     borderRadius: BorderRadius.circular(30)),
                                 height: 40,
                                 width: 140,
@@ -139,22 +155,25 @@ class BootomSheet extends StatelessWidget {
                                   .collection('ChatGroups')
                                   .doc('ChatGroups')
                                   .collection("Students")
-                                  .doc(groupID)
+                                  .doc(widget.groupID)
                                   .snapshots(),
                               builder: (context, groupSnapShot) {
                                 if (groupSnapShot.hasData) {
-                                  if (groupSnapShot.data!.data()!['activate'] == true) {
+                                  if (groupSnapShot.data!.data()!['activate'] ==
+                                      true) {
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: GestureDetector(
                                         onTap: () async {
                                           showDialog(
                                               context: context,
-                                              barrierDismissible: false, // user must tap button!
+                                              barrierDismissible:
+                                                  false, // user must tap button!
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
                                                   title: const Text('Alert'),
-                                                  content: const SingleChildScrollView(
+                                                  content:
+                                                      const SingleChildScrollView(
                                                     child: ListBody(
                                                       children: <Widget>[
                                                         Text(
@@ -166,24 +185,36 @@ class BootomSheet extends StatelessWidget {
                                                     TextButton(
                                                       child: const Text('ok'),
                                                       onPressed: () async {
-                                                        await FirebaseFirestore.instance
-                                                            .collection('DrivingSchoolCollection')
-                                                            .doc(UserCredentialsController.schoolId)
-                                                            .collection('ChatGroups')
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'DrivingSchoolCollection')
+                                                            .doc(
+                                                                UserCredentialsController
+                                                                    .schoolId)
+                                                            .collection(
+                                                                'ChatGroups')
                                                             .doc('ChatGroups')
-                                                            .collection("Students")
-                                                            .doc(groupID)
-                                                            .update({'activate': false}).then(
-                                                                (value) {
-                                                          Navigator.pop(context);
-                                                          showToast(msg: 'Deactivated');
+                                                            .collection(
+                                                                "Students")
+                                                            .doc(widget.groupID)
+                                                            .update({
+                                                          'activate': false
+                                                        }).then((value) {
+                                                          Navigator.pop(
+                                                              context);
+                                                          showToast(
+                                                              msg:
+                                                                  'Deactivated');
                                                         });
                                                       },
                                                     ),
                                                     TextButton(
-                                                      child: const Text('cancel'),
+                                                      child:
+                                                          const Text('cancel'),
                                                       onPressed: () {
-                                                        Navigator.of(context).pop();
+                                                        Navigator.of(context)
+                                                            .pop();
                                                       },
                                                     ),
                                                   ],
@@ -192,9 +223,12 @@ class BootomSheet extends StatelessWidget {
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                              color: Colors.red.withOpacity(0.3),
-                                              border: Border.all(color: Colors.red),
-                                              borderRadius: BorderRadius.circular(30)),
+                                              color:
+                                                  Colors.red.withOpacity(0.3),
+                                              border:
+                                                  Border.all(color: Colors.red),
+                                              borderRadius:
+                                                  BorderRadius.circular(30)),
                                           height: 40,
                                           width: 140,
                                           child: const Center(
@@ -214,14 +248,17 @@ class BootomSheet extends StatelessWidget {
                                         onTap: () async {
                                           showDialog(
                                               context: context,
-                                              barrierDismissible: false, // user must tap button!
+                                              barrierDismissible:
+                                                  false, // user must tap button!
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
                                                   title: const Text('Alert'),
-                                                  content: const SingleChildScrollView(
+                                                  content:
+                                                      const SingleChildScrollView(
                                                     child: ListBody(
                                                       children: <Widget>[
-                                                        Text('Do you want to Activate this group ?')
+                                                        Text(
+                                                            'Do you want to Activate this group ?')
                                                       ],
                                                     ),
                                                   ),
@@ -229,24 +266,35 @@ class BootomSheet extends StatelessWidget {
                                                     TextButton(
                                                       child: const Text('ok'),
                                                       onPressed: () async {
-                                                        await FirebaseFirestore.instance
-                                                            .collection('DrivingSchoolCollection')
-                                                            .doc(UserCredentialsController.schoolId)
-                                                            .collection('ChatGroups')
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'DrivingSchoolCollection')
+                                                            .doc(
+                                                                UserCredentialsController
+                                                                    .schoolId)
+                                                            .collection(
+                                                                'ChatGroups')
                                                             .doc('ChatGroups')
-                                                            .collection("Students")
-                                                            .doc(groupID)
-                                                            .update({'activate': true}).then(
-                                                                (value) {
-                                                          Navigator.pop(context);
-                                                          showToast(msg: 'Activated');
+                                                            .collection(
+                                                                "Students")
+                                                            .doc(widget.groupID)
+                                                            .update({
+                                                          'activate': true
+                                                        }).then((value) {
+                                                          Navigator.pop(
+                                                              context);
+                                                          showToast(
+                                                              msg: 'Activated');
                                                         });
                                                       },
                                                     ),
                                                     TextButton(
-                                                      child: const Text('cancel'),
+                                                      child:
+                                                          const Text('cancel'),
                                                       onPressed: () {
-                                                        Navigator.of(context).pop();
+                                                        Navigator.of(context)
+                                                            .pop();
                                                       },
                                                     ),
                                                   ],
@@ -255,9 +303,12 @@ class BootomSheet extends StatelessWidget {
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                              color: Colors.green.withOpacity(0.3),
-                                              border: Border.all(color: Colors.green),
-                                              borderRadius: BorderRadius.circular(30)),
+                                              color:
+                                                  Colors.green.withOpacity(0.3),
+                                              border: Border.all(
+                                                  color: Colors.green),
+                                              borderRadius:
+                                                  BorderRadius.circular(30)),
                                           height: 40,
                                           width: 140,
                                           child: const Center(
@@ -288,139 +339,336 @@ class BootomSheet extends StatelessWidget {
                 Container(
                   height: 500,
                   decoration: const BoxDecoration(color: Colors.white),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 60,
-                        child: Row(
-                          children: [
-                            TextFontWidget(
-                              text: '${snaps.data!.docs.length}  participants',
-                              fontsize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            const SizedBox(
-                              width: 30,
-                            ),
-                            IconButton(
-                                onPressed: () async {
-                                  teacherGroupChatController.customAddStudentInGroup(groupID);
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 60,
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                   setState(() {
+                                  showAdminList = false; 
+                                });
                                 },
-                                icon: const Icon(Icons.person_add)),
-                                Spacer(),
-                                IconButton(
-                                onPressed: () async {
-                                  teacherGroupChatController.customAddAdminInGroup(groupID);
-                                 // addteacherTopaticipance(groupID,groupName,adminParameter:  UserCredentialsController.adminModel!.adminName);
-                                },
-                                icon: const Icon(Icons.person_4)),
-
-                          ],
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 380,
-                            child: StreamBuilder(
-                              stream: FirebaseFirestore.instance
-                                  .collection('DrivingSchoolCollection')
-                                  .doc(UserCredentialsController.schoolId)
-                                  .collection('ChatGroups')
-                                  .doc('ChatGroups')
-                                  .collection('Students')
-                                  .doc(groupID)
-                                  .collection('Participants')
-                                  .snapshots(),
-                              builder: (context, studentssnapshots) {
-                                if (studentssnapshots.hasData) {
-                                  return ListView.separated(
-                                      itemBuilder: (context, index) {
-                                        if (studentssnapshots.data!.docs.length == index) {
-                                          return SizedBox(
-                                            height: 80.h,
-                                          );
-                                        }
-                                        return GestureDetector(
-                                          onLongPress: () async {
-                                            showDialog(
-                                              context: context,
-                                              barrierDismissible: false, // user must tap button!
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  title: const Text('Alert'),
-                                                  content: const SingleChildScrollView(
-                                                    child: ListBody(
-                                                      children: <Widget>[
-                                                        Text('Do you want to remove this student ?')
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      child: const Text('ok'),
-                                                      onPressed: () async {
-                                                        await teacherGroupChatController
-                                                            .removeStudentToGroup(
-                                                                studentssnapshots.data!.docs[index]
-                                                                    ['docid'],
-                                                                groupID,
-                                                                context);
-                                                      },
-                                                    ),
-                                                    TextButton(
-                                                      child: const Text('cancel'),
-                                                      onPressed: () async {
-                                                        Navigator.pop(context);
-                                                      },
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left: 10, right: 10),
-                                            child: Container(
-                                              height: 50,
-                                              color: Colors.blue.withOpacity(0.1),
-                                              child: Row(
-                                                children: [
-                                                  Text("  ${index + 1}"),
-                                                  const SizedBox(
-                                                    width: 07,
-                                                  ),
-                                                  const CircleAvatar(),
-                                                  const SizedBox(
-                                                    width: 20,
-                                                  ),
-                                                  TextFontWidget(
-                                                      text: studentssnapshots.data!.docs[index]
-                                                          ['studentName'],
-                                                      fontsize: 12)
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        );
+                                child: TextFontWidget(
+                                  text:
+                                      '${snaps.data!.docs.length}  Students',
+                                  fontsize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 30,
+                              ),
+                              IconButton(
+                                  onPressed: () async {
+                                    teacherGroupChatController
+                                    //batchwiseStudent(widget.groupID);
+                                        .customAddStudentInGroup(
+                                            widget.groupID);
+                                  },
+                                  icon: const Icon(Icons.person_add)),
+                              Spacer(),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          showAdminList =
+                                              true; // Show admin list when clicked
+                                        });
                                       },
-                                      separatorBuilder: (context, index) {
-                                        return const SizedBox(
-                                          height: 10,
-                                        );
+                                      child: TextFontWidget(
+                                        text: "Add Admin",
+                                        fontsize: 13,
+                                      )),
+                                  IconButton(
+                                      onPressed: () async {
+                                        teacherGroupChatController
+                                            .customAddAdminInGroup(
+                                                widget.groupID);
+                                        // addteacherTopaticipance(groupID,groupName,adminParameter:  UserCredentialsController.adminModel!.adminName);
                                       },
-                                      itemCount: studentssnapshots.data!.docs.length );
-                                } else {
-                                  return const Center(
-                                    child: CircularProgressIndicator.adaptive(),
-                                  );
-                                }
-                              },
-                            ),
+                                      icon: const Icon(Icons.person_4)),
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
-                      )
-                    ],
+                        ),
+                        SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              showAdminList // Conditionally stream data
+                                      ==
+                                      false
+                                  ? SizedBox(
+                                      height: 380,
+                                      child: StreamBuilder(
+                                        stream: FirebaseFirestore.instance
+                                            .collection(
+                                                'DrivingSchoolCollection')
+                                            .doc(UserCredentialsController
+                                                .schoolId)
+                                            .collection('ChatGroups')
+                                            .doc('ChatGroups')
+                                            .collection('Students')
+                                            .doc(widget.groupID)
+                                            .collection('Participants')
+                                            .snapshots(),
+                                        builder: (context, studentssnapshots) {
+                                          if (studentssnapshots.hasData) {
+                                            return ListView.separated(
+                                                itemBuilder: (context, index) {
+                                                  if (studentssnapshots
+                                                          .data!.docs.length ==
+                                                      index) {
+                                                    return SizedBox(
+                                                      height: 80.h,
+                                                    );
+                                                  }
+                                                  return GestureDetector(
+                                                    onLongPress: () async {
+                                                      showDialog(
+                                                        context: context,
+                                                        barrierDismissible:
+                                                            false, // user must tap button!
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return AlertDialog(
+                                                            title: const Text(
+                                                                'Alert'),
+                                                            content:
+                                                                const SingleChildScrollView(
+                                                              child: ListBody(
+                                                                children: <Widget>[
+                                                                  Text(
+                                                                      'Do you want to remove this student ?')
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child:
+                                                                    const Text(
+                                                                        'ok'),
+                                                                onPressed:
+                                                                    () async {
+                                                                  await teacherGroupChatController.removeStudentToGroup(
+                                                                      studentssnapshots
+                                                                              .data!
+                                                                              .docs[index]
+                                                                          [
+                                                                          'docid'],
+                                                                      widget
+                                                                          .groupID,
+                                                                      context);
+                                                                },
+                                                              ),
+                                                              TextButton(
+                                                                child: const Text(
+                                                                    'cancel'),
+                                                                onPressed:
+                                                                    () async {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10,
+                                                              right: 10),
+                                                      child: Container(
+                                                        height: 50,
+                                                        color: Colors.blue
+                                                            .withOpacity(0.1),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                                "  ${index + 1}"),
+                                                            const SizedBox(
+                                                              width: 07,
+                                                            ),
+                                                            const CircleAvatar(),
+                                                            const SizedBox(
+                                                              width: 20,
+                                                            ),
+                                                            TextFontWidget(
+                                                                text: studentssnapshots
+                                                                        .data!
+                                                                        .docs[index]
+                                                                    [
+                                                                    'studentName'],
+                                                                fontsize: 12)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                separatorBuilder:
+                                                    (context, index) {
+                                                  return const SizedBox(
+                                                    height: 10,
+                                                  );
+                                                },
+                                                itemCount: studentssnapshots
+                                                    .data!.docs.length);
+                                          } else {
+                                            return const Center(
+                                              child: CircularProgressIndicator
+                                                  .adaptive(),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  : /////student
+                                  Container(
+                                      height: 380,
+                                      child: StreamBuilder(
+                                        stream: FirebaseFirestore.instance
+                                            .collection(
+                                                'DrivingSchoolCollection')
+                                            .doc(UserCredentialsController
+                                                .schoolId)
+                                            .collection('ChatGroups')
+                                            .doc('ChatGroups')
+                                            .collection('Admins')
+                                            .doc(widget.groupID)
+                                            .collection('Participants')
+                                            .snapshots(),
+                                        builder: (context, adminsnapshots) {
+                                          if (adminsnapshots.hasData) {
+                                            return ListView.separated(
+                                                itemBuilder: (context, index) {
+                                                  if (adminsnapshots
+                                                          .data!.docs.length ==
+                                                      index) {
+                                                    return SizedBox(
+                                                      height: 80.h,
+                                                    );
+                                                  }
+                                                  String username;
+                                                  if (adminsnapshots
+                                                      .data!.docs[index]
+                                                      .data() .containsKey(
+                                                          'username')) {
+                                                    username = adminsnapshots
+                                                            .data!.docs[index]
+                                                        ['username'];
+                                                  } else if (adminsnapshots
+                                                      .data!.docs[index].data()
+                                                      .containsKey('adminName')) {
+                                                    username = adminsnapshots
+                                                            .data!.docs[index]
+                                                        ['adminName'];
+                                                  } else {
+                                                    username = 'Unknown';
+                                                  }
+                                                  return GestureDetector(
+                                                    onLongPress: () async {
+                                                      showDialog(
+                                                        context: context,
+                                                        barrierDismissible:
+                                                            false, // user must tap button!
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return AlertDialog(
+                                                            title: const Text(
+                                                                'Alert'),
+                                                            content:
+                                                                const SingleChildScrollView(
+                                                              child: ListBody(
+                                                                children: <Widget>[
+                                                                  Text(
+                                                                      'Do you want to remove this Admin ?')
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child: const Text( 'ok'),
+                                                                onPressed:
+                                                                    () async {
+                                                                  await teacherGroupChatController.removeAdminToGroup(
+                                                                      adminsnapshots .data!
+                                                                              .docs[index]
+                                                                          ['docid'],
+                                                                      widget .groupID, context);
+                                                                },
+                                                              ),
+                                                              TextButton(
+                                                                child: const Text( 'cancel'),
+                                                                onPressed:  () async {
+                                                                  Navigator.pop(  context);
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10,
+                                                              right: 10),
+                                                      child: Container(
+                                                        height: 50,
+                                                        color: Colors.blue
+                                                            .withOpacity(0.1),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                                "  ${index + 1}"),
+                                                            const SizedBox(
+                                                              width: 07,
+                                                            ),
+                                                            const CircleAvatar(),
+                                                            const SizedBox(
+                                                              width: 20,
+                                                            ),
+                                                            TextFontWidget(
+                                                                text: username,
+                                                                //  adminsnapshots.data!.docs[index]
+                                                                //     ['username'],
+                                                                fontsize: 12)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                separatorBuilder:
+                                                    (context, index) {
+                                                  return const SizedBox(
+                                                    height: 10,
+                                                  );
+                                                },
+                                                itemCount: adminsnapshots
+                                                    .data!.docs.length);
+                                          } else {
+                                            return const Center(
+                                              child: CircularProgressIndicator
+                                                  .adaptive(),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],

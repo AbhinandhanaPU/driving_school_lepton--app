@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/constant/fonts/text_widget.dart';
 import 'package:new_project_app/constant/responsive.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/controller/course_controller/course_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/courses/course_std_list/course_std_list.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
+import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 import 'package:new_project_app/view/widgets/catagory_table_header_widget/data_container_widget/profile_details_widget.dart';
 
 class CourseDetailsToTutor extends StatelessWidget {
@@ -110,36 +113,36 @@ class CourseDetailsToTutor extends StatelessWidget {
                 ProfileDetailsWidget(title: "Pending Students", content: '50'),
               ],
             ),
-            // Positioned(
-            //   bottom: 30,
-            //   right: 40,
-            //   left: 40,
-            //   child: GestureDetector(
-            //     onTap: () {
-            //       Navigator.push(context, MaterialPageRoute(
-            //         builder: (context) {
-            //           return CourseStudentsList(
-            //             data: data,
-            //           );
-            //         },
-            //       ));
-            //     },
-            //     child: ButtonContainerWidget(
-            //       curving: 30,
-            //       colorindex: 0,
-            //       height: 60,
-            //       width: 140,
-            //       child: const Center(
-            //         child: TextFontWidgetRouter(
-            //           text: 'Subscribers',
-            //           fontsize: 20,
-            //           fontWeight: FontWeight.bold,
-            //           color: cWhite,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // )
+            Positioned(
+              bottom: 30,
+              right: 40,
+              left: 40,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return CourseStudentsList(
+                        data: data,
+                      );
+                    },
+                  ));
+                },
+                child: ButtonContainerWidget(
+                  curving: 30,
+                  colorindex: 0,
+                  height: 60,
+                  width: 140,
+                  child: const Center(
+                    child: TextFontWidgetRouter(
+                      text: 'Subscribers',
+                      fontsize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: cWhite,
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

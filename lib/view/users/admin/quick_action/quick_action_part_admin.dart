@@ -6,6 +6,7 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/view/pages/chat/teacher_section/teacher_chat-screen.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/all_students_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/all_tutor_home_page.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/archieves/std_list/all_archieves.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/attendence/attendence_book_status_month.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/batch/batch_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/courses/course_list/courses_list.dart';
@@ -13,11 +14,11 @@ import 'package:new_project_app/view/users/admin/admin_pages/create_admin/admin_
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/events/events_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/fees/fees_home_page.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/learners_test_page/learners_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/login_history/login_history.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/notices/notices_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/notifications/notifications.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_schedule/practice_shedule_home.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/requests/request_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/videos/video_list_admin.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
@@ -72,8 +73,9 @@ viewallMenus(BuildContext context) {
     AllStudentsHomePage(), // All Students
     AdminList(), // All admins
     CourseList(), // Course
-    BatchHome(),//batch
-     DrivingHomePage(), // Driving Test
+    StudentRequest(), // Course std request
+    BatchHome(), // batch
+    DrivingHomePage(), // Driving Test
     PracticeSheduleHome(), // Practice shedule
     const FeesHomePage(), // Fee
     const AttendenceBookScreenSelectMonth(), // Attendance
@@ -82,9 +84,10 @@ viewallMenus(BuildContext context) {
     NoticePageAdmin(), // Notice
     EventsListAdmin(), // Events
     Notifications(), // notifications
-    const TeacherChatScreen(), // Chat
-    const LearnersHomePage(), // Learners Test
+    const AdminChatScreen(), // Chat
+    //const LearnersHomePage(), // Learners Test
     const LoginHistory(), // Login history
+    ArchivedStudents(), // Archives
   ];
 
   Get.bottomSheet(
@@ -104,7 +107,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      17,
+                      18,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -207,7 +210,8 @@ List<String> imageStd = [
   'assets/flaticons/students.png', // students
   'assets/flaticons/createadmin.png', // admin
   'assets/flaticons/setting.png', // course
-  'assets/flaticons/batch-processing.png',//bacth
+  'assets/flaticons/add.png', // course student request
+  'assets/flaticons/batch-processing.png', //bacth
   'assets/flaticons/cone.png', // Driving Test
   'assets/flaticons/calendar.png', // practice shedule
   'assets/flaticons/hand.png', // fees
@@ -218,14 +222,16 @@ List<String> imageStd = [
   'assets/flaticons/events.png', // events
   'assets/flaticons/mobile-notification.png', // Notification
   'assets/flaticons/icons8-chat-100.png', // chats
-  'assets/flaticons/exam.png', // Leaners test
+  // 'assets/flaticons/exam.png', // Leaners test
   'assets/flaticons/user-access.png', // Login History
+  'assets/flaticons/file.png', // Login History
 ];
 List<String> stdtext = [
   'All Tutors',
   'All Students',
   'All Admins',
   'Courses',
+  'Student Requests',
   'Batches',
   'Driving Test',
   'Practice Shedule',
@@ -237,6 +243,7 @@ List<String> stdtext = [
   'Events',
   'Notification',
   'Chats',
-  'Leaners Test',
+  // 'Leaners Test',
   'Login History',
+  'Archives',
 ];

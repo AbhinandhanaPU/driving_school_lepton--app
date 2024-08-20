@@ -160,8 +160,7 @@ class TeacherGroupChatController extends GetxController {
             children: [
               Padding(
                   padding: const EdgeInsets.only(right: 20),
-                  child:
-                      TextFontWidget(text: adminName, fontsize: 10)),
+                  child: TextFontWidget(text: adminName, fontsize: 10)),
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
@@ -308,6 +307,285 @@ class TeacherGroupChatController extends GetxController {
     isLoading.value = false;
   }
 
+  Future<void> addAllStudentsOnBatch(
+    String groupID,
+  ) async {
+    isLoading.value = true;
+    final firabase = await FirebaseFirestore.instance
+        .collection("DrivingSchoolCollection")
+        .doc(UserCredentialsController.schoolId)
+        .collection('Students')
+        .get();
+
+    for (var i = 0; i < firabase.docs.length; i++) {
+      final studentDetails = AddStudentModel.fromMap(firabase.docs[i].data());
+
+      await FirebaseFirestore.instance
+          .collection("DrivingSchoolCollection")
+          .doc(UserCredentialsController.schoolId)
+          .collection('ChatGroups')
+          .doc('ChatGroups')
+          .collection('Students')
+          .doc(groupID)
+          .collection('Participants')
+          .doc(studentDetails.docid)
+          .set(studentDetails.toMap());
+    }
+    userIndexBecomeZero(groupID, 'Students', adminParameter: 'studentName');
+    isLoading.value = false;
+  }
+
+  batchwiseStudent(groupID) {
+    Get.bottomSheet(Container(
+      color: cWhite,
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              top: 15,
+            ),
+            child: TextFontWidget(text: "All Batches", fontsize: 14,fontWeight: FontWeight.w500,),
+          ),
+          SizedBox(height: 15.h),
+          Expanded(
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("DrivingSchoolCollection")
+                    .doc(UserCredentialsController.schoolId)
+                    .collection('Batch')
+                    .snapshots(),
+                builder: (context, batchsnapshot) {
+                  return ListView.separated(
+                    itemBuilder: (context, index) {
+                      final batchData = batchsnapshot.data!.docs[index].data();
+                      return GestureDetector(
+                        onTap: () {
+                          customBatchAddStudentInGroup(
+                              groupID, batchData['batchId']);
+                        },
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 221, 235, 246),
+                              border: Border.all(color: cblack)),
+                          child: Row(
+                            children: [
+                              TextFontWidget(
+                                  text: "${index + 1}", fontsize: 12),
+                              const SizedBox(width: 5),
+                              SizedBox(
+                                width: 200.w,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: TextFontWidget(
+                                    text: '${batchData['batchName']}',
+                                    fontsize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    itemCount: batchsnapshot.data?.docs.length ?? 0,
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 5,
+                    ),
+                    // child:
+                  );
+                }),
+          )
+        ],
+      ),
+    ));
+  }
+
+  customBatchAddStudentInGroup(groupID, batchId) {
+     Future<void> addAllStudentsOnBatch(
+                      String groupID,
+                    ) async {
+                      isLoading.value = true;
+                      final firabase = await FirebaseFirestore.instance
+                          .collection("DrivingSchoolCollection")
+                          .doc(UserCredentialsController.schoolId)
+                          .collection('Batch')
+                          .doc(batchId)
+                          .collection('Students')
+                          .get();
+
+                      for (var i = 0; i < firabase.docs.length; i++) {
+                        final studentDetailsofBatch =
+                            AddStudentModel.fromMap(firabase.docs[i].data());
+
+                        await FirebaseFirestore.instance
+                            .collection("DrivingSchoolCollection")
+                            .doc(UserCredentialsController.schoolId)
+                            .collection('ChatGroups')
+                            .doc('ChatGroups')
+                            .collection('Students')
+                            .doc(groupID)
+                            .collection('Participants')
+                            .doc(studentDetailsofBatch.docid)
+                            .set(studentDetailsofBatch.toMap());
+                      }
+                      userIndexBecomeZero(groupID, 'Students',
+                          adminParameter: 'studentName');
+                      isLoading.value = false;
+                      showToast(msg: ' students added successfully');
+                    }
+    userIndexBecomeZero(groupID, 'Students', adminParameter: 'studentName');
+    RxMap<String, bool?> addStudentList = <String, bool?>{}.obs;
+
+    List<AddStudentModel> featchingStudentList = [];
+
+    Get.bottomSheet(Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFontWidget(
+                  text: "Add students in custom",
+                  fontsize: 17,
+                  fontWeight: FontWeight.w600,
+                ),
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                  onTap: () async{
+                  await addAllStudentsOnBatch(groupID);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        TextFontWidget(
+                          text: "Add All",
+                          fontsize: 14,
+                          fontWeight: FontWeight.w500,
+                        ), Icon(Icons.person),
+                      ],
+                    ),
+                  ))
+            ],
+          ),
+          SizedBox(height: 15.h),
+          Expanded(
+            child: FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection("DrivingSchoolCollection")
+                  .doc(UserCredentialsController.schoolId)
+                  .collection('Batch')
+                  .doc(batchId)
+                  .collection('Students')
+                  .get(),
+              builder: (context, studentsSnaps) {
+                 if (studentsSnaps.data!.docs.length == 0) {
+                      return const Center(
+                        child: Text(
+                         'No Students',
+                          style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                         ));
+                      }
+                if (studentsSnaps.hasData) {
+                  return ListView.separated(
+                    itemBuilder: (context, index) {
+                      final studentDetails = AddStudentModel.fromMap(
+                        studentsSnaps.data!.docs[index].data(),
+                      );
+                      featchingStudentList.add(studentDetails);
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: Row(
+                          children: [
+                            Obx(() => Container(
+                                  color: addStudentList[studentsSnaps.data!
+                                              .docs[index]['studentName']] ==
+                                          null
+                                      ? Colors.transparent
+                                      : addStudentList[studentsSnaps
+                                                      .data!.docs[index]
+                                                  ['studentName']] ==
+                                              true
+                                          ? Colors.green.withOpacity(0.4)
+                                          : Colors.red.withOpacity(0.4),
+                                  height: 60.h,
+                                  child: Row(
+                                    children: [
+                                      Text("${index + 1}"),
+                                      const SizedBox(width: 5),
+                                      SizedBox(
+                                        width: 200.w,
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: TextFontWidget(
+                                            text: studentDetails.studentName!,
+                                            fontsize: 11,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                            const Spacer(),
+                            IconButton(
+                              onPressed: () async {
+                                addStudentToGroup(studentDetails.docid!,
+                                        groupID, studentDetails)
+                                    .then((value) {
+                                  showToast(msg: 'Added');
+                                  addStudentList[studentsSnaps.data!.docs[index]
+                                      ['studentName']] = true;
+                                });
+                              },
+                              icon: const Icon(Icons.add),
+                            ),
+                            const SizedBox(width: 20),
+                            IconButton(
+                              onPressed: () async {
+                                await removeStudentToGroup(
+                                        studentDetails.docid!, groupID, context)
+                                    .then((value) {
+                                  showToast(msg: "Removed");
+                                  addStudentList[studentsSnaps.data!.docs[index]
+                                      ['studentName']] = false;
+                                });
+                              },
+                              icon: const Icon(Icons.remove),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) => const Divider(),
+                    itemCount: studentsSnaps.data!.docs.length,
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    ));
+
+    
+  }
+
   customAddStudentInGroup(groupID) {
     userIndexBecomeZero(groupID, 'Students', adminParameter: 'studentName');
     RxMap<String, bool?> addStudentList = <String, bool?>{}.obs;
@@ -427,7 +705,7 @@ class TeacherGroupChatController extends GetxController {
     ));
   }
 
-    customAddAdminInGroup(groupID) {
+  customAddAdminInGroup(groupID) {
     userIndexBecomeZero(groupID, 'Admins', adminParameter: 'adminName');
     RxMap<String, bool?> addAdminList = <String, bool?>{}.obs;
 
@@ -471,13 +749,12 @@ class TeacherGroupChatController extends GetxController {
                         child: Row(
                           children: [
                             Obx(() => Container(
-                                  color: addAdminList[adminsSnaps.data!
-                                              .docs[index]['username']] ==
+                                  color: addAdminList[adminsSnaps
+                                              .data!.docs[index]['username']] ==
                                           null
                                       ? Colors.transparent
-                                      : addAdminList[adminsSnaps
-                                                      .data!.docs[index]
-                                                  ['username']] ==
+                                      : addAdminList[adminsSnaps.data!
+                                                  .docs[index]['username']] ==
                                               true
                                           ? Colors.green.withOpacity(0.4)
                                           : Colors.red.withOpacity(0.4),
@@ -503,8 +780,8 @@ class TeacherGroupChatController extends GetxController {
                             const Spacer(),
                             IconButton(
                               onPressed: () async {
-                                addAdminToGroup(adminDetails.docid,
-                                        groupID, adminDetails)
+                                addAdminToGroup(adminDetails.docid, groupID,
+                                        adminDetails)
                                     .then((value) {
                                   showToast(msg: 'Added');
                                   addAdminList[adminsSnaps.data!.docs[index]
@@ -560,8 +837,8 @@ class TeacherGroupChatController extends GetxController {
         .set(studentDetails.toMap());
   }
 
-   Future<void> addAdminToGroup(String adminDocID, String groupID,
-      AddAdminModel adminDetails) async {
+  Future<void> addAdminToGroup(
+      String adminDocID, String groupID, AddAdminModel adminDetails) async {
     await FirebaseFirestore.instance
         .collection("DrivingSchoolCollection")
         .doc(UserCredentialsController.schoolId)
@@ -588,7 +865,7 @@ class TeacherGroupChatController extends GetxController {
         .delete()
         .then((value) => Navigator.pop(context));
   }
-  
+
   Future<void> removeAdminToGroup(
       String adminDocID, String groupID, BuildContext context) async {
     await FirebaseFirestore.instance
@@ -604,14 +881,60 @@ class TeacherGroupChatController extends GetxController {
         .then((value) => Navigator.pop(context));
   }
 
-
   addParticipants(String groupID) async {
     Get.bottomSheet(Container(
       color: Colors.white,
       height: 200,
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  await batchwiseStudent(groupID);
+                  //  await customAddStudentInGroup(groupID);
+                },
+                child: Container(
+                  decoration:
+                      BoxDecoration(color: adminePrimayColor.withOpacity(0.3)),
+                  height: 60.h,
+                  width: 150.w,
+                  child: const Center(
+                    child: TextFontWidget(
+                        text: 'Batch Wise',
+                        fontsize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              Obx(
+                () => isLoading.value
+                    ? circularProgressIndicatotWidget
+                    : GestureDetector(
+                        onTap: () async {
+                          await addAllStudents(
+                            groupID,
+                          ).then((value) => showToast(
+                              msg: "All students added in this groups"));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: adminePrimayColor.withOpacity(0.3)),
+                          height: 60.h,
+                          width: 150.w,
+                          child: const Center(
+                            child: TextFontWidget(
+                                text: 'Add All Students',
+                                fontsize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+              )
+            ],
+          ),
           GestureDetector(
             onTap: () async {
               await customAddStudentInGroup(groupID);
@@ -626,30 +949,6 @@ class TeacherGroupChatController extends GetxController {
                     text: 'Custom', fontsize: 15, fontWeight: FontWeight.bold),
               ),
             ),
-          ),
-          Obx(
-            () => isLoading.value
-                ? circularProgressIndicatotWidget
-                : GestureDetector(
-                    onTap: () async {
-                      await addAllStudents(
-                        groupID,
-                      ).then((value) =>
-                          showToast(msg: "All students added in this groups"));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: adminePrimayColor.withOpacity(0.3)),
-                      height: 60.h,
-                      width: 150.w,
-                      child: const Center(
-                        child: TextFontWidget(
-                            text: 'Add All Students',
-                            fontsize: 15,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
           )
         ],
       ),
@@ -763,7 +1062,8 @@ createChatGroups(BuildContext context, String chatValue) async {
                             .doc(UserCredentialsController.schoolId)
                             .collection('ChatGroups')
                             .doc('ChatGroups')
-                            .set({'docid': "ChatGroups"}).then((value) async {////////////////ariyilla
+                            .set({'docid': "ChatGroups"}).then((value) async {
+                          ////////////////ariyilla
                           await FirebaseFirestore.instance
                               .collection('DrivingSchoolCollection')
                               .doc(UserCredentialsController.schoolId)

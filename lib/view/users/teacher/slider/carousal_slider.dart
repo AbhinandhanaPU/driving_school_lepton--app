@@ -7,7 +7,7 @@ import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/controller/course_controller/course_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
-import 'package:new_project_app/view/users/teacher/teacher_pages/slider/course_details_tutor/course_details_tr.dart';
+import 'package:new_project_app/view/users/teacher/slider/slider_tutor/course_details_tr.dart';
 
 class CarouselSliderTutor extends StatelessWidget {
   CarouselSliderTutor({super.key});

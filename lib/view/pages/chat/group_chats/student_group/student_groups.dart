@@ -58,15 +58,12 @@ class StudentsGroupsMessagesScreen extends StatelessWidget {
                                         child: const Text('ok'),
                                         onPressed: () async {
                                           await FirebaseFirestore.instance
-                                              .collection(
-                                                  'DrivingSchoolCollection')
-                                              .doc(UserCredentialsController
-                                                  .schoolId)
+                                              .collection( 'DrivingSchoolCollection')
+                                              .doc(UserCredentialsController.schoolId)
                                               .collection('ChatGroups')
                                               .doc('ChatGroups')
                                               .collection("Students")
-                                              .doc(snapshots.data?.docs[index]
-                                                  ['docid'])
+                                              .doc(snapshots.data?.docs[index] ['docid'])
                                               .delete()
                                               .then((value) {
                                             Navigator.of(context).pop();
@@ -89,17 +86,14 @@ class StudentsGroupsMessagesScreen extends StatelessWidget {
                             height: 70,
                             child: ListTile(
                               onTap: () async {
-                                final firebase = await FirebaseFirestore
-                                    .instance
+                                final firebase = await FirebaseFirestore.instance
                                     .collection('DrivingSchoolCollection')
                                     .doc(UserCredentialsController.schoolId)
                                     .get();
                                 if (snapshots.data!.docs[index]['teacherId'] ==
-                                        FirebaseAuth
-                                            .instance.currentUser!.uid ||
-                                    firebase.data()!['classTeacherdocid'] ==
-                                        FirebaseAuth
-                                            .instance.currentUser!.uid) {
+                                        FirebaseAuth .instance.currentUser!.uid ||
+                                        firebase.data()!['classTeacherdocid'] ==
+                                        FirebaseAuth .instance.currentUser!.uid) {
                                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                                 return StudentsGroupChats(
                                         groupId: snapshots.data!.docs[index]
@@ -257,6 +251,6 @@ addteacherTopaticipance(String groupId, String groupName,
       .set({
     'docid': FirebaseAuth.instance.currentUser!.uid,
     adminParameter:
-        '${UserCredentialsController.adminModel!.adminName} a d'
+        '${UserCredentialsController.adminModel!.adminName} '
   });
 }
