@@ -66,12 +66,12 @@ viewallMenus(BuildContext context) {
     const StudentDrivingTest(), // driving test
     const StudentPracticeSchedule(), // Practice schedule
     const StudyMaterialsStudent(), // Study Materials
-    StudentChatScreen(),
+    StudentChatScreen(),//chat
     EventsListOfStudent(), //event
-     QuestionWidget(),
+     QuestionWidget(),///mock
     const VideosListStudent(), // Video
     const NoticePageStudent(), //Notice
-    StudentFeeStatus(),
+    StudentFeeStatus(),//fee
     AttendanceHomePage(), //
     //
   ];

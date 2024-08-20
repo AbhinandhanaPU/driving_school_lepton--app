@@ -2,6 +2,7 @@ import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/controller/admin_controller/admin_controller.dart';
 import 'package:new_project_app/controller/student_controller/student_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
@@ -11,6 +12,8 @@ import 'package:shimmer/shimmer.dart';
 class NotificationPartOfAdmin extends StatelessWidget {
   NotificationPartOfAdmin({super.key});
   final StudentController studentController = Get.put(StudentController());
+  final AdminController adminController = Get.put(AdminController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +92,11 @@ class NotificationPartOfAdmin extends StatelessWidget {
                   return const Center(child: Text("No students found."));
                 } else {
                   final studentCourseList = snapshot.data!;
+
+                    if (adminController.openedNotifications.length != studentCourseList.length) {
+                  adminController.openedNotifications.value =
+                      List<bool>.filled(studentCourseList.length, false);
+                }
                   return ListView.separated(
                     itemCount: studentCourseList.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -96,8 +104,10 @@ class NotificationPartOfAdmin extends StatelessWidget {
                           studentCourseList[index]["course"] as CourseModel;
                       final student =
                           studentCourseList[index]["student"] as StudentModel;
-                      return InkWell(
+                      return Obx(() =>
+                      InkWell(
                         onTap: () {
+                          adminController.openedNotifications[index] = true;
                           showModalBottomSheet(
                             shape: const BeveledRectangleBorder(),
                             context: context,
@@ -171,7 +181,16 @@ class NotificationPartOfAdmin extends StatelessWidget {
                               ),
                             ),
                           ),
-                          title: Shimmer.fromColors(
+                          title: 
+                          //Obx(() =>
+                            adminController.openedNotifications[index]
+                              ? const Text(
+                                  "New Student Request",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 48, 88, 86),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ): Shimmer.fromColors(
                             baseColor: Colors.black,
                             highlightColor: Colors.grey.withOpacity(0.1),
                             child: const Text(
@@ -182,6 +201,7 @@ class NotificationPartOfAdmin extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
+                         //  ),
                           subtitle: Text(
                             "${student.studentName} Requested to Join` ${course.courseName} Course ",
                             overflow: TextOverflow.ellipsis,
@@ -230,7 +250,7 @@ class NotificationPartOfAdmin extends StatelessWidget {
                               color: cblack.withOpacity(0.8),
                             ),
                           ),
-                        ),
+                        ),),
                       );
                     },
                     separatorBuilder: (context, index) {

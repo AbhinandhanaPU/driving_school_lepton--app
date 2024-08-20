@@ -64,12 +64,11 @@ viewallMenus(BuildContext context) {
     TutorPracticeSheduleHome(),
     AllBatchHomeOfTutor(),
     const StudyMaterialsTeacher(), // Study Materials
-    const StudyMaterialsTeacher(), // Study Materials
+  //  const StudyMaterialsTeacher(), // Study Materials
     EventsListOfTutor(), //event
     const VideosListTeacher(), // Video
-    const VideosListTeacher(), // Video
-    NoticePageTutor(),
-    NoticePageTutor(), //Notice
+   // const VideosListTeacher(), // Video
+    NoticePageTutor(),//Notice
   ];
 
   Get.bottomSheet(
@@ -89,7 +88,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      11,
+                      8,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -185,12 +184,12 @@ List<String> imageStd = [
   'assets/flaticons/calendar.png', // practice shedule
   'assets/flaticons/batch-processing.png', //bacth
   'assets/flaticons/books.png', // study Materials
-  'assets/flaticons/icons8-chat-100.png', // chats
+ // 'assets/flaticons/icons8-chat-100.png', // chats
   'assets/flaticons/events.png', // events
-  'assets/flaticons/exam.png', // Leaners test
+ // 'assets/flaticons/exam.png', // Leaners test
   'assets/flaticons/video.png', // videos
   'assets/flaticons/icons8-notice-100.png', // Notice
-  'assets/flaticons/hand.png', // fees
+//  'assets/flaticons/hand.png', // fees
 ];
 List<String> stdtext = [
   'Student Review',
@@ -198,10 +197,10 @@ List<String> stdtext = [
   'Practice Shedule',
   'Batches',
   'Study Materials',
-  'Chats',
+ // 'Chats',
   'Events',
-  'Leaners Test',
+ // 'Leaners Test',
   'Videos',
   'Notices',
-  'Fees',
+ // 'Fees',
 ];

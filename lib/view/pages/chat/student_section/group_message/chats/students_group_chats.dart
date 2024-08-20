@@ -176,11 +176,14 @@ class _StudenstGroupChatsScreenState extends State<StudenstGroupChatsScreen> {
                                               onPressed: () async {
                                                 ///////////////////////////
                                                 ///
+                                                 String messageText = studentGroupChatMessageController.messageController.text.trim();
+                                                    if (messageText.isNotEmpty) {
                                                 studentGroupChatMessageController
                                                     .sendMessage(
                                                         widget.groupID,
                                                         userName.data!.data()![
                                                             'studentName']);
+                                                    }
                                                 /////////////////////////
                                               }),
                                         ),
