@@ -44,7 +44,7 @@ class QuizTestAdminSideController extends GetxController {
                           onTap: () {
                             selectedLanguage.value = languageCode[index];
                             controller.selectLanguage(languageCode[index]);
-                            Get.to(()=>QuestionWidget());
+                            Get.to(()=>Scaffold(body: QuestionWidget()));
                           },
                           child: TextFontWidget(
                               text: languages[index], fontsize: 18,),
