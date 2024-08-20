@@ -87,12 +87,11 @@ class _BootomSheetState extends State<BootomSheet> {
                               onTap: () {
                                 showDialog(
                                   context: context,
-                                  barrierDismissible:
-                                      false, // user must tap button!
+                                  barrierDismissible: false, // user must tap button!
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: const Text(
-                                          'Select teacher to Transfer group'),
+                                          'Select admin to Transfer group'),
                                       content: const SingleChildScrollView(
                                         child: ListBody(
                                           children: <Widget>[
@@ -105,22 +104,17 @@ class _BootomSheetState extends State<BootomSheet> {
                                           child: const Text('Ok'),
                                           onPressed: () async {
                                             FirebaseFirestore.instance
-                                                .collection(
-                                                    'DrivingSchoolCollection')
-                                                .doc(UserCredentialsController
-                                                    .schoolId)
+                                                .collection('DrivingSchoolCollection')
+                                                .doc(UserCredentialsController.schoolId)
                                                 .collection('ChatGroups')
                                                 .doc('ChatGroups')
                                                 .collection("Students")
                                                 .doc(widget.groupID)
                                                 .update({
-                                              'adminId':
-                                                  adminNameListValue!['docid']
+                                              'adminId': adminNameListValue!['docid']
                                             }).then((value) {
                                               Navigator.of(context).pop();
-                                              showToast(
-                                                  msg:
-                                                      "Transfer Group Successfully");
+                                              showToast(msg: "Transfer Group Successfully");
                                             });
                                           },
                                         ),
@@ -371,6 +365,7 @@ class _BootomSheetState extends State<BootomSheet> {
                               IconButton(
                                   onPressed: () async {
                                     teacherGroupChatController
+                                    //batchwiseStudent(widget.groupID);
                                         .customAddStudentInGroup(
                                             widget.groupID);
                                   },
