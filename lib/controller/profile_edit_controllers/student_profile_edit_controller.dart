@@ -46,7 +46,8 @@ class StudentProfileEditController extends GetxController {
       isLoading.value = false;
     }
   }
-   Future<void> updateStudentProfilePicture() async {
+
+  Future<void> updateStudentProfilePicture() async {
     try {
       if (Get.find<GetImage>().pickedImage.value.isNotEmpty) {
         isLoading.value = true;
