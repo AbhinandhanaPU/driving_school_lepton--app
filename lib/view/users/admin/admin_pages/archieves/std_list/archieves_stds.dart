@@ -53,40 +53,21 @@ class ArchiveStdDataList extends StatelessWidget {
               ),
             ],
           ),
-          kHeight10,
+          kHeight30,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  StreamBuilder<List<String>>(
-                    stream: studentController.fetchStudentsCourse(data),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return TextFontWidget(
-                          text: "Course not found",
-                          fontsize: 18.h,
-                          fontWeight: FontWeight.bold,
-                          color: cblack,
-                        );
-                      } else {
-                        String courses = snapshot.data!.join(',\n ');
-                        return TextFontWidget(
-                          text: courses,
-                          fontsize: 18.h,
-                          fontWeight: FontWeight.bold,
-                          color: themeColor,
-                        );
-                      }
-                    },
+                  TextFontWidget(
+                    text: data.studentemail,
+                    fontsize: 18.h,
+                    fontWeight: FontWeight.bold,
+                    color: themeColor,
                   ),
                   TextFontWidget(
-                    text: 'Course Type',
+                    text: 'Email Id',
                     fontsize: 14.h,
                     fontWeight: FontWeight.bold,
                     color: cgrey,

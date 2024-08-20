@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
 import 'package:new_project_app/view/users/student/quick_action/quick_action_part_std.dart';
 import 'package:new_project_app/view/users/student/quick_action/quick_action_widgets.dart';
 import 'package:new_project_app/view/users/student/slider/carousal_slider_std.dart';
@@ -63,7 +62,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
                     Padding(
                       padding: EdgeInsets.only(
                           top: 80.sp, right: 20.sp, left: 20.sp),
-                      child:  NotificationPartOfStd(),
+                      child: NotificationPartOfStd(),
                     ),
                     //////////////////////////////////////////////////////// notifications
                   ],
@@ -146,12 +145,13 @@ class _StudentDashboardState extends State<StudentDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 340.sp, left: 40),
-              child:  Row(
+              child: Row(
                 children: [
                   QuickActionsWidgetDrivingTest(),
                   QuickActionsWidgetPractice(),
                   QuickActionsWidgetSM(),
-                  QuestionWidget(),
+                  QuickActionsWidgetChat(),
+                  // QuestionWidget(),
                 ],
               ),
             ), /////////////////////////////////////quick action
