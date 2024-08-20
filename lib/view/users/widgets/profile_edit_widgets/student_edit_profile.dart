@@ -140,9 +140,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                                 updateValue: 'phoneNumber',
                                 validator: checkFieldPhoneNumberIsValid,
                                 textInputType: TextInputType.number);
-                                setState(() {
-                                  
-                                });
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -256,9 +254,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                               updateValue: 'guardianName',
                               validator: checkFieldEmpty,
                             );
-                            setState(() {
-                              
-                            });
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -295,9 +291,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                                 validator: checkFieldEmpty,
                                 hintText: 'DOB',
                                 updateValue: 'dateofBirth');
-                                setState(() {
-                                  
-                                });
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -333,9 +327,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                               updateValue: 'rtoName',
                               validator: checkFieldEmpty,
                             );
-                            setState(() {
-                              
-                            });
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -372,9 +364,7 @@ class _StudentProfileEditPageState extends State<StudentProfileEditPage> {
                                       updateValue: 'licenceNumber',
                                       textInputType: TextInputType.number,
                                     );
-                                    setState(() {
-                                      
-                                    });
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.edit,
@@ -453,8 +443,7 @@ class StudentCircleAvatarImgeWidget extends StatelessWidget {
                         actions: [
                           TextButton(
                               onPressed: () {
-                                // Get.find<StudentProfileEditController>()
-                                //     .updateStudentProfilePicture();
+                                studentProfileEditController.updateStudentProfilePicture();
                               },
                               child: Text('Update'.tr)),
                           TextButton(
