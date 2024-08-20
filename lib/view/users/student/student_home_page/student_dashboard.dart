@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
 import 'package:new_project_app/view/users/student/quick_action/quick_action_part_std.dart';
 import 'package:new_project_app/view/users/student/quick_action/quick_action_widgets.dart';
 import 'package:new_project_app/view/users/student/slider/carousal_slider_std.dart';
@@ -47,23 +46,20 @@ class _StudentDashboardState extends State<StudentDashboard> {
                   color: themeColor.withOpacity(0.1),
                   // const Color.fromARGB(255, 218, 247, 229),
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.sp),
-                      topRight: Radius.circular(15.sp)),
+                      topLeft: Radius.circular(15.sp), topRight: Radius.circular(15.sp)),
                 ),
                 child: ListView(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 120.sp, right: 20.sp, left: 20.sp),
+                      padding: EdgeInsets.only(top: 120.sp, right: 20.sp, left: 20.sp),
                       child: const QuickActionPartStudent(),
                     ),
                     ////////////////////////////////////////////////////////all tab part
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 80.sp, right: 20.sp, left: 20.sp),
-                      child:  NotificationPartOfStd(),
+                      padding: EdgeInsets.only(top: 80.sp, right: 20.sp, left: 20.sp),
+                      child: NotificationPartOfStd(),
                     ),
                     //////////////////////////////////////////////////////// notifications
                   ],
@@ -89,15 +85,14 @@ class _StudentDashboardState extends State<StudentDashboard> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: CircleAvatar(
-                          backgroundImage: UserCredentialsController
-                                          .studentModel?.profileImageUrl ==
-                                      null ||
-                                  UserCredentialsController
-                                      .studentModel!.profileImageUrl.isEmpty
-                              ? const NetworkImage(assetImagePathPerson)
-                              : NetworkImage(UserCredentialsController
-                                      .studentModel?.profileImageUrl ??
-                                  " ") as ImageProvider,
+                          backgroundImage:
+                              UserCredentialsController.studentModel?.profileImageUrl == null ||
+                                      UserCredentialsController
+                                          .studentModel!.profileImageUrl.isEmpty
+                                  ? const NetworkImage(assetImagePathPerson)
+                                  : NetworkImage(
+                                      UserCredentialsController.studentModel?.profileImageUrl ??
+                                          " ") as ImageProvider,
                           onBackgroundImageError: (exception, stackTrace) {},
                           radius: 25,
                         ),
@@ -111,9 +106,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
                         child: SizedBox(
                             width: 200,
                             child: Text(
-                              UserCredentialsController
-                                      .studentModel?.studentName ??
-                                  "",
+                              UserCredentialsController.studentModel?.studentName ?? "",
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
                                 fontSize: 17.sp,
@@ -146,12 +139,14 @@ class _StudentDashboardState extends State<StudentDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 340.sp, left: 40),
-              child:  Row(
+              child: Row(
                 children: [
                   QuickActionsWidgetDrivingTest(),
                   QuickActionsWidgetPractice(),
                   QuickActionsWidgetSM(),
-                  QuestionWidget(),
+                  QuickActionsWidgetChat(),
+
+                  // QuestionWidget(),
                 ],
               ),
             ), /////////////////////////////////////quick action
