@@ -62,7 +62,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
                     Padding(
                       padding: EdgeInsets.only(
                           top: 80.sp, right: 20.sp, left: 20.sp),
-                      child: NotificationPartOfStd(),
+                      child:  NotificationPartOfStd(),
                     ),
                     //////////////////////////////////////////////////////// notifications
                   ],
@@ -145,13 +145,12 @@ class _StudentDashboardState extends State<StudentDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 340.sp, left: 40),
-              child: Row(
+              child:  Row(
                 children: [
                   QuickActionsWidgetDrivingTest(),
                   QuickActionsWidgetPractice(),
                   QuickActionsWidgetSM(),
-                  QuickActionsWidgetChat(),
-                  // QuestionWidget(),
+                 QuickActionsWidgetQuestion(),
                 ],
               ),
             ), /////////////////////////////////////quick action

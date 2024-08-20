@@ -122,7 +122,7 @@ class StudentFeeDatas extends StatelessWidget {
                   ),
                   kHeight10,
                   TextFontWidget(
-                    text: dataa['pendingAmount'],
+                    text: dataa['pendingAmount'].toString(),
                     fontsize: 18.h,
                     fontWeight: FontWeight.bold,
                     color: cblue,

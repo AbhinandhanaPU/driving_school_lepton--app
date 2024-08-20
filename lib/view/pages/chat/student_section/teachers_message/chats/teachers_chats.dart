@@ -163,11 +163,14 @@ class _AdminsChatsScreenState extends State<AdminsChatsScreen> {
                                         log('adminName >>>>  ${widget.adminDocID}');
                                         ///////////////////////////
                                         ///
+                                       String messageText = studentChatController.messageController.text.trim();
+                                       if (messageText.isNotEmpty) {
                                         studentChatController.sentMessage(
                                           widget.adminDocID,
                                           await getCurrentAdminMessageIndex(),
                                           await getTeacherChatCounterIndex(),
                                         );
+                                       }
                                         /////////////////////////
                                       }),
                                 ),

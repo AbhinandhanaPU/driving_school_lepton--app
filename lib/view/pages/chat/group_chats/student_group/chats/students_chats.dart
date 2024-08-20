@@ -211,6 +211,21 @@ class _StudentsGroupChatsState extends State<StudentsGroupChats> {
                                               log("hay${FirebaseAuth .instance.currentUser!.uid}");
                                               if (userName.hasData) {
                                                 log("nameeeeeeeeee${userName.data!.data()}");
+                                                if(userName.data!.data()!['username']==null)
+                                                return FutureBuilder(
+                                            future: FirebaseFirestore.instance
+                                                .collection(
+                                                    'DrivingSchoolCollection')
+                                                .doc(UserCredentialsController
+                                                    .schoolId)
+                                                // .collection('Admins')
+                                                // .doc(FirebaseAuth
+                                                //     .instance.currentUser!.uid)
+                                                .get(),
+                                            builder: (context, adminName) {
+                                            //  log("hay${FirebaseAuth .instance.currentUser!.uid}");
+                                              if (adminName.hasData) {
+                                             //   log("nameeeeeeeeee${adminName.data!.data()}");
                                                 return CircleAvatar(
                                                   radius: 28,
                                                   backgroundColor:
@@ -224,6 +239,42 @@ class _StudentsGroupChatsState extends State<StudentsGroupChats> {
                                                         onPressed: () async {
                                                           ///////////////////////////
                                                           ///
+                                                          
+                                                          if (teacherGroupChatController
+                                                                  .messageController
+                                                                  .text
+                                                                  .trim() !=
+                                                              "") {
+                                                            teacherGroupChatController
+                                                                .sendMessage(
+                                                                    widget.groupId,
+                                                                    adminName.data!.data()![
+                                                                        'adminName']);
+                                                                teacherGroupChatController.messageController.clear(); 
+                                                          }
+                                                          
+                                                          /////////////////////////
+                                                        }),
+                                                  ),
+                                                );
+                                              } else {
+                                                return const Center();
+                                              }
+                                            });
+                                                return CircleAvatar(
+                                                  radius: 28,
+                                                  backgroundColor:
+                                                      adminePrimayColor,
+                                                  child: Center(
+                                                    child: IconButton(
+                                                        icon: const Icon(
+                                                          Icons.send,
+                                                          color: Colors.white,
+                                                        ),
+                                                        onPressed: () async {
+                                                          ///////////////////////////
+                                                          ///
+                                                          
                                                           if (teacherGroupChatController
                                                                   .messageController
                                                                   .text
@@ -236,6 +287,7 @@ class _StudentsGroupChatsState extends State<StudentsGroupChats> {
                                                                         'username']);
                                                                 teacherGroupChatController.messageController.clear(); 
                                                           }
+                                                          
                                                           /////////////////////////
                                                         }),
                                                   ),

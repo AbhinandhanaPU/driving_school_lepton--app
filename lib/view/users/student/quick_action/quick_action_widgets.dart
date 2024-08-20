@@ -132,8 +132,8 @@ class QuickActionsWidgetSM extends StatelessWidget {
   }
 }
 
-class QuickActionsWidgetChat extends StatelessWidget {
-  const QuickActionsWidgetChat({
+class QuickActionsWidgetQuestion extends StatelessWidget {
+  const QuickActionsWidgetQuestion({
     super.key,
   });
 
