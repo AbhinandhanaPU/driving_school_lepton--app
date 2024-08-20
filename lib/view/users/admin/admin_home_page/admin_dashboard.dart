@@ -63,7 +63,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     Padding(
                       padding: EdgeInsets.only(
                           top: 80.sp, right: 20.sp, left: 20.sp),
-                      child: const NotificationPartOfAdmin(),
+                      child: NotificationPartOfAdmin(),
                     ),
                     //////////////////////////////////////////////////////// notifications
                   ],

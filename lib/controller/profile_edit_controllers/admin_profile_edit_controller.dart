@@ -14,27 +14,27 @@ class AdminProfileEditController extends GetxController {
   TextEditingController textEditingController = TextEditingController();
   RxBool isLoading = RxBool(false);
 
-  Future<void> updateprofile(context, {required String updateValue, required String valuee}) async {
+  Future<void> updateprofile(context,
+      {required String updateValue, required String valuee}) async {
     try {
       isLoading.value = true;
       await server
           .collection('DrivingSchoolCollection')
           .doc(UserCredentialsController.schoolId)
-          .update({updateValue: valuee})
-          .then((value) => showToast(msg: 'AdminProfile Updated!'))
-          .then((value) async {
-            final user = await server
-                .collection('DrivingSchoolCollection')
-                .doc(UserCredentialsController.schoolId)
-                .get();
+          .update({updateValue: valuee}).then((value) async {
+        final user = await server
+            .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .get();
 
-            if (user.data() != null) {
-              UserCredentialsController.adminModel = AdminModel.fromMap(user.data()!);
-              log(UserCredentialsController.adminModel.toString());
-            }
-            isLoading.value = false;
-            showToast(msg: 'Updated Successfully');
-          });
+        if (user.data() != null) {
+          UserCredentialsController.adminModel =
+              AdminModel.fromMap(user.data()!);
+          log(UserCredentialsController.adminModel.toString());
+        }
+        isLoading.value = false;
+        showToast(msg: 'Updated Successfully');
+      });
     } catch (e) {
       showToast(msg: "Something went wrong");
       log(e.toString());
@@ -63,7 +63,8 @@ class AdminProfileEditController extends GetxController {
               .get();
 
           if (studentData.data() != null) {
-            UserCredentialsController.adminModel = AdminModel.fromMap(studentData.data()!);
+            UserCredentialsController.adminModel =
+                AdminModel.fromMap(studentData.data()!);
           }
         });
       }
