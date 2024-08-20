@@ -145,7 +145,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 340.sp, left: 40),
-              child: const Row(
+              child:  Row(
                 children: [
                   QuickActionsWidgetDrivingTest(),
                   QuickActionsWidgetPractice(),

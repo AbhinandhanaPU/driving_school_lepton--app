@@ -132,7 +132,7 @@ class QuestionWidget extends StatelessWidget {
                               ),
                               FutureBuilder(
                                   future: translationService.translateText(
-                                      _question.question, 'ta'),
+                                      _question.question),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
                                       return Text(
@@ -322,7 +322,7 @@ class QuestionWidget extends StatelessWidget {
                                                                   FutureBuilder(
                                                                       future: translationService.translateText(
                                                                           textData,
-                                                                          'ta'),
+                                                                          ),
                                                                       builder:
                                                                           (context,
                                                                               snapshot) {
