@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/fonts/text_widget.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
+import 'package:new_project_app/controller/admin_controller/admin_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/admin/admin_home_page/admin_dashboard.dart';
 import 'package:new_project_app/view/users/admin/drawer/admin_header_drawer.dart';
@@ -21,6 +23,7 @@ class _AdminMainHomeScreenState extends State<AdminMainHomeScreen> {
     super.initState();
   }
 
+  AdminController adminController = Get.put(AdminController());
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -36,6 +39,7 @@ class _AdminMainHomeScreenState extends State<AdminMainHomeScreen> {
               : null,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              adminController.secondaryAdmin.value = true;
               return snapshot.data?.data()?['active'] == false
                   ? const Scaffold(
                       body: SafeArea(
@@ -64,6 +68,7 @@ class _AdminMainHomeScreenState extends State<AdminMainHomeScreen> {
                       ),
                     );
             } else if (UserCredentialsController.schoolId == serverAuth.currentUser!.uid) {
+              adminController.secondaryAdmin.value = false;
               return Scaffold(
                 appBar: AppBar(
                     // flexibleSpace: const AppBarColorWidget(),

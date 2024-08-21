@@ -160,7 +160,6 @@ Widget MyDrawerList(context) {
           ));
           // Get.off(() => const PrivacyPolicy());
         }),
-         
         kHeight10,
         kHeight10,
         kHeight10,
