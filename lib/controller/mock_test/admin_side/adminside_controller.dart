@@ -5,11 +5,65 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/fonts/text_widget.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
+import 'package:new_project_app/controller/mock_test/admin_side/language.dart';
 import 'package:new_project_app/controller/mock_test/admin_side/model/questionModel.dart';
 import 'package:new_project_app/view/mock_test/user/model/moctest_questionnair.dart';
+import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
 import 'package:new_project_app/view/widgets/getx_showdilogue/getx_showdilog.dart';
 
 class QuizTestAdminSideController extends GetxController {
+  final LanguageController controller = Get.put(LanguageController());
+  RxString selectedLanguage = 'en'.obs; // Default language
+
+  void selectLanguage(String language) {
+    selectedLanguage.value = language;
+  }
+ final languages = ['English', 'മലയാളം', 'தமிழ்', 'हिंदी'];
+            final languageCode = ['en', 'ml', 'ta', 'hi'];
+  void showLanguageBottomSheet() {
+    Get.bottomSheet(
+      Container(
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+        ),
+        child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Select Language',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 16),
+                SizedBox(
+                  height: 200,
+                  child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            selectedLanguage.value = languageCode[index];
+                            controller.selectLanguage(languageCode[index]);
+                            Get.to(()=>Scaffold(body: QuestionWidget()));
+                          },
+                          child: TextFontWidget(
+                              text: languages[index], fontsize: 18,),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(
+                          height: 20,
+                          child: Divider(thickness: 0.2,),
+                        );
+                      },
+                      itemCount: languages.length),
+                )
+              ],
+            ),
+      ),
+    );
+  }
+
   late PageController pgcontroller;
   RxInt initquestionNumber = 1.obs;
   List<QuizTestQuestionModel> getAllQuestionFromServer = [];
@@ -81,9 +135,7 @@ class QuizTestAdminSideController extends GetxController {
   void showResult() {
     getxcustomShowDialogBox(
         title: 'Result',
-        children: [
-          TextFontWidget(text: "${correctAns}/20", fontsize: 14)
-        ],
+        children: [TextFontWidget(text: "${correctAns}/20", fontsize: 14)],
         doYouWantActionButton: true);
   }
 }

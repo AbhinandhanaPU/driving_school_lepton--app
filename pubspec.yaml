@@ -42,6 +42,7 @@ dependencies:
   firebase_messaging:
   google_fonts:
   intl:
+  http:
   image_picker:
   fluttertoast:
   google_nav_bar:

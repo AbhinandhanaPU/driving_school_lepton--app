@@ -9,10 +9,10 @@ import 'package:new_project_app/controller/user_credentials/user_credentials_con
 import 'package:shimmer/shimmer.dart';
 
 class NotificationPartOfStd extends StatelessWidget {
-   NotificationPartOfStd({super.key});
+  NotificationPartOfStd({super.key});
 
-   
- final PushNotificationController pushNotificationController =Get.put(PushNotificationController());
+  final PushNotificationController pushNotificationController =
+      Get.put(PushNotificationController());
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -80,111 +80,114 @@ class NotificationPartOfStd extends StatelessWidget {
         SizedBox(
           height: 350.h,
           child: StreamBuilder(
-            stream: server
+              stream: server
                   .collection('AllUsersDeviceID')
                   .doc(UserCredentialsController.currentUSerID)
                   .collection("Notification_Message")
-                  .orderBy('dateTime',descending: true)
+                  .orderBy('dateTime', descending: true)
                   .snapshots(),
-            builder: (context, snapshot) {
+              builder: (context, snapshot) {
                 if (snapshot.hasData) {
-              return ListView.separated(
-                itemBuilder: (context, index) {
-                        final data = snapshot.data!.docs[index].data();
-                  return InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                        shape: const BeveledRectangleBorder(),
-                        context: context,
-                        builder: (context) {
-                           server
-                                .collection("DrivingSchoolCollection")
-                                    .doc(UserCredentialsController.schoolId)
-                                    .collection('AllUsersDeviceID')
-                                    .doc(UserCredentialsController.currentUSerID)
-                                    .collection("Notification_Message")
-                                    .doc(data['docid'])
-                                    .update({'open': true});
-                          return SingleChildScrollView(
-                            child: Container(
-                              color:  //cbluelight,
-                               Color(data['whiteshadeColor']),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container( // color: cblue,
-                                     color: Color(data['containerColor']),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 20),
-                                    child:  Row(
-                                      children: [
-                                        Icon(   // Icons.alarm,
-                                          IconData(
-                                            data['icon'],
-                                            fontFamily: 'MaterialIcons',
-                                          ),
-                                          size: 25,
-                                          color: Colors.white,
+                  return ListView.separated(
+                    itemBuilder: (context, index) {
+                      final data = snapshot.data!.docs[index].data();
+                      return InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                            shape: const BeveledRectangleBorder(),
+                            context: context,
+                            builder: (context) {
+                              server
+                                  .collection("DrivingSchoolCollection")
+                                  .doc(UserCredentialsController.schoolId)
+                                  .collection('AllUsersDeviceID')
+                                  .doc(UserCredentialsController.currentUSerID)
+                                  .collection("Notification_Message")
+                                  .doc(data['docid'])
+                                  .update({'open': true});
+                              return SingleChildScrollView(
+                                child: Container(
+                                  color: //cbluelight,
+                                      Color(data['whiteshadeColor']),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        // color: cblue,
+                                        color: Color(data['containerColor']),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 20),
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              // Icons.alarm,
+                                              IconData(
+                                                data['icon'],
+                                                fontFamily: 'MaterialIcons',
+                                              ),
+                                              size: 25,
+                                              color: Colors.white,
+                                            ),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                data['headerText'],
+                                                //  "Holiday",
+                                                style: TextStyle(
+                                                    color: cWhite,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                             data['headerText'],
-                                          //  "Holiday",
-                                            style: TextStyle(
-                                                color: cWhite,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                   Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 20),
-                                    child: Text(
-                                       data['messageText'],
-                                   //   " Tommorow is Holiday  ",
-                                      textAlign: TextAlign.justify,
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        color: cWhite,
                                       ),
-                                    ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 20),
+                                        child: Text(
+                                          data['messageText'],
+                                          //   " Tommorow is Holiday  ",
+                                          textAlign: TextAlign.justify,
+                                          style: TextStyle(
+                                            fontSize: 17,
+                                            color: cWhite,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
+                                ),
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                    child: ListTile(
-                      leading:  CircleAvatar(
-                        backgroundColor:  //cbluelight,
-                          Color(data['containerColor']),
-                        radius: 25,
-                        child: Center(
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor:
-                            // cbluelight,
-                              Color(data['whiteshadeColor']),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: //cbluelight,
+                                Color(data['containerColor']),
+                            radius: 25,
                             child: Center(
-                              child: Icon(
-                              //  Icons.alarm,
-                                 IconData(data['icon'], fontFamily: 'MaterialIcons'),
-                                color: Colors.white,
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundColor:
+                                    // cbluelight,
+                                    Color(data['whiteshadeColor']),
+                                child: Center(
+                                  child: Icon(
+                                    //  Icons.alarm,
+                                    IconData(data['icon'],
+                                        fontFamily: 'MaterialIcons'),
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      title:
-                           data['open'] == true
+                          title: data['open'] == true
                               ? Text(
                                   // data['headerText'],
                                   "Holiday",
@@ -193,76 +196,75 @@ class NotificationPartOfStd extends StatelessWidget {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
                                 )
-                              :
-                          Shimmer.fromColors(
-                        baseColor: Colors.black,
-                        highlightColor: Colors.grey.withOpacity(0.1),
-                        child:  Text(
-                           data['headerText'],
-                        //  "Holiday",
-                          style: TextStyle(
+                              : Shimmer.fromColors(
+                                  baseColor: Colors.black,
+                                  highlightColor: Colors.grey.withOpacity(0.1),
+                                  child: Text(
+                                    data['headerText'],
+                                    //  "Holiday",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 48, 88, 86),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                          subtitle: Text(
+                            data['messageText'],
+                            // "Tommorow is Holiday",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
                               color: Color.fromARGB(255, 48, 88, 86),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      subtitle:  Text(
-                        data['messageText'],
-                       // "Tommorow is Holiday",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 48, 88, 86),
-                        ),
-                      ),
-                      trailing: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text(
-                                "Do you want to remove the notification ?",
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text(
-                                    "No",
-                                    style: TextStyle(color: cblack),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    await pushNotificationController
-                                        .removeSingleNotification(
-                                            data['docid']);
-                                  },
-                                  child: const Text(
-                                    "yes",
-                                    style: TextStyle(color: cblack),
-                                  ),
-                                ),
-                              ],
                             ),
-                          );
-                        },
-                        child: Icon(
-                          Icons.close,
-                          size: 20,
-                          color: cblack.withOpacity(0.8),
+                          ),
+                          trailing: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text(
+                                    "Do you want to remove the notification ?",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        "No",
+                                        style: TextStyle(color: cblack),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () async {
+                                        await pushNotificationController
+                                            .removeSingleNotification(
+                                                data['docid']);
+                                      },
+                                      child: const Text(
+                                        "yes",
+                                        style: TextStyle(color: cblack),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            child: Icon(
+                              Icons.close,
+                              size: 20,
+                              color: cblack.withOpacity(0.8),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox();
+                    },
+                    itemCount: snapshot.data!.docs.length,
                   );
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox();
-                },
-                itemCount: snapshot.data!.docs.length,
-              );
                 } else if (snapshot.data == null) {
                   return Text(
                     "NO Notifications",
@@ -272,8 +274,7 @@ class NotificationPartOfStd extends StatelessWidget {
                 } else {
                   return circularProgressIndicatotWidget;
                 }
-            }
-          ),
+              }),
         )
       ],
     );

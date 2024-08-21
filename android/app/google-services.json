@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:693384841272:android:178778acb16aa4aa77becd",
+        "mobilesdk_app_id": "1:693384841272:android:4aa4fe4925704f1b77becd",
         "android_client_info": {
-          "package_name": "com.example.new_project_app"
+          "package_name": "lepton.drivingschool.in"
         }
       },
       "oauth_client": [],

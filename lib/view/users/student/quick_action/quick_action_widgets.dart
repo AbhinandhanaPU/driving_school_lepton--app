@@ -1,7 +1,8 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
+import 'package:new_project_app/controller/mock_test/admin_side/adminside_controller.dart';
 import 'package:new_project_app/view/users/student/drawer/drawer_items/documents/documents/documents_std.dart';
 import 'package:new_project_app/view/users/student/student_pages/driving_test/driving_test.dart';
 import 'package:new_project_app/view/users/student/student_pages/study_materials/study_materials_student.dart';
@@ -132,8 +133,10 @@ class QuickActionsWidgetSM extends StatelessWidget {
   }
 }
 
-class QuickActionsWidgetQuestion extends StatelessWidget {
-  const QuickActionsWidgetQuestion({
+class QuickActionsWidgetChat extends StatelessWidget {
+  final QuizTestAdminSideController quizTestAdminSideController =
+      Get.put(QuizTestAdminSideController());
+  QuickActionsWidgetChat({
     super.key,
   });
 
@@ -145,11 +148,7 @@ class QuickActionsWidgetQuestion extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return  QuestionWidget();
-              },
-            )),
+            onTap: () => quizTestAdminSideController.showLanguageBottomSheet(),
             child: Container(
               height: 55.h,
               width: 55.w,
