@@ -5,6 +5,7 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/mock_test/admin_side/adminside_controller.dart';
+import 'package:new_project_app/service/translation/api_services.dart';
 import 'package:new_project_app/view/mock_test/user/model/moctest_questionnair.dart';
 import 'package:new_project_app/view/widgets/loading_widget/loading_widget.dart';
 
@@ -14,6 +15,8 @@ class QuestionWidget extends StatelessWidget {
   final QuizTestAdminSideController quizTestAdminSideController =
       Get.put(QuizTestAdminSideController());
   Widget build(BuildContext context) {
+    final TranslationService translationService = TranslationService();
+
     quizTestAdminSideController.startTimer();
     return StreamBuilder(
         stream: quizTestAdminSideController.getAllQuestionAndSuffleStream(),
@@ -44,18 +47,18 @@ class QuestionWidget extends StatelessWidget {
                 quizTestAdminSideController.resetTimer();
                 quizTestAdminSideController.startTimer();
               }
-              if (quizTestAdminSideController.initquestionNumber.value ==
-                  quizTestAdminSideController.selectedQuestions.length) {
-                quizTestAdminSideController.startTimer();
-                Future.delayed(Duration(seconds: 30), () {})
-                    .then((value) async {
-                  quizTestAdminSideController.wrongAns.value++;
-                  showToast(msg: 'No Answer Selected');
-                  quizTestAdminSideController.stopTimer();
-                  quizTestAdminSideController.resetTimer();
-                  quizTestAdminSideController.showResult();
-                });
-              }
+              // if (quizTestAdminSideController.initquestionNumber.value ==
+              //     quizTestAdminSideController.selectedQuestions.length) {
+              //   quizTestAdminSideController.startTimer();
+              //   Future.delayed(Duration(seconds: 30), () {})
+              //       .then((value) async {
+              //     quizTestAdminSideController.wrongAns.value++;
+              //     showToast(msg: 'No Answer Selected');
+              //     quizTestAdminSideController.stopTimer();
+              //     quizTestAdminSideController.resetTimer();
+              //     quizTestAdminSideController.showResult();
+              //   });
+              // }
 
               return Scaffold(
                 appBar: AppBar(
@@ -78,25 +81,30 @@ class QuestionWidget extends StatelessWidget {
                               '${quizTestAdminSideController.initquestionNumber.value}/${quizTestAdminSideController.selectedQuestions.length}',
                               style: TextStyle(color: Colors.black)),
                           kWidth20,
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.yellow),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.timer_sharp,
-                                  color: cblack,
+                          quizTestAdminSideController
+                                      .initquestionNumber.value ==
+                                  quizTestAdminSideController
+                                      .selectedQuestions.length
+                              ? SizedBox()
+                              : Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.yellow),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.timer_sharp,
+                                        color: cblack,
+                                      ),
+                                      kWidth10,
+                                      Text(
+                                        "${quizTestAdminSideController.startTimerValue.value}",
+                                        style: TextStyle(color: cblack),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                kWidth10,
-                                Text(
-                                  "${quizTestAdminSideController.startTimerValue.value}",
-                                  style: TextStyle(color: cblack),
-                                ),
-                              ],
-                            ),
-                          ),
                         ],
                       )
                     ],
@@ -122,11 +130,22 @@ class QuestionWidget extends StatelessWidget {
                               SizedBox(
                                 height: 32,
                               ),
-                              Text(
-                                'Q. ${_question.question}',
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.bold),
-                              ),
+                              FutureBuilder(
+                                  future: translationService.translateText(
+                                      _question.question),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Text(
+                                        'Q. ${snapshot.data}',
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold),
+                                      );
+                                    } else {
+                                      return Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                  }),
                               SizedBox(
                                 height: 32,
                               ),
@@ -239,10 +258,10 @@ class QuestionWidget extends StatelessWidget {
                                                   }, child: LayoutBuilder(
                                                     builder:
                                                         (context, constraints) {
-                                                      final text =
+                                                      final textData =
                                                           '${index + 1}. ${optionsnapshot.data?.docs[index]['options']}';
                                                       final textSpan = TextSpan(
-                                                        text: text,
+                                                        text: textData,
                                                         style: TextStyle(
                                                             fontSize: 20,
                                                             fontWeight:
@@ -299,15 +318,25 @@ class QuestionWidget extends StatelessWidget {
                                                                   .spaceBetween,
                                                           children: [
                                                             Expanded(
-                                                              child: Text(
-                                                                text,
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        20,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                              ),
+                                                              child:
+                                                                  FutureBuilder(
+                                                                      future: translationService.translateText(
+                                                                          textData,
+                                                                          ),
+                                                                      builder:
+                                                                          (context,
+                                                                              snapshot) {
+                                                                        if (snapshot
+                                                                            .hasData) {
+                                                                          return Text(
+                                                                            snapshot.data??'',
+                                                                            style:
+                                                                                TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                                                                          );
+                                                                        } else {
+                                                                          return SizedBox();
+                                                                        }
+                                                                      }),
                                                             ),
                                                           ],
                                                         ),
@@ -390,7 +419,8 @@ class QuestionWidget extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               if (quizTestAdminSideController
-                                  .optionSelected.value == false) {
+                                      .optionSelected.value ==
+                                  false) {
                                 quizTestAdminSideController.wrongAns.value++;
                               }
                               if (quizTestAdminSideController
