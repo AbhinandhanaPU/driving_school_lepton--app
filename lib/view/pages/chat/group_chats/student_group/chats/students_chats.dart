@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
+import 'package:new_project_app/controller/group_chat_controller/group_StudentsTeacher_chat_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/model/group_chat_controller/group_StudentsTeacher_chat_controller.dart';
 import 'package:new_project_app/view/pages/chat/group_chats/student_group/chats/chat_appBar.dart';
 
 import '../../group_chat.dart';
@@ -211,13 +211,11 @@ class _StudentsGroupChatsState extends State<StudentsGroupChats> {
                                               log("hay${FirebaseAuth .instance.currentUser!.uid}");
                                               if (userName.hasData) {
                                                 log("nameeeeeeeeee${userName.data!.data()}");
-                                                if(userName.data!.data()!['username']==null)
+                                                if(userName.data!.data()?['username']==null)
                                                 return FutureBuilder(
                                             future: FirebaseFirestore.instance
-                                                .collection(
-                                                    'DrivingSchoolCollection')
-                                                .doc(UserCredentialsController
-                                                    .schoolId)
+                                                .collection('DrivingSchoolCollection')
+                                                .doc(UserCredentialsController.schoolId)
                                                 // .collection('Admins')
                                                 // .doc(FirebaseAuth
                                                 //     .instance.currentUser!.uid)

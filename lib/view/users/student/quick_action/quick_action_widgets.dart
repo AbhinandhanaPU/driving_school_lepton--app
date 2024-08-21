@@ -133,10 +133,10 @@ class QuickActionsWidgetSM extends StatelessWidget {
   }
 }
 
-class QuickActionsWidgetChat extends StatelessWidget {
+class QuickActionsWidgetQuestion extends StatelessWidget {
   final QuizTestAdminSideController quizTestAdminSideController =
       Get.put(QuizTestAdminSideController());
-  QuickActionsWidgetChat({
+  QuickActionsWidgetQuestion({
     super.key,
   });
 
