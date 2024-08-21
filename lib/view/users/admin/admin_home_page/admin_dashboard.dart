@@ -12,6 +12,7 @@ import 'package:new_project_app/view/users/admin/quick_action/quick_action_part_
 import 'package:new_project_app/view/users/admin/quick_action/quick_action_widgets.dart';
 import 'package:new_project_app/view/users/admin/slider_admin/carousal_slider_admin.dart';
 import 'package:new_project_app/view/users/widgets/profile_edit_widgets/admin_edit_profile.dart';
+import 'package:new_project_app/view/widgets/loading_widget/loading_widget.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -32,7 +33,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Widget build(BuildContext context) {
     pushNotificationController.getUserDeviceID().then((value) {
       pushNotificationController.allUSerDeviceID(
-          UserCredentialsController.userRole!, UserCredentialsController.currentUSerID!);
+          UserCredentialsController.userRole!,
+          UserCredentialsController.currentUSerID!);
     });
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 244, 244, 244),
@@ -47,19 +49,22 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   color: themeColor.withOpacity(0.1),
                   // const Color.fromARGB(255, 218, 247, 229),
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.sp), topRight: Radius.circular(15.sp)),
+                      topLeft: Radius.circular(15.sp),
+                      topRight: Radius.circular(15.sp)),
                 ),
                 child: ListView(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 120.sp, right: 20.sp, left: 20.sp),
+                      padding: EdgeInsets.only(
+                          top: 120.sp, right: 20.sp, left: 20.sp),
                       child: const QuickActionPartAdmin(),
                     ),
                     ////////////////////////////////////////////////////////all tab part
                     Padding(
-                      padding: EdgeInsets.only(top: 80.sp, right: 20.sp, left: 20.sp),
+                      padding: EdgeInsets.only(
+                          top: 80.sp, right: 20.sp, left: 20.sp),
                       child: NotificationPartOfAdmin(),
                     ),
                     //////////////////////////////////////////////////////// notifications
@@ -73,111 +78,123 @@ class _AdminDashboardState extends State<AdminDashboard> {
             ),
             //////////////////////////////////////////////////////details showing graph
             StreamBuilder(
-                stream: server
-                    .collection('DrivingSchoolCollection')
-                    .doc(UserCredentialsController.schoolId)
-                    .collection('Admins')
-                    .doc(serverAuth.currentUser!.uid)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return SizedBox(
-                      height: 100.h,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: 05.sp,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: CircleAvatar(
-                                  backgroundImage: UserCredentialsController
-                                                  .adminModel?.profileImageUrl ==
-                                              null ||
-                                          UserCredentialsController
-                                              .adminModel!.profileImageUrl.isEmpty
-                                      ? const NetworkImage(assetImagePathPerson)
-                                      : NetworkImage(
-                                          UserCredentialsController.adminModel?.profileImageUrl ??
-                                              " ") as ImageProvider,
-                                  onBackgroundImageError: (exception, stackTrace) {},
-                                  radius: 25,
-                                ),
-                              ),
+              stream: UserCredentialsController.schoolId !=
+                      serverAuth.currentUser!.uid
+                  ? server
+                      .collection('DrivingSchoolCollection')
+                      .doc(UserCredentialsController.schoolId)
+                      .collection('Admins')
+                      .doc(serverAuth.currentUser!.uid)
+                      .snapshots()
+                  : null,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final data = snapshot.data!.data()!;
+                  return SizedBox(
+                    height: 100.h,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10.sp, left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data['username'],
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.poppins(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.bold,
                             ),
-                            /////////////////////////////////////image
-                            Expanded(
-                              flex: 5,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 12, top: 10),
-                                child: SizedBox(
-                                    width: 200,
-                                    child: Text(
-                                      UserCredentialsController.adminModel?.adminName ?? "",
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 17.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )),
-                              ),
+                          ),
+                          Text(
+                            'Secondary Admin',
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.poppins(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w400,
+                              color: cblack.withOpacity(0.5),
                             ),
-                            /////////////////////////////////////////name
-                            Expanded(
-                              flex: 1,
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return const AdminProfileEditPage();
-                                      },
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(Icons.now_widgets),
-                              ),
-                            ),
-                            ////////////////////////////////edit profile
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    );
-                  } else {
-                    final data = snapshot.data!.data()!;
-                    return SizedBox(
-                        height: 100.h,
-                        child: Padding(
-                            padding: EdgeInsets.only(top: 10.sp, left: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data['username'],
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 17.sp,
-                                    fontWeight: FontWeight.bold,
+                    ),
+                  );
+                } else if (UserCredentialsController.schoolId ==
+                    serverAuth.currentUser!.uid) {
+                  return SizedBox(
+                    height: 100.h,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: 05.sp,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: CircleAvatar(
+                                backgroundImage: UserCredentialsController
+                                                .adminModel?.profileImageUrl ==
+                                            null ||
+                                        UserCredentialsController
+                                            .adminModel!.profileImageUrl.isEmpty
+                                    ? const NetworkImage(assetImagePathPerson)
+                                    : NetworkImage(UserCredentialsController
+                                            .adminModel?.profileImageUrl ??
+                                        " ") as ImageProvider,
+                                onBackgroundImageError:
+                                    (exception, stackTrace) {},
+                                radius: 25,
+                              ),
+                            ),
+                          ),
+                          /////////////////////////////////////image
+                          Expanded(
+                            flex: 5,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 12, top: 10),
+                              child: SizedBox(
+                                  width: 200,
+                                  child: Text(
+                                    UserCredentialsController
+                                            .adminModel?.adminName ??
+                                        "",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )),
+                            ),
+                          ),
+                          /////////////////////////////////////////name
+                          Expanded(
+                            flex: 1,
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return const AdminProfileEditPage();
+                                    },
                                   ),
-                                ),
-                                Text(
-                                  'Secondary Admin',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: cblack.withOpacity(0.5),
-                                  ),
-                                ),
-                              ],
-                            )));
-                  }
-                }),
+                                );
+                              },
+                              icon: const Icon(Icons.now_widgets),
+                            ),
+                          ),
+                          ////////////////////////////////edit profile
+                        ],
+                      ),
+                    ),
+                  );
+                } else {
+                  return LoadingWidget();
+                }
+              },
+            ),
             Padding(
               padding: EdgeInsets.only(top: 340.sp, left: 40),
               child: Row(

@@ -64,14 +64,36 @@ class CarouselSliderAdmin extends StatelessWidget {
                                 child: Text(
                                   '${data.courseName}',
                                   style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                              Icon(
-                                Icons.group,
-                                color: themeColor,
-                                size: 28,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.group,
+                                    color: themeColor.withOpacity(0.5),
+                                    size: 25,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  StreamBuilder<int>(
+                                      stream: courseController
+                                          .fetchTotalStudents(data.courseId),
+                                      builder: (context, snapshot) {
+                                        return Text(
+                                          snapshot.hasData
+                                              ? snapshot.data.toString()
+                                              : '0',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: cgreylite),
+                                        );
+                                      }),
+                                ],
                               )
                             ],
                           ),
