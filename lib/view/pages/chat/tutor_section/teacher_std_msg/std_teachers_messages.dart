@@ -3,12 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 
-import 'chats/admin_vs_tutor.dart';
+import 'chats/std_vs_tutor.dart';
 
 // import 'chats/teachers_chats.dart';
 
-class TutorAdminMessagesScreen extends StatelessWidget {
-  const TutorAdminMessagesScreen({super.key});
+class TutorStudentMessagesScreen extends StatelessWidget {
+  const TutorStudentMessagesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class TutorAdminMessagesScreen extends StatelessWidget {
             .doc(UserCredentialsController.schoolId)
             .collection('Teachers')
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection("AdminChats")
+            .collection("StudentChats")
             .snapshots(),
         builder: (context, snapshots) {
           if (snapshots.hasData) {
@@ -30,10 +30,10 @@ class TutorAdminMessagesScreen extends StatelessWidget {
                       onTap: () {
  
                       Navigator.push(context,MaterialPageRoute(builder: (context) {
-               return TutorAdminChatsScreen(
-                              adminName: snapshots.data!.docs[index]
-                                  ['adminName'],
-                              adminDocID: snapshots.data!.docs[index]
+               return TutorStdChatsScreen(
+                              stdName: snapshots.data!.docs[index]
+                                  ['stdName'],
+                              stdDocID: snapshots.data!.docs[index]
                                   ['docid'],
                             );
     },));
@@ -48,11 +48,11 @@ class TutorAdminMessagesScreen extends StatelessWidget {
                       leading: const CircleAvatar(
                         radius: 30,
                       ),
-                      title: Text(snapshots.data!.docs[index]['adminName'],
+                      title: Text(snapshots.data!.docs[index]['stdName'],
                           style: const TextStyle(color: Colors.black)),
                       contentPadding: const EdgeInsetsDirectional.all(1),
                       subtitle: const Text(
-                        'Admin',
+                        'Student',
                         style: TextStyle(color: Colors.black),
                       ),
                       trailing: snapshots.data!.docs[index]['messageindex'] == 0

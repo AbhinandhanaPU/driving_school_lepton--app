@@ -106,7 +106,7 @@ class Parent_TeachersChatsScreenState extends State<TutorAdminChatsScreen> {
                     .doc(UserCredentialsController.schoolId)
                     .collection('Admins')
                     .doc(widget.adminDocID)
-                    .collection('teacherChats')
+                    .collection('TeacherChats')
                     .doc(FirebaseAuth.instance.currentUser?.uid)
                     .snapshots(),
                 builder: (context, checkingblock) {
@@ -292,7 +292,7 @@ class Parent_TeachersChatsScreenState extends State<TutorAdminChatsScreen> {
         'block': false,
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
-        'teachername': UserCredentialsController.teacherModel?.teacherName,///ppppprnt
+        'teachername': UserCredentialsController.teacherModel?.teacherName??"",///ppppprnt
       });
     }
   }
@@ -317,7 +317,7 @@ class Parent_TeachersChatsScreenState extends State<TutorAdminChatsScreen> {
         'block': false,
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
-        'teachername': UserCredentialsController.teacherModel?.teacherName,///ppprnt
+        'teachername': UserCredentialsController.teacherModel?.teacherName??"",///ppprnt
 
       }).then((value) async {
         await FirebaseFirestore.instance

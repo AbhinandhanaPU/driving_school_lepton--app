@@ -125,7 +125,7 @@ class AddStudentModel {
       bloodgroup: map['bloodgroup'] != null ? map['bloodgroup'] as String : null,
       dateofBirth: map['dateofBirth'] != null ? map['dateofBirth'] as String : null,
       docid: map['docid'] != null ? map['docid'] as String : null,
-      userRole: map['userRole'] as String,
+      userRole: map['userRole'] ??"",
     );
   }
 

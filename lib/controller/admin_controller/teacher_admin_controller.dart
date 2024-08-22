@@ -210,7 +210,7 @@ class AdminTeacherChatController extends GetxController {
         block: false,
         docid: FirebaseAuth.instance.currentUser!.uid,
         messageindex: await fectchingStudentCurrentMessageIndex(teacherDocID),
-        adminName: UserCredentialsController.adminModel!.adminName!);
+        adminName: UserCredentialsController.adminModel?.adminName??"");///// xyza
     final sendMessage = OnlineChatModel(
       message: messageController.text,
       messageindex: 1,

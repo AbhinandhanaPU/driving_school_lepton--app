@@ -5,8 +5,9 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/const/const.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/student_section/search/search_teachers.dart';
+import 'package:new_project_app/view/pages/chat/student_section/search/search_std_admin.dart';
 import 'package:new_project_app/view/pages/chat/tutor_section/teacher_messages/teachers_messages.dart';
+import 'package:new_project_app/view/pages/chat/tutor_section/teacher_std_msg/std_teachers_messages.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'group_section/tutor_message_group_screen.dart';
 
@@ -16,11 +17,11 @@ class TutorChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<void> showsearch() async {
-      await showSearch(context: context, delegate: SearchAdmin());
+      await showSearch(context: context, delegate: SearchAdminAndStudents());
     }
 
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           flexibleSpace: const AppBarColorWidget(),
@@ -86,6 +87,64 @@ class TutorChatScreen extends StatelessWidget {
                   ],
                 ),
               ),
+               Tab(
+                icon: ListView(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 0),
+                      child: Icon(Icons.group),
+                    ),
+                    //////////////////////////////////////////////////////////////////////////////////////////////////
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Student".tr),
+                        StreamBuilder(
+                            stream:FirebaseFirestore.instance
+                                .collection('DrivingSchoolCollection')
+                                .doc(UserCredentialsController.schoolId)
+                                .collection('Teachers')
+                                .doc(FirebaseAuth.instance.currentUser?.uid)
+                                .collection("StudentChatCounter")
+                                .doc("c3cDX5ymHfITQ3AXcwSp")
+                                .snapshots(),
+                            builder: (context, messageIndex) {
+                              if (messageIndex.hasData) {
+                                if (messageIndex.data!.data() == null) {
+                                  return const Text('');
+                                } else {
+                                  MessageCounter.tutorMessageCounter =
+                                      messageIndex.data?.data()?['chatIndex'];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(left: 5),
+                                    child: CircleAvatar(
+                                      radius: 10,
+                                      backgroundColor: Colors.white,
+                                      child: Center(
+                                        child: Text(
+                                          messageIndex.data!
+                                              .data()!['chatIndex']
+                                              .toString(),
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator.adaptive(),
+                                );
+                              }
+                            }),
+                      ],
+                    )
+                  ],
+                ),
+              ),
               // const Tab(icon: Icon(Icons.groups_2), text: 'Parents'),
               Tab(
                   icon: const Icon(
@@ -98,6 +157,7 @@ class TutorChatScreen extends StatelessWidget {
         body: const TabBarView(
           children: [
             TutorAdminMessagesScreen(),
+            TutorStudentMessagesScreen(),
             // const Icon(Icons.directions_transit, size: 350),
             TutorGroupMessagesScreen(),
           ],

@@ -20,7 +20,7 @@ import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.d
 import '../../model/chat_model/chat_model.dart';
 import 'model/create_group_chat_model.dart';
 
-class TeacherGroupChatController extends GetxController {
+class AdminGroupChatController extends GetxController {
   final TextEditingController messageController = TextEditingController();
   RxBool isLoading = false.obs;
   messageTitles(Size size, String chatId, String message, String docid,
@@ -215,7 +215,7 @@ class TeacherGroupChatController extends GetxController {
         chatid: FirebaseAuth.instance.currentUser!.uid,
         docid: id,
         sendTime: DateTime.now().toString(),
-        username: '$adminName T r');
+        username: '$adminName ');
     await FirebaseFirestore.instance
         .collection("DrivingSchoolCollection")
         .doc(UserCredentialsController.schoolId)
@@ -510,14 +510,9 @@ class TeacherGroupChatController extends GetxController {
                         child: Row(
                           children: [
                             Obx(() => Container(
-                                  color: addStudentList[studentsSnaps.data!
-                                              .docs[index]['studentName']] ==
-                                          null
+                                  color: addStudentList[studentsSnaps.data!.docs[index]['studentName']] == null
                                       ? Colors.transparent
-                                      : addStudentList[studentsSnaps
-                                                      .data!.docs[index]
-                                                  ['studentName']] ==
-                                              true
+                                      : addStudentList[studentsSnaps.data!.docs[index] ['studentName']] == true
                                           ? Colors.green.withOpacity(0.4)
                                           : Colors.red.withOpacity(0.4),
                                   height: 60.h,
@@ -542,12 +537,10 @@ class TeacherGroupChatController extends GetxController {
                             const Spacer(),
                             IconButton(
                               onPressed: () async {
-                                addStudentToGroup(studentDetails.docid!,
-                                        groupID, studentDetails)
+                                addStudentToGroup(studentDetails.docid!,groupID, studentDetails)
                                     .then((value) {
                                   showToast(msg: 'Added');
-                                  addStudentList[studentsSnaps.data!.docs[index]
-                                      ['studentName']] = true;
+                                  addStudentList[studentsSnaps.data!.docs[index] ['studentName']] = true;
                                 });
                               },
                               icon: const Icon(Icons.add),
@@ -555,12 +548,10 @@ class TeacherGroupChatController extends GetxController {
                             const SizedBox(width: 20),
                             IconButton(
                               onPressed: () async {
-                                await removeStudentToGroup(
-                                        studentDetails.docid!, groupID, context)
+                                await removeStudentToGroup( studentDetails.docid!, groupID, context)
                                     .then((value) {
                                   showToast(msg: "Removed");
-                                  addStudentList[studentsSnaps.data!.docs[index]
-                                      ['studentName']] = false;
+                                  addStudentList[studentsSnaps.data!.docs[index]['studentName']] = false;
                                 });
                               },
                               icon: const Icon(Icons.remove),
@@ -583,8 +574,6 @@ class TeacherGroupChatController extends GetxController {
         ],
       ),
     ));
-
-    
   }
 
   customAddStudentInGroup(groupID) {
@@ -663,12 +652,10 @@ class TeacherGroupChatController extends GetxController {
                             const Spacer(),
                             IconButton(
                               onPressed: () async {
-                                addStudentToGroup(studentDetails.docid!,
-                                        groupID, studentDetails)
+                                addStudentToGroup(studentDetails.docid!,groupID, studentDetails)
                                     .then((value) {
                                   showToast(msg: 'Added');
-                                  addStudentList[studentsSnaps.data!.docs[index]
-                                      ['studentName']] = true;
+                                  addStudentList[studentsSnaps.data!.docs[index]['studentName']] = true;
                                 });
                               },
                               icon: const Icon(Icons.add),
@@ -676,12 +663,10 @@ class TeacherGroupChatController extends GetxController {
                             const SizedBox(width: 20),
                             IconButton(
                               onPressed: () async {
-                                await removeStudentToGroup(
-                                        studentDetails.docid!, groupID, context)
+                                await removeStudentToGroup(studentDetails.docid!, groupID, context)
                                     .then((value) {
                                   showToast(msg: "Removed");
-                                  addStudentList[studentsSnaps.data!.docs[index]
-                                      ['studentName']] = false;
+                                  addStudentList[studentsSnaps.data!.docs[index]['studentName']] = false;
                                 });
                               },
                               icon: const Icon(Icons.remove),

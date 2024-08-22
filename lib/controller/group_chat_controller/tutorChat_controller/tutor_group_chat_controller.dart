@@ -212,7 +212,7 @@ class TutorGroupChatMessageController extends GetxController {
        .doc(UserCredentialsController.schoolId)
         .collection('ChatGroups')
         .doc('ChatGroups')
-        .collection("Teachers")
+        .collection("Students")
         .doc(groupID)
         .collection('chats')
         .doc(id)

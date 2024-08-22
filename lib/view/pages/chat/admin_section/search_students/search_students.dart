@@ -72,7 +72,7 @@ class SearchStudentsForChat extends SearchDelegate {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    data.studentName!,
+                                    data.studentName??"",
                                     style: GoogleFonts.poppins(fontSize: 16),
                                   ),
                                 ],

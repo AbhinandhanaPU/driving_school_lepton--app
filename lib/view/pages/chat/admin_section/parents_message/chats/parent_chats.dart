@@ -12,10 +12,10 @@ import 'package:new_project_app/controller/user_credentials/user_credentials_con
 
 class ParentsChatsScreen extends StatefulWidget {
   final String tutorDocID;
-  final String teacherName;
+  final String teachername;
 
   const ParentsChatsScreen(
-      {required this.tutorDocID, required this.teacherName, super.key});
+      {required this.tutorDocID, required this.teachername, super.key});
 
   @override
   State<ParentsChatsScreen> createState() => _ParentsChatsScreenState();
@@ -38,7 +38,7 @@ class _ParentsChatsScreenState extends State<ParentsChatsScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    log('teacherName${widget.teacherName}');
+    log('teachername${widget.teachername}');
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 242, 224),
       resizeToAvoidBottomInset: true,
@@ -47,7 +47,7 @@ class _ParentsChatsScreenState extends State<ParentsChatsScreen> {
           children: [
             const CircleAvatar(),
             kWidth10,
-            Text(widget.teacherName),
+            Text(widget.teachername),
           ],
         ),
         actions: [
@@ -277,7 +277,7 @@ class _ParentsChatsScreenState extends State<ParentsChatsScreen> {
         'block': false,
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
-        'teacherName': UserCredentialsController.teacherModel?.teacherName,
+        'teachername': UserCredentialsController.teacherModel?.teacherName,
       }).then((value) async {
         await FirebaseFirestore.instance
             .collection('DrivingSchoolCollection')
@@ -290,7 +290,7 @@ class _ParentsChatsScreenState extends State<ParentsChatsScreen> {
           'block': false,
           'docid': widget.tutorDocID,
           'messageindex': 0,
-          'teachername': widget.teacherName,
+          'teachername': widget.teachername,
         });
       });
     }
@@ -319,7 +319,7 @@ class _ParentsChatsScreenState extends State<ParentsChatsScreen> {
         'block': false,
         'docid': widget.tutorDocID,
         'messageindex': 0,
-        'teachername': widget.teacherName,
+        'teachername': widget.teachername,
       });
     }
   }

@@ -120,7 +120,7 @@ class SearchParentsForChat extends SearchDelegate {
                   final data = buildSuggestionList[index];
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ParentsChatsScreen(
-                      tutorDocID: data.docid!, teacherName: data.teacherName!);
+                      tutorDocID: data.docid!, teachername: data.teacherName!);
                   },));
                   // Get.off(() => ParentsChatsScreen(
                   //     parentDocID: data.docid!, parentName: data.parentName!));
