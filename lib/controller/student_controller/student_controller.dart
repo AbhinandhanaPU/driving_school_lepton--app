@@ -13,6 +13,7 @@ class StudentController extends GetxController {
   List<StudentModel> studentProfileList = [];
   TextEditingController amountController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  RxInt totalStudentsCount = 0.obs;
 
   final _fbServer = server
       .collection('DrivingSchoolCollection')
@@ -343,7 +344,7 @@ class StudentController extends GetxController {
 
   Future<void> declineStudentToCourse(
     StudentModel studentModel,
-     String courseID,
+    String courseID,
   ) async {
     try {
       final reqStudentDoc = await _fbServer
@@ -377,6 +378,7 @@ class StudentController extends GetxController {
 
       await for (var coursesSnapshot in coursesStream) {
         List<Map<String, dynamic>> results = [];
+        int totalCount = 0;
 
         for (var courseDoc in coursesSnapshot.docs) {
           CourseModel course = CourseModel.fromMap(courseDoc.data());
@@ -394,8 +396,10 @@ class StudentController extends GetxController {
               "course": course,
               "student": student,
             });
+            totalCount++;
           }
         }
+        totalStudentsCount.value = totalCount;
         yield results;
       }
     } catch (e) {
