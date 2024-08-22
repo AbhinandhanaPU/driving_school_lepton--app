@@ -1,185 +1,101 @@
+import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class FeesList extends StatelessWidget {
-  final int index;
-  // final TeacherModel data;
+  final StudentModel stdData;
+  final Map<String, dynamic> feeData;
   const FeesList({
-    required this.index,
-    // required this.data,
     super.key,
+    required this.stdData,
+    required this.feeData,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
-      decoration: BoxDecoration(
-        color: index % 2 == 0 ? const Color.fromARGB(255, 246, 246, 246) : Colors.blue[50],
+      margin: EdgeInsets.only(
+        top: 15,
+        left: 15,
+        right: 15,
+        bottom: 8,
       ),
-      child: Row(
+      padding: EdgeInsets.only(left: 12, right: 12, top: 15, bottom: 15),
+      decoration: BoxDecoration(
+        color: cWhite,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: cblack.withOpacity(0.1),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
         children: [
-          Expanded(
-            flex: 4,
-            child: Row(
-              children: [
-                // SizedBox(
-                //   width: 20,
-                //   child: Center(
-                //     child: Image.asset(
-                //       'webassets/stickers/icons8-student-100 (1).png',
-                //     ),
-                //   ),
-                // ),
-                Expanded(
-                  child: Center(
-                    child: TextFontWidget(
-                      text: "Ramu",
-                      fontsize: 12,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: TextFontWidget(
+                  text: 
+                  stdData.studentName,
+                  fontsize: 21.h,
+                  fontWeight: FontWeight.w500,
                 ),
-              ],
-            ),
-          ), //........................................... teacher Name
-          const SizedBox(
-            width: 01,
-          ),
-          Expanded(
-            flex: 3,
-            child: Row(
-              children: [
-                Expanded(
-                    child: Center(
-                  child: TextFontWidget(
-                    text: "20-04-2023",
-                    fontsize: 12,
-                    overflow: TextOverflow.ellipsis,
+              ),
+              TextFontWidget(
+                text: ':',
+                fontsize: 18.h,
+                fontWeight: FontWeight.bold,
+                color: cblack,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFontWidget(
+                    text: feeData['feeStatus'],
+                    fontsize: 18.h,
+                    fontWeight: FontWeight.bold,
+                    color: themeColor,
                   ),
-                )),
-              ],
-            ),
-          ), // ................................... teacher Email
-          const SizedBox(
-            width: 01,
-          ),
-          Expanded(
-            flex: 6,
-            child: Row(
-              children: [
-                // SizedBox(
-                //   width: 15,
-                //   child: Center(
-                //     child: Image.asset(
-                //       'webassets/png/telephone.png',
-                //     ),
-                //   ),
-                // ),
-                Expanded(
-                  child: Center(
-                    child: TextFontWidget(
-                      text: "3",
-                      fontsize: 12,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  TextFontWidget(
+                    text: 'Fee Status',
+                    fontsize: 14.h,
+                    fontWeight: FontWeight.bold,
+                    color: cgrey,
                   ),
-                ),
-              ],
-            ),
-          ), //....................................... teacher Phone Number
-          const SizedBox(
-            width: 01,
-          ),
-          Expanded(
-            flex: 6,
-            child: Row(
-              children: [
-                Expanded(
-                    child: Center(
-                  child: TextFontWidget(
-                    text: "5-04-2023",
-                    fontsize: 12,
-                    overflow: TextOverflow.ellipsis,
+                ],
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextFontWidget(
+                    text: feeData['pendingAmount'].toString(),
+                    fontsize: 18.h,
+                    fontWeight: FontWeight.bold,
+                    color: themeColor,
                   ),
-                )),
-              ],
-            ),
-          ),
-          const SizedBox(
-            width: 01,
-          ),
-          Expanded(
-            flex: 4,
-            child: Row(
-              children: [
-                // SizedBox(
-                //   width: 15,
-                //   child: Center(
-                //     child: Image.asset(
-                //       'webassets/png/telephone.png',
-                //     ),
-                //   ),
-                // ),
-                Expanded(
-                  child: Center(
-                    child: TextFontWidget(
-                      text: "good",
-                      fontsize: 12,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  TextFontWidget(
+                    text: 'Pending Amount',
+                    fontsize: 14.h,
+                    fontWeight: FontWeight.bold,
+                    color: cgrey,
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
-          const SizedBox(
-            width: 01,
-          ),
-          Expanded(
-            flex: 4,
-            child: Row(
-              children: [
-                // SizedBox(
-                //   width: 15,
-                //   child: Center(
-                //     child: Image.asset(
-                //       'webassets/png/telephone.png',
-                //     ),
-                //   ),
-                // ),
-                Expanded(
-                  child: Center(
-                    child: TextFontWidget(
-                      text: "paid",
-                      fontsize: 12,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ), //....................................... teacher licence number
-          const SizedBox(
-            width: 01,
-          ),
-          Expanded(
-            flex: 4,
-            child: Row(
-              children: [
-                Expanded(
-                    child: Center(
-                  child: TextFontWidget(
-                    text: "5-04-2023",
-                    fontsize: 12,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                )),
-              ],
-            ),
-          ),
-
-          //............................. Status [Active or DeActivate]
         ],
       ),
     );
