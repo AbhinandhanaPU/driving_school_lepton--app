@@ -190,6 +190,17 @@ class CourseController extends GetxController {
     return coursesRef.snapshots().map((snapshot) => snapshot.docs.length);
   }
 
+  Future<int> fetchFeeStudentsCount(String courseId) {
+    CollectionReference feeRef = server
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('FeeCollection')
+        .doc(courseId)
+        .collection('Students');
+
+    return feeRef.get().then((snapshot) => snapshot.docs.length);
+  }
+
   Future<void> deleteStudentsFromCourse(StudentModel studentModel) async {
     try {
       final data = courseModelData.value;

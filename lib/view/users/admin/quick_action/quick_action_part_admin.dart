@@ -13,7 +13,7 @@ import 'package:new_project_app/view/users/admin/admin_pages/courses/course_list
 import 'package:new_project_app/view/users/admin/admin_pages/create_admin/admin_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/events/events_admin.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/fees/fees_home_page.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/fees/course/courses_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/login_history/login_history.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/notices/notices_admin.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/notifications/notifications.dart';
@@ -77,7 +77,7 @@ viewallMenus(BuildContext context) {
     BatchHome(), // batch
     DrivingHomePage(), // Driving Test
     PracticeSheduleHome(), // Practice shedule
-    const FeesHomePage(), // Fee
+    FeeCourseList(), // Fee
     const AttendenceBookScreenSelectMonth(), // Attendance
     AdminStudyMaterials(), // Study Materials
     VideosListAdmin(), // Videos

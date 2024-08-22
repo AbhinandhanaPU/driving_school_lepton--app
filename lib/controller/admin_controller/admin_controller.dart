@@ -14,7 +14,8 @@ class AdminController extends GetxController {
   RxString joiningSelectedDate = ''.obs;
   final Rx<String> gender = ''.obs;
   Rx<ButtonState> buttonstate = ButtonState.idle.obs;
-   final RxList<bool> openedNotifications = <bool>[].obs;
+  final RxList<bool> openedNotifications = <bool>[].obs;
+  RxBool secondaryAdmin = false.obs;
 //......................  Add Admin Section
 
   TextEditingController nameController = TextEditingController();

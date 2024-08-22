@@ -89,7 +89,8 @@ class NotificationPartOfAdmin extends StatelessWidget {
                 } else if (snapshot.hasError) {
                   return Center(child: Text("Error: ${snapshot.error}"));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(child: Text("No students found."));
+                  return const Center(
+                      child: Text("No students requested to join courses."));
                 } else {
                   final studentCourseList = snapshot.data!;
 
