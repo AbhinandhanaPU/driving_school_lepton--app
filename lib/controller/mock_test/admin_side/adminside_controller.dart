@@ -18,8 +18,9 @@ class QuizTestAdminSideController extends GetxController {
   void selectLanguage(String language) {
     selectedLanguage.value = language;
   }
- final languages = ['English', 'മലയാളം', 'தமிழ்', 'हिंदी'];
-            final languageCode = ['en', 'ml', 'ta', 'hi'];
+
+  final languages = ['English', 'മലയാളം', 'தமிழ்', 'हिंदी'];
+  final languageCode = ['en', 'ml', 'ta', 'hi'];
   void showLanguageBottomSheet() {
     Get.bottomSheet(
       Container(
@@ -29,37 +30,41 @@ class QuizTestAdminSideController extends GetxController {
           borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
         ),
         child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Select Language',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 16),
-                SizedBox(
-                  height: 200,
-                  child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            selectedLanguage.value = languageCode[index];
-                            controller.selectLanguage(languageCode[index]);
-                            Get.to(()=>Scaffold(body: QuestionWidget()));
-                          },
-                          child: TextFontWidget(
-                              text: languages[index], fontsize: 18,),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return SizedBox(
-                          height: 20,
-                          child: Divider(thickness: 0.2,),
-                        );
-                      },
-                      itemCount: languages.length),
-                )
-              ],
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Select Language',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            SizedBox(height: 16),
+            SizedBox(
+              height: 200,
+              child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        selectedLanguage.value = languageCode[index];
+                        controller.selectLanguage(languageCode[index]);
+                        Get.to(() => Scaffold(body: QuestionWidget()));
+                      },
+                      child: TextFontWidget(
+                        text: languages[index],
+                        fontsize: 18,
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      height: 20,
+                      child: Divider(
+                        thickness: 0.2,
+                      ),
+                    );
+                  },
+                  itemCount: languages.length),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -67,8 +72,7 @@ class QuizTestAdminSideController extends GetxController {
   late PageController pgcontroller;
   RxInt initquestionNumber = 1.obs;
   List<QuizTestQuestionModel> getAllQuestionFromServer = [];
-  List<QuizTestQuestionModel> selectedQuestions =
-      []; // New list for shuffled 20 questions
+  List<QuizTestQuestionModel> selectedQuestions = []; // New list for shuffled 20 questions
 
   Stream<List<QuizTestQuestionModel>> getAllQuestionAndSuffleStream() async* {
     selectedQuestions.clear();
@@ -80,9 +84,7 @@ class QuizTestAdminSideController extends GetxController {
         .collection('MockTestCollection')
         .get()
         .then((value) async {
-      final list = value.docs
-          .map((e) => QuizTestQuestionModel.fromMap(e.data()))
-          .toList();
+      final list = value.docs.map((e) => QuizTestQuestionModel.fromMap(e.data())).toList();
       getAllQuestionFromServer.addAll(list);
 
       // Shuffle the list of all questions
@@ -134,8 +136,13 @@ class QuizTestAdminSideController extends GetxController {
 
   void showResult() {
     getxcustomShowDialogBox(
-        title: 'Result',
-        children: [TextFontWidget(text: "${correctAns}/20", fontsize: 14)],
-        doYouWantActionButton: true);
+      title: 'Result',
+      children: [TextFontWidget(text: "${correctAns}/20", fontsize: 14)],
+      doYouWantActionButton: true,
+      actionOnTapFunction: () {
+        Get.back();
+        Get.back();
+      },
+    );
   }
 }
