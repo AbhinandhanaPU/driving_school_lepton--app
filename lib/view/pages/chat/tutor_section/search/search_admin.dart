@@ -7,6 +7,7 @@ import 'package:new_project_app/controller/chat_controller/tutor_controller/tuto
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/admin_model/admin_model.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
+
 import '../teacher_messages/chats/admin_vs_tutor.dart';
 
 class SearchTeachersForParents extends SearchDelegate {
@@ -46,8 +47,8 @@ class SearchTeachersForParents extends SearchDelegate {
               // backgroundColor: Colors.transparent,
               body: ListView.separated(
                   itemBuilder: (context, index) {
-                    AdminModel data = AdminModel.fromMap(
-                        snapshots.data!.docs[index].data());
+                    AdminModel data =
+                        AdminModel.fromMap(snapshots.data!.docs[index].data());
                     return Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -73,7 +74,7 @@ class SearchTeachersForParents extends SearchDelegate {
                                 children: [
                                   // Text(snapshots.data!.docs[index]['id']),
                                   Text(
-                                    data.adminName!,
+                                    data.adminName,
                                     style: GoogleFonts.poppins(fontSize: 16),
                                   ),
                                   // sizedBoxH10,
@@ -119,7 +120,7 @@ class SearchTeachersForParents extends SearchDelegate {
     } else {
       buildSuggestionList = tutorChatController.searchTeacher
           .where((item) =>
-              item.adminName!.toLowerCase().contains(query.toLowerCase()))
+              item.adminName.toLowerCase().contains(query.toLowerCase()))
           .toList();
     }
     if (buildSuggestionList.isEmpty) {
@@ -135,11 +136,12 @@ class SearchTeachersForParents extends SearchDelegate {
               return GestureDetector(
                 onTap: () {
                   final data = buildSuggestionList[index];
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return TutorAdminChatsScreen(
-                      adminDocID: data.docid!,
-                      adminName: data.adminName!);
-                  },));
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return TutorAdminChatsScreen(
+                          adminDocID: data.docid, adminName: data.adminName);
+                    },
+                  ));
                   // Get.off(ParentTeachersChatsScreen(
                   //     teacherDocID: data.docid!,
                   //     teacherName: data.teacherName!));
@@ -171,7 +173,7 @@ class SearchTeachersForParents extends SearchDelegate {
                             children: [
                               // Text(snapshots.data!.docs[index]['id']),
                               Text(
-                                buildSuggestionList[index].adminName!,
+                                buildSuggestionList[index].adminName,
                                 style: GoogleFonts.poppins(fontSize: 16),
                               ),
                               // sizedBoxH10,

@@ -8,8 +8,8 @@ import 'package:new_project_app/controller/study_materials/study_materials_contr
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_edit.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/study_materials/upload_studymaterial.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/study_materials/view_study_material/view_st_mtrl.dart';
 import 'package:new_project_app/view/users/widgets/listcard_widget/listcard_widget.dart';
+import 'package:new_project_app/view/users/widgets/file_viewer/file_viewer.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
@@ -55,12 +55,14 @@ class AdminStudyMaterials extends StatelessWidget {
                           child: ListTileCardWidget(
                             onTap: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PDFSectionScreen(
-                                            urlPdf: snapshot.data!.docs[index]
-                                                ['downloadUrl'],
-                                          )));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FileViewerPage(
+                                    pdfUrl: data['downloadUrl'],
+                                    pdfName: data["title"],
+                                  ),
+                                ),
+                              );
                             },
                             leading: Icon(
                               Icons.note,

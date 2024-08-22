@@ -63,8 +63,8 @@ class AdminTeacherChatController extends GetxController {
                           .then((value) async {
                         await FirebaseFirestore.instance
                             .collection('DrivingSchoolCollection')
-                          .doc(UserCredentialsController.schoolId)
-                          .collection('Teachers')
+                            .doc(UserCredentialsController.schoolId)
+                            .collection('Teachers')
                             .doc(teacherDocID)
                             .collection('TeacherChats')
                             .doc(UserCredentialsController.adminModel!.docid)
@@ -210,7 +210,7 @@ class AdminTeacherChatController extends GetxController {
         block: false,
         docid: FirebaseAuth.instance.currentUser!.uid,
         messageindex: await fectchingStudentCurrentMessageIndex(teacherDocID),
-        adminName: UserCredentialsController.adminModel!.adminName!);
+        adminName: UserCredentialsController.adminModel!.adminName);
     final sendMessage = OnlineChatModel(
       message: messageController.text,
       messageindex: 1,
@@ -219,7 +219,7 @@ class AdminTeacherChatController extends GetxController {
       sendTime: DateTime.now().toString(),
     );
     await FirebaseFirestore.instance
-       .collection('DrivingSchoolCollection')
+        .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
         .collection('Admins')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -230,19 +230,19 @@ class AdminTeacherChatController extends GetxController {
         .set(sendMessage.toMap())
         .then((value) async {
       await FirebaseFirestore.instance
-        .collection('DrivingSchoolCollection')
-        .doc(UserCredentialsController.schoolId)
-        .collection('Teachers')
-        .doc(teacherDocID)
-         .collection('AdminChats')
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Teachers')
+          .doc(teacherDocID)
+          .collection('AdminChats')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .set(userDetails.toMap(), SetOptions(merge: true))
           .then((value) async {
         FirebaseFirestore.instance
-             .collection('DrivingSchoolCollection')
-        .doc(UserCredentialsController.schoolId)
-        .collection('Teachers')
-        .doc(teacherDocID)
+            .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection('Teachers')
+            .doc(teacherDocID)
             .collection('AdminChats')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .collection('messages')
@@ -250,10 +250,10 @@ class AdminTeacherChatController extends GetxController {
             .set(sendMessage.toMap())
             .then((value) async {
           await FirebaseFirestore.instance
-               .collection('DrivingSchoolCollection')
-        .doc(UserCredentialsController.schoolId)
-        .collection('Teachers')
-        .doc(teacherDocID)
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection('Teachers')
+              .doc(teacherDocID)
               .collection('TutorChatCounter')
               .doc('c3cDX5ymHfITQ3AXcwSp')
               .update({'chatIndex': sentStudentChatIndex}).then(
@@ -280,9 +280,9 @@ class AdminTeacherChatController extends GetxController {
               child: const Text('Ok'),
               onPressed: () async {
                 await FirebaseFirestore.instance
-                     .collection('DrivingSchoolCollection')
-                     .doc(UserCredentialsController.schoolId)
-                     .collection('Admins')
+                    .collection('DrivingSchoolCollection')
+                    .doc(UserCredentialsController.schoolId)
+                    .collection('Admins')
                     .doc(UserCredentialsController.adminModel!.docid)
                     .collection('TeacherChats')
                     .doc(teacherDocID)
@@ -327,9 +327,9 @@ class AdminTeacherChatController extends GetxController {
     try {
       final QuerySnapshot<Map<String, dynamic>> snapshot =
           await FirebaseFirestore.instance
-               .collection('DrivingSchoolCollection')
-               .doc(UserCredentialsController.schoolId)
-               .collection('Teachers')
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection('Teachers')
               .get();
       searchParentCollection =
           snapshot.docs.map((e) => AddStudentModel.fromMap(e.data())).toList();
@@ -345,8 +345,8 @@ class AdminTeacherChatController extends GetxController {
       final QuerySnapshot<Map<String, dynamic>> snapshot =
           await FirebaseFirestore.instance
               .collection('DrivingSchoolCollection')
-               .doc(UserCredentialsController.schoolId)
-               .collection('Teachers')
+              .doc(UserCredentialsController.schoolId)
+              .collection('Teachers')
               .get();
       searchTeacher =
           snapshot.docs.map((e) => TeacherModel.fromMap(e.data())).toList();
