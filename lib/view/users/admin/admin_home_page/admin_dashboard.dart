@@ -240,13 +240,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
               },
             ),
             Padding(
-              padding: EdgeInsets.only(top: 340.sp, left: 40),
+              padding: EdgeInsets.only(top: 340.sp, left: 30),
               child: Row(
                 children: [
-                  // QuestionWidget(),
                   QuickActionsWidgetDrivingTestAdmin(),
                   QuickActionsWidgetPractice(),
-                  QuickActionsWidgetSM(),
+                  QuickActionsWidgetRequest(),
                   QuickActionsWidgetChat(),
                 ],
               ),

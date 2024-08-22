@@ -91,8 +91,8 @@ class QuickActionsWidgetPractice extends StatelessWidget {
   }
 }
 
-class QuickActionsWidgetSM extends StatelessWidget {
-  const QuickActionsWidgetSM({
+class QuickActionsWidgetRequest extends StatelessWidget {
+  const QuickActionsWidgetRequest({
     super.key,
   });
 
@@ -100,32 +100,47 @@ class QuickActionsWidgetSM extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 86.h,
-      width: 89.w,
-      child: Column(
+      width: 94.w,
+      child: Stack(
         children: [
-          GestureDetector(
-            onTap: () => Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return StudentRequest();
-              },
-            )),
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return StudentRequest();
+                  },
+                )),
+                child: Container(
+                  height: 55.h,
+                  width: 55.w,
+                  decoration: BoxDecoration(
+                      color: cWhite,
+                      border: Border.all(color: cblack.withOpacity(0.2)),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Image.asset(
+                    'assets/flaticons/add.png',
+                    scale: 2.5,
+                  ),
+                ),
+              ),
+              Text(
+                "Student Request",
+                style: TextStyle(fontSize: 12.sp),
+              )
+            ],
+          ),
+          Positioned(
+            right: 15,
+            top: 0,
             child: Container(
-              height: 55.h,
-              width: 55.w,
+              padding: EdgeInsets.all(9),
               decoration: BoxDecoration(
-                  color: cWhite,
-                  border: Border.all(color: cblack.withOpacity(0.2)),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Image.asset(
-                'assets/flaticons/add.png',
-                scale: 2.5,
+                borderRadius: BorderRadius.circular(10),
+                color: themeColor,
               ),
             ),
           ),
-          Text(
-            "Course Request",
-            style: TextStyle(fontSize: 12.sp),
-          )
         ],
       ),
     );
