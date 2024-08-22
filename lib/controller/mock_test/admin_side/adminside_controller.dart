@@ -34,7 +34,7 @@ class QuizTestAdminSideController extends GetxController {
           children: [
             Text(
               'Select Language',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
             SizedBox(
