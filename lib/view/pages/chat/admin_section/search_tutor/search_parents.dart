@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
-import 'package:new_project_app/controller/chat_controller/student_controller/student_controller.dart';
+import 'package:new_project_app/controller/admin_controller/teacher_admin_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/model/admin_model/admin_model.dart';
-import 'package:new_project_app/view/pages/chat/student_section/admin_message/chats/teachers_chats.dart';
+import 'package:new_project_app/model/teacher_model/teacher_model.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
+import '../parents_message/chats/parent_chats.dart';
 
-class SearchAdmin extends SearchDelegate {
-  StudentChatController studentChatController =
-      Get.put(StudentChatController());
+class SearchParentsForChat extends SearchDelegate {
+  AdminTeacherChatController teacherParentChatController =
+      Get.put(AdminTeacherChatController());
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -36,9 +36,9 @@ class SearchAdmin extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     return StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection("DrivingSchoolCollection")
-            .doc(UserCredentialsController.schoolId)
-            .collection("Admins")
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection("Teachers")
             .snapshots(),
         builder: (context, snapshots) {
           var screenSize = MediaQuery.of(context).size;
@@ -47,12 +47,11 @@ class SearchAdmin extends SearchDelegate {
               // backgroundColor: Colors.transparent,
               body: ListView.separated(
                   itemBuilder: (context, index) {
-                    AdminModel data = AdminModel.fromMap(
-                        snapshots.data!.docs[index].data());
+                  TeacherModel data =
+                      TeacherModel.fromMap(snapshots.data!.docs[index].data());
                     return Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          // border: Border.all(color: Colors.grey,width: 0.5),
                         ),
                         height: screenSize.width / 8,
                         width: double.infinity,
@@ -72,27 +71,10 @@ class SearchAdmin extends SearchDelegate {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Text(snapshots.data!.docs[index]['id']),
                                   Text(
-                                    data.adminName,
+                                    data.teacherName!,
                                     style: GoogleFonts.poppins(fontSize: 16),
                                   ),
-                                  // sizedBoxH10,
-                                  // Text(
-                                  //   'Admission No. :${data.admissionNumber}',
-                                  //   style: GoogleFonts.poppins(fontSize: 12),
-                                  // ),
-                                  // sizedBoxH10,
-
-                                  // Text(
-                                  //   'Class & Division : ${data.classID}',
-                                  //   style: GoogleFonts.poppins(fontSize: 12),
-                                  // ),
-                                  // sizedBoxH10,
-                                  // Text(
-                                  //   'Phone No :${data.guardianID}',
-                                  //   style: GoogleFonts.poppins(fontSize: 12),
-                                  // ),
                                 ],
                               ),
                             )
@@ -114,13 +96,13 @@ class SearchAdmin extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final List<AdminModel> buildSuggestionList;
+    final List<TeacherModel> buildSuggestionList;
     if (query.isEmpty) {
-      buildSuggestionList = studentChatController.searchAdmin;
+      buildSuggestionList = teacherParentChatController.searchTeacher;
     } else {
-      buildSuggestionList = studentChatController.searchAdmin
+      buildSuggestionList = teacherParentChatController.searchTeacher
           .where((item) =>
-              item.adminName.toLowerCase().contains(query.toLowerCase()))
+              item.teacherName!.toLowerCase().contains(query.toLowerCase()))
           .toList();
     }
     if (buildSuggestionList.isEmpty) {
@@ -137,13 +119,11 @@ class SearchAdmin extends SearchDelegate {
                 onTap: () {
                   final data = buildSuggestionList[index];
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return AdminsChatsScreen(
-                      adminDocID: data.docid,
-                      adminName: data.adminName);
+                    return ParentsChatsScreen(
+                      tutorDocID: data.docid!, teacherName: data.teacherName!);
                   },));
-                  // Get.off(() => TeachersChatsScreen(
-                  //     teacherDocID: data.docid!,
-                  //     teacherName: data.teacherName!));
+                  // Get.off(() => ParentsChatsScreen(
+                  //     parentDocID: data.docid!, parentName: data.parentName!));
                 },
                 child: Container(
                     decoration: BoxDecoration(
@@ -172,7 +152,7 @@ class SearchAdmin extends SearchDelegate {
                             children: [
                               // Text(snapshots.data!.docs[index]['id']),
                               Text(
-                                buildSuggestionList[index].adminName,
+                                buildSuggestionList[index].teacherName!,
                                 style: GoogleFonts.poppins(fontSize: 16),
                               ),
                               // sizedBoxH10,
@@ -207,14 +187,14 @@ class SearchAdmin extends SearchDelegate {
   }
 }
 
-// void _showlert(BuildContext context, TeacherModel data) {
+// void _showlert(BuildContext context, ParentModel data) {
 //   showDialog(
 //       barrierDismissible: false,
 //       context: context,
 //       builder: (context) => Student_Details_AlertBox_Widget(
 //             studentID: data.docid ?? "",
 //             studentImage: data.profileImageUrl ?? "",
-//             teacherName: data.teacherName ?? "",
+//             parentName: data.parentName ?? "",
 //             studentClass: data.classID ?? "",
 //             admissionNumber: data.admissionNumber ?? "",
 //             studentGender: data.gender ?? "",

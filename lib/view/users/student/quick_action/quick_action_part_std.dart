@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/controller/mock_test/admin_side/adminside_controller.dart';
 import 'package:new_project_app/view/mock_test/user/question_viewer.dart';
 import 'package:new_project_app/view/pages/chat/student_section/student_chat_screen.dart';
 import 'package:new_project_app/view/users/student/drawer/drawer_items/documents/documents/documents_std.dart';
@@ -59,6 +60,8 @@ class QuickActionPartStudent extends StatelessWidget {
 }
 
 viewallMenus(BuildContext context) {
+    final QuizTestAdminSideController quizTestAdminSideController =
+      Get.put(QuizTestAdminSideController());
   double w = MediaQuery.of(context).size.width;
   int columnCount = 3;
   final screenNavigationOfStd = [
@@ -68,7 +71,11 @@ viewallMenus(BuildContext context) {
     const StudyMaterialsStudent(), // Study Materials
     StudentChatScreen(),//chat
     EventsListOfStudent(), //event
-     QuestionWidget(),///mock
+     GestureDetector(
+      onTap: () {
+         quizTestAdminSideController.showLanguageBottomSheet();
+      },
+      child: QuestionWidget()),///mock
     const VideosListStudent(), // Video
     const NoticePageStudent(), //Notice
     StudentFeeStatus(),//fee

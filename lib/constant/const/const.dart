@@ -10,6 +10,7 @@ class TeacherPasswordSaver {
 class MessageCounter {
   static int studentMessageCounter = 0;
   static int adminMessageCounter = 0;
+  static int tutorMessageCounter = 0;
 
   static String userPassword = '';
 }

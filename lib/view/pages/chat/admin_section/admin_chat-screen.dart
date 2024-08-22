@@ -7,7 +7,8 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/const/const.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/teacher_section/student_message/students_messages.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/parents_message/parents_messages.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/student_message/students_messages.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 
 import '../group_chats/group_chat.dart';
@@ -19,7 +20,7 @@ class AdminChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     log(DateTime.now().toString());
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           flexibleSpace: const AppBarColorWidget(),
@@ -110,88 +111,88 @@ class AdminChatScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              // Tab(
-              //   icon: ListView(
-              //     children: [
-              //       const Padding(
-              //         padding: EdgeInsets.only(right: 0),
-              //         child: Icon(Icons.group),
-              //       ),
-              //       //////////////////////////////////////////////////////////////////////////////////////////////////
-              //       Row(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           Text(
-              //             "Parents",
-              //             style: TextStyle(fontSize: 17.sp),
-              //           ),
-              //           StreamBuilder(
-              //             stream: FirebaseFirestore.instance
-              //                 .collection('DrivingSchoolCollection')
-              //                 .doc(UserCredentialsController.schoolId)
-              //                 .collection("Admins")
-              //                 .doc(UserCredentialsController.adminModel?.docid)
-              //                 .collection('ParentChatCounter')
-              //                 .doc('F0Ikn1UouYIkqmRFKIpg')
-              //                 .snapshots(),
-              //             builder: (context, messageIndex) {
-              //               if (messageIndex.hasData) {
-              //                 if (messageIndex.data!.data() == null) {
-              //                   return const Text('');
-              //                 } else if (messageIndex.data!.data()!['chatIndex'] <= 0) {
-              //                   FirebaseFirestore.instance
-              //                       .collection('DrivingSchoolCollection')
-              //                       .doc(UserCredentialsController.schoolId)
-              //                       .collection("Admins")
-              //                       .doc(UserCredentialsController.adminModel?.docid)
-              //                       .collection('ParentChatCounter')
-              //                       .doc('F0Ikn1UouYIkqmRFKIpg')
-              //                       .update({'chatIndex': 0});
-              //                   return const CircleAvatar(
-              //                     radius: 10,
-              //                     backgroundColor: Colors.white,
-              //                     child: Center(
-              //                       child: Text(
-              //                         '0',
-              //                         style: TextStyle(
-              //                             color: Colors.black,
-              //                             fontSize: 10,
-              //                             fontWeight: FontWeight.bold),
-              //                       ),
-              //                     ),
-              //                   );
-              //                 } else {
-              //                   MessageCounter.parentMessageCounter =
-              //                       messageIndex.data?.data()?['chatIndex'];
-              //                   return Padding(
-              //                     padding: const EdgeInsets.only(left: 5),
-              //                     child: CircleAvatar(
-              //                       radius: 10.sp,
-              //                       backgroundColor: Colors.white,
-              //                       child: Center(
-              //                         child: Text(
-              //                           messageIndex.data!.data()!['chatIndex'].toString(),
-              //                           style: TextStyle(
-              //                               color: Colors.black,
-              //                               fontSize: 10.sp,
-              //                               fontWeight: FontWeight.bold),
-              //                         ),
-              //                       ),
-              //                     ),
-              //                   );
-              //                 }
-              //               } else {
-              //                 return const Center(
-              //                   child: CircularProgressIndicator.adaptive(),
-              //                 );
-              //               }
-              //             },
-              //           ),
-              //         ],
-              //       )
-              //     ],
-              //   ),
-              // ),
+              Tab(
+                icon: ListView(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 0),
+                      child: Icon(Icons.group),
+                    ),
+                    //////////////////////////////////////////////////////////////////////////////////////////////////
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Tutors",
+                          style: TextStyle(fontSize: 17.sp),
+                        ),
+                        StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('DrivingSchoolCollection')
+                              .doc(UserCredentialsController.schoolId)
+                              .collection("Admins")
+                              .doc(UserCredentialsController.adminModel?.docid)
+                              .collection('TeacherChatCounter')
+                              .doc('F0Ikn1UouYIkqmRFKIpg')
+                              .snapshots(),
+                          builder: (context, messageIndex) {
+                            if (messageIndex.hasData) {
+                              if (messageIndex.data!.data() == null) {
+                                return const Text('');
+                              } else if (messageIndex.data!.data()!['chatIndex'] <= 0) {
+                                FirebaseFirestore.instance
+                                    .collection('DrivingSchoolCollection')
+                                    .doc(UserCredentialsController.schoolId)
+                                    .collection("Admins")
+                                    .doc(UserCredentialsController.adminModel?.docid)
+                                    .collection('TeacherChatCounter')
+                                    .doc('F0Ikn1UouYIkqmRFKIpg')
+                                    .update({'chatIndex': 0});
+                                return const CircleAvatar(
+                                  radius: 10,
+                                  backgroundColor: Colors.white,
+                                  child: Center(
+                                    child: Text(
+                                      '0',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                MessageCounter.tutorMessageCounter =
+                                    messageIndex.data?.data()?['chatIndex'];
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: CircleAvatar(
+                                    radius: 10.sp,
+                                    backgroundColor: Colors.white,
+                                    child: Center(
+                                      child: Text(
+                                        messageIndex.data!.data()!['chatIndex'].toString(),
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 10.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator.adaptive(),
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
               Tab(
                   icon: const Icon(
                     Icons.class_,
@@ -203,6 +204,7 @@ class AdminChatScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             const StudentsMessagesScreen(),
+              const TutorMessagesScreen(),
             GroupChatScreenForAdmin(),
           ],
         ),

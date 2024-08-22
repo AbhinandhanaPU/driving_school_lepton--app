@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/view/pages/chat/tutor_section/tutor_chat_screeen.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/Tutor_batch/tutor_batch_home.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/driving_test_tutor/driving_test_home.dart';
 import 'package:new_project_app/view/users/teacher/teacher_pages/events_tutor/events_tutor.dart';
@@ -69,6 +70,7 @@ viewallMenus(BuildContext context) {
     const VideosListTeacher(), // Video
    // const VideosListTeacher(), // Video
     NoticePageTutor(),//Notice
+    TutorChatScreen(),//chat
   ];
 
   Get.bottomSheet(
@@ -88,7 +90,7 @@ viewallMenus(BuildContext context) {
                     padding: EdgeInsets.all(w / 40),
                     crossAxisCount: columnCount,
                     children: List.generate(
-                      8,
+                      9,
                       (int index) {
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
@@ -184,12 +186,12 @@ List<String> imageStd = [
   'assets/flaticons/calendar.png', // practice shedule
   'assets/flaticons/batch-processing.png', //bacth
   'assets/flaticons/books.png', // study Materials
- // 'assets/flaticons/icons8-chat-100.png', // chats
   'assets/flaticons/events.png', // events
  // 'assets/flaticons/exam.png', // Leaners test
   'assets/flaticons/video.png', // videos
   'assets/flaticons/icons8-notice-100.png', // Notice
 //  'assets/flaticons/hand.png', // fees
+ 'assets/flaticons/icons8-chat-100.png', // chats
 ];
 List<String> stdtext = [
   'Student Review',
@@ -197,10 +199,11 @@ List<String> stdtext = [
   'Practice Shedule',
   'Batches',
   'Study Materials',
- // 'Chats',
+ 
   'Events',
  // 'Leaners Test',
   'Videos',
   'Notices',
  // 'Fees',
+  'Chats',
 ];
