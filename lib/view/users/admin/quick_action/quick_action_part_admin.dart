@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
-import 'package:new_project_app/view/pages/chat/teacher_section/teacher_chat-screen.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/admin_chat-screen.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/all_students_homepage.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_tutors/all_tutor_home_page.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/archieves/std_list/all_archieves.dart';

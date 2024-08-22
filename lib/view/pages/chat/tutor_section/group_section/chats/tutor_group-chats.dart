@@ -7,25 +7,24 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/controller/group_chat_controller/studentchat_controller/student_chat_controller.dart';
+import 'package:new_project_app/controller/group_chat_controller/tutorChat_controller/tutor_group_chat_controller.dart';
 
 import '../../../group_chats/group_chat.dart';
 
-class StudenstGroupChatsScreen extends StatefulWidget {
- final String groupID;
- final String groupName;
+class TutorGroupChatsScreen extends StatefulWidget {
+  final String groupID;
+  final String groupName;
 
-  const StudenstGroupChatsScreen(
+  const TutorGroupChatsScreen(
       {required this.groupID, required this.groupName, super.key});
 
   @override
-  State<StudenstGroupChatsScreen> createState() =>
-      _StudenstGroupChatsScreenState();
+  State<TutorGroupChatsScreen> createState() => TutorGroupChatsScreenState();
 }
 
-class _StudenstGroupChatsScreenState extends State<StudenstGroupChatsScreen> {
-  final studentGroupChatMessageController =
-      Get.put(StudentGroupChatMessageController());
+class TutorGroupChatsScreenState extends State<TutorGroupChatsScreen> {
+  final parentGroupChatMessageController =
+      Get.put(TutorGroupChatMessageController());
 
   int currentStudentMessageIndex = 0;
 
@@ -35,8 +34,8 @@ class _StudenstGroupChatsScreenState extends State<StudenstGroupChatsScreen> {
 
   @override
   void initState() {
-    userIndexBecomeZero(widget.groupID, 'Students',
-        adminParameter: 'studentName');
+    userIndexBecomeZero(widget.groupID, 'Teachers',
+        adminParameter: 'teacherName');
     super.initState();
   }
 
@@ -66,11 +65,11 @@ class _StudenstGroupChatsScreenState extends State<StudenstGroupChatsScreen> {
               width: size.width,
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance
-                      .collection('DrivingSchoolCollection')
+                     .collection('DrivingSchoolCollection')
                       .doc(UserCredentialsController.schoolId)
-                      .collection('ChatGroups')
-                      .doc('ChatGroups')
-                      .collection('Students')
+                       .collection('ChatGroups')
+                       .doc('ChatGroups')
+                      .collection("Teachers")
                       .doc(widget.groupID)
                       .collection('chats')
                       .orderBy('sendTime', descending: true)
@@ -84,16 +83,15 @@ class _StudenstGroupChatsScreenState extends State<StudenstGroupChatsScreen> {
                         itemCount: snaps.data!.docs.length,
                         itemBuilder: (context, index) {
                           ///////////////////////////////////
-                          return studentGroupChatMessageController
-                              .messageTitles(
-                                  size,
-                                  snaps.data!.docs[index]['chatid'],
-                                  snaps.data!.docs[index]['message'],
-                                  snaps.data!.docs[index]['docid'],
-                                  snaps.data!.docs[index]['sendTime'],
-                                  context,
-                                  widget.groupID,
-                                  snaps.data!.docs[index]['username']);
+                          return parentGroupChatMessageController.messageTitles(
+                              size,
+                              snaps.data!.docs[index]['chatid'],
+                              snaps.data!.docs[index]['message'],
+                              snaps.data!.docs[index]['docid'],
+                              snaps.data!.docs[index]['sendTime'],
+                              context,
+                              widget.groupID,
+                              snaps.data!.docs[index]['username']);
                           ///////////////////////////////
                         },
                       );
@@ -106,10 +104,10 @@ class _StudenstGroupChatsScreenState extends State<StudenstGroupChatsScreen> {
             StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('DrivingSchoolCollection')
-                    .doc(UserCredentialsController.schoolId)
-                    .collection('ChatGroups')
-                    .doc('ChatGroups')
-                    .collection('Students')
+                            .doc(UserCredentialsController.schoolId)
+                            .collection('ChatGroups')
+                            .doc('ChatGroups')
+                            .collection("Teachers")
                     .doc(widget.groupID)
                     .snapshots(),
                 builder: (context, checkingblock) {
@@ -145,7 +143,7 @@ class _StudenstGroupChatsScreenState extends State<StudenstGroupChatsScreen> {
                                 height: size.height / 17,
                                 width: size.width / 1.3,
                                 child: TextField(
-                                  controller: studentGroupChatMessageController
+                                  controller: parentGroupChatMessageController
                                       .messageController,
                                   decoration: InputDecoration(
                                       hintText: "Send Message",
@@ -157,8 +155,8 @@ class _StudenstGroupChatsScreenState extends State<StudenstGroupChatsScreen> {
                               FutureBuilder(
                                   future: FirebaseFirestore.instance
                                       .collection('DrivingSchoolCollection')
-                                      .doc(UserCredentialsController.schoolId)
-                                      .collection('Students')
+                                     .doc(UserCredentialsController.schoolId)
+                                      .collection("Teachers")
                                       .doc(FirebaseAuth
                                           .instance.currentUser!.uid)
                                       .get(),
@@ -176,14 +174,11 @@ class _StudenstGroupChatsScreenState extends State<StudenstGroupChatsScreen> {
                                               onPressed: () async {
                                                 ///////////////////////////
                                                 ///
-                                                 String messageText = studentGroupChatMessageController.messageController.text.trim();
-                                                    if (messageText.isNotEmpty) {
-                                                studentGroupChatMessageController
+                                                parentGroupChatMessageController
                                                     .sendMessage(
                                                         widget.groupID,
                                                         userName.data!.data()![
-                                                            'studentName']);
-                                                    }
+                                                            'teacherName']);
                                                 /////////////////////////
                                               }),
                                         ),

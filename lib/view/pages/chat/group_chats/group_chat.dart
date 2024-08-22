@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/model/group_chat_controller/group_StudentsTeacher_chat_controller.dart';
+import 'package:new_project_app/controller/group_chat_controller/group_StudentsTeacher_chat_controller.dart';
 import 'package:new_project_app/view/pages/chat/group_chats/student_group/student_groups.dart';
 
 class GroupChatScreenForAdmin extends StatelessWidget {

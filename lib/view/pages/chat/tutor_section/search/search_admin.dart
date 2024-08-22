@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
-import 'package:new_project_app/controller/chat_controller/student_controller/student_controller.dart';
+import 'package:new_project_app/controller/chat_controller/tutor_controller/tutor_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/admin_model/admin_model.dart';
-import 'package:new_project_app/view/pages/chat/student_section/admin_message/chats/teachers_chats.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
-class SearchAdmin extends SearchDelegate {
-  StudentChatController studentChatController =
-      Get.put(StudentChatController());
+import '../teacher_messages/chats/admin_vs_tutor.dart';
+
+class SearchTeachersForParents extends SearchDelegate {
+  TutorChatController tutorChatController = Get.put(TutorChatController());
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -47,8 +47,8 @@ class SearchAdmin extends SearchDelegate {
               // backgroundColor: Colors.transparent,
               body: ListView.separated(
                   itemBuilder: (context, index) {
-                    AdminModel data = AdminModel.fromMap(
-                        snapshots.data!.docs[index].data());
+                    AdminModel data =
+                        AdminModel.fromMap(snapshots.data!.docs[index].data());
                     return Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -116,9 +116,9 @@ class SearchAdmin extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     final List<AdminModel> buildSuggestionList;
     if (query.isEmpty) {
-      buildSuggestionList = studentChatController.searchAdmin;
+      buildSuggestionList = tutorChatController.searchTeacher;
     } else {
-      buildSuggestionList = studentChatController.searchAdmin
+      buildSuggestionList = tutorChatController.searchTeacher
           .where((item) =>
               item.adminName.toLowerCase().contains(query.toLowerCase()))
           .toList();
@@ -136,12 +136,13 @@ class SearchAdmin extends SearchDelegate {
               return GestureDetector(
                 onTap: () {
                   final data = buildSuggestionList[index];
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return AdminsChatsScreen(
-                      adminDocID: data.docid,
-                      adminName: data.adminName);
-                  },));
-                  // Get.off(() => TeachersChatsScreen(
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return TutorAdminChatsScreen(
+                          adminDocID: data.docid, adminName: data.adminName);
+                    },
+                  ));
+                  // Get.off(ParentTeachersChatsScreen(
                   //     teacherDocID: data.docid!,
                   //     teacherName: data.teacherName!));
                 },

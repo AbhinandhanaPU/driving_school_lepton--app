@@ -13,6 +13,7 @@ import 'package:new_project_app/controller/form_controller/form_controller.dart'
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/admin_model/data_base_model_ad.dart';
 import 'package:new_project_app/model/student_model/data_base_model.dart';
+import 'package:new_project_app/model/teacher_model/data_base_tr_model.dart';
 import 'package:new_project_app/view/pages/chat/group_chats/group_chat.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
@@ -705,56 +706,160 @@ class TeacherGroupChatController extends GetxController {
     ));
   }
 
-  customAddAdminInGroup(groupID) {
+  customAddAdminInGroup(groupID,groupName) {
     userIndexBecomeZero(groupID, 'Admins', adminParameter: 'adminName');
     RxMap<String, bool?> addAdminList = <String, bool?>{}.obs;
+      RxMap<String, bool?> addTeacherList = <String, bool?>{}.obs;
 
     List<AddAdminModel> featchingAdminList = [];
+     List<AddTeacherModel> featchingTeacherList = [];
 
-    Get.bottomSheet(Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextFontWidget(
-                  text: "Add Admins in custom",
-                  fontsize: 17,
-                  fontWeight: FontWeight.w600,
-                ),
+    Get.bottomSheet(
+      DefaultTabController(
+         length: 2,
+        child: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextFontWidget(
+                    text: "Add others in custom",
+                    fontsize: 17,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 15.h),
+            const TabBar(
+               labelColor: Color.fromARGB(255, 28, 64, 93),          
+             unselectedLabelColor: cblack, 
+              tabs: [
+                Tab(text: "Admins",),
+                Tab(text: "Teachers"),
               ],
             ),
-          ),
-          SizedBox(height: 15.h),
-          Expanded(
-            child: FutureBuilder(
+            Expanded(
+              child: TabBarView(
+                children: [
+              FutureBuilder(
+                future: FirebaseFirestore.instance
+                    .collection("DrivingSchoolCollection")
+                    .doc(UserCredentialsController.schoolId)
+                    .collection('Admins')
+                    .get(),
+                builder: (context, adminsSnaps) {
+                  if (adminsSnaps.hasData) {
+                    return ListView.separated(
+                      itemBuilder: (context, index) {
+                        final adminDetails = AddAdminModel.fromMap(
+                          adminsSnaps.data!.docs[index].data(),
+                        );
+                        featchingAdminList.add(adminDetails);
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Row(
+                            children: [
+                              Obx(() => Container(
+                                    color: addAdminList[adminsSnaps
+                                                .data!.docs[index]['username']] ==
+                                            null
+                                        ? Colors.transparent
+                                        : addAdminList[adminsSnaps.data!
+                                                    .docs[index]['username']] ==
+                                                true
+                                            ? Colors.green.withOpacity(0.4)
+                                            : Colors.red.withOpacity(0.4),
+                                    height: 60.h,
+                                    child: Row(
+                                      children: [
+                                        Text("${index + 1}"),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: 200.w,
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: TextFontWidget(
+                                              text: adminDetails.username,
+                                              fontsize: 11,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                              const Spacer(),
+                              IconButton(
+                                onPressed: () async {
+                                  addAdminToGroup(adminDetails.docid, groupID,
+                                          adminDetails,groupName)
+                                      .then((value) {
+                                    showToast(msg: 'Added');
+                                    addAdminList[adminsSnaps.data!.docs[index]
+                                        ['username']] = true;
+                                  });
+                                },
+                                icon: const Icon(Icons.add),
+                              ),
+                              const SizedBox(width: 20),
+                              IconButton(
+                                onPressed: () async {
+                                  await removeAdminToGroup(
+                                          adminDetails.docid, groupID, context)
+                                      .then((value) {
+                                    showToast(msg: "Removed");
+                                    addAdminList[adminsSnaps.data!.docs[index]
+                                        ['username']] = false;
+                                  });
+                                },
+                                icon: const Icon(Icons.remove),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => const Divider(),
+                      itemCount: adminsSnaps.data!.docs.length,
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                  }
+                },
+              ),
+          //  ),
+            ///////////////////////////////////////////////////////////////////////////////
+            FutureBuilder(
               future: FirebaseFirestore.instance
                   .collection("DrivingSchoolCollection")
                   .doc(UserCredentialsController.schoolId)
-                  .collection('Admins')
+                  .collection('Teachers')
                   .get(),
-              builder: (context, adminsSnaps) {
-                if (adminsSnaps.hasData) {
+              builder: (context, tutorgpSnaps) {
+                if (tutorgpSnaps.hasData) {
                   return ListView.separated(
                     itemBuilder: (context, index) {
-                      final adminDetails = AddAdminModel.fromMap(
-                        adminsSnaps.data!.docs[index].data(),
+                      final tutorgpDetails = AddTeacherModel.fromMap(
+                        tutorgpSnaps.data!.docs[index].data(),
                       );
-                      featchingAdminList.add(adminDetails);
+                      featchingTeacherList.add(tutorgpDetails);
                       return Padding(
                         padding: const EdgeInsets.only(left: 10, right: 10),
                         child: Row(
                           children: [
                             Obx(() => Container(
-                                  color: addAdminList[adminsSnaps
-                                              .data!.docs[index]['username']] ==
+                                  color: addTeacherList[tutorgpSnaps
+                                              .data!.docs[index]['teacherName']] ==
                                           null
                                       ? Colors.transparent
-                                      : addAdminList[adminsSnaps.data!
-                                                  .docs[index]['username']] ==
+                                      : addTeacherList[tutorgpSnaps.data!
+                                                  .docs[index]['teacherName']] ==
                                               true
                                           ? Colors.green.withOpacity(0.4)
                                           : Colors.red.withOpacity(0.4),
@@ -768,7 +873,7 @@ class TeacherGroupChatController extends GetxController {
                                         child: SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: TextFontWidget(
-                                            text: adminDetails.username,
+                                            text: tutorgpDetails.teacherName??"",
                                             fontsize: 11,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -780,12 +885,12 @@ class TeacherGroupChatController extends GetxController {
                             const Spacer(),
                             IconButton(
                               onPressed: () async {
-                                addAdminToGroup(adminDetails.docid, groupID,
-                                        adminDetails)
+                                addTeacherToGroup(tutorgpDetails.docid??'', groupID,
+                                        tutorgpDetails,groupName)
                                     .then((value) {
                                   showToast(msg: 'Added');
-                                  addAdminList[adminsSnaps.data!.docs[index]
-                                      ['username']] = true;
+                                  addTeacherList[tutorgpSnaps.data!.docs[index]
+                                      ['teacherName']] = true;
                                 });
                               },
                               icon: const Icon(Icons.add),
@@ -793,12 +898,12 @@ class TeacherGroupChatController extends GetxController {
                             const SizedBox(width: 20),
                             IconButton(
                               onPressed: () async {
-                                await removeAdminToGroup(
-                                        adminDetails.docid, groupID, context)
+                                await removeTutorToGroup(
+                                        tutorgpDetails.docid??'', groupID, context)
                                     .then((value) {
                                   showToast(msg: "Removed");
-                                  addAdminList[adminsSnaps.data!.docs[index]
-                                      ['username']] = false;
+                                  addTeacherList[tutorgpSnaps.data!.docs[index]
+                                      ['teacherName']] = false;
                                 });
                               },
                               icon: const Icon(Icons.remove),
@@ -808,7 +913,7 @@ class TeacherGroupChatController extends GetxController {
                       );
                     },
                     separatorBuilder: (context, index) => const Divider(),
-                    itemCount: adminsSnaps.data!.docs.length,
+                    itemCount: tutorgpSnaps.data!.docs.length,
                   );
                 } else {
                   return const Center(
@@ -816,11 +921,14 @@ class TeacherGroupChatController extends GetxController {
                   );
                 }
               },
+                ),
+                ],
+                ), 
             ),
-          ),
-        ],
-      ),
-    ));
+          ],
+        ),
+            ),
+      ));
   }
 
   Future<void> addStudentToGroup(String studentDocID, String groupID,
@@ -837,19 +945,76 @@ class TeacherGroupChatController extends GetxController {
         .set(studentDetails.toMap());
   }
 
-  Future<void> addAdminToGroup(
-      String adminDocID, String groupID, AddAdminModel adminDetails) async {
-    await FirebaseFirestore.instance
-        .collection("DrivingSchoolCollection")
-        .doc(UserCredentialsController.schoolId)
-        .collection('ChatGroups')
-        .doc('ChatGroups')
-        .collection('Admins')
-        .doc(groupID)
-        .collection('Participants')
-        .doc(adminDocID)
-        .set(adminDetails.toMap());
-  }
+
+  Future<void> addTeacherToGroup(
+      String tutorDocID, String groupID, AddTeacherModel tutorDetailss,String groupName) async {
+  final groupInfoDetails = CreateGroupChatModel(
+    activate: true,
+    docid: groupID,
+    admin: true,
+    groupName: groupName,
+    teacherId: FirebaseAuth.instance.currentUser!.uid,
+  );
+
+  final Map<String, dynamic> tutorData = tutorDetailss.toMap();
+  final Map<String, dynamic> groupInfoData = groupInfoDetails.toMap();
+
+  await FirebaseFirestore.instance
+      .collection("DrivingSchoolCollection")
+      .doc(UserCredentialsController.schoolId)
+      .collection('ChatGroups')
+      .doc('ChatGroups')
+      .collection('Teachers')
+      .doc(groupID)
+      .set(groupInfoData);
+
+  await FirebaseFirestore.instance
+      .collection("DrivingSchoolCollection")
+      .doc(UserCredentialsController.schoolId)
+      .collection('ChatGroups')
+      .doc('ChatGroups')
+      .collection('Teachers')
+      .doc(groupID)
+      .collection('Participants')
+      .doc(tutorDocID)
+      .set(tutorData);
+}
+
+
+ Future<void> addAdminToGroup(
+      String adminDocID, String groupID, AddAdminModel adminDetails,String groupName) async {
+  final groupInfoDetails = CreateGroupChatModel(
+    activate: true,
+    docid: groupID,
+    admin: true,
+    groupName: groupName,
+    teacherId: FirebaseAuth.instance.currentUser!.uid,
+  );
+
+  final Map<String, dynamic> adminData = adminDetails.toMap();
+  final Map<String, dynamic> groupInfoData = groupInfoDetails.toMap();
+
+  await FirebaseFirestore.instance
+      .collection("DrivingSchoolCollection")
+      .doc(UserCredentialsController.schoolId)
+      .collection('ChatGroups')
+      .doc('ChatGroups')
+      .collection('Admins')
+      .doc(groupID)
+      .set(groupInfoData);
+
+  await FirebaseFirestore.instance
+      .collection("DrivingSchoolCollection")
+      .doc(UserCredentialsController.schoolId)
+      .collection('ChatGroups')
+      .doc('ChatGroups')
+      .collection('Admins')
+      .doc(groupID)
+      .collection('Participants')
+      .doc(adminDocID)
+      .set(adminData);
+}
+ 
 
   Future<void> removeStudentToGroup(
       String studentDocID, String groupID, BuildContext context) async {
@@ -865,7 +1030,20 @@ class TeacherGroupChatController extends GetxController {
         .delete()
         .then((value) => Navigator.pop(context));
   }
-
+ Future<void> removeTutorToGroup(
+      String tutorDocID, String groupID, BuildContext context) async {
+    await FirebaseFirestore.instance
+        .collection("DrivingSchoolCollection")
+        .doc(UserCredentialsController.schoolId)
+        .collection('ChatGroups')
+        .doc('ChatGroups')
+        .collection('Teachers')
+        .doc(groupID)
+        .collection('Participants')
+        .doc(tutorDocID)
+        .delete()
+        .then((value) => Navigator.pop(context));
+  }
   Future<void> removeAdminToGroup(
       String adminDocID, String groupID, BuildContext context) async {
     await FirebaseFirestore.instance
