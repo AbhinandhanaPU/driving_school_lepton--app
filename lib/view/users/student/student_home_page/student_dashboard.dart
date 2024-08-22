@@ -150,7 +150,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
                   QuickActionsWidgetDrivingTest(),
                   QuickActionsWidgetPractice(),
                   QuickActionsWidgetSM(),
-                  QuickActionsWidgetChat(),
+                  QuickActionsWidgetQuestion(),
                 ],
               ),
             ), /////////////////////////////////////quick action
