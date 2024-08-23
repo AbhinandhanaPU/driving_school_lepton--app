@@ -6,9 +6,9 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/controller/documents_controller/documents_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/study_materials/view_study_material/view_st_mtrl.dart';
 import 'package:new_project_app/view/users/student/drawer/drawer_items/documents/crud/documnets_edit.dart';
 import 'package:new_project_app/view/users/student/drawer/drawer_items/documents/crud/upload_doc.dart';
+import 'package:new_project_app/view/users/widgets/file_viewer/file_viewer.dart';
 import 'package:new_project_app/view/users/widgets/listcard_widget/listcard_widget.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
@@ -72,9 +72,9 @@ class DocumentsStd extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => PDFSectionScreen(
-                                    urlPdf: snapshot.data!.docs[index]
-                                        ['downloadUrl'],
+                                  builder: (context) => FileViewerPage(
+                                    pdfUrl: data['downloadUrl'],
+                                    pdfName: data["title"],
                                   ),
                                 ),
                               );

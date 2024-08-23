@@ -5,6 +5,7 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+import 'package:new_project_app/view/users/widgets/file_viewer/file_viewer.dart';
 import 'package:new_project_app/view/users/widgets/listcard_widget/listcard_widget.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
@@ -42,7 +43,17 @@ class StudyMaterialsTeacher extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
                   child: ListTileCardWidget(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FileViewerPage(
+                            pdfUrl: data['downloadUrl'],
+                            pdfName: data["title"],
+                          ),
+                        ),
+                      );
+                    },
                     leading: Icon(
                       Icons.note,
                       color: cblack.withOpacity(0.5),

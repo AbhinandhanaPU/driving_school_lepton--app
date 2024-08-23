@@ -1,10 +1,12 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/controller/student_controller/student_controller.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/batch/batch_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/driving_test_home.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_schedule/practice_shedule_home.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/study_materials/study_materials_admin.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/requests/request_homepage.dart';
 
 class QuickActionsWidgetDrivingTestAdmin extends StatelessWidget {
   const QuickActionsWidgetDrivingTestAdmin({
@@ -21,7 +23,7 @@ class QuickActionsWidgetDrivingTestAdmin extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return  DrivingHomePage();
+                return DrivingHomePage();
               },
             )),
             child: Container(
@@ -91,41 +93,73 @@ class QuickActionsWidgetPractice extends StatelessWidget {
   }
 }
 
-class QuickActionsWidgetSM extends StatelessWidget {
-  const QuickActionsWidgetSM({
+class QuickActionsWidgetRequest extends StatefulWidget {
+  QuickActionsWidgetRequest({
     super.key,
   });
+
+  @override
+  State<QuickActionsWidgetRequest> createState() =>
+      _QuickActionsWidgetRequestState();
+}
+
+class _QuickActionsWidgetRequestState extends State<QuickActionsWidgetRequest> {
+  final StudentController studentController = Get.put(StudentController());
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 86.h,
-      width: 86.w,
-      child: Column(
+      width: 94.w,
+      child: Stack(
         children: [
-          GestureDetector(
-            onTap: () => Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return AdminStudyMaterials();
-              },
-            )),
-            child: Container(
-              height: 55.h,
-              width: 55.w,
-              decoration: BoxDecoration(
-                  color: cWhite,
-                  border: Border.all(color: cblack.withOpacity(0.2)),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Image.asset(
-                'assets/flaticons/books.png',
-                scale: 2.5,
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return StudentRequest();
+                  },
+                )),
+                child: Container(
+                  height: 55.h,
+                  width: 55.w,
+                  decoration: BoxDecoration(
+                      color: cWhite,
+                      border: Border.all(color: cblack.withOpacity(0.2)),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Image.asset(
+                    'assets/flaticons/add.png',
+                    scale: 2.5,
+                  ),
+                ),
               ),
-            ),
+              Text(
+                "Student Request",
+                style: TextStyle(fontSize: 12.sp),
+              )
+            ],
           ),
-          Text(
-            "Study Material",
-            style: TextStyle(fontSize: 12.sp),
-          )
+          studentController.totalStudentsCount.value != 0
+              ? Positioned(
+                  right: 10,
+                  top: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: themeColor,
+                    ),
+                    child: Text(
+                      studentController.totalStudentsCount.value.toString(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: cWhite,
+                      ),
+                    ),
+                  ),
+                )
+              : SizedBox(),
         ],
       ),
     );
