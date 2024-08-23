@@ -7,7 +7,6 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/const/const.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/admin_section/parents_message/parents_messages.dart';
 import 'package:new_project_app/view/pages/chat/admin_section/student_message/students_messages.dart';
 import 'package:new_project_app/view/pages/chat/student_section/tutor_msg/tutor_message/tutor_message.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';

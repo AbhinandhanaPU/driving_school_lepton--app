@@ -56,7 +56,7 @@ class AdminMessagesScreen extends StatelessWidget {
                             leading: const CircleAvatar(
                               radius: 30,
                             ),
-                            title: Text(snapshots.data!.docs[index]['adminName'],
+                            title: Text(snapshots.data?.docs[index]['adminName'],
                                 style: const TextStyle(color: Colors.black)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
                             subtitle: const Text(

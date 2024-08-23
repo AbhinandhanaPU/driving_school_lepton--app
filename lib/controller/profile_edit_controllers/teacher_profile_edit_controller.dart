@@ -21,7 +21,7 @@ class TeacherProfileEditController extends GetxController {
           .collection('DrivingSchoolCollection')
           .doc(UserCredentialsController.schoolId)
           .collection('Teachers')
-          .doc(UserCredentialsController.teacherModel!.docid)
+          .doc(UserCredentialsController.teacherModel?.docid)
           .update({updateValue: valuee})
           .then((value) => showToast(msg: 'Teacher Profile Updated!'))
           .then((value) async {
