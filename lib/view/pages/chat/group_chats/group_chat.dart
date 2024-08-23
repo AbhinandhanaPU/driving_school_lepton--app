@@ -5,12 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/controller/group_chat_controller/group_StudentsTeacher_chat_controller.dart';
+import 'package:new_project_app/controller/group_chat_controller/group_StudentsAdmin_chat_controller.dart';
 import 'package:new_project_app/view/pages/chat/group_chats/student_group/student_groups.dart';
 
 class GroupChatScreenForAdmin extends StatelessWidget {
-  final TeacherGroupChatController teacherGroupChatController =
-      Get.put(TeacherGroupChatController());
+  final AdminGroupChatController teacherGroupChatController =
+      Get.put(AdminGroupChatController());
   GroupChatScreenForAdmin({super.key});
 
   @override
@@ -27,8 +27,7 @@ class GroupChatScreenForAdmin extends StatelessWidget {
               return Center(
                 child: TextButton.icon(
                     onPressed: () async {
-                      
-                            createChatGroups(context, 'Students'.tr);
+                      createChatGroups(context, 'Students'.tr);
                     },
                     icon: const Icon(Icons.add),
                     label: const Text("Create a group")),

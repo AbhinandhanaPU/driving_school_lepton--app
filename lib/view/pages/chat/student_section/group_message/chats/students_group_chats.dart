@@ -159,8 +159,7 @@ class _StudenstGroupChatsScreenState extends State<StudenstGroupChatsScreen> {
                                       .collection('DrivingSchoolCollection')
                                       .doc(UserCredentialsController.schoolId)
                                       .collection('Students')
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser!.uid)
+                                      .doc(FirebaseAuth.instance.currentUser!.uid)
                                       .get(),
                                   builder: (context, userName) {
                                     if (userName.hasData) {
@@ -181,8 +180,7 @@ class _StudenstGroupChatsScreenState extends State<StudenstGroupChatsScreen> {
                                                 studentGroupChatMessageController
                                                     .sendMessage(
                                                         widget.groupID,
-                                                        userName.data!.data()![
-                                                            'studentName']);
+                                                        userName.data!.data()!['studentName']);
                                                     }
                                                 /////////////////////////
                                               }),

@@ -69,7 +69,7 @@ class TutorGroupChatsScreenState extends State<TutorGroupChatsScreen> {
                       .doc(UserCredentialsController.schoolId)
                        .collection('ChatGroups')
                        .doc('ChatGroups')
-                      .collection("Teachers")
+                      .collection("Students")
                       .doc(widget.groupID)
                       .collection('chats')
                       .orderBy('sendTime', descending: true)
@@ -107,7 +107,7 @@ class TutorGroupChatsScreenState extends State<TutorGroupChatsScreen> {
                             .doc(UserCredentialsController.schoolId)
                             .collection('ChatGroups')
                             .doc('ChatGroups')
-                            .collection("Teachers")
+                            .collection("Students")
                     .doc(widget.groupID)
                     .snapshots(),
                 builder: (context, checkingblock) {

@@ -9,6 +9,8 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/admin_model/admin_model.dart';
+import 'package:new_project_app/model/student_model/student_model.dart';
+import 'package:new_project_app/model/teacher_model/teacher_model.dart';
 
 import '../../../model/chat_model/chat_model.dart';
 
@@ -189,7 +191,139 @@ class StudentChatController extends GetxController {
       );
     }
   }
+   sentMessageTeacher(String teacherId, int usercurrentIndex,
+      int studentchatCounterIndex) async {
+    var countPlusone = await FirebaseFirestore.instance
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection("Teachers")
+        .doc(teacherId)
+        .collection('StudentChatCounter')
+        .doc('F0Ikn1UouYIkqmRFKIpg')
+        .get();
 
+    int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
+    int sentIindex = usercurrentIndex + 1;
+    log('usercurrentIndex  $usercurrentIndex');
+    // log("Student id${FirebaseAuth.instance.currentUser!.uid}");
+    final id = uuid.v1();
+    final sendMessage = OnlineChatModel(
+      message: messageController.text,
+      messageindex: 1,
+      chatid: FirebaseAuth.instance.currentUser!.uid,
+      docid: id,
+      sendTime: DateTime.now().toString(),
+    );
+    await FirebaseFirestore.instance
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Students')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('TeacherChats')
+        .doc(teacherId)
+        .collection('messages')
+        .doc(id)
+        .set(sendMessage.toMap())
+        .then((value) async {
+      await FirebaseFirestore.instance
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection("Teachers")
+          .doc(teacherId)
+          .collection('StudentChats')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('messages')
+          .doc(id)
+          .set(sendMessage.toMap())
+          .then((value) async {
+        await FirebaseFirestore.instance
+            .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection("Teachers")
+            .doc(teacherId)
+            .collection('StudentChats')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({'messageindex': sentIindex}).then((value) async {
+          await FirebaseFirestore.instance
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection("Teachers")
+              .doc(teacherId)
+              .collection('StudentChatCounter')
+              .doc('F0Ikn1UouYIkqmRFKIpg')
+              .update({'chatIndex': sentStudentChatIndex}).then(
+                  (value) => messageController.clear());
+        });
+      });
+    });
+  }
+
+  sentMessageBYTeacher(String teacherId, int usercurrentIndex,
+      int studentchatCounterIndex) async {
+    var countPlusone = await FirebaseFirestore.instance
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection("Teachers")
+        .doc(teacherId)
+        .collection('StudentChatCounter')
+        .doc('F0Ikn1UouYIkqmRFKIpg')
+        .get();
+
+    int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
+    int sentIindex = usercurrentIndex + 1;
+    log('usercurrentIndex  $usercurrentIndex');
+    // log("Student id${FirebaseAuth.instance.currentUser!.uid}");
+    final id = uuid.v1();
+    final sendMessage = OnlineChatModel(
+      message: messageController.text,
+      messageindex: 1,
+      chatid: FirebaseAuth.instance.currentUser!.uid,
+      docid: id,
+      sendTime: DateTime.now().toString(),
+    );
+    await FirebaseFirestore.instance
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Students')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('TeacherChats')
+        .doc(teacherId)
+        .collection('messages')
+        .doc(id)
+        .set(sendMessage.toMap())
+        .then((value) async {
+      await FirebaseFirestore.instance
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection("Teachers")
+          .doc(teacherId)
+          .collection('StudentChats')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('messages')
+          .doc(id)
+          .set(sendMessage.toMap())
+          .then((value) async {
+        await FirebaseFirestore.instance
+            .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection("Teachers")
+            .doc(teacherId)
+            .collection('StudentChats')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({'messageindex': sentIindex}).then((value) async {
+          await FirebaseFirestore.instance
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection("Teachers")
+              .doc(teacherId)
+              .collection('StudentChatCounter')
+              .doc('F0Ikn1UouYIkqmRFKIpg')
+              .update({'chatIndex': sentStudentChatIndex}).then(
+                  (value) => messageController.clear());
+        });
+      });
+    });
+  }
   sentMessage(String adminId, int usercurrentIndex,
       int studentchatCounterIndex) async {
     var countPlusone = await FirebaseFirestore.instance
@@ -201,7 +335,7 @@ class StudentChatController extends GetxController {
         .doc('F0Ikn1UouYIkqmRFKIpg')
         .get();
 
-    int sentStudentChatIndex = countPlusone.data()?['chatIndex'] + 1;
+    int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
     int sentIindex = usercurrentIndex + 1;
     log('usercurrentIndex  $usercurrentIndex');
     // log("Student id${FirebaseAuth.instance.currentUser!.uid}");
@@ -295,7 +429,41 @@ class StudentChatController extends GetxController {
       },
     );
   }
+ List<StudentModel> searchStudent = [];
 
+   Future<void> fetchStudents() async {
+    searchStudent.clear();
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await FirebaseFirestore.instance
+              .collection("DrivingSchoolCollection")
+              .doc(UserCredentialsController.schoolId)
+              .collection("Students")
+              .get();
+      searchStudent =
+          snapshot.docs.map((e) => StudentModel.fromMap(e.data())).toList();
+          
+    } catch (e) {
+      showToast(msg: "Student Data Error");
+    }
+  }
+  List<TeacherModel> searchTeacher = [];
+  Future<void> fetchTeacher() async {
+    searchTeacher.clear();
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await FirebaseFirestore.instance
+              .collection("DrivingSchoolCollection")
+              .doc(UserCredentialsController.schoolId)
+              .collection("Teachers")
+              .get();
+      searchTeacher =
+          snapshot.docs.map((e) => TeacherModel.fromMap(e.data())).toList();
+          
+    } catch (e) {
+      showToast(msg: "Teacher Data Error");
+    }
+  }
   List<AdminModel> searchAdmin = [];
   Future<void> fetchAdmin() async {
     searchAdmin.clear();

@@ -197,7 +197,7 @@ class AdminChatController extends GetxController {
     }
   }
 
-  sentMessage(
+  sentMessagee(
     String studentDocID,
   ) async {
     var countPlusone = await FirebaseFirestore.instance

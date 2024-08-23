@@ -6,7 +6,7 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/controller/chat_controller/student_controller/student_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/admin_model/admin_model.dart';
-import 'package:new_project_app/view/pages/chat/student_section/admin_message/chats/teachers_chats.dart';
+import 'package:new_project_app/view/pages/chat/student_section/admin_message/chats/admin_chats.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class SearchAdmin extends SearchDelegate {
