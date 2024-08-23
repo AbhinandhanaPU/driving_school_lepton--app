@@ -8,6 +8,7 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
+import 'package:new_project_app/view/widgets/custom_show_dialogbox/message_show_dialog.dart';
 
 class StudentController extends GetxController {
   List<StudentModel> studentProfileList = [];
@@ -155,27 +156,11 @@ class StudentController extends GetxController {
           .set(stdData.toMap())
           .then((value) {
         Navigator.pop(context);
-        showDialog(
+        customMessageDialogBox(
           context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Message'),
-              content: const SingleChildScrollView(
-                child: ListBody(
-                  children: <Widget>[
-                    Text('Your payment request sent Successfully ')
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
-              ],
-            );
+          message: 'Your payment request sent Successfully',
+          onPressed: () {
+            Get.back();
           },
         );
       });
@@ -217,25 +202,11 @@ class StudentController extends GetxController {
               .delete();
         }
         Navigator.pop(context);
-        showDialog(
+        customMessageDialogBox(
           context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Message'),
-              content: const SingleChildScrollView(
-                child: ListBody(
-                  children: <Widget>[Text('Your Successfully added to course')],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
-              ],
-            );
+          message: 'Your Successfully added to course',
+          onPressed: () {
+            Get.back();
           },
         );
       });

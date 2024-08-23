@@ -9,6 +9,7 @@ import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/splash_screen/splash_screen.dart';
+import 'package:new_project_app/view/widgets/custom_show_dialogbox/message_show_dialog.dart';
 
 class StudentLoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -34,28 +35,41 @@ class StudentLoginController extends GetxController {
             .get();
 
         if (user.data() != null) {
-          UserCredentialsController.studentModel = StudentModel.fromMap(user.data()!);
+          UserCredentialsController.studentModel =
+              StudentModel.fromMap(user.data()!);
           log(UserCredentialsController.studentModel.toString());
         }
 
         if (UserCredentialsController.studentModel?.userRole == "student") {
-          await SharedPreferencesHelper.setString(
-              SharedPreferencesHelper.currenUserKey, value.user!.uid);
-          await SharedPreferencesHelper.setString(SharedPreferencesHelper.userRoleKey, 'student')
-              .then((value) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return SplashScreen();
-                },
-              ),
-            );
-            emailController.clear();
-            passwordController.clear();
-          });
+          if (UserCredentialsController.studentModel!.status == "active") {
+            await SharedPreferencesHelper.setString(
+                SharedPreferencesHelper.currenUserKey, value.user!.uid);
+            await SharedPreferencesHelper.setString(
+                    SharedPreferencesHelper.userRoleKey, 'student')
+                .then((value) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SplashScreen();
+                  },
+                ),
+              );
+              emailController.clear();
+              passwordController.clear();
+            });
 
-          isLoading.value = false;
+            isLoading.value = false;
+          } else {
+            isLoading.value = false;
+            customMessageDialogBox(
+              context: context,
+              message: 'Your account is Deactivated',
+              onPressed: () {
+                Get.back();
+              },
+            );
+          }
         } else {
           showToast(msg: "You are not a student");
           isLoading.value = false;

@@ -12,6 +12,7 @@ import 'package:new_project_app/controller/image_picker_controlller/image_picker
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/teacher_model/teacher_model.dart';
 import 'package:new_project_app/view/users/teacher/teacher_home_page/teacher_home_page.dart';
+import 'package:new_project_app/view/widgets/custom_show_dialogbox/message_show_dialog.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:uuid/uuid.dart';
 
@@ -143,37 +144,20 @@ class TeacherSignUpController extends GetxController {
                         SharedPreferencesHelper.userRoleKey, 'teacher')
                     .then((value) {
                   clearFields();
-                  return showDialog(
+                  return customMessageDialogBox(
                     context: context,
-                    barrierDismissible: false, // user must tap button!
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Message'),
-                        content: const SingleChildScrollView(
-                          child: ListBody(
-                            children: <Widget>[
-                              Text('Your Profile Created Successfully ')
-                            ],
-                          ),
+                    message: 'Your Profile Created Successfully ',
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const TeachersMainHomeScreen();
+                          },
                         ),
-                        actions: <Widget>[
-                          TextButton(
-                            child: const Text('Ok'),
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return const TeachersMainHomeScreen();
-                                  },
-                                ),
-                              );
-                              TeacherPasswordSaver.teacherEmailID = '';
-                              TeacherPasswordSaver.teacherPassword = '';
-                            },
-                          ),
-                        ],
                       );
+                      TeacherPasswordSaver.teacherEmailID = '';
+                      TeacherPasswordSaver.teacherPassword = '';
                     },
                   );
                 });

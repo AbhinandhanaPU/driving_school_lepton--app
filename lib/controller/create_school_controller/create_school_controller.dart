@@ -10,6 +10,7 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/image_picker_controlller/image_picker_controller.dart';
 import 'package:new_project_app/model/admin_model/admin_model.dart';
 import 'package:new_project_app/view/login/admin_login_screen.dart';
+import 'package:new_project_app/view/widgets/custom_show_dialogbox/message_show_dialog.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:uuid/uuid.dart';
 
@@ -128,39 +129,18 @@ class CreateschoolController extends GetxController {
           .doc(adminModel.docid)
           .set(adminModel.toMap())
           .then((value) {
-        return showDialog(
+        return customMessageDialogBox(
           context: context,
-          barrierDismissible: false, // user must tap button!
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Message'),
-              content: const SingleChildScrollView(
-                child: ListBody(
-                  children: <Widget>[
-                    Text(
-                        "Your account created successfully. Please login again to continue ...")
-                    // Text(
-                    //     "Thank you for applying for an account. Your account is currently pending approval \n"
-                    //     " by the site administrator. In the meantime, a welcome message with further\n"
-                    //     " instructions has been sent to your e-mail address. "),
-                  ],
-                ),
+          message:
+              "Your account created successfully. Please login again to continue ...",
+          onPressed: () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AdminLoginScreen(),
               ),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AdminLoginScreen(),
-                      ),
-                    );
-                    await Future.delayed(const Duration(milliseconds: 500));
-                  },
-                ),
-              ],
             );
+            await Future.delayed(const Duration(milliseconds: 500));
           },
         );
       });
