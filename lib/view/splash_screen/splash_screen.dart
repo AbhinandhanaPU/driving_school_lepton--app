@@ -17,6 +17,7 @@ import 'package:new_project_app/view/home/first_screen/first_screen.dart';
 import 'package:new_project_app/view/users/admin/admin_home_page/admin_home_page.dart';
 import 'package:new_project_app/view/users/student/student_home_page/student_home_page.dart';
 import 'package:new_project_app/view/users/teacher/teacher_home_page/teacher_home_page.dart';
+import 'package:new_project_app/view/widgets/custom_show_dialogbox/message_show_dialog.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_montserrat.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -142,11 +143,14 @@ nextpage(context) async {
 Future<void> checkAdmin(
   context,
 ) async {
-  final adminData =
-      await server.collection('DrivingSchoolCollection').doc(serverAuth.currentUser?.uid).get();
+  final adminData = await server
+      .collection('DrivingSchoolCollection')
+      .doc(serverAuth.currentUser?.uid)
+      .get();
 
   if (adminData.data() != null) {
-    UserCredentialsController.adminModel = AdminModel.fromMap(adminData.data()!);
+    UserCredentialsController.adminModel =
+        AdminModel.fromMap(adminData.data()!);
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return const AdminMainHomeScreen();
@@ -173,12 +177,32 @@ Future<void> checkStudent(
       .get();
 
   if (studentData.data() != null) {
-    UserCredentialsController.studentModel = StudentModel.fromMap(studentData.data()!);
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) {
-        return StudentsMainHomeScreen();
-      },
-    ));
+    UserCredentialsController.studentModel =
+        StudentModel.fromMap(studentData.data()!);
+    if (UserCredentialsController.studentModel!.status == 'active') {
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) {
+          return StudentsMainHomeScreen();
+        },
+      ));
+    } else {
+      await serverAuth.signOut().then((value) async {
+        await SharedPreferencesHelper.clearSharedPreferenceData();
+        UserCredentialsController.clearUserCredentials();
+        log("account logedout");
+        customMessageDialogBox(
+          context: context,
+          message: 'Your account is Deactivated',
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+              builder: (context) {
+                return const FirstScreen();
+              },
+            ), (route) => false);
+          },
+        );
+      });
+    }
   } else {
     showToast(msg: "Please login again");
     Navigator.push(context, MaterialPageRoute(
@@ -200,7 +224,8 @@ Future<void> checkTeacher(
       .get();
 
   if (teacherData.data() != null) {
-    UserCredentialsController.studentModel = StudentModel.fromMap(teacherData.data()!);
+    UserCredentialsController.studentModel =
+        StudentModel.fromMap(teacherData.data()!);
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return const TeachersMainHomeScreen();

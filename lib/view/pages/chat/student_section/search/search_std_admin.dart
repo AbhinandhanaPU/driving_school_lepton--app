@@ -7,10 +7,8 @@ import 'package:new_project_app/controller/chat_controller/student_controller/st
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/admin_model/admin_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
-import 'package:new_project_app/model/teacher_model/teacher_model.dart';
 import 'package:new_project_app/view/pages/chat/student_section/admin_message/chats/admin_chats.dart';
 import 'package:new_project_app/view/pages/chat/student_section/tutor_msg/std_chats.dart';
-import 'package:new_project_app/view/pages/chat/student_section/tutor_msg/tutor_chats.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class SearchAdminAndStudents extends SearchDelegate {

@@ -6,6 +6,7 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/student_controller/student_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/all_students/search_students/update_std_batch.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/archieves/crud/archive_std.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
@@ -66,22 +67,6 @@ class AllStudentList extends StatelessWidget {
                       },
                     ),
                   ),
-                  // IconButton(
-                  //   onPressed: () {
-                  //     customDeleteShowDialog(
-                  //       context: context,
-                  //       onTap: () {
-                  //         studentController
-                  //             .deleteStudents(data)
-                  //             .then((value) => Navigator.pop(context));
-                  //       },
-                  //     );
-                  //   },
-                  //   icon: Icon(Icons.delete_outline),
-                  //   iconSize: 25,
-                  //   color: cred,
-                  //   padding: EdgeInsets.all(0),
-                  // ),
                   PopupMenuButton(
                     itemBuilder: (context) {
                       return [
@@ -113,6 +98,41 @@ class AllStudentList extends StatelessWidget {
           ),
           kHeight10,
           Row(
+            children: [
+              TextFontWidget(
+                text: 'Batch: ',
+                fontsize: 20.h,
+                fontWeight: FontWeight.bold,
+                color: cblack,
+              ),
+              TextFontWidget(
+                text: data.batchName != ""
+                    ? data.batchName
+                    : "Not added to any batch",
+                fontsize: 18.h,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+              kWidth20,
+              GestureDetector(
+                onTap: () {
+                  updateStudentBatch(context: context, studentModel: data);
+                },
+                child: data.batchId == ""
+                    ? Icon(
+                        Icons.add,
+                        color: cgreen,
+                      )
+                    : Icon(
+                        Icons.edit,
+                        color: cblue,
+                        size: 20,
+                      ),
+              ),
+            ],
+          ),
+          kHeight20,
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
@@ -122,7 +142,7 @@ class AllStudentList extends StatelessWidget {
                     stream: studentController.fetchStudentsCourse(data),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
+                        return Center(child: const CircularProgressIndicator());
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

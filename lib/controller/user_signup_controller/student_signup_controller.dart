@@ -87,8 +87,10 @@ class StudentSignUpController extends GetxController {
             rtoName: rtoNameController.text,
             licenceNumber: licenceController.text,
             joiningDate: DateTime.now().toString(),
-            status: 'Inactive', //change
+            status: 'active', //change
             level: "Beginner",
+            batchId: '',
+            batchName: '',
             userRole: "student",
           );
           await server

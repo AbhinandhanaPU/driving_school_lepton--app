@@ -6,7 +6,6 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/const/const.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/pages/chat/student_section/admin_message/admin_messages.dart';
-import 'package:new_project_app/view/pages/chat/student_section/search/search_teachers.dart';
 import 'package:new_project_app/view/pages/chat/student_section/tutor_msg/tutor_message/tutor_message.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 
@@ -17,8 +16,6 @@ class StudentChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
-
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -68,7 +65,8 @@ class StudentChatScreen extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           messageIndex.data!
-                                              .data()!['chatIndex'].toString(),
+                                              .data()!['chatIndex']
+                                              .toString(),
                                           style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 10,
@@ -128,7 +126,8 @@ class StudentChatScreen extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           messageIndex.data!
-                                              .data()!['chatIndex'].toString(),
+                                              .data()!['chatIndex']
+                                              .toString(),
                                           style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 10,
