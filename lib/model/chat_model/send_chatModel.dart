@@ -5,25 +5,25 @@ class SendUserStatusModel {
 bool? block;
 String docid;
 int messageindex;
-String adminName;
+String senderName;
   SendUserStatusModel({
     this.block,
     required this.docid,
     required this.messageindex,
-    required this.adminName,
+    required this.senderName,
   });
 
   SendUserStatusModel copyWith({
     bool? block,
     String? docid,
     int? messageindex,
-    String? adminName,
+    String? senderName,
   }) {
     return SendUserStatusModel(
       block: block ?? this.block,
       docid: docid ?? this.docid,
       messageindex: messageindex ?? this.messageindex,
-      adminName: adminName ?? this.adminName,
+      senderName: senderName ?? this.senderName,
     );
   }
 
@@ -32,7 +32,7 @@ String adminName;
       'block': block,
       'docid': docid,
       'messageindex': messageindex,
-      'adminName': adminName,
+      'senderName': senderName,
     };
   }
 
@@ -41,7 +41,7 @@ String adminName;
       block: map['block'] != null ? map['block'] as bool : null,
       docid: map['docid'] as String,
       messageindex: map['messageindex'] as int,
-      adminName: map['adminName'] as String,
+      senderName: map['senderName'] as String,
     );
   }
 
@@ -51,7 +51,7 @@ String adminName;
 
   @override
   String toString() {
-    return 'SendUserStatusModel(block: $block, docid: $docid, messageindex: $messageindex, adminName: $adminName)';
+    return 'SendUserStatusModel(block: $block, docid: $docid, messageindex: $messageindex, senderName: $senderName)';
   }
 
   @override
@@ -62,7 +62,7 @@ String adminName;
       other.block == block &&
       other.docid == docid &&
       other.messageindex == messageindex &&
-      other.adminName == adminName;
+      other.senderName == senderName;
   }
 
   @override
@@ -70,6 +70,6 @@ String adminName;
     return block.hashCode ^
       docid.hashCode ^
       messageindex.hashCode ^
-      adminName.hashCode;
+      senderName.hashCode;
   }
 }

@@ -5,10 +5,10 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/const/const.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/student_section/search/search_std_admin.dart';
 import 'package:new_project_app/view/pages/chat/tutor_section/teacher_messages/teachers_messages.dart';
 import 'package:new_project_app/view/pages/chat/tutor_section/teacher_std_msg/std_teachers_messages.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
+
 import 'group_section/tutor_message_group_screen.dart';
 
 class TutorChatScreen extends StatelessWidget {
@@ -16,9 +16,9 @@ class TutorChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> showsearch() async {
-      await showSearch(context: context, delegate: SearchAdminAndStudents());
-    }
+    // Future<void> showsearch() async {
+    //   await showSearch(context: context, delegate: SearchAdminAndStudents());
+    // }
 
     return DefaultTabController(
       length: 3,
@@ -47,7 +47,7 @@ class TutorChatScreen extends StatelessWidget {
                                 .doc(UserCredentialsController.schoolId)
                                 .collection('Teachers')
                                 .doc(FirebaseAuth.instance.currentUser?.uid)
-                                .collection("AdminsChatCounter")
+                                .collection("AdminChatCounter")
                                 .doc("c3cDX5ymHfITQ3AXcwSp")
                                 .snapshots(),
                             builder: (context, messageIndex) {
@@ -162,21 +162,21 @@ class TutorChatScreen extends StatelessWidget {
             TutorGroupMessagesScreen(),
           ],
         ),
-        floatingActionButton: CircleAvatar(
-          backgroundColor: adminePrimayColor,
-          //Color.fromARGB(255, 88, 167, 123),
-          radius: 25,
-          child: Center(
-            child: IconButton(
-                onPressed: () async {
-                  await showsearch();
-                },
-                icon: const Icon(
-                  Icons.search_rounded,
-                  color: Colors.white,
-                )),
-          ),
-        ),
+        // floatingActionButton: CircleAvatar(
+        //   backgroundColor: adminePrimayColor,
+        //   //Color.fromARGB(255, 88, 167, 123),
+        //   radius: 25,
+        //   child: Center(
+        //     child: IconButton(
+        //         onPressed: () async {
+        //           await showsearch();
+        //         },
+        //         icon: const Icon(
+        //           Icons.search_rounded,
+        //           color: Colors.white,
+        //         )),
+        //   ),
+        // ),
       ),
     );
   }

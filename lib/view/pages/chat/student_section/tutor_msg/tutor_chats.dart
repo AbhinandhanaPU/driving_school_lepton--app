@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/const/const.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
-import 'package:new_project_app/controller/chat_controller/student_controller/student_controller.dart';
+import 'package:new_project_app/controller/chat_controller/admin_controller/admin_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 
 class TeachersChatsScreen extends StatefulWidget {
@@ -22,7 +22,8 @@ class TeachersChatsScreen extends StatefulWidget {
 }
 
 class _TeachersChatsScreenState extends State<TeachersChatsScreen> {
-  final studentChatController = Get.put(StudentChatController());
+  //final studentChatController = Get.put(StudentChatController());
+    final adminChatController = Get.put(AdminChatController());
 
   int currentStudentMessageIndex = 0;
   int currentStudentMessageIndex2 = 0;
@@ -31,7 +32,7 @@ class _TeachersChatsScreenState extends State<TeachersChatsScreen> {
   @override
   void initState() {
     fectinTeacherChatStatus();
-    connectingStudentToTeacher();
+   // connectingStudentToTeacher();
     connectingCurrentStudentToTeacher();
     getStudentTeacherChatIndex();
     getCurrentTeacherMessageIndex().then((value) => resetUserMessageIndextr());
@@ -82,7 +83,7 @@ class _TeachersChatsScreenState extends State<TeachersChatsScreen> {
                         itemCount: snaps.data!.docs.length,
                         itemBuilder: (context, index) {
                           ///////////////////////////////////
-                          return studentChatController.messageTitles(
+                          return adminChatController.messageTitles(
                               widget.teacherDocID,
                               size,
                               snaps.data!.docs[index]['chatid'],
@@ -142,7 +143,7 @@ class _TeachersChatsScreenState extends State<TeachersChatsScreen> {
                                 width: size.width / 1.3,
                                 child: TextField(
                                   controller:
-                                      studentChatController.messageController,
+                                      adminChatController.messageController,
                                   decoration: InputDecoration(
                                       hintText: "Send Message",
                                       border: OutlineInputBorder(
@@ -163,13 +164,14 @@ class _TeachersChatsScreenState extends State<TeachersChatsScreen> {
                                         log('teacherName >>>>  ${widget.teacherDocID}');
                                         ///////////////////////////
                                         ///
-                                       String messageText = studentChatController.messageController.text.trim();
+                                       String messageText = adminChatController.messageController.text.trim();
                                        if (messageText.isNotEmpty) {
-                                        studentChatController.sentMessageTeacher(
+                                      await  adminChatController.sentMessageeToTutuorByAdmin(
                                           widget.teacherDocID,
-                                          await getCurrentTeacherMessageIndex(),
-                                          await getTeacherChatCounterIndex(),
+                                         // await getCurrentTeacherMessageIndex(),
+                                        //  await getTeacherChatCounterIndex(),
                                         );
+                                       adminChatController.messageController.clear();
                                        }
                                         /////////////////////////
                                       }),
@@ -299,30 +301,30 @@ class _TeachersChatsScreenState extends State<TeachersChatsScreen> {
     }
   }
 
-  Future connectingStudentToTeacher() async {
-    final checkuser = await FirebaseFirestore.instance
-        .collection('DrivingSchoolCollection')
-        .doc(UserCredentialsController.schoolId)
-        .collection('Admins')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('TeacherChats')
-        .get();
-    if (checkuser.docs.isEmpty) {
-      await FirebaseFirestore.instance
-          .collection('DrivingSchoolCollection')
-          .doc(UserCredentialsController.schoolId)
-          .collection('Admins')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection('TeacherChats')
-          .doc(widget.teacherDocID)
-          .set({
-        'block': false,
-        'docid': widget.teacherDocID,
-        'messageindex': 0,
-        'teachername': widget.teacherName,
-      });
-    }
-  }
+  // Future connectingStudentToTeacher() async {
+  //   final checkuser = await FirebaseFirestore.instance
+  //       .collection('DrivingSchoolCollection')
+  //       .doc(UserCredentialsController.schoolId)
+  //       .collection('Admins')
+  //       .doc(FirebaseAuth.instance.currentUser!.uid)
+  //       .collection('TeacherChats')
+  //       .get();
+  //   if (checkuser.docs.isEmpty) {
+  //     await FirebaseFirestore.instance
+  //         .collection('DrivingSchoolCollection')
+  //         .doc(UserCredentialsController.schoolId)
+  //         .collection('Admins')
+  //         .doc(FirebaseAuth.instance.currentUser!.uid)
+  //         .collection('TeacherChats')
+  //         .doc(widget.teacherDocID)
+  //         .set({
+  //       'block': false,
+  //       'docid': widget.teacherDocID,
+  //       'messageindex': 0,
+  //       'teachername': widget.teacherName,
+  //     });
+  //   }
+  // }
 
   Future fectinTeacherChatStatus() async {
     final firebasecollection = await FirebaseFirestore.instance
@@ -330,7 +332,7 @@ class _TeachersChatsScreenState extends State<TeachersChatsScreen> {
         .doc(UserCredentialsController.schoolId)
         .collection('Teachers')
         .doc(widget.teacherDocID)
-        .collection('AdminsChatCounter')
+        .collection('AdminChatCounter')
         .get();
 
     if (firebasecollection.docs.isEmpty) {
@@ -340,7 +342,7 @@ class _TeachersChatsScreenState extends State<TeachersChatsScreen> {
           .doc(UserCredentialsController.schoolId)
           .collection('Teachers')
           .doc(widget.teacherDocID)
-          .collection('AdminsChatCounter')
+          .collection('AdminChatCounter')
           .doc('F0Ikn1UouYIkqmRFKIpg')
           .set({'chatIndex': 0, 'docid': "F0Ikn1UouYIkqmRFKIpg"});
     } else {
