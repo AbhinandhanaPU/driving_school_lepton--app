@@ -41,7 +41,7 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log("getParentTeacherChatIndex().toString()$teacherIndex");
+    log("---------------------------------");
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -163,7 +163,7 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
                                       onPressed: () async {
                                         log('stdName >>>>  ${widget.stdDocID}');
                                         ///////////////////////////
-                                        ///
+                                        
                                         tutorChatController.sentMessagesToStd(
                                           widget.stdDocID,
                                           await getCurrentTeacherMessageIndex(),
