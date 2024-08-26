@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class StudentModel {
@@ -16,7 +15,7 @@ class StudentModel {
   String rtoName;
   String licenceNumber;
   String joiningDate;
-  String status; //
+  bool status;
   String level;
   String batchId;
   String batchName;
@@ -60,7 +59,7 @@ class StudentModel {
     String? rtoName,
     String? licenceNumber,
     String? joiningDate,
-    String? status,
+    bool? status,
     String? level,
     String? batchId,
     String? batchName,
@@ -129,7 +128,7 @@ class StudentModel {
       rtoName: map['rtoName'] ?? "",
       licenceNumber: map['licenceNumber'] ?? "",
       joiningDate: map['joiningDate'] ?? "",
-      status: map['status'] ?? "",
+      status: map['status'] ?? false,
       level: map['level'] ?? "",
       batchId: map['batchId'] ?? "",
       batchName: map['batchName'] ?? "",

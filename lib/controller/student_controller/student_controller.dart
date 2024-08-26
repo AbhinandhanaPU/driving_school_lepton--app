@@ -86,7 +86,7 @@ class StudentController extends GetxController {
   }
 
   Future<void> updateStudentStatus(
-      StudentModel studentModel, String newStatus) async {
+      StudentModel studentModel, bool newStatus) async {
     try {
       await _fbServer
           .collection('Students')

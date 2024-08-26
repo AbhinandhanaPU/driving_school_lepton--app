@@ -41,7 +41,7 @@ class StudentLoginController extends GetxController {
         }
 
         if (UserCredentialsController.studentModel?.userRole == "student") {
-          if (UserCredentialsController.studentModel!.status == "active") {
+          if (UserCredentialsController.studentModel!.status == true) {
             await SharedPreferencesHelper.setString(
                 SharedPreferencesHelper.currenUserKey, value.user!.uid);
             await SharedPreferencesHelper.setString(

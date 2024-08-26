@@ -87,7 +87,7 @@ class TutorTestStudentProfile extends StatelessWidget {
                       kHeight30,
                       ProfileDetailsWidget(
                         title: "Permission Status",
-                        content: stdata.status,
+                        content: stdata.status.toString(),
                       ),
                       kHeight20,
                       ProfileDetailsWidget(

@@ -86,7 +86,7 @@ class StudentProfile extends StatelessWidget {
                                   kHeight20,
                                   ProfileDetailsWidget(
                                     title: "Status",
-                                    content: data.status,
+                                    content: data.status.toString(),
                                   ),
                                   kHeight20,
                                   ProfileDetailsWidget(

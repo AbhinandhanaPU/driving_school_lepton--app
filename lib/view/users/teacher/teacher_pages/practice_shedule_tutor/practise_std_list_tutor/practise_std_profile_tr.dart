@@ -87,14 +87,14 @@ class TutorPractiseScheduleStudentProfile extends StatelessWidget {
                       kHeight30,
                       ProfileDetailsWidget(
                         title: "Permission Status",
-                        content: stdata.status,
+                        content: stdata.status.toString(),
                       ),
                       kHeight20,
                       ProfileDetailsWidget(
                         title: "Joining Date",
                         content: formatDate(stdata.joiningDate),
                       ),
-                       kHeight20,
+                      kHeight20,
                       StreamBuilder<List<String>>(
                         stream: studentController.fetchStudentsCourse(stdata),
                         builder: (context, snapshot) {

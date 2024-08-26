@@ -60,9 +60,9 @@ class AllStudentList extends StatelessWidget {
                     scale: 0.65,
                     child: Switch(
                       activeColor: Colors.green,
-                      value: data.status == 'active',
+                      value: data.status == true,
                       onChanged: (value) {
-                        final newStatus = value ? 'active' : 'inactive';
+                        final newStatus = value ? true : false;
                         studentController.updateStudentStatus(data, newStatus);
                       },
                     ),

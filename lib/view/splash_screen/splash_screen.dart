@@ -179,7 +179,7 @@ Future<void> checkStudent(
   if (studentData.data() != null) {
     UserCredentialsController.studentModel =
         StudentModel.fromMap(studentData.data()!);
-    if (UserCredentialsController.studentModel!.status == 'active') {
+    if (UserCredentialsController.studentModel!.status == true) {
       Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           return StudentsMainHomeScreen();
