@@ -1,2 +1,8 @@
+# Node modules directory
 node_modules/
+
+# Local environment files
 *.local
+
+# Ignore index.js file
+index.js
