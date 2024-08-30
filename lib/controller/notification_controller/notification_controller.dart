@@ -114,14 +114,14 @@ class NotificationController extends GetxController {
             .collection('DrivingSchoolCollection')
             .doc(UserCredentialsController.schoolId)
             .collection('AllUsersDeviceID')
-            .doc(selectedUSerUIDList[i].uid)
-            .set({'message': true, 'docid': selectedUSerUIDList[i].uid},
+            .doc(selectedUSerUIDList[i].docId)
+            .set({'message': true, 'docid': selectedUSerUIDList[i].docId},
                 SetOptions(merge: true)).then((value) async {
           await server
               .collection('DrivingSchoolCollection')
               .doc(UserCredentialsController.schoolId)
               .collection('AllUsersDeviceID')
-              .doc(selectedUSerUIDList[i].uid)
+              .doc(selectedUSerUIDList[i].docId)
               .get()
               .then((value) async {
             await sendPushMessage(selectedUSerUIDList[i].devideID,
@@ -131,7 +131,7 @@ class NotificationController extends GetxController {
                 .collection('DrivingSchoolCollection')
                 .doc(UserCredentialsController.schoolId)
                 .collection('AllUsersDeviceID')
-                .doc(selectedUSerUIDList[i].uid)
+                .doc(selectedUSerUIDList[i].docId)
                 .collection("Notification_Message")
                 .doc(uuid)
                 .set(messageDetails.toMap());
