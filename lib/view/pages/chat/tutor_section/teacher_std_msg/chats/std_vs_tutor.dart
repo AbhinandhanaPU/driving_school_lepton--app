@@ -32,8 +32,8 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
   @override
   void initState() {
     fectingTeacherChatStatus();
-   // connectingParentToteacher();
-  //  connectingCurrentParentToteacher();
+   connectingParentToteacher();
+   connectingCurrentParentToteacher();
     getParentTeacherChatIndex();
     getCurrentTeacherMessageIndex().then((value) => resetUserMessageIndex());
     super.initState();
@@ -167,7 +167,7 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
                                         tutorChatController.sentMessagesToStd(
                                           widget.stdDocID,
                                           await getCurrentTeacherMessageIndex(),
-                                      //  await getTeacherChatCounterIndex(),
+                                        await getTeacherChatCounterIndex(),
                                        //await connectingParentToteacher(),
                                         );
                                         /////////////////////////
@@ -244,7 +244,7 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
             .doc(UserCredentialsController.schoolId)
             .collection('Teachers')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('TutorChatCounter')
+        .collection('StudentChatCounter')
         .doc('c3cDX5ymHfITQ3AXcwSp')
         .update({
       'chatIndex': messageIndexNotify == 0 ? zero : messageIndexNotify
@@ -266,77 +266,77 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
             .doc(UserCredentialsController.schoolId)
             .collection('Teachers')
         .doc(FirebaseAuth.instance.currentUser?.uid)
-        .collection('TutorChatCounter')
+        .collection('StudentChatCounter')
         .doc('c3cDX5ymHfITQ3AXcwSp')
         .get();
     return currentStudentMessageIndex2 = vari.data()?['chatIndex'] ?? 0;
   }
 
-  // Future connectingCurrentParentToteacher() async {
-  //   final checkuser = await FirebaseFirestore.instance
-  //      .collection('DrivingSchoolCollection')
-  //       .doc(UserCredentialsController.schoolId)
-  //       .collection('Students')
-  //       .doc(widget.stdDocID)
-  //       .collection('TeacherChats')
-  //       .doc(FirebaseAuth.instance.currentUser?.uid)
-  //       .get();
-  //   if (checkuser.data() == null) {
-  //     await FirebaseFirestore.instance
-  //         .collection('DrivingSchoolCollection')
-  //       .doc(UserCredentialsController.schoolId)
-  //       .collection('Students')
-  //       .doc(widget.stdDocID)
-  //       .collection('TeacherChats')
-  //         .doc(FirebaseAuth.instance.currentUser?.uid)
-  //         .set({
-  //       'block': false,
-  //       'docid': FirebaseAuth.instance.currentUser?.uid,
-  //       'messageindex': 0,
-  //       'teachername': UserCredentialsController.teacherModel?.teacherName??"",///ppppprnt
-  //     });
-  //   }
-  // }
+  Future connectingCurrentParentToteacher() async {
+    final checkuser = await FirebaseFirestore.instance
+       .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Students')
+        .doc(widget.stdDocID)
+        .collection('TeacherChats')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .get();
+    if (checkuser.data() == null) {
+      await FirebaseFirestore.instance
+          .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Students')
+        .doc(widget.stdDocID)
+        .collection('TeacherChats')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .set({
+        'block': false,
+        'docid': FirebaseAuth.instance.currentUser?.uid,
+        'messageindex': 0,
+        'teachername': UserCredentialsController.teacherModel?.teacherName??"",///ppppprnt
+      });
+    }
+  }
 
-  // Future connectingParentToteacher() async {
-  //   final checkuser = await FirebaseFirestore.instance
-  //      .collection('DrivingSchoolCollection')
-  //       .doc(UserCredentialsController.schoolId)
-  //       .collection('Students')
-  //       .doc(widget.stdDocID)
-  //       .collection('TeacherChats')
-  //       .get();
-  //   if (checkuser.docs.isEmpty) {
-  //     await FirebaseFirestore.instance
-  //         .collection('DrivingSchoolCollection')
-  //       .doc(UserCredentialsController.schoolId)
-  //       .collection('Students')
-  //         .doc(widget.stdDocID)
-  //         .collection('TeacherChats')
-  //         .doc(FirebaseAuth.instance.currentUser?.uid)
-  //         .set({
-  //       'block': false,
-  //       'docid': FirebaseAuth.instance.currentUser?.uid,
-  //       'messageindex': 0,
-  //       'teachername': UserCredentialsController.teacherModel?.teacherName??"",///ppprnt
+  Future connectingParentToteacher() async {
+    final checkuser = await FirebaseFirestore.instance
+       .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Students')
+        .doc(widget.stdDocID)
+        .collection('TeacherChats')
+        .get();
+    if (checkuser.docs.isEmpty) {
+      await FirebaseFirestore.instance
+          .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Students')
+          .doc(widget.stdDocID)
+          .collection('TeacherChats')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .set({
+        'block': false,
+        'docid': FirebaseAuth.instance.currentUser?.uid,
+        'messageindex': 0,
+        'teachername': UserCredentialsController.teacherModel?.teacherName??"",///ppprnt
 
-  //     }).then((value) async {
-  //       await FirebaseFirestore.instance
-  //            .collection('DrivingSchoolCollection')
-  //           .doc(UserCredentialsController.schoolId)
-  //           .collection('Teachers')
-  //           .doc(FirebaseAuth.instance.currentUser!.uid)
-  //           .collection('StudentChats')
-  //           .doc(widget.stdDocID)
-  //           .set({
-  //         'block': false,
-  //         'docid': widget.stdDocID,
-  //         'messageindex': 0,
-  //         'stdName': widget.stdName,
-  //       });
-  //     });
-  //   }
-  // }
+      }).then((value) async {
+        await FirebaseFirestore.instance
+             .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection('Teachers')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('StudentChats')
+            .doc(widget.stdDocID)
+            .set({
+          'block': false,
+          'docid': widget.stdDocID,
+          'messageindex': 0,
+          'studentname': widget.stdName,
+        });
+      });
+    }
+  }
 
   Future fectingTeacherChatStatus() async {
     final firebasecollection = await FirebaseFirestore.instance

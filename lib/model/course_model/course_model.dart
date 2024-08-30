@@ -5,7 +5,7 @@ class CourseModel {
   String courseName;
   String courseDes;
   String duration;
-  String rate;
+  dynamic rate;
   String courseId;
   CourseModel({
     required this.courseName,
@@ -19,7 +19,7 @@ class CourseModel {
     String? courseName,
     String? courseDes,
     String? duration,
-    String? rate,
+    dynamic? rate,
     String? courseId,
   }) {
     return CourseModel(
@@ -46,7 +46,7 @@ class CourseModel {
       courseName: map['courseName'] ??"",
       courseDes: map['courseDes'] ??"",
       duration: map['duration'] ??"",
-      rate: map['rate'] ??"",
+      rate: map['rate'] ?? 0.0,
       courseId: map['courseId'] ??"",
     );
   }

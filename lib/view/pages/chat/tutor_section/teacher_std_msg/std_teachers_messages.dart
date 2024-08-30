@@ -60,7 +60,12 @@ class TutorStudentMessagesScreen extends StatelessWidget {
                             leading: const CircleAvatar(
                               radius: 30,
                             ),
-                            title: Text(snapshots.data!.docs[index]['stdName'],
+                            title: Text(
+                              snapshots.data!.docs[index].data().containsKey('stdName')
+    ? snapshots.data!.docs[index]['stdName']
+    : snapshots.data!.docs[index].data().containsKey('studentname')
+      ? snapshots.data!.docs[index]['studentname']
+      : '',
                                 style: const TextStyle(color: Colors.black)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
                             subtitle: const Text(

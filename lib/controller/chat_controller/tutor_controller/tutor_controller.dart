@@ -191,7 +191,7 @@ class TutorChatController extends GetxController {
   }
 
  sentMessagesToStd(String studentId, int usercurrentIndex,
-     // int parentChatCounterIndex
+     int parentChatCounterIndex
       ) async {
     var countPlusone = await FirebaseFirestore.instance
          .collection('DrivingSchoolCollection')

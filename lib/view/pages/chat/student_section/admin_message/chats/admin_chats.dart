@@ -294,7 +294,7 @@ class _AdminsChatsScreenState extends State<AdminsChatsScreen> {
         'block': false,
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
-        'studentname': UserCredentialsController.studentModel?.studentName,
+        'teachername': UserCredentialsController.teacherModel?.teacherName,
       });
     }
   }

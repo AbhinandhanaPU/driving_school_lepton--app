@@ -28,7 +28,7 @@ class _StudentsChatsScreenState extends State<StudentsChatsScreen> {
   int currentStudentMessageIndex = 0;
   @override
   void initState() {
-   // connectingCurrentStudentToteacher();
+   connectingCurrentStudentToteacher();
     connectingTeacherToStudent();
     fectingStudentChatStatus();
 
@@ -255,31 +255,31 @@ class _StudentsChatsScreenState extends State<StudentsChatsScreen> {
     });
   }
 
-  // Future connectingCurrentStudentToteacher() async {
-  //   final checkuser = await FirebaseFirestore.instance
-  //       .collection('DrivingSchoolCollection')
-  //       .doc(UserCredentialsController.schoolId)
-  //       .collection('Students')
-  //       .doc(widget.studentDocID)
-  //       .collection('AdminChats')
-  //       .doc(FirebaseAuth.instance.currentUser?.uid)
-  //       .get();
-  //   if (checkuser.data() == null) {
-  //     await FirebaseFirestore.instance
-  //         .collection('DrivingSchoolCollection')
-  //         .doc(UserCredentialsController.schoolId)
-  //         .collection('Students')
-  //         .doc(widget.studentDocID)
-  //         .collection('AdminChats')
-  //         .doc(FirebaseAuth.instance.currentUser?.uid)
-  //         .set({
-  //       'block': false,
-  //       'docid': FirebaseAuth.instance.currentUser?.uid,
-  //       'messageindex': 0,
-  //       'adminName': UserCredentialsController.adminModel?.adminName,
-  //     });
-  //   }
-  // }
+  Future connectingCurrentStudentToteacher() async {
+    final checkuser = await FirebaseFirestore.instance
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Students')
+        .doc(widget.studentDocID)
+        .collection('AdminChats')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .get();
+    if (checkuser.data() == null) {
+      await FirebaseFirestore.instance
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Students')
+          .doc(widget.studentDocID)
+          .collection('AdminChats')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .set({
+        'block': false,
+        'docid': FirebaseAuth.instance.currentUser?.uid,
+        'messageindex': 0,
+        'adminName': UserCredentialsController.adminModel?.adminName,
+      });
+    }
+  }
 
   Future connectingTeacherToStudent() async {
     final checkuser = await FirebaseFirestore.instance

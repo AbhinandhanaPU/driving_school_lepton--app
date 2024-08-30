@@ -15,7 +15,7 @@ class TeachersMessagesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      Future<void> showsearch() async {
-      await showSearch(context: context, delegate: SearchParentsForChat());
+      await showSearch(context: context, delegate: SearcTeacherForChat());
     }
         final size = MediaQuery.of(context).size;
         return StreamBuilder(

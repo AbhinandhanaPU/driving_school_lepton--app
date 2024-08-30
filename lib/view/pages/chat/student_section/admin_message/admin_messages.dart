@@ -41,7 +41,7 @@ class AdminMessagesScreen extends StatelessWidget {
                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                 return AdminsChatsScreen(
                                     adminName: snapshots.data!.docs[index]
-                                        ['adminName'],
+                                        ['senderName'],
                                     adminDocID: snapshots.data!.docs[index]
                                         ['docid'],
                                   );
@@ -56,7 +56,7 @@ class AdminMessagesScreen extends StatelessWidget {
                             leading: const CircleAvatar(
                               radius: 30,
                             ),
-                            title: Text(snapshots.data?.docs[index]['adminName'],
+                            title: Text(snapshots.data?.docs[index]['senderName'],
                                 style: const TextStyle(color: Colors.black)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
                             subtitle: const Text(

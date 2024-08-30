@@ -35,6 +35,10 @@ class StudentsMessagesScreen extends StatelessWidget {
                   height: size.height * 0.72,
                   child: ListView.separated(
                       itemBuilder: (context, index) {
+                        final doc = snapshots.data!.docs[index];
+final studentName = doc.data().containsKey('studentname') 
+    ? doc['studentname'] 
+    : doc['senderName'];
                         return SizedBox(
                           height: 70.h,
                           child: ListTile(
@@ -42,8 +46,7 @@ class StudentsMessagesScreen extends StatelessWidget {
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (context) {
                                   return StudentsChatsScreen(
-                                    studentName: snapshots.data!.docs[index]
-                                        ['studentname'],
+                                    studentName: studentName,
                                     studentDocID: snapshots.data!.docs[index]
                                         ['docid'],
                                   );
@@ -59,8 +62,8 @@ class StudentsMessagesScreen extends StatelessWidget {
                             leading: const CircleAvatar(
                               radius: 30,
                             ),
-                            title: Text(
-                                snapshots.data!.docs[index]['studentname'],
+                            title: Text(studentName,
+                               // snapshots.data!.docs[index]['studentname']??snapshots.data!.docs[index]['senderName'],
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 20.sp)),
                             contentPadding: const EdgeInsetsDirectional.all(1),

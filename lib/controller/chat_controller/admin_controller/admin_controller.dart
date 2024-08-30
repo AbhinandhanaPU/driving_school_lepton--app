@@ -1,9 +1,9 @@
 import 'dart:developer';
 
+import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
@@ -211,13 +211,15 @@ class AdminChatController extends GetxController {
         .get();
     int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
     //countPlusone.data()?['chatIndex'] + 1 ?? 0;
-
+final senderName = UserCredentialsController.adminModel?.adminName 
+    ?? UserCredentialsController.addAdminModel?.username 
+    ?? '';
     final id = uuid.v1();
     final userDetails = SendUserStatusModel(
         block: false,
         docid: FirebaseAuth.instance.currentUser!.uid,
         messageindex: await fectchingStudentCurrentMessageIndex(studentDocID),
-        senderName: UserCredentialsController.adminModel?.adminName??"");
+        senderName:  senderName);
     final sendMessage = OnlineChatModel(
       message: messageController.text,
       messageindex: 1,
@@ -283,13 +285,14 @@ class AdminChatController extends GetxController {
         .get();
     int sentTeacherChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
     //countPlusone.data()?['chatIndex'] + 1 ?? 0;
-
+final senderName = UserCredentialsController.adminModel?.adminName 
+    ?? UserCredentialsController.addAdminModel?.username ?? '';
     final id = uuid.v1();
     final userDetails = SendUserStatusModel(
         block: false,
         docid: FirebaseAuth.instance.currentUser!.uid,
         messageindex: await fectchingTeacherCurrentMessageIndex(teacherDocID),
-        senderName: UserCredentialsController.adminModel?.adminName??"");
+        senderName: senderName);
     final sendMessage = OnlineChatModel(
       message: messageController.text,
       messageindex: 1,
