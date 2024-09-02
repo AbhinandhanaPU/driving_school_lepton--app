@@ -7,6 +7,7 @@ class CourseModel {
   String duration;
   String rate;
   String courseId;
+
   CourseModel({
     required this.courseName,
     required this.courseDes,
@@ -42,12 +43,13 @@ class CourseModel {
   }
 
   factory CourseModel.fromMap(Map<String, dynamic> map) {
+    // Convert each field to a String to handle type mismatches
     return CourseModel(
-      courseName: map['courseName'] ??"",
-      courseDes: map['courseDes'] ??"",
-      duration: map['duration'] ??"",
-      rate: map['rate'] ??"",
-      courseId: map['courseId'] ??"",
+      courseName: map['courseName']?.toString() ?? "",
+      courseDes: map['courseDes']?.toString() ?? "",
+      duration: map['duration']?.toString() ?? "",
+      rate: map['rate']?.toString() ?? "",
+      courseId: map['courseId']?.toString() ?? "",
     );
   }
 
