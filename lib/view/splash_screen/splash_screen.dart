@@ -185,7 +185,7 @@ Future<void> checkStudent(
           return StudentsMainHomeScreen();
         },
       ));
-    } else {
+    } else if (studentData.data()!['status'] == true) {
       await serverAuth.signOut().then((value) async {
         await SharedPreferencesHelper.clearSharedPreferenceData();
         UserCredentialsController.clearUserCredentials();
