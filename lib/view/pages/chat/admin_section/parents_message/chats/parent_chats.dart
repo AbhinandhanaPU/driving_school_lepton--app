@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -164,8 +163,7 @@ class _ParentsChatsScreenState extends State<ParentsChatsScreen> {
                                 height: size.height / 17,
                                 width: size.width / 1.3,
                                 child: TextField(
-                                  controller: studentChatController
-                                      .messageController,
+                                  controller: studentChatController.messageController,
                                   decoration: InputDecoration(
                                       hintText: "Send Message",
                                       border: OutlineInputBorder(
