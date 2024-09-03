@@ -193,77 +193,77 @@ class AdminTeacherChatController extends GetxController {
     }
   }
 
-  sentMessage(String teacherDocID) async {
-    var countPlusone = await FirebaseFirestore.instance
-        .collection('DrivingSchoolCollection')
-        .doc(UserCredentialsController.schoolId)
-        .collection('Teachers')
-        .doc(teacherDocID)
-        .collection('TeachersChatCounter')
-        .doc('c3cDX5ymHfITQ3AXcwSp')
-        .get();
-    int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
-    // countPlusone.data()?['chatIndex'] + 1;
-final senderName = UserCredentialsController.adminModel?.adminName 
-    ?? UserCredentialsController.addAdminModel?.username 
-    ?? '';
-    final id = uuid.v1();
-    final userDetails = SendUserStatusModel(
-        block: false,
-        docid: FirebaseAuth.instance.currentUser!.uid,
-        messageindex: await fectchingStudentCurrentMessageIndex(teacherDocID),
-        senderName:senderName);///// xyza
-    final sendMessage = OnlineChatModel(
-      message: messageController.text,
-      messageindex: 1,
-      chatid: FirebaseAuth.instance.currentUser!.uid,
-      docid: id,
-      sendTime: DateTime.now().toString(),
-    );
-    await FirebaseFirestore.instance
-       .collection('DrivingSchoolCollection')
-        .doc(UserCredentialsController.schoolId)
-        .collection('Admins')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('TeacherChats')
-        .doc(teacherDocID)
-        .collection('messages')
-        .doc(id)
-        .set(sendMessage.toMap())
-        .then((value) async {
-      await FirebaseFirestore.instance
-        .collection('DrivingSchoolCollection')
-        .doc(UserCredentialsController.schoolId)
-        .collection('Teachers')
-        .doc(teacherDocID)
-        .collection('AdminChats')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set(userDetails.toMap(), SetOptions(merge: true))
-          .then((value) async {
-        FirebaseFirestore.instance
-            .collection('DrivingSchoolCollection')
-            .doc(UserCredentialsController.schoolId)
-            .collection('Teachers')
-            .doc(teacherDocID)
-            .collection('AdminChats')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection('messages')
-            .doc(id)
-            .set(sendMessage.toMap())
-            .then((value) async {
-          await FirebaseFirestore.instance
-              .collection('DrivingSchoolCollection')
-              .doc(UserCredentialsController.schoolId)
-              .collection('Teachers')
-              .doc(teacherDocID)
-              .collection('TutorChatCounter')
-              .doc('c3cDX5ymHfITQ3AXcwSp')
-              .update({'chatIndex': sentStudentChatIndex}).then(
-                  (value) => messageController.clear());
-        });
-      });
-    });
-  }
+//   sentMessage(String teacherDocID) async {
+//     var countPlusone = await FirebaseFirestore.instance
+//         .collection('DrivingSchoolCollection')
+//         .doc(UserCredentialsController.schoolId)
+//         .collection('Teachers')
+//         .doc(teacherDocID)
+//         .collection('TeachersChatCounter')
+//         .doc('c3cDX5ymHfITQ3AXcwSp')
+//         .get();
+//     int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
+//     // countPlusone.data()?['chatIndex'] + 1;
+// final senderName = UserCredentialsController.adminModel?.adminName 
+//     ?? UserCredentialsController.addAdminModel?.username 
+//     ?? '';
+//     final id = uuid.v1();
+//     final userDetails = SendUserStatusModel(
+//         block: false,
+//         docid: FirebaseAuth.instance.currentUser!.uid,
+//         messageindex: await fectchingStudentCurrentMessageIndex(teacherDocID),
+//         senderName:senderName);///// xyza
+//     final sendMessage = OnlineChatModel(
+//       message: messageController.text,
+//       messageindex: 1,
+//       chatid: FirebaseAuth.instance.currentUser!.uid,
+//       docid: id,
+//       sendTime: DateTime.now().toString(),
+//     );
+//     await FirebaseFirestore.instance
+//        .collection('DrivingSchoolCollection')
+//         .doc(UserCredentialsController.schoolId)
+//         .collection('Admins')
+//         .doc(FirebaseAuth.instance.currentUser!.uid)
+//         .collection('TeacherChats')
+//         .doc(teacherDocID)
+//         .collection('messages')
+//         .doc(id)
+//         .set(sendMessage.toMap())
+//         .then((value) async {
+//       await FirebaseFirestore.instance
+//         .collection('DrivingSchoolCollection')
+//         .doc(UserCredentialsController.schoolId)
+//         .collection('Teachers')
+//         .doc(teacherDocID)
+//         .collection('AdminChats')
+//         .doc(FirebaseAuth.instance.currentUser!.uid)
+//         .set(userDetails.toMap(), SetOptions(merge: true))
+//           .then((value) async {
+//         FirebaseFirestore.instance
+//             .collection('DrivingSchoolCollection')
+//             .doc(UserCredentialsController.schoolId)
+//             .collection('Teachers')
+//             .doc(teacherDocID)
+//             .collection('AdminChats')
+//             .doc(FirebaseAuth.instance.currentUser!.uid)
+//             .collection('messages')
+//             .doc(id)
+//             .set(sendMessage.toMap())
+//             .then((value) async {
+//           await FirebaseFirestore.instance
+//               .collection('DrivingSchoolCollection')
+//               .doc(UserCredentialsController.schoolId)
+//               .collection('Teachers')
+//               .doc(teacherDocID)
+//               .collection('TutorChatCounter')
+//               .doc('c3cDX5ymHfITQ3AXcwSp')
+//               .update({'chatIndex': sentStudentChatIndex}).then(
+//                   (value) => messageController.clear());
+//         });
+//       });
+//     });
+//   }
 
   unBlockuser(String teacherDocID, BuildContext context) async {
     return showDialog(

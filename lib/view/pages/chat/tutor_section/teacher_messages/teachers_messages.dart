@@ -32,34 +32,30 @@ class TutorAdminMessagesScreen extends StatelessWidget {
           if (snapshots.hasData) {
             return ListView(
               children: [
-                SizedBox(  height: size.height * 0.72,
+                SizedBox(  
+                  height: size.height * 0.72,
                   child: ListView.separated(
                       itemBuilder: (context, index) {
+                          final doc = snapshots.data!.docs[index];
+                          final senderName = doc.data().containsKey('adminName') 
+                             ? doc['adminName']  : doc['senderName'];
                         return SizedBox(
                           height: 70,
                           child: ListTile(
                             onTap: () {
-                   
                             Navigator.push(context,MaterialPageRoute(builder: (context) {
-                     return TutorAdminChatsScreen(
-                                    adminName: snapshots.data!.docs[index]
-                                        ['senderName'],
-                                    adminDocID: snapshots.data!.docs[index]
-                                        ['docid'],
+                             return TutorAdminChatsScreen(
+                                    adminName: senderName,
+                                    //snapshots.data!.docs[index] ['senderName'],
+                                    adminDocID: snapshots.data!.docs[index]['docid'],
                                   );
                       },));
-                  
-                              // Get.off(() => ParentTeachersChatsScreen(
-                              //       teacherName: snapshots.data!.docs[index]
-                              //           ['teacherName'],
-                              //       teacherDocID: snapshots.data!.docs[index]
-                              //           ['docid'],
-                              //     ));
                             },
                             leading: const CircleAvatar(
                               radius: 30,
                             ),
-                            title: Text(snapshots.data!.docs[index]['senderName'],
+                            title: Text(senderName??"",
+                             // snapshots.data!.docs[index]['senderName'],
                                 style: const TextStyle(color: Colors.black)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
                             subtitle: const Text(
@@ -72,11 +68,9 @@ class TutorAdminMessagesScreen extends StatelessWidget {
                                     padding: const EdgeInsets.only(right: 20),
                                     child: CircleAvatar(
                                       radius: 14,
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 118, 229, 121),
+                                      backgroundColor: const Color.fromARGB(255, 118, 229, 121),
                                       child: Text(
-                                        snapshots.data!.docs[index]['messageindex']
-                                            .toString(),
+                                        snapshots.data!.docs[index]['messageindex'].toString(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 10,

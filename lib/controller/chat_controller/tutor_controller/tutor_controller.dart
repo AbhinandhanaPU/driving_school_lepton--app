@@ -9,6 +9,7 @@ import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/admin_model/admin_model.dart';
+import 'package:new_project_app/model/admin_model/data_base_model_ad.dart';
 
 import '../../../model/chat_model/chat_model.dart';
 
@@ -305,8 +306,8 @@ class TutorChatController extends GetxController {
           .then((value) async {
         await FirebaseFirestore.instance
             .collection('DrivingSchoolCollection')
-          .doc(UserCredentialsController.schoolId)
-          .collection("Admins")
+            .doc(UserCredentialsController.schoolId)
+            .collection("Admins")
             .doc(adminId)
             .collection('TeacherChats')
             .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -368,22 +369,47 @@ class TutorChatController extends GetxController {
   Future<void> fetchAdmin() async {
     searchTeacher.clear();
     try {
-      final QuerySnapshot<Map<String, dynamic>> snapshot =
+      final DocumentSnapshot<Map<String, dynamic>> snapshot =
           await FirebaseFirestore.instance
               .collection('DrivingSchoolCollection')
           .doc(UserCredentialsController.schoolId)
-          .collection("Admins")
+          //.collection("Admins")
               .get();
-      searchTeacher =
-          snapshot.docs.map((e) => AdminModel.fromMap(e.data())).toList();
+     // searchTeacher =snapshot.docs.map((e) => AdminModel.fromMap(e.data())).toList();
+      if (snapshot.exists) {
+      final adminData = snapshot.data();
+      if (adminData != null) {
+        searchTeacher.add(AdminModel.fromMap(adminData));
+      //  log('AdminModel: ${AdminModel.fromMap(adminData).adminName}');
+      }
+    } else {
+      showToast(msg: "Admin document not found");
+    }
     } catch (e) {
       showToast(msg: "Admin Data Error");
+    } 
+  }
+ List<AddAdminModel> searchAdminAdd = [];
+  Future<void> fetchAdminAdd() async {
+    searchAdminAdd.clear();
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await FirebaseFirestore.instance
+              .collection("DrivingSchoolCollection")
+              .doc(UserCredentialsController.schoolId)
+              .collection("Admins")
+              .get();
+      searchAdminAdd =
+          snapshot.docs.map((e) => AddAdminModel.fromMap(e.data())).toList();
+          
+    } catch (e) {
+      showToast(msg: "Add Admin Data Error");
     }
   }
-
   @override
   void onInit() async {
     await fetchAdmin();
+    await fetchAdminAdd();
     super.onInit();
   }
 }

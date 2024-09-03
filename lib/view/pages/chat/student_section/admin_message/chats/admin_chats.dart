@@ -15,7 +15,8 @@ class AdminsChatsScreen extends StatefulWidget {
  final String adminName;
 
   const AdminsChatsScreen(
-      {required this.adminDocID, required this.adminName, super.key});
+      {required this.adminDocID, 
+      required this.adminName, super.key});
 
   @override
   State<AdminsChatsScreen> createState() => _AdminsChatsScreenState();
@@ -320,7 +321,21 @@ class _AdminsChatsScreenState extends State<AdminsChatsScreen> {
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
         'studentname': UserCredentialsController.studentModel?.studentName,
-      });
+      }).then((value) async {
+        await FirebaseFirestore.instance
+             .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection('Students')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('AdminChats')
+            .doc(widget.adminDocID)
+            .set({
+          'block': false,
+          'docid': widget.adminDocID,
+          'messageindex': 0,
+          'adminName': widget.adminName,
+        });
+      });;
     }
   }
 

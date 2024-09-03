@@ -199,7 +199,7 @@ class AdminChatController extends GetxController {
   }
 
   sentMessagee(
-    String studentDocID,
+    String studentDocID,usercurrentIndex
   ) async {
     var countPlusone = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
@@ -210,6 +210,7 @@ class AdminChatController extends GetxController {
         .doc('c3cDX5ymHfITQ3AXcwSp')
         .get();
     int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
+        int sentIindex = usercurrentIndex + 1;
     //countPlusone.data()?['chatIndex'] + 1 ?? 0;
 final senderName = UserCredentialsController.adminModel?.adminName 
     ?? UserCredentialsController.addAdminModel?.username 
@@ -245,7 +246,10 @@ final senderName = UserCredentialsController.adminModel?.adminName
           .doc(studentDocID)
           .collection('AdminChats')
           .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set(userDetails.toMap(), SetOptions(merge: true))
+          .collection('messages')
+          .doc(id)
+          .set(sendMessage.toMap())
+         // .set(userDetails.toMap(), SetOptions(merge: true))
           .then((value) async {
         FirebaseFirestore.instance
             .collection('DrivingSchoolCollection')
@@ -254,9 +258,10 @@ final senderName = UserCredentialsController.adminModel?.adminName
             .doc(studentDocID)
             .collection('AdminChats')
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection('messages')
-            .doc(id)
-            .set(sendMessage.toMap())
+            // .collection('messages')
+            // .doc(id)
+            // .set(sendMessage.toMap())
+             .update({'messageindex': sentIindex})
             .then((value) async {
           await FirebaseFirestore.instance
               .collection('DrivingSchoolCollection')
@@ -273,7 +278,7 @@ final senderName = UserCredentialsController.adminModel?.adminName
   }
 
    sentMessageeToTutuorByAdmin(
-    String teacherDocID,
+    String teacherDocID,usercurrentIndex
   ) async {
     var countPlusone = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
@@ -287,12 +292,13 @@ final senderName = UserCredentialsController.adminModel?.adminName
     //countPlusone.data()?['chatIndex'] + 1 ?? 0;
 final senderName = UserCredentialsController.adminModel?.adminName 
     ?? UserCredentialsController.addAdminModel?.username ?? '';
+      int sentIindex = usercurrentIndex + 1;
     final id = uuid.v1();
-    final userDetails = SendUserStatusModel(
-        block: false,
-        docid: FirebaseAuth.instance.currentUser!.uid,
-        messageindex: await fectchingTeacherCurrentMessageIndex(teacherDocID),
-        senderName: senderName);
+    // final userDetails = SendUserStatusModel(
+    //     block: false,
+    //     docid: FirebaseAuth.instance.currentUser!.uid,
+    //     messageindex: await fectchingTeacherCurrentMessageIndex(teacherDocID),
+    //     senderName: senderName);
     final sendMessage = OnlineChatModel(
       message: messageController.text,
       messageindex: 1,
@@ -318,7 +324,10 @@ final senderName = UserCredentialsController.adminModel?.adminName
           .doc(teacherDocID)
           .collection('AdminChats')
           .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set(userDetails.toMap(), SetOptions(merge: true))
+           .collection('messages')
+            .doc(id)
+            .set(sendMessage.toMap())
+         // .set(userDetails.toMap(), SetOptions(merge: true))
           .then((value) async {
 
         FirebaseFirestore.instance
@@ -330,7 +339,8 @@ final senderName = UserCredentialsController.adminModel?.adminName
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .collection('messages')
             .doc(id)
-            .set(sendMessage.toMap())
+           .update({'messageindex': sentIindex})
+           // .set(sendMessage.toMap())
             .then((value) async {
           await FirebaseFirestore.instance
               .collection('DrivingSchoolCollection')
