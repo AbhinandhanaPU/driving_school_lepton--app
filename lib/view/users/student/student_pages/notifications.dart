@@ -81,6 +81,8 @@ class NotificationPartOfStd extends StatelessWidget {
           height: 350.h,
           child: StreamBuilder(
               stream: server
+                  .collection('DrivingSchoolCollection')
+                  .doc(UserCredentialsController.schoolId)
                   .collection('AllUsersDeviceID')
                   .doc(UserCredentialsController.currentUSerID)
                   .collection("Notification_Message")

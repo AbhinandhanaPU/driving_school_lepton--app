@@ -9,8 +9,9 @@ import 'package:new_project_app/controller/user_credentials/user_credentials_con
 import 'package:shimmer/shimmer.dart';
 
 class NotificationPartOfTr extends StatelessWidget {
-   NotificationPartOfTr({super.key});
-  final PushNotificationController pushNotificationController =Get.put(PushNotificationController());
+  NotificationPartOfTr({super.key});
+  final PushNotificationController pushNotificationController =
+      Get.put(PushNotificationController());
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -79,10 +80,12 @@ class NotificationPartOfTr extends StatelessWidget {
           height: 290.h,
           child: StreamBuilder(
               stream: server
+                  .collection('DrivingSchoolCollection')
+                  .doc(UserCredentialsController.schoolId)
                   .collection('AllUsersDeviceID')
                   .doc(UserCredentialsController.currentUSerID)
                   .collection("Notification_Message")
-                  .orderBy('dateTime',descending: true)
+                  .orderBy('dateTime', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -99,10 +102,11 @@ class NotificationPartOfTr extends StatelessWidget {
                               context: context,
                               builder: (context) {
                                 server
-                                .collection("DrivingSchoolCollection")
+                                    .collection("DrivingSchoolCollection")
                                     .doc(UserCredentialsController.schoolId)
                                     .collection('AllUsersDeviceID')
-                                    .doc(UserCredentialsController.currentUSerID)
+                                    .doc(
+                                        UserCredentialsController.currentUSerID)
                                     .collection("Notification_Message")
                                     .doc(data['docid'])
                                     .update({'open': true});
@@ -136,7 +140,8 @@ class NotificationPartOfTr extends StatelessWidget {
                                                   style: const TextStyle(
                                                       color: cWhite,
                                                       fontSize: 20,
-                                                      fontWeight: FontWeight.bold),
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                               ),
                                             ],

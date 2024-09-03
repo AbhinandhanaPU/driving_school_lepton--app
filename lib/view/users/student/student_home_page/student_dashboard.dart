@@ -1,8 +1,10 @@
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/images/images.dart';
+import 'package:new_project_app/controller/push_notificationController/pushnotificationController.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/users/student/quick_action/quick_action_part_std.dart';
 import 'package:new_project_app/view/users/student/quick_action/quick_action_widgets.dart';
@@ -18,8 +20,8 @@ class StudentDashboard extends StatefulWidget {
 }
 
 class _StudentDashboardState extends State<StudentDashboard> {
-  // final PushNotificationController pushNotificationController =
-  //     Get.put(PushNotificationController());
+  final PushNotificationController pushNotificationController =
+      Get.put(PushNotificationController());
 
   @override
   void initState() {
@@ -28,11 +30,11 @@ class _StudentDashboardState extends State<StudentDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    // pushNotificationController.getUserDeviceID().then((value) {
-    //   pushNotificationController.allUSerDeviceID(
-    //       UserCredentialsController.userRole!,
-    //       UserCredentialsController.currentUSerID!);
-    // });
+    pushNotificationController.getUserDeviceID().then((value) {
+      pushNotificationController.allUSerDeviceID(
+          UserCredentialsController.userRole!,
+          UserCredentialsController.currentUSerID!);
+    });
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 244, 244, 244),
       body: SafeArea(
