@@ -122,11 +122,9 @@ class SearchAdmin extends SearchDelegate {
       ...studentChatController.searchAdminAdd,
     ];
 
-    // Check if the query is empty
     if (query.isEmpty) {
       buildSuggestionList = combinedList;
     } else {
-      // Filter the combined list based on the query
       buildSuggestionList = combinedList
           .where((item) =>
               (item is AdminModel &&
@@ -136,7 +134,6 @@ class SearchAdmin extends SearchDelegate {
           .toList();
     }
 
-    // Check if the suggestion list is empty
     if (buildSuggestionList.isEmpty) {
       return ListTile(
         title: TextFontWidget(text: "Result not Found", fontsize: 18),
@@ -261,8 +258,14 @@ class SearchAdminForTutor extends SearchDelegate {
               // backgroundColor: Colors.transparent,
               body: ListView.separated(
                   itemBuilder: (context, index) {
-                    AdminModel data =
-                        AdminModel.fromMap(snapshots.data!.docs[index].data());
+                     var docData = snapshots.data!.docs[index].data();
+                    dynamic data;
+
+                    if (docData.containsKey('adminName')) {
+                      data = AdminModel.fromMap(docData);
+                    } else if (docData.containsKey('username')) {
+                      data = AddAdminModel.fromMap(docData);
+                    }
                     return Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -288,25 +291,11 @@ class SearchAdminForTutor extends SearchDelegate {
                                 children: [
                                   // Text(snapshots.data!.docs[index]['id']),
                                   Text(
-                                    data.adminName,
+                                      data is AdminModel
+                                        ? data.adminName
+                                        : (data is AddAdminModel? data.username : ''),
                                     style: GoogleFonts.poppins(fontSize: 16),
                                   ),
-                                  // sizedBoxH10,
-                                  // Text(
-                                  //   'Admission No. :${data.admissionNumber}',
-                                  //   style: GoogleFonts.poppins(fontSize: 12),
-                                  // ),
-                                  // sizedBoxH10,
-
-                                  // Text(
-                                  //   'Class & Division : ${data.classID}',
-                                  //   style: GoogleFonts.poppins(fontSize: 12),
-                                  // ),
-                                  // sizedBoxH10,
-                                  // Text(
-                                  //   'Phone No :${data.guardianID}',
-                                  //   style: GoogleFonts.poppins(fontSize: 12),
-                                  // ),
                                 ],
                               ),
                             )
@@ -328,13 +317,22 @@ class SearchAdminForTutor extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final List<AdminModel> buildSuggestionList;
+     final List<dynamic> buildSuggestionList; 
+    List<dynamic> combinedList = [
+      ...tutorChatController.searchTeacher,
+      ...tutorChatController.searchAdminAdd,
+    ];
+   // final List<AdminModel> buildSuggestionList;
     if (query.isEmpty) {
-      buildSuggestionList = tutorChatController.searchTeacher;
+      buildSuggestionList = combinedList;
     } else {
-      buildSuggestionList = tutorChatController.searchTeacher
+      // Filter the combined list based on the query
+      buildSuggestionList = combinedList
           .where((item) =>
-              item.adminName.toLowerCase().contains(query.toLowerCase()))
+              (item is AdminModel &&
+                  item.adminName.toLowerCase().contains(query.toLowerCase())) ||
+              (item is AddAdminModel &&
+                  item.username.toLowerCase().contains(query.toLowerCase())))
           .toList();
     }
     if (buildSuggestionList.isEmpty) {
@@ -344,79 +342,63 @@ class SearchAdminForTutor extends SearchDelegate {
     } else {
       return Scaffold(
         body: ListView.separated(
-            itemBuilder: (context, index) {
-              final screenSize = MediaQuery.of(context).size;
+          itemBuilder: (context, index) {
+            final screenSize = MediaQuery.of(context).size;
+            final item = buildSuggestionList[index];
 
-              return GestureDetector(
-                onTap: () {
-                  final data = buildSuggestionList[index];
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return TutorAdminChatsScreen(
-                          adminDocID: data.docid, adminName: data.adminName);
-                    },
-                  ));
-                  // Get.off(() => TeachersChatsScreen(
-                  //     teacherDocID: data.docid!,
-                  //     teacherName: data.teacherName!));
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+            return GestureDetector(
+              onTap: () {
+                   close(context, null);
+              Future.delayed(Duration.zero, () {
+                if (item is AdminModel) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return TutorAdminChatsScreen(
+                      adminDocID: item.docid,
+                      adminName: item.adminName,
+                    );
+                  }));
+                } else if (item is AddAdminModel) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return TutorAdminChatsScreen(
+                      adminDocID: item.docid,
+                      adminName: item.username,
+                    );
+                  }));
+                }
+              });
+            },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                height: screenSize.width / 8,
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.person_sharp,
+                      size: 30,
                     ),
-                    height: screenSize.width / 8,
-                    width: double.infinity,
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                            onTap: () {
-                              // ignore: unused_local_variable
-                              final data = buildSuggestionList[index];
-
-                              // _showlert(context, data);
-                            },
-                            child: const Icon(
-                              Icons.person_sharp,
-                              size: 30,
-                            )),
-                        kwidth40,
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Text(snapshots.data!.docs[index]['id']),
-                              Text(
-                                buildSuggestionList[index].adminName,
-                                style: GoogleFonts.poppins(fontSize: 16),
-                              ),
-                              // sizedBoxH10,
-                              // Text(
-                              //   'Admission No. :${buildSuggestionList[index].admissionNumber}',
-                              //   style: GoogleFonts.poppins(fontSize: 12),
-                              // ),
-                              // sizedBoxH10,
-
-                              // Text(
-                              //   'Class & Division : ${buildSuggestionList[index].classID}',
-                              //   style: GoogleFonts.poppins(fontSize: 12),
-                              // ),
-                              // sizedBoxH10,
-                              // Text(
-                              //   'Phone No :${buildSuggestionList[index].guardianID}',
-                              //   style: GoogleFonts.poppins(fontSize: 12),
-                              // ),
-                            ],
-                          ),
-                        )
-                      ],
-                    )),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const Divider();
-            },
-            itemCount: buildSuggestionList.length),
+                    kwidth40,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        item is AdminModel
+                            ? item.adminName
+                            : (item is AddAdminModel ? item.username : ""),
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const Divider();
+          },
+          itemCount: buildSuggestionList.length,
+        ),
       );
     }
   }

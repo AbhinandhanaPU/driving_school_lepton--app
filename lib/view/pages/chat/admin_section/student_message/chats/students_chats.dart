@@ -31,7 +31,7 @@ class _StudentsChatsScreenState extends State<StudentsChatsScreen> {
    connectingCurrentStudentToteacher();
     connectingTeacherToStudent();
     fectingStudentChatStatus();
-
+   fectchingStudentCurrentMessageIndex();
     getCurrentStudentMessageIndex().then((value) => resetUserMessageIndex());
     super.initState();
   }
@@ -185,11 +185,12 @@ class _StudentsChatsScreenState extends State<StudentsChatsScreen> {
                                       ),
                                       onPressed: () async {
                                         ///////////////////////////
-                                          String messageText = adminChatController.messageController.text.trim();
-                        if (messageText.isNotEmpty) {
-                          await adminChatController.sentMessagee(widget.studentDocID, );
-                          adminChatController.messageController.clear();
-                        } /////////////////////////
+                                        String messageText = adminChatController.messageController.text.trim();
+                                         if (messageText.isNotEmpty) {
+                                          await adminChatController.sentMessagee(widget.studentDocID, 
+                                          await fectchingStudentCurrentMessageIndex());
+                                         adminChatController.messageController.clear();
+                                         } /////////////////////////
 
                                       }),
                                 ),
@@ -213,7 +214,7 @@ class _StudentsChatsScreenState extends State<StudentsChatsScreen> {
     );
   }
 
-  Future getCurrentStudentMessageIndex() async {
+  Future<int>  getCurrentStudentMessageIndex() async {
     var vari = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
@@ -222,7 +223,31 @@ class _StudentsChatsScreenState extends State<StudentsChatsScreen> {
         .collection('StudentChats')
         .doc(widget.studentDocID)
         .get();
-    return currentStudentMessageIndex = vari.data()?['messageindex'];
+    //return
+     currentStudentMessageIndex = vari.data()?['messageindex']??0;
+    if (currentStudentMessageIndex == 0) {
+      return 0;
+    } else {
+      return currentStudentMessageIndex;
+    }
+  }
+   Future<int> fectchingStudentCurrentMessageIndex() async {
+    final studentData = await FirebaseFirestore.instance
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Students')
+        .doc(widget.studentDocID)
+        .collection('AdminChats')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (studentData.data()?['messageindex'] == null) {
+      return 1;
+    } else {
+      int currentIndex = studentData.data()!['messageindex'];
+      currentStudentMessageIndex = currentIndex + 1;
+      return currentStudentMessageIndex;
+    }
   }
 
   resetUserMessageIndex() async {
@@ -254,8 +279,27 @@ class _StudentsChatsScreenState extends State<StudentsChatsScreen> {
           .update({'messageindex': 0});
     });
   }
+Future<String?> fetchAdminName() async {
+    final userDoc = await FirebaseFirestore.instance
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Admins')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .get();
+
+    if (userDoc.exists) {
+        return userDoc.data()?['username'];
+    }
+    return null;
+}
 
   Future connectingCurrentStudentToteacher() async {
+    
+      String?  senderName = UserCredentialsController.adminModel?.adminName 
+    ?? UserCredentialsController.addAdminModel?.username ;
+      if (senderName == null) {
+        senderName = await fetchAdminName();
+    }
     final checkuser = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
@@ -276,7 +320,7 @@ class _StudentsChatsScreenState extends State<StudentsChatsScreen> {
         'block': false,
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
-        'adminName': UserCredentialsController.adminModel?.adminName,
+        'adminName': senderName,
       });
     }
   }

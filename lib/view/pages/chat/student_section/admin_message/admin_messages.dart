@@ -34,14 +34,16 @@ class AdminMessagesScreen extends StatelessWidget {
                       height: size.height * 0.72,
                   child: ListView.separated(
                       itemBuilder: (context, index) {
+                         final doc = snapshots.data!.docs[index];
+                       final adminName = doc.data().containsKey('adminName') 
+                           ? doc['adminName']: doc['senderName'];
                         return SizedBox(
                           height: 70,
                           child: ListTile(
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                 return AdminsChatsScreen(
-                                    adminName: snapshots.data!.docs[index]
-                                        ['senderName'],
+                                    adminName: adminName,
                                     adminDocID: snapshots.data!.docs[index]
                                         ['docid'],
                                   );
@@ -56,7 +58,7 @@ class AdminMessagesScreen extends StatelessWidget {
                             leading: const CircleAvatar(
                               radius: 30,
                             ),
-                            title: Text(snapshots.data?.docs[index]['senderName'],
+                            title: Text(adminName,
                                 style: const TextStyle(color: Colors.black)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
                             subtitle: const Text(

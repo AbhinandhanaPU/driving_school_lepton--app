@@ -36,6 +36,7 @@ class TutorStudentMessagesScreen extends StatelessWidget {
                 SizedBox( height: size.height * 0.72,
                   child: ListView.separated(
                       itemBuilder: (context, index) {
+                         final doc = snapshots.data!.docs[index];
                         return SizedBox(
                           height: 70,
                           child: ListTile(
@@ -43,10 +44,10 @@ class TutorStudentMessagesScreen extends StatelessWidget {
                    
                             Navigator.push(context,MaterialPageRoute(builder: (context) {
                      return TutorStdChatsScreen(
-                                    stdName: snapshots.data!.docs[index]
-                                        ['stdName'],
-                                    stdDocID: snapshots.data!.docs[index]
-                                        ['docid'],
+                                    // stdName: snapshots.data!.docs[index]
+                                    //     ['stdName'],
+                                    stdName : doc.data().containsKey('stdName') ? doc['stdName']  : doc['studentname'],
+                                    stdDocID: snapshots.data!.docs[index]['docid'],
                                   );
                       },));
                   

@@ -27,10 +27,12 @@ class _ParentsChatsScreenState extends State<ParentsChatsScreen> {
  // final teacherParentChatController = Get.put(AdminTeacherChatController());
 
   int currentStudentMessageIndex = 0;
+ int currentStudentMessageIndex2 =0;
   @override
   void initState() {
    connectingCurrentParentToteacher();
     connectingTeacherToParent();
+    getTeacherChatCounterIndex();
     fectingParentChatStatus();
     getCurrentParenttMessageIndex().then((value) => resetUserMessageIndex());
     super.initState();
@@ -182,14 +184,13 @@ class _ParentsChatsScreenState extends State<ParentsChatsScreen> {
                                       ),
                                       onPressed: () async {
                                         ///////////////////////////
-                                           String messageText = studentChatController.messageController.text.trim();
-                        if (messageText.isNotEmpty) {
-                          await studentChatController.sentMessageTeacher(widget.tutorDocID,
-                           await getCurrentParenttMessageIndex(),
-                                         // await getTeacherChatCounterIndex(), 
-                                          );
-                          studentChatController.messageController.clear();
-                        } 
+                                        String messageText = studentChatController.messageController.text.trim();
+                                            if (messageText.isNotEmpty) {
+                                             await studentChatController.sentMessageTeacher(widget.tutorDocID,
+                                             await getCurrentParenttMessageIndex(),
+                                             await getTeacherChatCounterIndex());
+                                             studentChatController.messageController.clear();
+                                        } 
                                         // if (teacherParentChatController
                                         //         .messageController.text.trim() != "") {
                                         //   teacherParentChatController .sentMessage(widget.tutorDocID);
@@ -234,7 +235,7 @@ class _ParentsChatsScreenState extends State<ParentsChatsScreen> {
       return currentStudentMessageIndex;
     }
   }
-  Future<int> getCurrentParenttMessageIndex() async {
+  Future<int>   getCurrentParenttMessageIndex() async {
     var vari = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
@@ -283,17 +284,17 @@ class _ParentsChatsScreenState extends State<ParentsChatsScreen> {
     });
   }
 
-  // Future<int> getTeacherChatCounterIndex() async {
-  //   var vari = await FirebaseFirestore.instance
-  //       .collection('DrivingSchoolCollection')
-  //       .doc(UserCredentialsController.schoolId)
-  //       .collection('Students')
-  //       .doc(FirebaseAuth.instance.currentUser?.uid)
-  //       .collection('TutorChatCounter')
-  //       .doc('c3cDX5ymHfITQ3AXcwSp')
-  //       .get();
-  //   return currentStudentMessageIndex2 = vari.data()?['chatIndex'] ?? 0;
-  // }
+  Future<int> getTeacherChatCounterIndex() async {
+    var vari = await FirebaseFirestore.instance
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Students')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection('TutorChatCounter')
+        .doc('c3cDX5ymHfITQ3AXcwSp')
+        .get();
+    return currentStudentMessageIndex2 = vari.data()?['chatIndex'] ?? 0;
+  }
 
 
   Future connectingCurrentParentToteacher() async {
@@ -317,23 +318,23 @@ class _ParentsChatsScreenState extends State<ParentsChatsScreen> {
         'block': false,
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
-        'teachername': UserCredentialsController.teacherModel?.teacherName,
+        'StudentName': UserCredentialsController.studentModel?.studentName,
+      })
+     .then((value) async {
+        await FirebaseFirestore.instance
+            .collection('DrivingSchoolCollection')
+           .doc(UserCredentialsController.schoolId)
+           .collection("Students")
+           .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('TeacherChats')
+            .doc(widget.tutorDocID)
+            .set({
+          'block': false,
+          'docid': widget.tutorDocID,
+          'messageindex': 0,
+          'teachername': widget.teachername,
+        });
       });
-     // .then((value) async {
-      //   await FirebaseFirestore.instance
-      //       .collection('DrivingSchoolCollection')
-      //      .doc(UserCredentialsController.schoolId)
-      //      .collection("Admins")
-      //      .doc(FirebaseAuth.instance.currentUser!.uid)
-      //       .collection('TeacherChats')
-      //       .doc(widget.tutorDocID)
-      //       .set({
-      //     'block': false,
-      //     'docid': widget.tutorDocID,
-      //     'messageindex': 0,
-      //     'teachername': widget.teachername,
-      //   });
-      // });
     }
   }
 

@@ -298,7 +298,7 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
     }
   }
 
-  Future connectingParentToteacher() async {
+  Future  connectingParentToteacher() async {
     final checkuser = await FirebaseFirestore.instance
        .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)

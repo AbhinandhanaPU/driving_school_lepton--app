@@ -96,9 +96,11 @@ final studentName = doc.data().containsKey('studentname')
                             //         return const Center();
                             //       }
                             //     }),
-                            trailing: snapshots.data!.docs[index]
-                                        ['messageindex'] ==
-                                    0
+                             subtitle: const Text(
+                              'Student',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            trailing: snapshots.data!.docs[index]['messageindex'] ==0
                                 ? const Text('')
                                 : Padding(
                                     padding: const EdgeInsets.only(right: 20),
