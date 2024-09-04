@@ -35,12 +35,14 @@ class Parent_TeachersChatsScreenState extends State<TutorAdminChatsScreen> {
    connectingParentToteacher();
    connectingCurrentParentToteacher();
     getParentTeacherChatIndex();
+    connectiadmintoteacher();
     getCurrentTeacherMessageIndex().then((value) => resetUserMessageIndex());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    log('adminName >>>>  ${widget.adminName}');
     log("getParentTeacherChatIndex().toString()$teacherIndex");
     final Size size = MediaQuery.of(context).size;
 
@@ -161,6 +163,7 @@ class Parent_TeachersChatsScreenState extends State<TutorAdminChatsScreen> {
                                         color: Colors.white,
                                       ),
                                       onPressed: () async {
+                                         log('adminName >>>>  ${widget.adminName}');
                                         log('adminName >>>>  ${widget.adminDocID}');
                                         ///////////////////////////
                                         ///
@@ -297,6 +300,33 @@ class Parent_TeachersChatsScreenState extends State<TutorAdminChatsScreen> {
     }
   }
 
+  
+  Future connectiadmintoteacher() async {
+    final checkuser = await FirebaseFirestore.instance
+      .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection('Teachers')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('AdminChats')
+            .doc(widget.adminDocID)
+        .get();
+    if (checkuser.data() == null) {
+      await FirebaseFirestore.instance
+            .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection('Teachers')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('AdminChats')
+            .doc(widget.adminDocID)
+          .set({
+        'block': false,
+        'docid': widget.adminDocID,
+        'messageindex': 0,
+        'adminName': widget.adminName,///AAADMIN
+      });
+    }
+  }
+
   Future connectingParentToteacher() async {
     final checkuser = await FirebaseFirestore.instance
        .collection('DrivingSchoolCollection')
@@ -308,8 +338,8 @@ class Parent_TeachersChatsScreenState extends State<TutorAdminChatsScreen> {
     if (checkuser.docs.isEmpty) {
       await FirebaseFirestore.instance
           .collection('DrivingSchoolCollection')
-        .doc(UserCredentialsController.schoolId)
-        .collection('Admins')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Admins')
           .doc(widget.adminDocID)
           .collection('TeacherChats')
           .doc(FirebaseAuth.instance.currentUser?.uid)

@@ -41,6 +41,7 @@ class _AdminsChatsScreenState extends State<AdminsChatsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log('adminName >>>>  ${widget.adminName}');
     log("getStudentAdminChatIndex().toString()$adminIndex");
     final Size size = MediaQuery.of(context).size;
 
@@ -161,6 +162,7 @@ class _AdminsChatsScreenState extends State<AdminsChatsScreen> {
                                         color: Colors.white,
                                       ),
                                       onPressed: () async {
+                                         log('adminName >>>>  ${widget.adminName}');
                                         log('adminName >>>>  ${widget.adminDocID}');
                                         ///////////////////////////
                                         ///
@@ -295,7 +297,21 @@ class _AdminsChatsScreenState extends State<AdminsChatsScreen> {
         'block': false,
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
-        'teachername': UserCredentialsController.teacherModel?.teacherName,
+         'studentname': UserCredentialsController.studentModel?.studentName,
+      }).then((value) async {
+        await FirebaseFirestore.instance
+             .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection('Students')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('AdminChats')
+            .doc(widget.adminDocID)
+            .set({
+          'block': false,
+          'docid': widget.adminDocID,
+          'messageindex': 0,
+          'adminName': widget.adminName,
+        });
       });
     }
   }
@@ -321,21 +337,7 @@ class _AdminsChatsScreenState extends State<AdminsChatsScreen> {
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
         'studentname': UserCredentialsController.studentModel?.studentName,
-      }).then((value) async {
-        await FirebaseFirestore.instance
-             .collection('DrivingSchoolCollection')
-            .doc(UserCredentialsController.schoolId)
-            .collection('Students')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection('AdminChats')
-            .doc(widget.adminDocID)
-            .set({
-          'block': false,
-          'docid': widget.adminDocID,
-          'messageindex': 0,
-          'adminName': widget.adminName,
-        });
-      });;
+      });
     }
   }
 

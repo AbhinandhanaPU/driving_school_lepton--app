@@ -19,6 +19,7 @@ class CourseModel {
     String? courseName,
     String? courseDes,
     String? duration,
+    // ignore: unnecessary_question_mark
     dynamic? rate,
     String? courseId,
   }) {

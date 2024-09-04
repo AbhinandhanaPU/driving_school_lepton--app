@@ -9,7 +9,7 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/group_chat_controller/group_StudentsAdmin_chat_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/group_chats/student_group/chats/chat_appBar.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/group_chats/student_group/chats/chat_appBar.dart';
 import '../../group_chat.dart';
 
 class StudentsGroupChats extends StatefulWidget {

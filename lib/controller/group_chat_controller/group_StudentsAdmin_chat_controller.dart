@@ -14,7 +14,7 @@ import 'package:new_project_app/controller/user_credentials/user_credentials_con
 import 'package:new_project_app/model/admin_model/data_base_model_ad.dart';
 import 'package:new_project_app/model/student_model/data_base_model.dart';
 import 'package:new_project_app/model/teacher_model/data_base_tr_model.dart';
-import 'package:new_project_app/view/pages/chat/group_chats/group_chat.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/group_chats/group_chat.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 import '../../model/chat_model/chat_model.dart';

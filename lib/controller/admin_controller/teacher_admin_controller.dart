@@ -6,12 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
-import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/teacher_model/teacher_model.dart';
-
-import '../../../model/chat_model/chat_model.dart';
-import '../../../model/chat_model/send_chatModel.dart';
 import '../../../model/student_model/data_base_model.dart';
 
 class AdminTeacherChatController extends GetxController {

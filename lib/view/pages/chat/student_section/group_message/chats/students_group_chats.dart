@@ -9,7 +9,7 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/controller/group_chat_controller/studentchat_controller/student_chat_controller.dart';
 
-import '../../../group_chats/group_chat.dart';
+import '../../../admin_section/group_chats/group_chat.dart';
 
 class StudenstGroupChatsScreen extends StatefulWidget {
  final String groupID;

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/controller/group_chat_controller/group_StudentsAdmin_chat_controller.dart';
-import 'package:new_project_app/view/pages/chat/group_chats/student_group/student_groups.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/group_chats/student_group/student_groups.dart';
 
 class GroupChatScreenForAdmin extends StatelessWidget {
   final AdminGroupChatController teacherGroupChatController =

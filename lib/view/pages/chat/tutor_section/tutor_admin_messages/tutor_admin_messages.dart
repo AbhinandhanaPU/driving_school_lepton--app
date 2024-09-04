@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/fonts/text_widget.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/student_section/search/search_teachers.dart';
+import 'package:new_project_app/view/pages/chat/tutor_section/search/search_admin_tr.dart';
 
 import 'chats/admin_vs_tutor.dart';
 
