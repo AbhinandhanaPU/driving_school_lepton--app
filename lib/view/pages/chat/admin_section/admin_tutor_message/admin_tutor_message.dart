@@ -4,13 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/admin_section/search_tutor/search_parents.dart';
-import 'package:new_project_app/view/pages/chat/student_section/tutor_msg/tutor_chats.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/search_tutor/search_tutor.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/admin_tutor_message/chats_tr/admin_tutor_chats.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 
-class TeachersMessagesScreen extends StatelessWidget {
-  const TeachersMessagesScreen({super.key});
+class AdminToTeachersMessagesScreen extends StatelessWidget {
+  const AdminToTeachersMessagesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class TeachersMessagesScreen extends StatelessWidget {
                           child: ListTile(
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return TeachersChatsScreen(
+                                return AdminToTeachersChatsScreen(
                                     teacherName: snapshots.data?.docs[index]
                                         ['teachername']??"",
                                     teacherDocID: snapshots.data!.docs[index]

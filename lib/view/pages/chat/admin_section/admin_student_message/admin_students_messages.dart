@@ -3,21 +3,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:new_project_app/constant/fonts/text_widget.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/tutor_section/search/search_std_tr.dart';
+import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
-import 'chats/std_vs_tutor.dart';
+import '../search_students/search_students.dart';
+import 'chats/admin_students_chats.dart';
 
-// import 'chats/teachers_chats.dart';
-
-class TutorStudentMessagesScreen extends StatelessWidget {
-  const TutorStudentMessagesScreen({super.key});
+class AdminToStudentsMessagesScreen extends StatelessWidget {
+  const AdminToStudentsMessagesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-     Future<void> showsearch() async {
-      await showSearch(context: context, delegate: SearchStudentsForTr());
+    Future<void> showsearch() async {
+      await showSearch(context: context, delegate: SearchStudentsForChat());
     }
 
     final size = MediaQuery.of(context).size;
@@ -25,7 +23,7 @@ class TutorStudentMessagesScreen extends StatelessWidget {
         stream: FirebaseFirestore.instance
             .collection('DrivingSchoolCollection')
             .doc(UserCredentialsController.schoolId)
-            .collection('Teachers')
+            .collection("Admins")
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .collection("StudentChats")
             .snapshots(),
@@ -33,56 +31,86 @@ class TutorStudentMessagesScreen extends StatelessWidget {
           if (snapshots.hasData) {
             return ListView(
               children: [
-                SizedBox( height: size.height * 0.72,
+                SizedBox(
+                  height: size.height * 0.72,
                   child: ListView.separated(
                       itemBuilder: (context, index) {
-                         final doc = snapshots.data!.docs[index];
+                        final doc = snapshots.data!.docs[index];
+final studentName = doc.data().containsKey('studentname') 
+    ? doc['studentname'] 
+    : doc['senderName'];
                         return SizedBox(
-                          height: 70,
+                          height: 70.h,
                           child: ListTile(
                             onTap: () {
-                   
-                            Navigator.push(context,MaterialPageRoute(builder: (context) {
-                     return TutorStdChatsScreen(
-                                    // stdName: snapshots.data!.docs[index]
-                                    //     ['stdName'],
-                                    stdName : doc.data().containsKey('stdName') ? doc['stdName']  : doc['studentname'],
-                                    stdDocID: snapshots.data!.docs[index]['docid'],
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return AdminToStudentsChatsScreen(
+                                    studentName: studentName,
+                                    studentDocID: snapshots.data!.docs[index]
+                                        ['docid'],
                                   );
-                      },));
-                  
-                              // Get.off(() => ParentTeachersChatsScreen(
-                              //       teacherName: snapshots.data!.docs[index]
-                              //           ['teacherName'],
-                              //       teacherDocID: snapshots.data!.docs[index]
+                                },
+                              ));
+                              // Get.off(() => StudentsChatsScreen(
+                              //       studentName: snapshots.data!.docs[index]
+                              //           ['studentname'],
+                              //       studentDocID: snapshots.data!.docs[index]
                               //           ['docid'],
                               //     ));
                             },
                             leading: const CircleAvatar(
                               radius: 30,
                             ),
-                            title: Text(
-                              snapshots.data!.docs[index].data().containsKey('stdName')
-    ? snapshots.data!.docs[index]['stdName']
-    : snapshots.data!.docs[index].data().containsKey('studentname')
-      ? snapshots.data!.docs[index]['studentname']
-      : '',
-                                style: const TextStyle(color: Colors.black)),
+                            title: Text(studentName,
+                               // snapshots.data!.docs[index]['studentname']??snapshots.data!.docs[index]['senderName'],
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 20.sp)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
-                            subtitle: const Text(
+                            // subtitle: FutureBuilder(
+                            //     future: FirebaseFirestore.instance
+                            //         .collection('DrivingSchoolCollection')
+                            //         .doc(UserCredentialsController.schoolId)
+                            //         .collection('Courses')
+                            //         .doc(snapshots.data?.docs[index]['courseId'])
+                            //         .get(),
+                            //     builder: (context, futuredata) {
+                            //       if (futuredata.hasData) {
+                            //         return Row(
+                            //           children: [
+                            //             Text(
+                            //               ' course: ',
+                            //               style: TextStyle(
+                            //                   color: Colors.black,
+                            //                   fontSize: 15.sp),
+                            //             ),
+                            //             Text(
+                            //               futuredata.data?.data()?['courseName'],
+                            //               style: TextStyle(
+                            //                   color: Colors.black,
+                            //                   fontSize: 15.sp),
+                            //             ),
+                            //           ],
+                            //         );
+                            //       } else {
+                            //         return const Center();
+                            //       }
+                            //     }),
+                             subtitle: const Text(
                               'Student',
                               style: TextStyle(color: Colors.black),
                             ),
-                            trailing: snapshots.data!.docs[index]['messageindex'] == 0
+                            trailing: snapshots.data!.docs[index]['messageindex'] ==0
                                 ? const Text('')
                                 : Padding(
                                     padding: const EdgeInsets.only(right: 20),
                                     child: CircleAvatar(
                                       radius: 14,
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 118, 229, 121),
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 118, 229, 121),
                                       child: Text(
-                                        snapshots.data!.docs[index]['messageindex']
+                                        snapshots
+                                            .data!.docs[index]['messageindex']
                                             .toString(),
                                         style: const TextStyle(
                                             color: Colors.black,

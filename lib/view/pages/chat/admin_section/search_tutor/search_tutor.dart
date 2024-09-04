@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
-import 'package:new_project_app/controller/chat_controller/admin_controller/admin_controller.dart';
+import 'package:new_project_app/controller/admin_controller/teacher_admin_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/model/student_model/data_base_model.dart';
-import 'package:new_project_app/view/pages/chat/admin_section/admin_student_message/chats/admin_students_chats.dart';
+import 'package:new_project_app/model/teacher_model/teacher_model.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/admin_tutor_message/chats_tr/admin_tutor_chats.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
-class SearchStudentsForChat extends SearchDelegate {
-  AdminChatController adminChatController = Get.put(AdminChatController());
+// }
+class SearcTeacherForChat extends SearchDelegate {
+  AdminTeacherChatController teacherParentChatController =  Get.put(AdminTeacherChatController());
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -35,18 +36,17 @@ class SearchStudentsForChat extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     return StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection("DrivingSchoolCollection")
+            .collection('DrivingSchoolCollection')
             .doc(UserCredentialsController.schoolId)
-            .collection("Admins")
+            .collection("Teachers")
             .snapshots(),
         builder: (context, snapshots) {
           var screenSize = MediaQuery.of(context).size;
           if (snapshots.hasData) {
             return Scaffold(
-              // backgroundColor: Colors.transparent,
               body: ListView.separated(
                   itemBuilder: (context, index) {
-                    AddStudentModel data = AddStudentModel.fromMap(
+                    TeacherModel data = TeacherModel.fromMap(
                         snapshots.data!.docs[index].data());
                     return Container(
                         decoration: BoxDecoration(
@@ -57,10 +57,7 @@ class SearchStudentsForChat extends SearchDelegate {
                         child: Row(
                           children: [
                             GestureDetector(
-                                onTap: () {
-                                  // log(data.profileImageUrl ?? "");
-                                  // _showlert(context, data);
-                                },
+                                onTap: () {},
                                 child: const CircleAvatar(
                                   radius: 60,
                                 )),
@@ -71,7 +68,7 @@ class SearchStudentsForChat extends SearchDelegate {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    data.studentName ?? "",
+                                    data.teacherName!,
                                     style: GoogleFonts.poppins(fontSize: 16),
                                   ),
                                 ],
@@ -95,13 +92,13 @@ class SearchStudentsForChat extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final List<AddStudentModel> buildSuggestionList;
+    final List<TeacherModel> buildSuggestionList;
     if (query.isEmpty) {
-      buildSuggestionList = adminChatController.searchStudents;
+      buildSuggestionList = teacherParentChatController.searchTeacher;
     } else {
-      buildSuggestionList = adminChatController.searchStudents
+      buildSuggestionList = teacherParentChatController.searchTeacher
           .where((item) =>
-              item.studentName!.toLowerCase().contains(query.toLowerCase()))
+              item.teacherName!.toLowerCase().contains(query.toLowerCase()))
           .toList();
     }
     if (buildSuggestionList.isEmpty) {
@@ -119,9 +116,9 @@ class SearchStudentsForChat extends SearchDelegate {
                   final data = buildSuggestionList[index];
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return AdminToStudentsChatsScreen(
-                          studentDocID: data.docid!,
-                          studentName: data.studentName!);
+                      return AdminToTeachersChatsScreen(
+                          teacherDocID: data.docid!,
+                          teacherName: data.teacherName!);
                     },
                   ));
                 },
@@ -137,8 +134,6 @@ class SearchStudentsForChat extends SearchDelegate {
                             onTap: () {
                               // ignore: unused_local_variable
                               final data = buildSuggestionList[index];
-
-                              // _showlert(context, data);
                             },
                             child: const Icon(
                               Icons.person_sharp,
@@ -150,12 +145,10 @@ class SearchStudentsForChat extends SearchDelegate {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Text(snapshots.data!.docs[index]['id']),
                               Text(
-                                buildSuggestionList[index].studentName!,
+                                buildSuggestionList[index].teacherName!,
                                 style: GoogleFonts.poppins(fontSize: 16),
                               ),
-                              // ),
                             ],
                           ),
                         )

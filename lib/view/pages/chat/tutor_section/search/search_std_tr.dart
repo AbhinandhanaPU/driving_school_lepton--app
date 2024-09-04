@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,11 +7,11 @@ import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/controller/chat_controller/admin_controller/admin_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/student_model/data_base_model.dart';
-import 'package:new_project_app/view/pages/chat/admin_section/admin_student_message/chats/admin_students_chats.dart';
+import 'package:new_project_app/view/pages/chat/tutor_section/teacher_std_msg/chats/std_vs_tutor.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
-
-class SearchStudentsForChat extends SearchDelegate {
-  AdminChatController adminChatController = Get.put(AdminChatController());
+class SearchStudentsForTr extends SearchDelegate {
+  AdminChatController adminChatController =
+      Get.put(AdminChatController());
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -37,7 +38,7 @@ class SearchStudentsForChat extends SearchDelegate {
         stream: FirebaseFirestore.instance
             .collection("DrivingSchoolCollection")
             .doc(UserCredentialsController.schoolId)
-            .collection("Admins")
+            .collection("Students")
             .snapshots(),
         builder: (context, snapshots) {
           var screenSize = MediaQuery.of(context).size;
@@ -71,7 +72,7 @@ class SearchStudentsForChat extends SearchDelegate {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    data.studentName ?? "",
+                                    data.studentName??"",
                                     style: GoogleFonts.poppins(fontSize: 16),
                                   ),
                                 ],
@@ -117,13 +118,14 @@ class SearchStudentsForChat extends SearchDelegate {
               return GestureDetector(
                 onTap: () {
                   final data = buildSuggestionList[index];
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return AdminToStudentsChatsScreen(
-                          studentDocID: data.docid!,
-                          studentName: data.studentName!);
-                    },
-                  ));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return TutorStdChatsScreen(
+                      stdDocID: data.docid!,
+                      stdName: data.studentName!);
+                  },));
+                  // Get.off(() => StudentsChatsScreen(
+                  //     studentDocID: data.docid!,
+                  //     studentName: data.studentName!));
                 },
                 child: Container(
                     decoration: BoxDecoration(
@@ -155,6 +157,21 @@ class SearchStudentsForChat extends SearchDelegate {
                                 buildSuggestionList[index].studentName!,
                                 style: GoogleFonts.poppins(fontSize: 16),
                               ),
+                              // sizedBoxH10,
+                              // Text(
+                              //   'Admission No. :${buildSuggestionList[index].admissionNumber}',
+                              //   style: GoogleFonts.poppins(fontSize: 12),
+                              // ),
+                              // sizedBoxH10,
+
+                              // Text(
+                              //   'Class & Division : ${buildSuggestionList[index].classID}',
+                              //   style: GoogleFonts.poppins(fontSize: 12),
+                              // ),
+                              // sizedBoxH10,
+                              // Text(
+                              //   'Phone No :${buildSuggestionList[index].guardianID}',
+                              //   style: GoogleFonts.poppins(fontSize: 12),
                               // ),
                             ],
                           ),

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,9 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-
 import '../../../model/chat_model/chat_model.dart';
-import '../../../model/chat_model/send_chatModel.dart';
 import '../../../model/student_model/data_base_model.dart';
 
 class AdminChatController extends GetxController {
@@ -198,9 +195,7 @@ class AdminChatController extends GetxController {
     }
   }
 
-  sentMessagee(
-    String studentDocID,usercurrentIndex
-  ) async {
+  sentMessagee( String studentDocID,usercurrentIndex) async {
     var countPlusone = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
@@ -212,15 +207,15 @@ class AdminChatController extends GetxController {
     int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
         int sentIindex = usercurrentIndex + 1;
     //countPlusone.data()?['chatIndex'] + 1 ?? 0;
-final senderName = UserCredentialsController.adminModel?.adminName 
-    ?? UserCredentialsController.addAdminModel?.username 
-    ?? '';
+// final senderName = UserCredentialsController.adminModel?.adminName 
+//     ?? UserCredentialsController.addAdminModel?.username 
+//     ?? '';
     final id = uuid.v1();
-    final userDetails = SendUserStatusModel(
-        block: false,
-        docid: FirebaseAuth.instance.currentUser!.uid,
-        messageindex: await fectchingStudentCurrentMessageIndex(studentDocID),
-        senderName:  senderName);
+    // final userDetails = SendUserStatusModel(
+    //     block: false,
+    //     docid: FirebaseAuth.instance.currentUser!.uid,
+    //     messageindex: await fectchingStudentCurrentMessageIndex(studentDocID),
+    //     senderName:  senderName);
     final sendMessage = OnlineChatModel(
       message: messageController.text,
       messageindex: 1,
@@ -277,9 +272,7 @@ final senderName = UserCredentialsController.adminModel?.adminName
     });
   }
 
-   sentMessageeToTutuorByAdmin(
-    String teacherDocID,usercurrentIndex
-  ) async {
+   sentMessageeToTutuorByAdmin( String teacherDocID,usercurrentIndex) async {
     var countPlusone = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
@@ -290,8 +283,8 @@ final senderName = UserCredentialsController.adminModel?.adminName
         .get();
     int sentTeacherChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
     //countPlusone.data()?['chatIndex'] + 1 ?? 0;
-final senderName = UserCredentialsController.adminModel?.adminName 
-    ?? UserCredentialsController.addAdminModel?.username ?? '';
+// final senderName = UserCredentialsController.adminModel?.adminName 
+//     ?? UserCredentialsController.addAdminModel?.username ?? '';
       int sentIindex = usercurrentIndex + 1;
     final id = uuid.v1();
     // final userDetails = SendUserStatusModel(
