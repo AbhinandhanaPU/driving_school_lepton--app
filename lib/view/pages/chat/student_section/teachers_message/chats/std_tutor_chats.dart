@@ -190,7 +190,6 @@ class _StudentToTutorChatsScreenState extends State<StudentToTutorChatsScreen> {
                                              await getCurrentParenttMessageIndex(),
                                              await getTeacherChatCounterIndex(),
                                              );
-                                           studentChatController.messageController.clear();
                                         } 
                                         /////////////////////////
                                       }),
@@ -315,7 +314,7 @@ class _StudentToTutorChatsScreenState extends State<StudentToTutorChatsScreen> {
         'block': false,
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
-        'StudentName': UserCredentialsController.studentModel?.studentName,
+        'studentName': UserCredentialsController.studentModel?.studentName,
       })
      .then((value) async {
         await FirebaseFirestore.instance

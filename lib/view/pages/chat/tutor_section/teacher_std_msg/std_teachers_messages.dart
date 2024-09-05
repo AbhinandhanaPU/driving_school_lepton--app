@@ -6,17 +6,14 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/fonts/text_widget.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/pages/chat/tutor_section/search/search_std_tr.dart';
-
 import 'chats/std_vs_tutor.dart';
-
-// import 'chats/teachers_chats.dart';
 
 class TutorStudentMessagesScreen extends StatelessWidget {
   const TutorStudentMessagesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-     Future<void> showsearch() async {
+    Future<void> showsearch() async {
       await showSearch(context: context, delegate: SearchStudentsForTr());
     }
 
@@ -33,57 +30,48 @@ class TutorStudentMessagesScreen extends StatelessWidget {
           if (snapshots.hasData) {
             return ListView(
               children: [
-                SizedBox( height: size.height * 0.72,
+                SizedBox(
+                  height: size.height * 0.72,
                   child: ListView.separated(
                       itemBuilder: (context, index) {
-                         final doc = snapshots.data!.docs[index];
+                        final doc = snapshots.data!.docs[index];
                         return SizedBox(
                           height: 70,
                           child: ListTile(
                             onTap: () {
-                   
-                            Navigator.push(context,MaterialPageRoute(builder: (context) {
-                     return TutorStdChatsScreen(
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return TutorStdChatsScreen(
                                     // stdName: snapshots.data!.docs[index]
                                     //     ['stdName'],
-                                    stdName : doc.data().containsKey('stdName') ? doc['stdName']  : doc['studentname'],
+                                    stdName:  doc.data().containsKey('StudentName')
+                                            ? doc['StudentName']
+                                            : doc['studentname'],
                                     stdDocID: snapshots.data!.docs[index]['docid'],
                                   );
-                      },));
-                  
-                              // Get.off(() => ParentTeachersChatsScreen(
-                              //       teacherName: snapshots.data!.docs[index]
-                              //           ['teacherName'],
-                              //       teacherDocID: snapshots.data!.docs[index]
-                              //           ['docid'],
-                              //     ));
+                                },
+                              ));
                             },
-                            leading: const CircleAvatar(
-                              radius: 30,
-                            ),
+                            leading: const CircleAvatar(radius: 30),
                             title: Text(
-                              snapshots.data!.docs[index].data().containsKey('stdName')
-    ? snapshots.data!.docs[index]['stdName']
-    : snapshots.data!.docs[index].data().containsKey('studentname')
-      ? snapshots.data!.docs[index]['studentname']
-      : '',
+                                snapshots.data!.docs[index].data() .containsKey('StudentName')
+                                    ? snapshots.data!.docs[index]['StudentName']
+                                    : snapshots.data!.docs[index].data().containsKey('studentname')
+                                    ? snapshots.data!.docs[index]['studentname']: '',
                                 style: const TextStyle(color: Colors.black)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
-                            subtitle: const Text(
-                              'Student',
+                            subtitle: const Text( 'Student',
                               style: TextStyle(color: Colors.black),
                             ),
-                            trailing: snapshots.data!.docs[index]['messageindex'] == 0
+                            trailing: snapshots.data!.docs[index]['messageindex'] ==0
                                 ? const Text('')
                                 : Padding(
                                     padding: const EdgeInsets.only(right: 20),
                                     child: CircleAvatar(
                                       radius: 14,
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 118, 229, 121),
+                                      backgroundColor: const Color.fromARGB(255, 118, 229, 121),
                                       child: Text(
-                                        snapshots.data!.docs[index]['messageindex']
-                                            .toString(),
+                                        snapshots.data!.docs[index]['messageindex'].toString(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 10,
@@ -110,8 +98,7 @@ class TutorStudentMessagesScreen extends StatelessWidget {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30.sp)),
+                              borderRadius: BorderRadius.all(Radius.circular(30.sp)),
                               color: const Color.fromARGB(255, 232, 224, 224)),
                           height: 50.h,
                           width: 200.w,

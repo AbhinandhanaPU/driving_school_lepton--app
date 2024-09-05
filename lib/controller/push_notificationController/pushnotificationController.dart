@@ -44,6 +44,8 @@ class PushNotificationController extends GetxController {
   }
     Future<void> removeAllNotification() async {
     await server
+        .collection("DrivingSchoolCollection")
+        .doc(UserCredentialsController.schoolId)
         .collection("AllUsersDeviceID")
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .collection("Notification_Message")
@@ -51,6 +53,8 @@ class PushNotificationController extends GetxController {
         .then((value) async {
       for (var i = 0; i < value.docs.length; i++) {
         await server
+            .collection("DrivingSchoolCollection")
+            .doc(UserCredentialsController.schoolId)
             .collection("AllUsersDeviceID")
             .doc(FirebaseAuth.instance.currentUser?.uid)
             .collection("Notification_Message")
@@ -63,6 +67,8 @@ class PushNotificationController extends GetxController {
   
   Future<void> removeSingleNotification(String docid) async {
     await server
+        .collection("DrivingSchoolCollection")
+        .doc(UserCredentialsController.schoolId)
         .collection("AllUsersDeviceID")
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .collection('Notification_Message')

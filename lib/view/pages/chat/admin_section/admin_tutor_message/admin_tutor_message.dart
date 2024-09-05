@@ -8,21 +8,21 @@ import 'package:new_project_app/view/pages/chat/admin_section/search_tutor/searc
 import 'package:new_project_app/view/pages/chat/admin_section/admin_tutor_message/chats_tr/admin_tutor_chats.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
-
 class AdminToTeachersMessagesScreen extends StatelessWidget {
   const AdminToTeachersMessagesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-     Future<void> showsearch() async {
+    Future<void> showsearch() async {
       await showSearch(context: context, delegate: SearcTeacherForChat());
     }
-        final size = MediaQuery.of(context).size;
-        return StreamBuilder(
+
+    final size = MediaQuery.of(context).size;
+    return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('DrivingSchoolCollection')
             .doc(UserCredentialsController.schoolId)
-            .collection('Admins')///////////////////////////////////correct
+            .collection('Admins') ///////////////////////////////////correct
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .collection("TeacherChats")
             .snapshots(),
@@ -38,29 +38,23 @@ class AdminToTeachersMessagesScreen extends StatelessWidget {
                           height: 70,
                           child: ListTile(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return AdminToTeachersChatsScreen(
-                                    teacherName: snapshots.data?.docs[index]
-                                        ['teachername']??"",
-                                    teacherDocID: snapshots.data!.docs[index]
-                                        ['docid'],
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return AdminToTeachersChatsScreen(
+                                    teacherName: snapshots.data?.docs[index] ['teachername'] ??"",
+                                    teacherDocID: snapshots.data!.docs[index] ['docid'],
                                   );
-                              },));
-                              // Get.off(() => AdminsChatsScreen(
-                              //       teacherName: snapshots.data!.docs[index]
-                              //           ['teacherName'],
-                              //       teacherDocID: snapshots.data!.docs[index]
-                              //           ['docid'],
-                              //     ));
+                                },
+                              ));
                             },
                             leading: const CircleAvatar(
                               radius: 30,
                             ),
-                            title: Text(snapshots.data?.docs[index]['teachername']??"",
+                            title: Text(
+                                snapshots.data?.docs[index]['teachername'] ??"",
                                 style: const TextStyle(color: Colors.black)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
-                            subtitle: const Text(
-                              'Teacher',
+                            subtitle: const Text(  'Teacher',
                               style: TextStyle(color: Colors.black),
                             ),
                             trailing: snapshots.data!.docs[index]['messageindex'] == 0
@@ -69,11 +63,9 @@ class AdminToTeachersMessagesScreen extends StatelessWidget {
                                     padding: const EdgeInsets.only(right: 20),
                                     child: CircleAvatar(
                                       radius: 14,
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 118, 229, 121),
+                                      backgroundColor: const Color.fromARGB( 255, 118, 229, 121),
                                       child: Text(
-                                        snapshots.data!.docs[index]['messageindex']
-                                            .toString(),
+                                        snapshots.data!.docs[index]['messageindex'].toString(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 10,
@@ -89,7 +81,7 @@ class AdminToTeachersMessagesScreen extends StatelessWidget {
                       },
                       itemCount: snapshots.data!.docs.length),
                 ),
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
@@ -100,8 +92,7 @@ class AdminToTeachersMessagesScreen extends StatelessWidget {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30.sp)),
+                              borderRadius: BorderRadius.all(Radius.circular(30.sp)),
                               color: const Color.fromARGB(255, 232, 224, 224)),
                           height: 50.h,
                           width: 200.w,

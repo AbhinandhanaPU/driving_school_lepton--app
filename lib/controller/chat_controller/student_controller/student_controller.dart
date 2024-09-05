@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:new_project_app/model/admin_model/data_base_model_ad.dart';
 import 'package:new_project_app/model/chat_model/send_chatModel.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/model/teacher_model/teacher_model.dart';
+
 import '../../../model/chat_model/chat_model.dart';
 
 class StudentChatController extends GetxController {
@@ -94,8 +96,7 @@ class StudentChatController extends GetxController {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+                padding:const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
@@ -104,31 +105,24 @@ class StudentChatController extends GetxController {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      '$message              ',
+                    Text('$message              ',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         color: Color.fromARGB(255, 0, 0, 0),
                       ),
                     ),
-                    Text(
-                      timeformattedd,
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 90, 90, 90), fontSize: 10),
+                    Text(timeformattedd,
+                      style: const TextStyle(color: Color.fromARGB(255, 90, 90, 90), fontSize: 10),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 05,
-              ),
+              const SizedBox( height: 05,),
               Padding(
                 padding: const EdgeInsets.only(right: 10),
-                child: Text(
-                  dayformattedd,
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 90, 90, 90), fontSize: 10),
+                child: Text( dayformattedd,
+                  style: const TextStyle(color: Color.fromARGB(255, 90, 90, 90), fontSize: 10),
                 ),
               ),
             ],
@@ -161,31 +155,25 @@ class StudentChatController extends GetxController {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    '$message              ',
+                  Text('$message              ',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
                   ),
-                  Text(
-                    timeformattedd,
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 90, 90, 90), fontSize: 10),
+                  Text(timeformattedd,
+                    style: const TextStyle( color: Color.fromARGB(255, 90, 90, 90), fontSize: 10),
                   ),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 05,
-            ),
+            const SizedBox( height: 05, ),
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Text(
                 dayformattedd,
-                style: const TextStyle(
-                    color: Color.fromARGB(255, 90, 90, 90), fontSize: 10),
+                style: const TextStyle( color: Color.fromARGB(255, 90, 90, 90), fontSize: 10),
               ),
             ),
           ],
@@ -256,15 +244,36 @@ class StudentChatController extends GetxController {
             // .set(sendMessage.toMap())
            .update({'messageindex': sentIindex})
             .then((value) async {
-          await FirebaseFirestore.instance
-              .collection('DrivingSchoolCollection')
-              .doc(UserCredentialsController.schoolId)
-              .collection("Teachers")
-              .doc(teacherId)
-              .collection('StudentChatCounter')
-              .doc('F0Ikn1UouYIkqmRFKIpg')
-              .update({'chatIndex': sentStudentChatIndex})
-              .then((value) => messageController.clear());
+           var docSnapshot = await FirebaseFirestore.instance
+      .collection('DrivingSchoolCollection')
+      .doc(UserCredentialsController.schoolId)
+      .collection("Teachers")
+      .doc(teacherId)
+      .collection('StudentChatCounter')
+      .doc('F0Ikn1UouYIkqmRFKIpg')
+      .get();
+
+  if (docSnapshot.exists) {
+    // Document exists, proceed with update
+    await FirebaseFirestore.instance
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection("Teachers")
+        .doc(teacherId)
+        .collection('StudentChatCounter')
+        .doc('F0Ikn1UouYIkqmRFKIpg')
+        .update({'chatIndex': sentStudentChatIndex});
+  } else {
+    // Document does not exist, create it
+    await FirebaseFirestore.instance
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection("Teachers")
+        .doc(teacherId)
+        .collection('StudentChatCounter')
+        .doc('F0Ikn1UouYIkqmRFKIpg')
+        .set({'chatIndex': sentStudentChatIndex}, SetOptions(merge: true));
+  } messageController.clear();
         });
       });
     });
@@ -288,83 +297,6 @@ class StudentChatController extends GetxController {
     }
   }
 
-  // sentMessageBYTeacher(String teacherId, int usercurrentIndex,
-  //     int studentchatCounterIndex) async {
-  //   var countPlusone = await FirebaseFirestore.instance
-  //       .collection('DrivingSchoolCollection')
-  //       .doc(UserCredentialsController.schoolId)
-  //       .collection("Teachers")
-  //       .doc(teacherId)
-  //       .collection('StudentChatCounter')
-  //       .doc('F0Ikn1UouYIkqmRFKIpg')
-  //       .get();
-
-  //   int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
-  //   int sentIindex = usercurrentIndex + 1;
-  //   log('usercurrentIndex  $usercurrentIndex');
-  //   // log("Student id${FirebaseAuth.instance.currentUser!.uid}");
-  //   final id = uuid.v1();
-  //      final userDetails = SendUserStatusModel(
-  //       block: false,
-  //       docid: FirebaseAuth.instance.currentUser!.uid,
-  //       messageindex: await fectchingTeacherCurrentMessageIndex(teacherId),
-  //       senderName: UserCredentialsController.studentModel?.studentName??"");
-  //   final sendMessage = OnlineChatModel(
-  //     message: messageController.text,
-  //     messageindex: 1,
-  //     chatid: FirebaseAuth.instance.currentUser!.uid,
-  //     docid: id,
-  //     sendTime: DateTime.now().toString(),
-  //   );
-  //   await FirebaseFirestore.instance
-  //       .collection('DrivingSchoolCollection')
-  //       .doc(UserCredentialsController.schoolId)
-  //       .collection('Students')
-  //       .doc(FirebaseAuth.instance.currentUser!.uid)
-  //       .collection('TeacherChats')
-  //       .doc(teacherId)
-  //       .collection('messages')
-  //       .doc(id)
-  //       .set(sendMessage.toMap())
-  //       .then((value) async {
-  //     await FirebaseFirestore.instance
-  //         .collection('DrivingSchoolCollection')
-  //         .doc(UserCredentialsController.schoolId)
-  //         .collection("Teachers")
-  //         .doc(teacherId)
-  //         .collection('StudentChats')
-  //         .doc(FirebaseAuth.instance.currentUser!.uid)
-  //      //  .set(userDetails.toMap(), SetOptions(merge: true))
-  //         .collection('messages')
-  //         .doc(id)
-  //         .set(sendMessage.toMap())
-  //         .then((value) async {
-
-  //       await FirebaseFirestore.instance
-  //           .collection('DrivingSchoolCollection')
-  //           .doc(UserCredentialsController.schoolId)
-  //           .collection("Teachers")
-  //           .doc(teacherId)
-  //           .collection('StudentChats')
-  //           .doc(FirebaseAuth.instance.currentUser!.uid)
-  //           // .collection('messages')
-  //           // .doc(id)
-  //           // .set(sendMessage.toMap())
-  //          .update({'messageindex': sentIindex})
-  //           .then((value) async {
-  //         await FirebaseFirestore.instance
-  //             .collection('DrivingSchoolCollection')
-  //             .doc(UserCredentialsController.schoolId)
-  //             .collection("Teachers")
-  //             .doc(teacherId)
-  //             .collection('StudentChatCounter')
-  //             .doc('F0Ikn1UouYIkqmRFKIpg')
-  //             .update({'chatIndex': sentStudentChatIndex}).then(
-  //                 (value) => messageController.clear());
-  //       });
-  //     });
-  //   });
-  // }
    Future<int> fectchingTeacherCurrentMessageIndex(String teacherId) async {
     final teacherData = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
@@ -599,3 +531,81 @@ class StudentChatController extends GetxController {
     super.onInit();
   }
 }
+
+  // sentMessageBYTeacher(String teacherId, int usercurrentIndex,
+  //     int studentchatCounterIndex) async {
+  //   var countPlusone = await FirebaseFirestore.instance
+  //       .collection('DrivingSchoolCollection')
+  //       .doc(UserCredentialsController.schoolId)
+  //       .collection("Teachers")
+  //       .doc(teacherId)
+  //       .collection('StudentChatCounter')
+  //       .doc('F0Ikn1UouYIkqmRFKIpg')
+  //       .get();
+
+  //   int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
+  //   int sentIindex = usercurrentIndex + 1;
+  //   log('usercurrentIndex  $usercurrentIndex');
+  //   // log("Student id${FirebaseAuth.instance.currentUser!.uid}");
+  //   final id = uuid.v1();
+  //      final userDetails = SendUserStatusModel(
+  //       block: false,
+  //       docid: FirebaseAuth.instance.currentUser!.uid,
+  //       messageindex: await fectchingTeacherCurrentMessageIndex(teacherId),
+  //       senderName: UserCredentialsController.studentModel?.studentName??"");
+  //   final sendMessage = OnlineChatModel(
+  //     message: messageController.text,
+  //     messageindex: 1,
+  //     chatid: FirebaseAuth.instance.currentUser!.uid,
+  //     docid: id,
+  //     sendTime: DateTime.now().toString(),
+  //   );
+  //   await FirebaseFirestore.instance
+  //       .collection('DrivingSchoolCollection')
+  //       .doc(UserCredentialsController.schoolId)
+  //       .collection('Students')
+  //       .doc(FirebaseAuth.instance.currentUser!.uid)
+  //       .collection('TeacherChats')
+  //       .doc(teacherId)
+  //       .collection('messages')
+  //       .doc(id)
+  //       .set(sendMessage.toMap())
+  //       .then((value) async {
+  //     await FirebaseFirestore.instance
+  //         .collection('DrivingSchoolCollection')
+  //         .doc(UserCredentialsController.schoolId)
+  //         .collection("Teachers")
+  //         .doc(teacherId)
+  //         .collection('StudentChats')
+  //         .doc(FirebaseAuth.instance.currentUser!.uid)
+  //      //  .set(userDetails.toMap(), SetOptions(merge: true))
+  //         .collection('messages')
+  //         .doc(id)
+  //         .set(sendMessage.toMap())
+  //         .then((value) async {
+
+  //       await FirebaseFirestore.instance
+  //           .collection('DrivingSchoolCollection')
+  //           .doc(UserCredentialsController.schoolId)
+  //           .collection("Teachers")
+  //           .doc(teacherId)
+  //           .collection('StudentChats')
+  //           .doc(FirebaseAuth.instance.currentUser!.uid)
+  //           // .collection('messages')
+  //           // .doc(id)
+  //           // .set(sendMessage.toMap())
+  //          .update({'messageindex': sentIindex})
+  //           .then((value) async {
+  //         await FirebaseFirestore.instance
+  //             .collection('DrivingSchoolCollection')
+  //             .doc(UserCredentialsController.schoolId)
+  //             .collection("Teachers")
+  //             .doc(teacherId)
+  //             .collection('StudentChatCounter')
+  //             .doc('F0Ikn1UouYIkqmRFKIpg')
+  //             .update({'chatIndex': sentStudentChatIndex}).then(
+  //                 (value) => messageController.clear());
+  //       });
+  //     });
+  //   });
+  // }

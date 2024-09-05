@@ -105,8 +105,7 @@ class NotificationPartOfTr extends StatelessWidget {
                                     .collection("DrivingSchoolCollection")
                                     .doc(UserCredentialsController.schoolId)
                                     .collection('AllUsersDeviceID')
-                                    .doc(
-                                        UserCredentialsController.currentUSerID)
+                                    .doc( UserCredentialsController.currentUSerID)
                                     .collection("Notification_Message")
                                     .doc(data['docid'])
                                     .update({'open': true});
