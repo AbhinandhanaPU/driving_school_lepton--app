@@ -160,7 +160,7 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
                                         tutorChatController.sentMessagesToStd(
                                           widget.stdDocID,
                                           await getCurrentTeacherMessageIndex(),
-                                          await getTeacherChatCounterIndex(),
+                                          await getTutorChatCounterIndex(),
                                           //await connectingParentToteacher(),
                                         );
                                         /////////////////////////
@@ -252,7 +252,7 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
     });
   }
 
-  Future<int> getTeacherChatCounterIndex() async {
+  Future<int> getTutorChatCounterIndex() async {
     var vari = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
@@ -355,7 +355,7 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
       return;
     }
   }
-  // resetUserMessageIndex() async {
+  // resetUserMessageIndex() async {  
   //   final messageIndexNotify =
   //       widget.tutorMessageCounter - currentStudentMessageIndex;
   //   await FirebaseFirestore.instance

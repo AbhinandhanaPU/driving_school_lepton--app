@@ -6,16 +6,15 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/controller/student_controller/student_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
+
 import '../search_students/search_students.dart';
 import 'chats/admin_students_chats.dart';
 
 class AdminToStudentsMessagesScreen extends StatelessWidget {
-   AdminToStudentsMessagesScreen({super.key});
+  AdminToStudentsMessagesScreen({super.key});
 
   final StudentController studentController = Get.put(StudentController());
-  
   @override
   Widget build(BuildContext context) {
     Future<void> showsearch() async {
@@ -51,88 +50,58 @@ class AdminToStudentsMessagesScreen extends StatelessWidget {
                                 builder: (context) {
                                   return AdminToStudentsChatsScreen(
                                     studentName: studentName,
-                                    studentDocID: snapshots.data!.docs[index]['docid'],
+                                    studentDocID: snapshots.data!.docs[index] ['docid'],
                                   );
                                 },
                               ));
                             },
-                            leading: const CircleAvatar( radius: 30,),
+                            leading: Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: const CircleAvatar( radius: 30,),
+                            ),
                             title: Text(studentName,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20.sp)),
-                            contentPadding: const EdgeInsetsDirectional.all(1),
-                  //           subtitle:  StreamBuilder<List<String>>(
-                  //   stream: studentController.fetchStudentsCourse(StudentModel(docid: studentDocID)),
-                  //   builder: (context, snapshot) {
-                  //     if (snapshot.connectionState == ConnectionState.waiting) {
-                  //       return const Center(child: CircularProgressIndicator());
-                  //     } else if (snapshot.hasError) {
-                  //       return Text('Error: ${snapshot.error}');
-                  //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  //       return TextFontWidget(
-                  //         text: "Course not found",
-                  //         fontsize: 18.h,
-                  //         fontWeight: FontWeight.bold,
-                  //         color: cblack,
-                  //       );
-                  //     } else {
-                  //       String courses = snapshot.data!.join(',\n ');
-                  //       return TextFontWidget(
-                  //         text: courses,
-                  //         fontsize: 18.h,
-                  //         fontWeight: FontWeight.bold,
-                  //         color: themeColor,
-                  //       );
-                  //     }
-                  //   },
-                  // ),
-                            // subtitle: FutureBuilder(
-                            //     future: FirebaseFirestore.instance
-                            //         .collection('DrivingSchoolCollection')
-                            //         .doc(UserCredentialsController.schoolId)
-                            //         .collection('Courses')
-                            //         .doc(snapshots.data?.docs[index]['courseId'])
-                            //         .get(),
-                            //     builder: (context, futuredata) {
-                            //       if (futuredata.hasData) {
-                            //         return Row(
-                            //           children: [
-                            //             Text(
-                            //               ' course: ',
-                            //               style: TextStyle(
-                            //                   color: Colors.black,
-                            //                   fontSize: 15.sp),
-                            //             ),
-                            //             Text(
-                            //               futuredata.data?.data()?['courseName'],
-                            //               style: TextStyle(
-                            //                   color: Colors.black,
-                            //                   fontSize: 15.sp),
-                            //             ),
-                            //           ],
-                            //         );
-                            //       } else {
-                            //         return const Center();
-                            //       }
-                            //     }),
+                                style: TextStyle( color: Colors.black, fontSize: 20.sp)),
+                            contentPadding:const EdgeInsetsDirectional.all(1),
+                            subtitle: StreamBuilder<List<String>>(
+                              stream:studentController.fetchStudentsCourseChat(
+                                      snapshots.data!.docs[index]['docid']),
+                              builder: (context, snaps) {
+                                if (snaps.connectionState ==ConnectionState.waiting) {
+                                  return const Center(child: CircularProgressIndicator());
+                                } else if (snaps.hasError) {
+                                  return Text('Error: ${snaps.error}');
+                                } else if (!snaps.hasData ||
+                                    snaps.data!.isEmpty) {
+                                  return TextFontWidget(
+                                    text: "Course not found",
+                                    fontsize: 15.h,
+                                    fontWeight: FontWeight.bold,
+                                    color: cblack,
+                                  );
+                                } else {
+                                  String courses = snaps.data!.join(', \n');
+                                  return TextFontWidget(
+                                    text: courses,
+                                    fontsize: 15.h,
+                                    fontWeight: FontWeight.bold,
+                                    color: themeColor,
+                                  );
+                                }
+                              },
+                            ),
                             // subtitle: const Text(
                             //   'Student',
                             //   style: TextStyle(color: Colors.black),
                             // ),
-                            trailing: snapshots.data!.docs[index]
-                                        ['messageindex'] ==
-                                    0
+                            trailing: snapshots.data!.docs[index] ['messageindex'] ==0
                                 ? const Text('')
                                 : Padding(
-                                    padding: const EdgeInsets.only(right: 20),
+                                    padding: const EdgeInsets.only(right: 20,),
                                     child: CircleAvatar(
                                       radius: 14,
                                       backgroundColor: const Color.fromARGB(
                                           255, 118, 229, 121),
-                                      child: Text(
-                                        snapshots
-                                            .data!.docs[index]['messageindex']
-                                            .toString(),
+                                      child: Text( snapshots.data!.docs[index]['messageindex'].toString(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 10,
@@ -144,7 +113,12 @@ class AdminToStudentsMessagesScreen extends StatelessWidget {
                         );
                       },
                       separatorBuilder: (context, index) {
-                        return const Divider();
+                        return Column(
+                          children: [
+                            SizedBox(height: 4,),
+                            const Divider(),
+                          ],
+                        );
                       },
                       itemCount: snapshots.data!.docs.length),
                 ),

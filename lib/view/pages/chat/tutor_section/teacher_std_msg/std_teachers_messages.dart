@@ -3,14 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/fonts/text_widget.dart';
+import 'package:new_project_app/controller/student_controller/student_controller.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/view/pages/chat/tutor_section/search/search_std_tr.dart';
 import 'chats/std_vs_tutor.dart';
 
 class TutorStudentMessagesScreen extends StatelessWidget {
-  const TutorStudentMessagesScreen({super.key});
+   TutorStudentMessagesScreen({super.key});
 
+  final StudentController studentController = Get.put(StudentController());
   @override
   Widget build(BuildContext context) {
     Future<void> showsearch() async {
@@ -45,8 +48,7 @@ class TutorStudentMessagesScreen extends StatelessWidget {
                                     // stdName: snapshots.data!.docs[index]
                                     //     ['stdName'],
                                     stdName:  doc.data().containsKey('StudentName')
-                                            ? doc['StudentName']
-                                            : doc['studentname'],
+                                            ? doc['StudentName']: doc['studentname'],
                                     stdDocID: snapshots.data!.docs[index]['docid'],
                                   );
                                 },
@@ -60,8 +62,34 @@ class TutorStudentMessagesScreen extends StatelessWidget {
                                     ? snapshots.data!.docs[index]['studentname']: '',
                                 style: const TextStyle(color: Colors.black)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
-                            subtitle: const Text( 'Student',
-                              style: TextStyle(color: Colors.black),
+                            // subtitle: const Text( 'Student',
+                            //   style: TextStyle(color: Colors.black),
+                            // ),
+                              subtitle: StreamBuilder<List<String>>(
+                              stream:studentController.fetchStudentsCourseChat(
+                                      snapshots.data!.docs[index]['docid']),
+                              builder: (context, snaps) {
+                                if (snaps.connectionState ==ConnectionState.waiting) {
+                                  return const Center(child: CircularProgressIndicator());
+                                } else if (snaps.hasError) {
+                                  return Text('Error: ${snaps.error}');
+                                } else if (!snaps.hasData ||snaps.data!.isEmpty) {
+                                  return TextFontWidget(
+                                    text: "Course not found",
+                                    fontsize: 15.h,
+                                    fontWeight: FontWeight.bold,
+                                    color: cblack,
+                                  );
+                                } else {
+                                  String courses = snaps.data!.join(', \n');
+                                  return TextFontWidget(
+                                    text: courses,
+                                    fontsize: 15.h,
+                                    fontWeight: FontWeight.bold,
+                                    color: themeColor,
+                                  );
+                                }
+                              },
                             ),
                             trailing: snapshots.data!.docs[index]['messageindex'] ==0
                                 ? const Text('')

@@ -161,7 +161,7 @@ class Parent_TeachersChatsScreenState extends State<TutorAdminChatsScreen> {
                                         parentChatController.sentMessages(
                                           widget.adminDocID,
                                           await getCurrentTeacherMessageIndex(),
-                                          await getTeacherChatCounterIndex(),
+                                          await getTutorChatCounterIndex(),
                                         );
                                         /////////////////////////
                                       }),
@@ -252,7 +252,7 @@ class Parent_TeachersChatsScreenState extends State<TutorAdminChatsScreen> {
     });
   }
 
-  Future<int> getTeacherChatCounterIndex() async {
+  Future<int> getTutorChatCounterIndex() async {
     var vari = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)

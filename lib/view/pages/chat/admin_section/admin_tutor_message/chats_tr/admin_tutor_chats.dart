@@ -164,7 +164,7 @@ class _AdminToTeachersChatsScreenState
                                           await adminChatController.sentMessageeToTutuorByAdmin(
                                             widget.teacherDocID,
                                             await getCurrentTeacherMessageIndex(),
-                                            //  await getTeacherChatCounterIndex(),
+                                            //  await getTutorChatCounterIndex(),
                                           );
                                           adminChatController.messageController.clear();
                                         }
@@ -211,9 +211,9 @@ class _AdminToTeachersChatsScreenState
     var vari = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
-        .collection('TeacherChats')
+        .collection('Teachers')
         .doc(widget.teacherDocID)
-        .collection('Admins')
+        .collection('AdminsChats')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     currentStudentMessageIndex = vari.data()?['messageindex'] ?? 0;
@@ -255,7 +255,7 @@ class _AdminToTeachersChatsScreenState
     });
   }
 
-  Future<int> getTeacherChatCounterIndex() async {
+  Future<int> getTutorChatCounterIndex() async {
     var vari = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
@@ -335,7 +335,7 @@ class _AdminToTeachersChatsScreenState
     if (senderName == null) {
       senderName = await fetchAdminName();
     }
-    final checkuser = await FirebaseFirestore.instance
+    final checkuser = await FirebaseFirestore.instance  
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
         .collection('Admins')
@@ -390,8 +390,8 @@ class _AdminToTeachersChatsScreenState
           .collection('Teachers')
           .doc(widget.teacherDocID)
           .collection('AdminChatCounter')
-          .doc('F0Ikn1UouYIkqmRFKIpg')
-          .set({'chatIndex': 0, 'docid': "F0Ikn1UouYIkqmRFKIpg"});
+          .doc('c3cDX5ymHfITQ3AXcwSp')
+          .set({'chatIndex': 0, 'docid': "c3cDX5ymHfITQ3AXcwSp"});
     } else {
       log('NMNnnnnnnnnnnnnnnnnnnnnnnn');
       return;

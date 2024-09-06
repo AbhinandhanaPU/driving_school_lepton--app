@@ -696,4 +696,41 @@ class StudentController extends GetxController {
       log('deleteStudentFromPracticeSchedule error: $e');
     }
   }
+
+   Stream<List<String>> fetchStudentsCourseChat(String stdocid) async* {
+    List<String> courseNames = [];
+
+    try {
+      final docidofcourse = await _fbServer.collection("Courses").get();
+
+      if (docidofcourse.docs.isNotEmpty) {
+        for (var courseDoc in docidofcourse.docs) {
+          final courseDocid = courseDoc.id;
+
+          final std = await _fbServer
+              .collection("Courses")
+              .doc(courseDocid)
+              .collection('Students')
+              .doc(stdocid)
+              .get();
+
+          if (std.exists) {
+            final courseDocument =
+                await _fbServer.collection("Courses").doc(courseDocid).get();
+
+            if (courseDocument.exists) {
+              final courseName = courseDocument.data()?['courseName'];
+              if (courseName != null) {
+                courseNames.add(courseName);
+                log("courseNames : $courseNames");
+                yield courseNames;
+              }
+            }
+          }
+        }
+      }
+    } catch (e) {
+      log("Student course fetching error: $e");
+    }
+  }
 }

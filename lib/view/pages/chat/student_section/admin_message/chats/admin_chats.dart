@@ -171,7 +171,7 @@ class _AdminsChatsScreenState extends State<AdminsChatsScreen> {
                                         studentChatController.sentMessage(
                                           widget.adminDocID,
                                           await getCurrentAdminMessageIndex(),
-                                          await getTeacherChatCounterIndex(),
+                                          await getTutorChatCounterIndex(),
                                         );
                                        }
                                         /////////////////////////adcbef
@@ -264,7 +264,7 @@ class _AdminsChatsScreenState extends State<AdminsChatsScreen> {
     });
   }
 
-  Future<int> getTeacherChatCounterIndex() async {
+  Future<int> getTutorChatCounterIndex() async {
     var vari = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)

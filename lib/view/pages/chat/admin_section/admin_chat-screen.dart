@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:new_project_app/controller/user_credentials/user_credentials_con
 import 'package:new_project_app/view/pages/chat/admin_section/admin_student_message/admin_students_messages.dart';
 import 'package:new_project_app/view/pages/chat/admin_section/admin_tutor_message/admin_tutor_message.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
+
 import 'group_chats/group_chat.dart';
 
 class AdminChatScreen extends StatelessWidget {
@@ -16,6 +18,8 @@ class AdminChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final adminDocid = UserCredentialsController.adminModel?.docid 
+    ?? UserCredentialsController.addAdminModel?.docid ;
     log(DateTime.now().toString());
     return DefaultTabController(
       length: 3,
@@ -46,7 +50,7 @@ class AdminChatScreen extends StatelessWidget {
                               .collection('DrivingSchoolCollection')
                               .doc(UserCredentialsController.schoolId)
                               .collection("Admins")
-                              .doc(UserCredentialsController.adminModel?.docid)
+                              .doc(adminDocid)
                               .collection('StudentChatCounter')
                               .doc('F0Ikn1UouYIkqmRFKIpg')
                               .snapshots(),
@@ -59,7 +63,7 @@ class AdminChatScreen extends StatelessWidget {
                                     .collection('DrivingSchoolCollection')
                                     .doc(UserCredentialsController.schoolId)
                                     .collection("Admins")
-                                    .doc(UserCredentialsController.adminModel?.docid)
+                                    .doc(adminDocid)
                                     .collection('StudentChatCounter')
                                     .doc('F0Ikn1UouYIkqmRFKIpg')
                                     .update({'chatIndex': 0});
@@ -126,7 +130,7 @@ class AdminChatScreen extends StatelessWidget {
                               .doc(UserCredentialsController.schoolId)
                               .collection("Admins")
                               .doc(UserCredentialsController.adminModel?.docid)
-                              .collection('TeacherChatCounter')
+                              .collection('TutorChatCounter')
                               .doc('F0Ikn1UouYIkqmRFKIpg')
                               .snapshots(),
                           builder: (context, messageIndex) {
@@ -139,7 +143,7 @@ class AdminChatScreen extends StatelessWidget {
                                     .doc(UserCredentialsController.schoolId)
                                     .collection("Admins")
                                     .doc(UserCredentialsController.adminModel?.docid)
-                                    .collection('TeacherChatCounter')
+                                    .collection('TutorChatCounter')
                                     .doc('F0Ikn1UouYIkqmRFKIpg')
                                     .update({'chatIndex': 0});
                                 return const CircleAvatar(
