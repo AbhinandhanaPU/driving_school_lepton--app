@@ -36,7 +36,7 @@ class CreateCourses extends StatelessWidget {
         hintText: "Enter Fee",
         title: 'Fee',
         formField: TextFormField(
-          controller: courseController.courseFeeController,
+          controller: courseController.courseRateController,
           decoration: InputDecoration(hintText: "Enter Fee"),
           validator: checkFieldEmpty,
         ),

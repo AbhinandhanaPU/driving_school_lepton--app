@@ -79,20 +79,23 @@ class CarouselSliderAdmin extends StatelessWidget {
                                   SizedBox(
                                     width: 5,
                                   ),
-                                  StreamBuilder<int>(
-                                      stream: courseController
-                                          .fetchTotalStudents(data.courseId),
-                                      builder: (context, snapshot) {
-                                        return Text(
-                                          snapshot.hasData
-                                              ? snapshot.data.toString()
-                                              : '0',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: cgreylite),
-                                        );
-                                      }),
+                                  StreamBuilder(
+                                    stream: courseController
+                                        .fetchStudentsWithStatusTrue(
+                                            data.courseId),
+                                    builder: (context, snapshot) {
+                                      final studentCount = snapshot.hasData
+                                          ? snapshot.data!.length
+                                          : 0;
+                                      return Text(
+                                        studentCount.toString(),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: cgreylite),
+                                      );
+                                    },
+                                  ),
                                 ],
                               )
                             ],

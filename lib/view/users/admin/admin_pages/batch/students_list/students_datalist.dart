@@ -4,22 +4,22 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
-import 'package:new_project_app/controller/practice_shedule_controller/practice_shedule_controller.dart';
+import 'package:new_project_app/controller/batch_controller/batch_controller.dart';
 import 'package:new_project_app/controller/student_controller/student_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
+import 'package:new_project_app/view/widgets/loading_widget/lottie_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
-class StudentDataList extends StatelessWidget {
+class BatchStudentDataList extends StatelessWidget {
   final StudentModel data;
 
-  StudentDataList({
+  BatchStudentDataList({
     super.key,
     required this.data,
   });
-  final PracticeSheduleController practiceSheduleController =
-      Get.put(PracticeSheduleController());
   final StudentController studentController = Get.put(StudentController());
+  final BatchController batchController = Get.put(BatchController());
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class StudentDataList extends StatelessWidget {
                   customDeleteShowDialog(
                     context: context,
                     onTap: () {
-                      practiceSheduleController
+                      batchController
                           .deleteStudent(docId: data.docid)
                           .then((value) => Navigator.pop(context));
                     },
@@ -98,11 +98,11 @@ class StudentDataList extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  StreamBuilder<List<String>>(
-                    stream: studentController.fetchStudentsCourse(data),
+                  FutureBuilder<List<String>>(
+                    future: studentController.fetchStudentsCourse(data),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const LottieLoadingWidet();
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

@@ -98,8 +98,8 @@ class TutorPracticeStudentDataList extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  StreamBuilder<List<String>>(
-                    stream: studentController.fetchStudentsCourse(data),
+                  FutureBuilder<List<String>>(
+                    future: studentController.fetchStudentsCourse(data),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());

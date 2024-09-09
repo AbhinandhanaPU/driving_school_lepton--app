@@ -23,8 +23,7 @@ class AllTestStudentListOfTutor extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title:  
-              const Text('Students'),
+          title: const Text('Students'),
           foregroundColor: cWhite,
           backgroundColor: themeColor,
         ),
@@ -128,8 +127,8 @@ class AllTestStudentListOfTutor extends StatelessWidget {
                                                   fontWeight: FontWeight.bold,
                                                   color: cblack,
                                                 ),
-                                                StreamBuilder<List<String>>(
-                                                  stream: studentController
+                                                FutureBuilder<List<String>>(
+                                                  future: studentController
                                                       .fetchStudentsCourse(
                                                           data),
                                                   builder: (context, snapshot) {

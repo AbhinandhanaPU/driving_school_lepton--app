@@ -91,7 +91,7 @@ class PracticalStudentsList extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => StudentProfile(
-                                    data: data,
+                                    studentModel: data,
                                   ),
                                 ),
                               );

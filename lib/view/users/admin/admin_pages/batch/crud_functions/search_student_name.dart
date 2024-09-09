@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:new_project_app/controller/batch_controller/batch_controller.dart';
 import 'package:new_project_app/controller/practice_shedule_controller/practice_shedule_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/student_profile.dart';
@@ -34,9 +35,9 @@ class SearchStudentByName extends SearchDelegate {
     final List<StudentModel> suggestionList;
 
     if (query.isEmpty) {
-      suggestionList = Get.find<PracticeSheduleController>().studentList;
+      suggestionList = Get.find<BatchController>().studentList;
     } else {
-      suggestionList = Get.find<PracticeSheduleController>()
+      suggestionList = Get.find<BatchController>()
           .studentList
           .where((item) =>
               item.studentName.toLowerCase().contains(query.toLowerCase()))
@@ -62,12 +63,12 @@ class SearchStudentByName extends SearchDelegate {
                   context,
                   MaterialPageRoute(
                     builder: (context) => StudentProfile(
-                      data: data,
+                      studentModel: data,
                     ),
                   ),
                 );
               },
-              child: StudentDataList(data: data),
+              child: BatchStudentDataList(data: data),
             );
           },
           separatorBuilder: (context, index) {

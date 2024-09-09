@@ -95,8 +95,8 @@ class TutorPractiseScheduleStudentProfile extends StatelessWidget {
                         content: formatDate(stdata.joiningDate),
                       ),
                       kHeight20,
-                      StreamBuilder<List<String>>(
-                        stream: studentController.fetchStudentsCourse(stdata),
+                      FutureBuilder<List<String>>(
+                        future: studentController.fetchStudentsCourse(stdata),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {

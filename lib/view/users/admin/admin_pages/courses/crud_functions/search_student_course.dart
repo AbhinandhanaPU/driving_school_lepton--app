@@ -62,7 +62,7 @@ class SearchCourseStudents extends SearchDelegate {
                   context,
                   MaterialPageRoute(
                     builder: (context) => StudentProfile(
-                      data: data,
+                      studentModel: data,
                     ),
                   ),
                 );

@@ -59,7 +59,7 @@ class CourseDetailsToTutor extends StatelessWidget {
                       // Course Rate
                       ProfileDetailsWidget(
                         title: 'Fee',
-                        content: data.rate,
+                        content: data.rate.toString(),
                       ),
                       kHeight10, // Course Duration
                       ProfileDetailsWidget(
@@ -96,21 +96,23 @@ class CourseDetailsToTutor extends StatelessWidget {
                   ),
                 ),
                 kHeight40,
-                StreamBuilder<int>(
-                  stream: courseController.fetchTotalStudents(data.courseId),
+                StreamBuilder(
+                  stream: courseController
+                      .fetchStudentsWithStatusTrue(data.courseId),
                   builder: (context, snapshot) {
+                    final studentCount =
+                        snapshot.hasData ? snapshot.data!.length : 0;
                     return ProfileDetailsWidget(
                       title: "Total students",
-                      content:
-                          snapshot.hasData ? snapshot.data.toString() : '0',
+                      content: studentCount.toString(),
                     );
                   },
                 ),
 
-                kHeight20,
-                ProfileDetailsWidget(title: "Course Completed", content: '50'),
-                kHeight20,
-                ProfileDetailsWidget(title: "Pending Students", content: '50'),
+                // kHeight20,
+                // ProfileDetailsWidget(title: "Course Completed", content: '50'),
+                // kHeight20,
+                // ProfileDetailsWidget(title: "Pending Students", content: '50'),
               ],
             ),
             Positioned(

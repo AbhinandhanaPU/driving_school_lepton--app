@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
-import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/controller/course_controller/course_controller.dart';
-import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/student_profile.dart';
@@ -13,7 +11,6 @@ import 'package:new_project_app/view/users/admin/admin_pages/courses/crud_functi
 import 'package:new_project_app/view/users/admin/admin_pages/courses/crud_functions/search_student_course.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/loading_widget/loading_widget.dart';
-import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class CourseStudentsList extends StatelessWidget {
   final CourseModel data;
@@ -30,7 +27,7 @@ class CourseStudentsList extends StatelessWidget {
       appBar: AppBar(
         foregroundColor: cWhite,
         title: Text(
-          "Students List".tr,
+          data.courseName.tr,
         ),
         flexibleSpace: const AppBarColorWidget(),
         actions: [
@@ -53,47 +50,38 @@ class CourseStudentsList extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder(
-              stream: server
-                  .collection('DrivingSchoolCollection')
-                  .doc(UserCredentialsController.schoolId)
-                  .collection('Courses')
-                  .doc(data.courseId)
-                  .collection('Students')
-                  .snapshots(),
+            child: StreamBuilder<List<StudentModel>>(
+              stream:
+                  courseController.fetchStudentsWithStatusTrue(data.courseId),
               builder: (context, snapshot) {
+                final students = snapshot.data ?? [];
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const LoadingWidget();
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Center(
-                    child: TextFontWidget(
-                      text: 'No students found',
-                      fontsize: 18,
-                      fontWeight: FontWeight.w500,
+                } else if (students.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      'No Students',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                     ),
                   );
                 } else {
                   return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
+                    itemCount: students.length,
                     itemBuilder: (BuildContext context, int index) {
-                      final data = StudentModel.fromMap(
-                          snapshot.data!.docs[index].data());
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => StudentProfile(
-                                data: data,
-                              ),
+                              builder: (context) =>
+                                  StudentProfile(studentModel: students[index]),
                             ),
                           );
                         },
-                        child: CourseStudentDataList(
-                          data: data,
-                        ),
+                        child: CourseStudentDataList(data: students[index]),
                       );
                     },
                   );
@@ -108,7 +96,7 @@ class CourseStudentsList extends StatelessWidget {
 
   Future<void> searchStudentsByName(
       BuildContext context, String courseId) async {
-    courseController.fetchStudentsCourse(courseId);
+    courseController.fetchStudentsWithStatusTrue(courseId);
     await showSearch(context: context, delegate: SearchCourseStudents());
   }
 }

@@ -21,12 +21,11 @@ class BatchController extends GetxController {
 
   TextEditingController batchNameController = TextEditingController();
   TextEditingController dateController = TextEditingController();
-  
-RxList<BatchModel> batches = RxList<BatchModel>();
+
+  RxList<BatchModel> batches = RxList<BatchModel>();
   Rxn<BatchModel> batchModelData = Rxn<BatchModel>();
-    RxString ontapBatchName= 'dd'.obs;
-  RxBool onTapBtach = false.obs;
   RxString batchId = ''.obs;
+  List<StudentModel> studentList = [];
 
   Future<void> createBatch() async {
     final uuid = const Uuid().v1();
@@ -62,17 +61,17 @@ RxList<BatchModel> batches = RxList<BatchModel>();
 
   Future<void> updateBatch(String batchId, BuildContext context) async {
     try {
-         final updatedData = {
-      'batchName': batchNameController.text,
-      'date': dateController.text,
-    };
-    log("Updating batch with data: $updatedData", name: "Batch upda");
-     await server
+      final updatedData = {
+        'batchName': batchNameController.text,
+        'date': dateController.text,
+      };
+      log("Updating batch with data: $updatedData", name: "Batch upda");
+      await server
           .collection('DrivingSchoolCollection')
           .doc(UserCredentialsController.schoolId)
           .collection('Batch')
           .doc(batchId)
-          .update(updatedData )
+          .update(updatedData)
           .then((value) {
             batchNameController.clear();
             dateController.clear();
@@ -121,22 +120,22 @@ RxList<BatchModel> batches = RxList<BatchModel>();
             buttonstate.value = ButtonState.idle;
           });
         });
-  //    }
-    // } catch (e) {
-    //   buttonstate.value = ButtonState.fail;
-    //   await Future.delayed(const Duration(seconds: 2)).then((value) {
-    //     buttonstate.value = ButtonState.idle;
-    //   });
-       } else {
-      log("Student document not found", name: "Batch");
+        //    }
+        // } catch (e) {
+        //   buttonstate.value = ButtonState.fail;
+        //   await Future.delayed(const Duration(seconds: 2)).then((value) {
+        //     buttonstate.value = ButtonState.idle;
+        //   });
+      } else {
+        log("Student document not found", name: "Batch");
+        buttonstate.value = ButtonState.fail;
+        showToast(msg: "Student not found. Please try again.");
+      }
+    } catch (e) {
       buttonstate.value = ButtonState.fail;
-      showToast(msg: "Student not found. Please try again.");
-    }
-  } catch (e) {
-    buttonstate.value = ButtonState.fail;
-    await Future.delayed(const Duration(seconds: 2)).then((value) {
-      buttonstate.value = ButtonState.idle;
-    });
+      await Future.delayed(const Duration(seconds: 2)).then((value) {
+        buttonstate.value = ButtonState.idle;
+      });
       log("Error .... $e");
     }
   }
@@ -161,66 +160,89 @@ RxList<BatchModel> batches = RxList<BatchModel>();
     }
   }
 
-  Stream<int> fetchTotalStudents(String batchId) {
-    CollectionReference coursesRef = server
+  Stream<List<StudentModel>> fetchFilteredStudents(String batchId) {
+    CollectionReference batchStudentsRef = server
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
         .collection('Batch')
         .doc(batchId)
         .collection('Students');
 
-    return coursesRef.snapshots().map((snapshot) => snapshot.docs.length);
-  }
-
-  
-  Future<void> shiftStudentToAnotherBatch({
-  required String studentDocId,
-  required String oldBatchId,
-  required String newBatchId,
-}) async {
-  try {
-    // Fetch the student data from the old batch
-    final studentSnapshot = await server
+    CollectionReference allStudentsRef = server
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
-        .collection('Batch')
-        .doc(oldBatchId)
-        .collection('Students')
-        .doc(studentDocId)
-        .get();
+        .collection('Students');
 
-    if (studentSnapshot.exists) {
-      final studentData = StudentModel.fromMap(studentSnapshot.data()!);
+    return batchStudentsRef.snapshots().asyncMap((batchSnapshot) async {
+      List<String> batchStudentIds =
+          batchSnapshot.docs.map((doc) => doc.id).toList();
 
-      // Add the student to the new batch
-      await server
-          .collection('DrivingSchoolCollection')
-          .doc(UserCredentialsController.schoolId)
-          .collection('Batch')
-          .doc(newBatchId)
-          .collection('Students')
-          .doc(studentDocId)
-          .set(studentData.toMap());
+      if (batchStudentIds.isEmpty) {
+        return [];
+      }
 
-      // Remove the student from the old batch
-      await server
+      QuerySnapshot filteredStudentsSnapshot = await allStudentsRef
+          .where('docid', whereIn: batchStudentIds)
+          .where('status', isEqualTo: true)
+          .get();
+
+      studentList = filteredStudentsSnapshot.docs
+          .map(
+              (doc) => StudentModel.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
+
+      return studentList;
+    });
+  }
+
+  Future<void> shiftStudentToAnotherBatch({
+    required String studentDocId,
+    required String oldBatchId,
+    required String newBatchId,
+  }) async {
+    try {
+      // Fetch the student data from the old batch
+      final studentSnapshot = await server
           .collection('DrivingSchoolCollection')
           .doc(UserCredentialsController.schoolId)
           .collection('Batch')
           .doc(oldBatchId)
           .collection('Students')
           .doc(studentDocId)
-          .delete();
+          .get();
 
-      showToast(msg: "Student shifted successfully");
-    } else {
-      showToast(msg: "Student not found in the old batch");
+      if (studentSnapshot.exists) {
+        final studentData = StudentModel.fromMap(studentSnapshot.data()!);
+
+        // Add the student to the new batch
+        await server
+            .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection('Batch')
+            .doc(newBatchId)
+            .collection('Students')
+            .doc(studentDocId)
+            .set(studentData.toMap());
+
+        // Remove the student from the old batch
+        await server
+            .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
+            .collection('Batch')
+            .doc(oldBatchId)
+            .collection('Students')
+            .doc(studentDocId)
+            .delete();
+
+        showToast(msg: "Student shifted successfully");
+      } else {
+        showToast(msg: "Student not found in the old batch");
+      }
+    } catch (e) {
+      showToast(msg: "Error shifting student. Please try again.");
+      log("Error shifting student: $e", name: "Batch");
     }
-  } catch (e) {
-    showToast(msg: "Error shifting student. Please try again.");
-    log("Error shifting student: $e", name: "Batch");
   }
-}
 
   Future<void> fetchBatches() async {
     try {
@@ -230,12 +252,10 @@ RxList<BatchModel> batches = RxList<BatchModel>();
           .collection('Batch')
           .get();
 
-      batches.value = snapshot.docs
-          .map((doc) => BatchModel.fromMap(doc.data()))
-          .toList();
+      batches.value =
+          snapshot.docs.map((doc) => BatchModel.fromMap(doc.data())).toList();
     } catch (e) {
       log("Error fetching batches: $e");
     }
   }
-
 }

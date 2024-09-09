@@ -5,7 +5,7 @@ class CourseModel {
   String courseName;
   String courseDes;
   String duration;
-  dynamic rate;
+  int rate;
   String courseId;
   CourseModel({
     required this.courseName,
@@ -18,9 +18,9 @@ class CourseModel {
   CourseModel copyWith({
     String? courseName,
     String? courseDes,
+    String? tutor,
     String? duration,
-    // ignore: unnecessary_question_mark
-    dynamic? rate,
+    int? rate,
     String? courseId,
   }) {
     return CourseModel(
@@ -44,11 +44,11 @@ class CourseModel {
 
   factory CourseModel.fromMap(Map<String, dynamic> map) {
     return CourseModel(
-      courseName: map['courseName'] ??"",
-      courseDes: map['courseDes'] ??"",
-      duration: map['duration'] ??"",
-      rate: map['rate'] ?? 0.0,
-      courseId: map['courseId'] ??"",
+      courseName: map['courseName'] ?? "",
+      courseDes: map['courseDes'] ?? "",
+      duration: map['duration'] ?? "",
+      rate: map['rate'] ?? 0,
+      courseId: map['courseId'] ?? "",
     );
   }
 

@@ -88,7 +88,7 @@ class FeeCourseDatalist extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFontWidget(
-                    text: data.rate,
+                    text: data.rate.toString(),
                     fontsize: 18.h,
                     fontWeight: FontWeight.bold,
                     color: themeColor,
@@ -108,14 +108,14 @@ class FeeCourseDatalist extends StatelessWidget {
                     children: [
                       Icon(Icons.group, color: themeColor),
                       kWidth10,
-                      StreamBuilder<int>(
-                        stream:
-                            courseController.fetchTotalStudents(data.courseId),
+                      StreamBuilder(
+                        stream: courseController
+                            .fetchStudentsWithStatusTrue(data.courseId),
                         builder: (context, snapshot) {
+                          final studentCount =
+                              snapshot.hasData ? snapshot.data!.length : 0;
                           return TextFontWidget(
-                            text: snapshot.hasData
-                                ? snapshot.data.toString()
-                                : '0',
+                            text: studentCount.toString(),
                             fontsize: 16.h,
                             fontWeight: FontWeight.bold,
                             color: cblack,

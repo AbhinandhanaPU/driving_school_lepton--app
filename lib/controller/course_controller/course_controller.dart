@@ -14,7 +14,7 @@ import 'package:uuid/uuid.dart';
 class CourseController extends GetxController {
   TextEditingController coursenameController = TextEditingController();
   TextEditingController courseDurationController = TextEditingController();
-  TextEditingController courseFeeController = TextEditingController();
+  TextEditingController courseRateController = TextEditingController();
   TextEditingController courseDesController = TextEditingController();
 
   TextEditingController editcourseNameController = TextEditingController();
@@ -47,7 +47,7 @@ class CourseController extends GetxController {
   void clearFields() {
     coursenameController.clear();
     courseDurationController.clear();
-    courseFeeController.clear();
+    courseRateController.clear();
     courseDesController.clear();
 
     editcourseNameController.clear();
@@ -59,11 +59,13 @@ class CourseController extends GetxController {
   Future<void> createCourses() async {
     log("Creating Course .....");
     final uuid = const Uuid().v1();
+    int rate = int.tryParse(courseRateController.text) ?? 0;
+
     final courseDetails = CourseModel(
         courseName: coursenameController.text,
         courseDes: courseDesController.text,
         duration: courseDurationController.text,
-        rate: courseFeeController.text,
+        rate: rate,
         courseId: uuid);
 
     try {
@@ -133,6 +135,7 @@ class CourseController extends GetxController {
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
         .collection('Students')
+        .where('status', isEqualTo: true)
         .get();
 
     for (var i = 0; i < firebase.docs.length; i++) {
@@ -179,15 +182,32 @@ class CourseController extends GetxController {
     }
   }
 
-  Stream<int> fetchTotalStudents(String courseId) {
-    CollectionReference coursesRef = server
+  Stream<List<StudentModel>> fetchStudentsWithStatusTrue(String courseId) {
+    return server
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
         .collection('Courses')
         .doc(courseId)
-        .collection('Students');
+        .collection('Students')
+        .snapshots()
+        .asyncMap((snapshot) async {
+      List<String> studentIds = snapshot.docs.map((doc) => doc.id).toList();
 
-    return coursesRef.snapshots().map((snapshot) => snapshot.docs.length);
+      if (studentIds.isEmpty) return [];
+
+      QuerySnapshot studentSnapshot = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Students')
+          .where('status', isEqualTo: true)
+          .where('docid', whereIn: studentIds)
+          .get();
+      studentList = studentSnapshot.docs
+          .map(
+              (doc) => StudentModel.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
+      return studentList;
+    });
   }
 
   Future<int> fetchFeeStudentsCount(String courseId) {
@@ -226,21 +246,24 @@ class CourseController extends GetxController {
     }
   }
 
-  Future<void> fetchStudentsCourse(String courseId) async {
+  Future<void> updateStudentLevel(
+      StudentModel studentModel, String newLevel, String courseID) async {
     try {
-      log("fetchStudents......................");
-      final data = await server
+      await server
           .collection('DrivingSchoolCollection')
           .doc(UserCredentialsController.schoolId)
           .collection('Courses')
-          .doc(courseId)
+          .doc(courseID)
           .collection('Students')
-          .get();
-      studentList =
-          data.docs.map((e) => StudentModel.fromMap(e.data())).toList();
-      log(studentList[0].toString());
+          .doc(studentModel.docid)
+          .update({'level': newLevel}).then((value) {
+        studentModel.level = newLevel;
+        update();
+        log("Student level updated to $newLevel");
+        showToast(msg: "Student level updated to $newLevel");
+      });
     } catch (e) {
-      showToast(msg: "User Data Error");
+      log("Student level update error: $e");
     }
   }
 }

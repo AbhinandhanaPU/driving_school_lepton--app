@@ -33,7 +33,7 @@ editFunctionOfCourse(BuildContext context, CourseModel data) {
                   title: 'Duration'),
               TextFormFiledHeightnoColor(
                   controller: courseController.editcourseRateController,
-                  hintText: data.rate,
+                  hintText: data.rate.toString(),
                   validator: checkFieldEmpty,
                   title: 'Course Fee')
             ],
