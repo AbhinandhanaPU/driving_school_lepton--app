@@ -33,27 +33,28 @@ class BatchModel {
 
   factory BatchModel.fromMap(Map<String, dynamic> map) {
     return BatchModel(
-      batchName: map['batchName'] as String,
-      date: map['date'] as String,
-      batchId: map['batchId'] as String,
+      batchName: map['batchName'] ?? "",
+      date: map['date'] ?? "",
+      batchId: map['batchId'] ?? "",
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory BatchModel.fromJson(String source) => BatchModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory BatchModel.fromJson(String source) =>
+      BatchModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'BatchModel(batchName: $batchName, date: $date, batchId: $batchId)';
+  String toString() =>
+      'BatchModel(batchName: $batchName, date: $date, batchId: $batchId)';
 
   @override
   bool operator ==(covariant BatchModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.batchName == batchName &&
-      other.date == date &&
-      other.batchId == batchId;
+
+    return other.batchName == batchName &&
+        other.date == date &&
+        other.batchId == batchId;
   }
 
   @override

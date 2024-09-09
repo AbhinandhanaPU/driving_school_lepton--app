@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/course_controller/course_controller.dart';
@@ -53,14 +54,7 @@ class TestController extends GetxController {
           .doc(UserCredentialsController.schoolId)
           .collection('DrivingTest')
           .doc(testDetails.docId)
-          .set(testDetails.toMap()
-              //       {
-              //   'testDate': testDateController.text,
-              //   'testTime': testTimeController.text,
-              //   'location': testLocationController.text,
-              //   'docId': uuid,
-              // }
-              )
+          .set(testDetails.toMap())
           .then((value) async {
         clearFields();
         buttonstate.value = ButtonState.success;
@@ -188,16 +182,61 @@ class TestController extends GetxController {
     }
   }
 
-  Stream<int> fetchTotalStudents(String courseId) {
-    CollectionReference coursesRef = server
+  Stream<List<StudentModel>> fetchStudentsWithStatusTrue(String testId) {
+    return server
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
         .collection('DrivingTest')
-        .doc(courseId)
-        .collection('Students');
+        .doc(testId)
+        .collection('Students')
+        .snapshots()
+        .asyncMap((snapshot) async {
+      List<String> studentIds = snapshot.docs.map((doc) => doc.id).toList();
 
-    return coursesRef.snapshots().map((snapshot) => snapshot.docs.length);
+      if (studentIds.isEmpty) return [];
+
+      QuerySnapshot studentSnapshot = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Students')
+          .where('status', isEqualTo: true)
+          .where('docid', whereIn: studentIds)
+          .get();
+
+      return studentSnapshot.docs
+          .map(
+              (doc) => StudentModel.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
+    });
   }
 
-  
+  Future<List<Map<String, dynamic>>> fetchOrderedDrivingTests() async {
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('DrivingTest')
+          .get();
+
+      List<Map<String, dynamic>> tests = snapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        try {
+          DateTime parsedDate =
+              DateFormat('dd-MM-yyyy').parse(data['testDate']);
+          data['parsedTestDate'] = parsedDate;
+        } catch (e) {
+          log('Error parsing date: ${data['testDate']}, Error: $e');
+          data['parsedTestDate'] = DateTime(1970, 1, 1);
+        }
+        return data;
+      }).toList();
+
+      tests.sort((a, b) => b['parsedTestDate'].compareTo(a['parsedTestDate']));
+
+      return tests;
+    } catch (e) {
+      log('Error fetching driving tests: $e');
+      return [];
+    }
+  }
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/controller/test_controller/test_controller.dart';
+import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/model/test_model/test_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/CRUD/edit_test.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
@@ -16,8 +17,7 @@ class DrivingTestList extends StatelessWidget {
     super.key,
     required this.data,
   });
-  final TestController testController =
-      Get.put(TestController());
+  final TestController testController = Get.put(TestController());
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +64,8 @@ class DrivingTestList extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        testController.testDateController.text =
-                            data.testDate;
-                        testController.testTimeController.text =
-                            data.testTime;
+                        testController.testDateController.text = data.testDate;
+                        testController.testTimeController.text = data.testTime;
                         testController.testLocationController.text =
                             data.location;
                         editFunctionOfTest(context, data);
@@ -96,6 +94,7 @@ class DrivingTestList extends StatelessWidget {
               ),
             ],
           ),
+          kHeight10,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -140,14 +139,14 @@ class DrivingTestList extends StatelessWidget {
                     children: [
                       Icon(Icons.group, color: cblue),
                       kWidth10,
-                      StreamBuilder<int>(
+                      StreamBuilder<List<StudentModel>>(
                         stream: testController
-                            .fetchTotalStudents(data.docId),
+                            .fetchStudentsWithStatusTrue(data.docId),
                         builder: (context, snapshot) {
+                          final studentCount =
+                              snapshot.hasData ? snapshot.data!.length : 0;
                           return TextFontWidget(
-                            text: snapshot.hasData
-                                ? snapshot.data.toString()
-                                : '0',
+                            text: studentCount.toString(),
                             fontsize: 16.h,
                             fontWeight: FontWeight.bold,
                             color: cblack,

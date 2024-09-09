@@ -1,20 +1,26 @@
+import 'dart:developer';
+
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
+import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/student_controller/student_controller.dart';
+import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+import 'package:new_project_app/model/batch_model/batch_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/widgets/catagory_table_header_widget/data_container_widget/profile_details_widget.dart';
+import 'package:new_project_app/view/widgets/loading_widget/lottie_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class StudentProfile extends StatelessWidget {
-  final StudentModel data;
+  final StudentModel studentModel;
 
   StudentProfile({
     super.key,
-    required this.data,
+    required this.studentModel,
   });
   final StudentController studentController = Get.put(StudentController());
 
@@ -34,14 +40,14 @@ class StudentProfile extends StatelessWidget {
               padding: const EdgeInsets.only(top: 40, bottom: 20),
               child: CircleAvatar(
                   radius: 60,
-                  backgroundImage: NetworkImage(data.profileImageUrl)
+                  backgroundImage: NetworkImage(studentModel.profileImageUrl)
                   // AssetImage("assets/images/profilebg.png"),
                   ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                data.studentName,
+                studentModel.studentName,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
@@ -58,16 +64,16 @@ class StudentProfile extends StatelessWidget {
                       kHeight30,
                       ProfileDetailsWidget(
                         title: "Email",
-                        content: data.studentemail,
+                        content: studentModel.studentemail,
                       ),
                       kHeight20,
-                      StreamBuilder<List<String>>(
-                        stream: studentController.fetchStudentsCourse(data),
+                      FutureBuilder<List<String>>(
+                        future:
+                            studentController.fetchStudentsCourse(studentModel),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return const Center(
-                                child: CircularProgressIndicator());
+                            return const LottieLoadingWidet();
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else if (!snapshot.hasData ||
@@ -88,49 +94,90 @@ class StudentProfile extends StatelessWidget {
                         },
                       ),
                       kHeight20,
-                      ProfileDetailsWidget(
-                        title: "Joining Date",
-                        content: stringTimeToDateConvert(data.joiningDate),
-                      ),
+                      studentModel.batchId.isEmpty
+                          ? TextFontWidget(
+                              text: 'Batch NOt Assigned',
+                              fontsize: 14.h,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            )
+                          : FutureBuilder(
+                              future: server
+                                  .collection('DrivingSchoolCollection')
+                                  .doc(UserCredentialsController.schoolId)
+                                  .collection('Batch')
+                                  .doc(studentModel.batchId)
+                                  .get(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const LottieLoadingWidet();
+                                } else if (snapshot.hasError) {
+                                  log('Error fetching batch data: ${snapshot.error}');
+                                  return Text('Error: ${snapshot.error}');
+                                } else if (!snapshot.hasData ||
+                                    !snapshot.data!.exists) {
+                                  log('No data found for batchId: ${studentModel.batchId}');
+                                  return const Text('Batch Not Found');
+                                } else {
+                                  final batchData = BatchModel.fromMap(
+                                      snapshot.data!.data()!);
+                                  String batchName = batchData.batchName.isEmpty
+                                      ? "Not found"
+                                      : batchData.batchName;
+                                  log('Batch name for batchId ${studentModel.batchId}: $batchName');
+                                  return ProfileDetailsWidget(
+                                    title: "Batch",
+                                    content: batchName,
+                                  );
+                                }
+                              },
+                            ),
                       kHeight20,
                       ProfileDetailsWidget(
                         title: "Status",
-                        content: data.status.toString(),
+                        content: studentModel.status.toString(),
+                      ),
+                      kHeight20,
+                      ProfileDetailsWidget(
+                        title: "Joining Date",
+                        content:
+                            stringTimeToDateConvert(studentModel.joiningDate),
                       ),
                       kHeight20,
                       ProfileDetailsWidget(
                         title: "Phone Number",
-                        content: data.phoneNumber,
+                        content: studentModel.phoneNumber,
                       ),
                       kHeight20,
                       ProfileDetailsWidget(
                         title: "Date of Birth",
-                        content: data.dateofBirth,
+                        content: studentModel.dateofBirth,
                       ),
                       kHeight20,
                       ProfileDetailsWidget(
                         title: "Address",
-                        content: data.address,
+                        content: studentModel.address,
                       ),
                       kHeight20,
                       ProfileDetailsWidget(
                         title: "Place",
-                        content: data.place,
+                        content: studentModel.place,
                       ),
                       kHeight20,
                       ProfileDetailsWidget(
                         title: "Guardian Name",
-                        content: data.guardianName,
+                        content: studentModel.guardianName,
                       ),
                       kHeight20,
                       ProfileDetailsWidget(
                         title: "RTO Name",
-                        content: data.rtoName,
+                        content: studentModel.rtoName,
                       ),
                       kHeight20,
                       ProfileDetailsWidget(
                         title: "Licence Number",
-                        content: data.licenceNumber,
+                        content: studentModel.licenceNumber,
                       ),
                       kHeight20,
                     ],

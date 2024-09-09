@@ -4,28 +4,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/admin_section/search_tutor/search_parents.dart';
-import 'package:new_project_app/view/pages/chat/student_section/tutor_msg/tutor_chats.dart';
+import 'package:new_project_app/view/pages/chat/student_section/search/search_tutor_std.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
+import 'chats/std_tutor_chats.dart';
+// import 'chats/students_chats.dart';
 
-
-class TeachersMessagesScreen extends StatelessWidget {
-  const TeachersMessagesScreen({super.key});
+class StudentToTutorMessagesScreen extends StatelessWidget {
+  const StudentToTutorMessagesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-     Future<void> showsearch() async {
-      await showSearch(context: context, delegate: SearcTeacherForChat());
+    Future<void> showsearch() async {
+      await showSearch(context: context, delegate: SearchTutorForStd());
     }
-        final size = MediaQuery.of(context).size;
-        return StreamBuilder(
+
+    final size = MediaQuery.of(context).size;
+    return StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('DrivingSchoolCollection')
-            .doc(UserCredentialsController.schoolId)
-            .collection('Admins')///////////////////////////////////correct
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection("TeacherChats")
-            .snapshots(),
+           .collection('DrivingSchoolCollection')
+           .doc(UserCredentialsController.schoolId)
+           .collection("Students")
+           .doc(FirebaseAuth.instance.currentUser!.uid)
+           .collection('TeacherChats')
+           .snapshots(),
         builder: (context, snapshots) {
           if (snapshots.hasData) {
             return ListView(
@@ -35,28 +36,30 @@ class TeachersMessagesScreen extends StatelessWidget {
                   child: ListView.separated(
                       itemBuilder: (context, index) {
                         return SizedBox(
-                          height: 70,
+                          height: 70.h,
                           child: ListTile(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return TeachersChatsScreen(
-                                    teacherName: snapshots.data?.docs[index]
-                                        ['teachername']??"",
-                                    teacherDocID: snapshots.data!.docs[index]
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return StudentToTutorChatsScreen(
+                                    tutorDocID: snapshots.data!.docs[index]
                                         ['docid'],
+                                    teachername: snapshots.data?.docs[index]
+                                        ['teachername']??"",
                                   );
-                              },));
-                              // Get.off(() => AdminsChatsScreen(
-                              //       teacherName: snapshots.data!.docs[index]
-                              //           ['teacherName'],
-                              //       teacherDocID: snapshots.data!.docs[index]
+                                },
+                              ));
+                              // Get.off(() => ParentsChatsScreen(
+                              //       parentDocID: snapshots.data!.docs[index]
                               //           ['docid'],
+                              //       parentName: snapshots.data!.docs[index]
+                              //           ['parentname'],
                               //     ));
                             },
                             leading: const CircleAvatar(
                               radius: 30,
                             ),
-                            title: Text(snapshots.data?.docs[index]['teachername']??"",
+                             title: Text(snapshots.data!.docs[index]['teachername'],
                                 style: const TextStyle(color: Colors.black)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
                             subtitle: const Text(
@@ -82,14 +85,14 @@ class TeachersMessagesScreen extends StatelessWidget {
                                     ),
                                   ),
                           ),
-                        );
+                        );//////////50000
                       },
                       separatorBuilder: (context, index) {
                         return const Divider();
                       },
                       itemCount: snapshots.data!.docs.length),
                 ),
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
@@ -99,10 +102,10 @@ class TeachersMessagesScreen extends StatelessWidget {
                           showsearch();
                         },
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(30.sp)),
-                              color: const Color.fromARGB(255, 232, 224, 224)),
+                                  BorderRadius.all(Radius.circular(30)),
+                              color: Color.fromARGB(255, 232, 224, 224)),
                           height: 50.h,
                           width: 200.w,
                           child: Center(
@@ -111,9 +114,9 @@ class TeachersMessagesScreen extends StatelessWidget {
                               children: [
                                 const Icon(Icons.search),
                                 Padding(
-                                  padding: EdgeInsets.only(right: 10.sp),
+                                  padding: const EdgeInsets.only(right: 10),
                                   child: TextFontWidget(
-                                    text: 'Search Tutor'.tr,
+                                    text: 'Search Teacher'.tr,
                                     fontsize: 15.sp,
                                   ),
                                 ),
@@ -133,3 +136,17 @@ class TeachersMessagesScreen extends StatelessWidget {
         });
   }
 }
+
+
+
+// FutureBuilder(
+//               future: FirebaseFirestore.instance
+//                   .collection('SchoolListCollection')
+//                   .doc(UserCredentialsController.schoolId)
+//                   .collection(UserCredentialsController.batchId!)
+//                   .doc(UserCredentialsController.batchId)
+//                   .collection('classes')
+//                   .doc(UserCredentialsController.classId)
+//                   .collection('Parents')
+//                   .doc(napshots.data!.docs[index]['docid'])
+//                   .get()

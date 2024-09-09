@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-
 import 'chats/tutor_group-chats.dart';
 
 class TutorGroupMessagesScreen extends StatelessWidget {
@@ -12,7 +11,7 @@ class TutorGroupMessagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: FirebaseFirestore.instance
-             .collection('DrivingSchoolCollection')
+            .collection('DrivingSchoolCollection')
             .doc(UserCredentialsController.schoolId)
             .collection('ChatGroups')
             .doc('ChatGroups')
@@ -27,7 +26,7 @@ class TutorGroupMessagesScreen extends StatelessWidget {
                     child: ListTile(
                       onTap: () async {
                         final firebase = await FirebaseFirestore.instance
-                             .collection('DrivingSchoolCollection')
+                            .collection('DrivingSchoolCollection')
                             .doc(UserCredentialsController.schoolId)
                             .collection('ChatGroups')
                             .doc('ChatGroups')
@@ -38,20 +37,15 @@ class TutorGroupMessagesScreen extends StatelessWidget {
                             .get();
                         if (firebase.data()?['docid'] ==
                             FirebaseAuth.instance.currentUser?.uid) {
-                          // Get.off(() => ParentGroupChatsScreen(
-                          //       groupID: snapshots.data?.docs[index]['docid'],
-                          //       groupName: snapshots.data?.docs[index]
-                          //           ['groupName'],
-                          //     ));
-                          Navigator.push(context,MaterialPageRoute(builder: (context) {
-               return TutorGroupChatsScreen (
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return TutorGroupChatsScreen(
                                 groupID: snapshots.data?.docs[index]['docid'],
-                                groupName: snapshots.data?.docs[index]
-                                    ['groupName'],
+                                groupName: snapshots.data?.docs[index]['groupName'],
                               );
-    },));
+                            },
+                          ));
                         } else {
-                          // ignore: use_build_context_synchronously
                           showDialog(
                             context: context,
                             barrierDismissible: false, // user must tap button!
@@ -78,15 +72,13 @@ class TutorGroupMessagesScreen extends StatelessWidget {
                           );
                         }
                       },
-                      leading: const CircleAvatar(
-                        radius: 30,
-                      ),
+                      leading: const CircleAvatar( radius: 30,),
                       title: Text(snapshots.data!.docs[index]['groupName'],
                           style: const TextStyle(color: Colors.black)),
                       contentPadding: const EdgeInsetsDirectional.all(1),
                       trailing: StreamBuilder(
                           stream: FirebaseFirestore.instance
-                               .collection('DrivingSchoolCollection')
+                              .collection('DrivingSchoolCollection')
                               .doc(UserCredentialsController.schoolId)
                               .collection('ChatGroups')
                               .doc('ChatGroups')
@@ -108,9 +100,7 @@ class TutorGroupMessagesScreen extends StatelessWidget {
                                       : CircleAvatar(
                                           radius: 14,
                                           backgroundColor: const Color.fromARGB(255, 118, 229, 121),
-                                          child: Text(
-                                            messagesnaps.data!
-                                                .data()!['messageIndex'].toString(),
+                                          child: Text( messagesnaps.data!.data()!['messageIndex'].toString(),
                                             style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 10,

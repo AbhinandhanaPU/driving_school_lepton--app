@@ -5,8 +5,8 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/const/const.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/tutor_section/teacher_messages/teachers_messages.dart';
 import 'package:new_project_app/view/pages/chat/tutor_section/teacher_std_msg/std_teachers_messages.dart';
+import 'package:new_project_app/view/pages/chat/tutor_section/tutor_admin_messages/tutor_admin_messages.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 
 import 'group_section/tutor_message_group_screen.dart';
@@ -16,16 +16,13 @@ class TutorChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Future<void> showsearch() async {
-    //   await showSearch(context: context, delegate: SearchAdminAndStudents());
-    // }
 
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
           flexibleSpace: const AppBarColorWidget(),
-        foregroundColor: cWhite,
+          foregroundColor: cWhite,
           title: Text('Chat'.tr),
           bottom: TabBar(
             tabs: [
@@ -42,7 +39,7 @@ class TutorChatScreen extends StatelessWidget {
                       children: [
                         Text("Admins".tr),
                         StreamBuilder(
-                            stream:FirebaseFirestore.instance
+                            stream: FirebaseFirestore.instance
                                 .collection('DrivingSchoolCollection')
                                 .doc(UserCredentialsController.schoolId)
                                 .collection('Teachers')
@@ -64,9 +61,7 @@ class TutorChatScreen extends StatelessWidget {
                                       backgroundColor: Colors.white,
                                       child: Center(
                                         child: Text(
-                                          messageIndex.data!
-                                              .data()!['chatIndex']
-                                              .toString(),
+                                          messageIndex.data!.data()!['chatIndex'].toString(),
                                           style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 10,
@@ -87,7 +82,7 @@ class TutorChatScreen extends StatelessWidget {
                   ],
                 ),
               ),
-               Tab(
+              Tab(
                 icon: ListView(
                   children: [
                     const Padding(
@@ -100,7 +95,7 @@ class TutorChatScreen extends StatelessWidget {
                       children: [
                         Text("Student".tr),
                         StreamBuilder(
-                            stream:FirebaseFirestore.instance
+                            stream: FirebaseFirestore.instance
                                 .collection('DrivingSchoolCollection')
                                 .doc(UserCredentialsController.schoolId)
                                 .collection('Teachers')
@@ -122,9 +117,7 @@ class TutorChatScreen extends StatelessWidget {
                                       backgroundColor: Colors.white,
                                       child: Center(
                                         child: Text(
-                                          messageIndex.data!
-                                              .data()!['chatIndex']
-                                              .toString(),
+                                          messageIndex.data!.data()!['chatIndex'].toString(),
                                           style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 10,
@@ -145,38 +138,19 @@ class TutorChatScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              // const Tab(icon: Icon(Icons.groups_2), text: 'Parents'),
               Tab(
-                  icon: const Icon(
-                    Icons.class_,
-                  ),
+                  icon: const Icon( Icons.class_,),
                   text: 'Group'.tr),
             ],
           ),
         ),
-        body: const TabBarView(
+        body:  TabBarView(
           children: [
             TutorAdminMessagesScreen(),
             TutorStudentMessagesScreen(),
-            // const Icon(Icons.directions_transit, size: 350),
             TutorGroupMessagesScreen(),
           ],
         ),
-        // floatingActionButton: CircleAvatar(
-        //   backgroundColor: adminePrimayColor,
-        //   //Color.fromARGB(255, 88, 167, 123),
-        //   radius: 25,
-        //   child: Center(
-        //     child: IconButton(
-        //         onPressed: () async {
-        //           await showsearch();
-        //         },
-        //         icon: const Icon(
-        //           Icons.search_rounded,
-        //           color: Colors.white,
-        //         )),
-        //   ),
-        // ),
       ),
     );
   }

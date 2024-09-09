@@ -62,7 +62,7 @@ class CourseDetailsStd extends StatelessWidget {
                       // Course Rate
                       ProfileDetailsWidget(
                         title: 'Fee',
-                        content: data.rate,
+                        content: data.rate.toString(),
                       ),
                       kHeight10, // Course Duration
                       ProfileDetailsWidget(

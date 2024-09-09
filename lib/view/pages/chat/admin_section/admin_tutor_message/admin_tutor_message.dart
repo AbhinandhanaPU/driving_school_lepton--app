@@ -3,63 +3,58 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:new_project_app/constant/fonts/text_widget.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/student_section/search/search_teachers.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/search_tutor/search_tutor.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/admin_tutor_message/chats_tr/admin_tutor_chats.dart';
+import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
-import 'chats/admin_vs_tutor.dart';
-
-// import 'chats/teachers_chats.dart';
-
-class TutorAdminMessagesScreen extends StatelessWidget {
-  const TutorAdminMessagesScreen({super.key});
+class AdminToTeachersMessagesScreen extends StatelessWidget {
+  const AdminToTeachersMessagesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-      Future<void> showsearch() async {
-      await showSearch(context: context, delegate: SearchAdminForTutor());
+    Future<void> showsearch() async {
+      await showSearch(context: context, delegate: SearcTeacherForChat());
     }
-      final size = MediaQuery.of(context).size;
+
+    final size = MediaQuery.of(context).size;
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('DrivingSchoolCollection')
             .doc(UserCredentialsController.schoolId)
-            .collection('Teachers')
+            .collection('Admins') ///////////////////////////////////correct
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection("AdminChats")
+            .collection("TeacherChats")
             .snapshots(),
         builder: (context, snapshots) {
           if (snapshots.hasData) {
             return ListView(
               children: [
-                SizedBox(  
+                SizedBox(
                   height: size.height * 0.72,
                   child: ListView.separated(
                       itemBuilder: (context, index) {
-                          final doc = snapshots.data!.docs[index];
-                          final senderName = doc.data().containsKey('adminName') 
-                             ? doc['adminName']  : doc['senderName'];
                         return SizedBox(
                           height: 70,
                           child: ListTile(
                             onTap: () {
-                            Navigator.push(context,MaterialPageRoute(builder: (context) {
-                             return TutorAdminChatsScreen(
-                                    adminName: senderName,
-                                    //snapshots.data!.docs[index] ['senderName'],
-                                    adminDocID: snapshots.data!.docs[index]['docid'],
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return AdminToTeachersChatsScreen(
+                                    teacherName: snapshots.data?.docs[index] ['teachername'] ??"",
+                                    teacherDocID: snapshots.data!.docs[index] ['docid'],
                                   );
-                      },));
+                                },
+                              ));
                             },
                             leading: const CircleAvatar(
                               radius: 30,
                             ),
-                            title: Text(senderName??"",
-                             // snapshots.data!.docs[index]['senderName'],
+                            title: Text(
+                                snapshots.data?.docs[index]['teachername'] ??"",
                                 style: const TextStyle(color: Colors.black)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
-                            subtitle: const Text(
-                              'Admin',
+                            subtitle: const Text(  'Teacher',
                               style: TextStyle(color: Colors.black),
                             ),
                             trailing: snapshots.data!.docs[index]['messageindex'] == 0
@@ -68,7 +63,7 @@ class TutorAdminMessagesScreen extends StatelessWidget {
                                     padding: const EdgeInsets.only(right: 20),
                                     child: CircleAvatar(
                                       radius: 14,
-                                      backgroundColor: const Color.fromARGB(255, 118, 229, 121),
+                                      backgroundColor: const Color.fromARGB( 255, 118, 229, 121),
                                       child: Text(
                                         snapshots.data!.docs[index]['messageindex'].toString(),
                                         style: const TextStyle(
@@ -86,7 +81,7 @@ class TutorAdminMessagesScreen extends StatelessWidget {
                       },
                       itemCount: snapshots.data!.docs.length),
                 ),
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
@@ -97,8 +92,7 @@ class TutorAdminMessagesScreen extends StatelessWidget {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30.sp)),
+                              borderRadius: BorderRadius.all(Radius.circular(30.sp)),
                               color: const Color.fromARGB(255, 232, 224, 224)),
                           height: 50.h,
                           width: 200.w,
@@ -110,7 +104,7 @@ class TutorAdminMessagesScreen extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.only(right: 10.sp),
                                   child: TextFontWidget(
-                                    text: 'Search Admin'.tr,
+                                    text: 'Search Tutor'.tr,
                                     fontsize: 15.sp,
                                   ),
                                 ),
@@ -130,4 +124,3 @@ class TutorAdminMessagesScreen extends StatelessWidget {
         });
   }
 }
-

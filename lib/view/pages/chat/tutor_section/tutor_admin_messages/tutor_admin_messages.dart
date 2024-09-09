@@ -3,19 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:new_project_app/constant/fonts/text_widget.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
+import 'package:new_project_app/view/pages/chat/tutor_section/search/search_admin_tr.dart';
+import 'chats/admin_vs_tutor.dart';
 
-import '../search_students/search_students.dart';
-import 'chats/students_chats.dart';
-
-class StudentsMessagesScreen extends StatelessWidget {
-  const StudentsMessagesScreen({super.key});
+class TutorAdminMessagesScreen extends StatelessWidget {
+  const TutorAdminMessagesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     Future<void> showsearch() async {
-      await showSearch(context: context, delegate: SearchStudentsForChat());
+      await showSearch(context: context, delegate: SearchAdminForTutor());
     }
 
     final size = MediaQuery.of(context).size;
@@ -23,9 +22,9 @@ class StudentsMessagesScreen extends StatelessWidget {
         stream: FirebaseFirestore.instance
             .collection('DrivingSchoolCollection')
             .doc(UserCredentialsController.schoolId)
-            .collection("Admins")
+            .collection('Teachers')
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection("StudentChats")
+            .collection("AdminChats")
             .snapshots(),
         builder: (context, snapshots) {
           if (snapshots.hasData) {
@@ -36,82 +35,40 @@ class StudentsMessagesScreen extends StatelessWidget {
                   child: ListView.separated(
                       itemBuilder: (context, index) {
                         final doc = snapshots.data!.docs[index];
-final studentName = doc.data().containsKey('studentname') 
-    ? doc['studentname'] 
-    : doc['senderName'];
+                        final senderName = doc.data().containsKey('adminName')
+                            ? doc['adminName'] : doc['senderName'];
                         return SizedBox(
-                          height: 70.h,
+                          height: 70,
                           child: ListTile(
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (context) {
-                                  return StudentsChatsScreen(
-                                    studentName: studentName,
-                                    studentDocID: snapshots.data!.docs[index]
-                                        ['docid'],
+                                  return TutorAdminChatsScreen(
+                                    adminName: senderName,
+                                    //snapshots.data!.docs[index] ['senderName'],
+                                    adminDocID: snapshots.data!.docs[index]['docid'],
                                   );
                                 },
                               ));
-                              // Get.off(() => StudentsChatsScreen(
-                              //       studentName: snapshots.data!.docs[index]
-                              //           ['studentname'],
-                              //       studentDocID: snapshots.data!.docs[index]
-                              //           ['docid'],
-                              //     ));
                             },
                             leading: const CircleAvatar(
                               radius: 30,
                             ),
-                            title: Text(studentName,
-                               // snapshots.data!.docs[index]['studentname']??snapshots.data!.docs[index]['senderName'],
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20.sp)),
+                            title: Text(senderName ?? "",
+                                style: const TextStyle(color: Colors.black)),
                             contentPadding: const EdgeInsetsDirectional.all(1),
-                            // subtitle: FutureBuilder(
-                            //     future: FirebaseFirestore.instance
-                            //         .collection('DrivingSchoolCollection')
-                            //         .doc(UserCredentialsController.schoolId)
-                            //         .collection('Courses')
-                            //         .doc(snapshots.data?.docs[index]['courseId'])
-                            //         .get(),
-                            //     builder: (context, futuredata) {
-                            //       if (futuredata.hasData) {
-                            //         return Row(
-                            //           children: [
-                            //             Text(
-                            //               ' course: ',
-                            //               style: TextStyle(
-                            //                   color: Colors.black,
-                            //                   fontSize: 15.sp),
-                            //             ),
-                            //             Text(
-                            //               futuredata.data?.data()?['courseName'],
-                            //               style: TextStyle(
-                            //                   color: Colors.black,
-                            //                   fontSize: 15.sp),
-                            //             ),
-                            //           ],
-                            //         );
-                            //       } else {
-                            //         return const Center();
-                            //       }
-                            //     }),
-                             subtitle: const Text(
-                              'Student',
+                            subtitle: const Text('Admin',
                               style: TextStyle(color: Colors.black),
                             ),
-                            trailing: snapshots.data!.docs[index]['messageindex'] ==0
+                            trailing: snapshots.data!.docs[index] ['messageindex'] == 0
                                 ? const Text('')
                                 : Padding(
                                     padding: const EdgeInsets.only(right: 20),
                                     child: CircleAvatar(
                                       radius: 14,
-                                      backgroundColor: const Color.fromARGB(
-                                          255, 118, 229, 121),
+                                      backgroundColor: const Color.fromARGB(255, 118, 229, 121),
                                       child: Text(
-                                        snapshots
-                                            .data!.docs[index]['messageindex']
-                                            .toString(),
+                                        snapshots.data!.docs[index]['messageindex'].toString(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 10,
@@ -138,8 +95,7 @@ final studentName = doc.data().containsKey('studentname')
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30.sp)),
+                              borderRadius:BorderRadius.all(Radius.circular(30.sp)),
                               color: const Color.fromARGB(255, 232, 224, 224)),
                           height: 50.h,
                           width: 200.w,
@@ -151,7 +107,7 @@ final studentName = doc.data().containsKey('studentname')
                                 Padding(
                                   padding: EdgeInsets.only(right: 10.sp),
                                   child: TextFontWidget(
-                                    text: 'Search Student'.tr,
+                                    text: 'Search Admin'.tr,
                                     fontsize: 15.sp,
                                   ),
                                 ),

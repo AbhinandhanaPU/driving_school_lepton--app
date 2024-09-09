@@ -49,7 +49,7 @@ class StudentRequest extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => StudentProfile(
-                                data: student,
+                                studentModel: student,
                               ),
                             ),
                           );

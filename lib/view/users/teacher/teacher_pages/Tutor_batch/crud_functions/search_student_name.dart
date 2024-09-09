@@ -62,12 +62,12 @@ class SearchStudentByName extends SearchDelegate {
                   context,
                   MaterialPageRoute(
                     builder: (context) => StudentProfile(
-                      data: data,
+                      studentModel: data,
                     ),
                   ),
                 );
               },
-              child: StudentDataList(data: data),
+              child: BatchStudentDataList(data: data),
             );
           },
           separatorBuilder: (context, index) {

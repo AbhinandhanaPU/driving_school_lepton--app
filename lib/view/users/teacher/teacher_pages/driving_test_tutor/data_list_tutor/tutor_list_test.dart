@@ -14,8 +14,7 @@ class TutorDrivingTestList extends StatelessWidget {
     super.key,
     required this.data,
   });
-  final TestController testController =
-      Get.put(TestController());
+  final TestController testController = Get.put(TestController());
 
   @override
   Widget build(BuildContext context) {
@@ -138,14 +137,14 @@ class TutorDrivingTestList extends StatelessWidget {
                     children: [
                       Icon(Icons.group, color: cblue),
                       kWidth10,
-                      StreamBuilder<int>(
+                      StreamBuilder(
                         stream: testController
-                            .fetchTotalStudents(data.docId),
+                            .fetchStudentsWithStatusTrue(data.docId),
                         builder: (context, snapshot) {
+                          final studentCount =
+                              snapshot.hasData ? snapshot.data!.length : 0;
                           return TextFontWidget(
-                            text: snapshot.hasData
-                                ? snapshot.data.toString()
-                                : '0',
+                            text: studentCount.toString(),
                             fontsize: 16.h,
                             fontWeight: FontWeight.bold,
                             color: cblack,

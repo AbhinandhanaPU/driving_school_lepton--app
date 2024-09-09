@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/constant/fonts/text_widget.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
-import 'package:new_project_app/controller/student_controller/student_controller.dart';
+import 'package:new_project_app/controller/fee_controller/fee_controller.dart';
+import 'package:new_project_app/model/course_model/course_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
-import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 pendingAmountFunction(
   BuildContext context,
   StudentModel studentModel,
   String status,
-  String courseID,
+  CourseModel course,
 ) {
-  StudentController studentController = Get.put(StudentController());
+  FeeController feecontroller = Get.put(FeeController());
+
   showDialog(
     context: context,
     builder: (context) {
@@ -27,14 +29,14 @@ pendingAmountFunction(
                 },
                 child: const Icon(Icons.arrow_back)),
             const TextFontWidget(
-              text: "Pending Amount",
+              text: "Amount collected",
               fontsize: 17,
               fontWeight: FontWeight.bold,
             )
           ],
         ),
         content: Form(
-          key: studentController.formKey,
+          key: feecontroller.formKey,
           child: SizedBox(
             height: 160,
             width: 250,
@@ -47,8 +49,7 @@ pendingAmountFunction(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const TextFontWidget(
-                            text: "Pending Amount *", fontsize: 12.5),
+                        const TextFontWidget(text: "Amount *", fontsize: 12.5),
                         const SizedBox(
                           height: 05,
                         ),
@@ -61,7 +62,7 @@ pendingAmountFunction(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
-                              controller: studentController.amountController,
+                              controller: feecontroller.amountController,
                               validator: checkFieldEmpty,
                               decoration: const InputDecoration(
                                   hintText: "Enter Amount",
@@ -80,9 +81,9 @@ pendingAmountFunction(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
                     onTap: () {
-                      if (studentController.formKey.currentState!.validate()) {
-                        studentController.addStudentFeeColl(
-                            studentModel, status, courseID);
+                      if (feecontroller.formKey.currentState!.validate()) {
+                        feecontroller.addStudentFeeColl(
+                            studentModel, status, course);
                       }
                       Navigator.pop(context);
                     },

@@ -90,7 +90,6 @@ class StudentSignUpController extends GetxController {
             status: true,
             level: "Beginner",
             batchId: '',
-            batchName: '',
             userRole: "student",
           );
           await server

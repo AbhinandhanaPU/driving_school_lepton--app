@@ -59,7 +59,7 @@ class CourseDetails extends StatelessWidget {
                       // Course Rate
                       ProfileDetailsWidget(
                         title: 'Fee',
-                        content: data.rate,
+                        content: '${data.rate}',
                       ),
                       kHeight10, // Course Duration
                       ProfileDetailsWidget(
@@ -96,13 +96,15 @@ class CourseDetails extends StatelessWidget {
                   ),
                 ),
                 kHeight40,
-                StreamBuilder<int>(
-                  stream: courseController.fetchTotalStudents(data.courseId),
+                StreamBuilder(
+                  stream: courseController
+                      .fetchStudentsWithStatusTrue(data.courseId),
                   builder: (context, snapshot) {
+                    final studentCount =
+                        snapshot.hasData ? snapshot.data!.length : 0;
                     return ProfileDetailsWidget(
                       title: "Total students",
-                      content:
-                          snapshot.hasData ? snapshot.data.toString() : '0',
+                      content: studentCount.toString(),
                     );
                   },
                 ),
@@ -119,13 +121,14 @@ class CourseDetails extends StatelessWidget {
               left: 40,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return CourseStudentsList(
-                        data: data,
-                      );
-                    },
-                  ));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return CourseStudentsList(data: data);
+                      },
+                    ),
+                  );
                 },
                 child: ButtonContainerWidget(
                   curving: 30,

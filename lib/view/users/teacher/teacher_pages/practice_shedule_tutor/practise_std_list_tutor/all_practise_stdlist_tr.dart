@@ -127,8 +127,8 @@ class AllPractiseScheduleStudentListTutor extends StatelessWidget {
                                                   fontWeight: FontWeight.bold,
                                                   color: cblack,
                                                 ),
-                                                StreamBuilder<List<String>>(
-                                                  stream: studentController
+                                                FutureBuilder<List<String>>(
+                                                  future: studentController
                                                       .fetchStudentsCourse(
                                                           data),
                                                   builder: (context, snapshot) {

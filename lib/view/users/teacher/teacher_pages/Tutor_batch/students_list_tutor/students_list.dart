@@ -21,8 +21,8 @@ class TutorBatchStudentsList extends StatelessWidget {
     super.key,
     required this.data,
   });
-  
-final  BatchController batchController =Get.put(BatchController());
+
+  final BatchController batchController = Get.put(BatchController());
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +89,7 @@ final  BatchController batchController =Get.put(BatchController());
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => StudentProfile(
-                                    data: data,
+                                    studentModel: data,
                                   ),
                                 ),
                               );
@@ -133,7 +133,7 @@ final  BatchController batchController =Get.put(BatchController());
 
   Future<void> searchStudentsByName(
       BuildContext context, String bacthId) async {
-    batchController.fetchTotalStudents(bacthId);
+    batchController.fetchFilteredStudents(bacthId);
     await showSearch(context: context, delegate: SearchStudentByName());
   }
 }

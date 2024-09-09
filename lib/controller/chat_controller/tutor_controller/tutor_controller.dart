@@ -49,7 +49,7 @@ class TutorChatController extends GetxController {
                     onPressed: () async {
                       log(docid);
                       await FirebaseFirestore.instance
-                           .collection('DrivingSchoolCollection')
+                          .collection('DrivingSchoolCollection')
                           .doc(UserCredentialsController.schoolId)
                           .collection("Admins")
                           .doc(adminID)
@@ -191,19 +191,18 @@ class TutorChatController extends GetxController {
     }
   }
 
- sentMessagesToStd(String studentId, int usercurrentIndex,
-     int parentChatCounterIndex
-      ) async {
+  sentMessagesToStd(String studentId, int usercurrentIndex,
+      int parentChatCounterIndex) async {
     var countPlusone = await FirebaseFirestore.instance
-         .collection('DrivingSchoolCollection')
-          .doc(UserCredentialsController.schoolId)
-          .collection("Students")
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection("Students")
         .doc(studentId)
         .collection('TutorChatCounter')
         .doc('F0Ikn1UouYIkqmRFKIpg')
         .get();
 
-    int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0)+ 1;
+    int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
     int sentIindex = usercurrentIndex + 1;
     log('''countPlusone.data()?['chatIndex']  ${countPlusone.data()?['chatIndex']}''');
     // log("Student id${FirebaseAuth.instance.currentUser!.uid}");
@@ -216,7 +215,7 @@ class TutorChatController extends GetxController {
       sendTime: DateTime.now().toString(),
     );
     await FirebaseFirestore.instance
-       .collection('DrivingSchoolCollection')
+        .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
         .collection("Teachers")
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -239,16 +238,16 @@ class TutorChatController extends GetxController {
           .then((value) async {
         await FirebaseFirestore.instance
             .collection('DrivingSchoolCollection')
-          .doc(UserCredentialsController.schoolId)
-          .collection("Students")
+            .doc(UserCredentialsController.schoolId)
+            .collection("Students")
             .doc(studentId)
             .collection('TeacherChats')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .update({'messageindex': sentIindex}).then((value) async {
           await FirebaseFirestore.instance
-             .collection('DrivingSchoolCollection')
-             .doc(UserCredentialsController.schoolId)
-             .collection("Students")
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection("Students")
               .doc(studentId)
               .collection('TutorChatCounter')
               .doc('F0Ikn1UouYIkqmRFKIpg')
@@ -259,18 +258,18 @@ class TutorChatController extends GetxController {
     });
   }
 
-  sentMessages(String adminId, int usercurrentIndex,
-      int parentChatCounterIndex) async {
+  sentMessages(
+      String adminId, int usercurrentIndex, int parentChatCounterIndex) async {
     var countPlusone = await FirebaseFirestore.instance
-         .collection('DrivingSchoolCollection')
-         .doc(UserCredentialsController.schoolId)
-         .collection("Admins")
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection("Admins")
         .doc(adminId)
         .collection('TutorChatCounter')
         .doc('F0Ikn1UouYIkqmRFKIpg')
         .get();
 
-    int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0)+ 1;
+    int sentStudentChatIndex = (countPlusone.data()?['chatIndex'] ?? 0) + 1;
     int sentIindex = usercurrentIndex + 1;
     log('''countPlusone.data()?['chatIndex']  ${countPlusone.data()?['chatIndex']}''');
     // log("Student id${FirebaseAuth.instance.currentUser!.uid}");
@@ -283,7 +282,7 @@ class TutorChatController extends GetxController {
       sendTime: DateTime.now().toString(),
     );
     await FirebaseFirestore.instance
-       .collection('DrivingSchoolCollection')
+        .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
         .collection("Teachers")
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -313,9 +312,9 @@ class TutorChatController extends GetxController {
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .update({'messageindex': sentIindex}).then((value) async {
           await FirebaseFirestore.instance
-             .collection('DrivingSchoolCollection')
-             .doc(UserCredentialsController.schoolId)
-             .collection("Admins")
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection("Admins")
               .doc(adminId)
               .collection('TutorChatCounter')
               .doc('F0Ikn1UouYIkqmRFKIpg')
@@ -372,24 +371,25 @@ class TutorChatController extends GetxController {
       final DocumentSnapshot<Map<String, dynamic>> snapshot =
           await FirebaseFirestore.instance
               .collection('DrivingSchoolCollection')
-          .doc(UserCredentialsController.schoolId)
-          //.collection("Admins")
+              .doc(UserCredentialsController.schoolId)
+              //.collection("Admins")
               .get();
-     // searchTeacher =snapshot.docs.map((e) => AdminModel.fromMap(e.data())).toList();
+      // searchTeacher =snapshot.docs.map((e) => AdminModel.fromMap(e.data())).toList();
       if (snapshot.exists) {
-      final adminData = snapshot.data();
-      if (adminData != null) {
-        searchTeacher.add(AdminModel.fromMap(adminData));
-      //  log('AdminModel: ${AdminModel.fromMap(adminData).adminName}');
+        final adminData = snapshot.data();
+        if (adminData != null) {
+          searchTeacher.add(AdminModel.fromMap(adminData));
+          //  log('AdminModel: ${AdminModel.fromMap(adminData).adminName}');
+        }
+      } else {
+        showToast(msg: "Admin document not found");
       }
-    } else {
-      showToast(msg: "Admin document not found");
-    }
     } catch (e) {
       showToast(msg: "Admin Data Error");
-    } 
+    }
   }
- List<AddAdminModel> searchAdminAdd = [];
+
+  List<AddAdminModel> searchAdminAdd = [];
   Future<void> fetchAdminAdd() async {
     searchAdminAdd.clear();
     try {
@@ -401,11 +401,11 @@ class TutorChatController extends GetxController {
               .get();
       searchAdminAdd =
           snapshot.docs.map((e) => AddAdminModel.fromMap(e.data())).toList();
-          
     } catch (e) {
       showToast(msg: "Add Admin Data Error");
     }
   }
+
   @override
   void onInit() async {
     await fetchAdmin();

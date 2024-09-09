@@ -5,12 +5,13 @@ import 'package:new_project_app/controller/user_credentials/user_credentials_con
 import 'package:new_project_app/model/course_model/course_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/users/widgets/std_fees_level/std_fees_level.dart';
+import 'package:new_project_app/view/widgets/loading_widget/lottie_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widgets/google_poppins.dart';
 
 approvalDialogBox(
   BuildContext context,
-  CourseModel modelData,
+  CourseModel courseModel,
   StudentModel data,
 ) {
   showDialog(
@@ -42,26 +43,41 @@ approvalDialogBox(
           child: Column(
             children: [
               StreamBuilder(
-                stream: server
-                    .collection('DrivingSchoolCollection')
-                    .doc(UserCredentialsController.schoolId)
-                    .collection('FeeCollection')
-                    .doc(modelData.courseId)
-                    .collection('Students')
-                    .doc(data.docid)
-                    .snapshots(),
+                stream: data.batchId.isNotEmpty && data.docid.isNotEmpty
+                    ? server
+                        .collection('DrivingSchoolCollection')
+                        .doc(UserCredentialsController.schoolId)
+                        .collection('FeesCollection')
+                        .doc(data.batchId)
+                        .collection('Courses')
+                        .doc(courseModel.courseId)
+                        .collection('Students')
+                        .doc(data.docid)
+                        .snapshots()
+                    : null,
                 builder: (context, snapshot) {
-                  String feeStatus = 'not paid';
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+                  if (data.batchId.isEmpty || data.docid.isEmpty) {
+                    return const Center(
+                      child: Text('Batch Not Assigned'),
+                    );
                   }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const LottieLoadingWidet();
+                  }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  }
+                  String? feeStatus;
                   if (snapshot.hasData && snapshot.data?.data() != null) {
                     final feeData = snapshot.data!.data();
                     feeStatus = feeData!['feeStatus'] ?? 'not paid';
                   }
+
                   return StdFeesLevelDropDown(
                     data: data,
-                    courseID: modelData.courseId,
+                    course: courseModel,
                     feeData: feeStatus,
                   );
                 },

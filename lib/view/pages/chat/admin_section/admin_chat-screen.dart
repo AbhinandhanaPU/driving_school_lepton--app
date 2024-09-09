@@ -7,17 +7,19 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/const/const.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
-import 'package:new_project_app/view/pages/chat/admin_section/student_message/students_messages.dart';
-import 'package:new_project_app/view/pages/chat/student_section/tutor_msg/tutor_message/tutor_message.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/admin_student_message/admin_students_messages.dart';
+import 'package:new_project_app/view/pages/chat/admin_section/admin_tutor_message/admin_tutor_message.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 
-import '../group_chats/group_chat.dart';
+import 'group_chats/group_chat.dart';
 
 class AdminChatScreen extends StatelessWidget {
   const AdminChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final adminDocid = UserCredentialsController.adminModel?.docid 
+    ?? UserCredentialsController.addAdminModel?.docid ;
     log(DateTime.now().toString());
     return DefaultTabController(
       length: 3,
@@ -40,8 +42,7 @@ class AdminChatScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Students",
+                        Text( "Students",
                           style: TextStyle(fontSize: 16.sp),
                         ),
                         StreamBuilder(
@@ -49,7 +50,7 @@ class AdminChatScreen extends StatelessWidget {
                               .collection('DrivingSchoolCollection')
                               .doc(UserCredentialsController.schoolId)
                               .collection("Admins")
-                              .doc(UserCredentialsController.adminModel?.docid)
+                              .doc(adminDocid)
                               .collection('StudentChatCounter')
                               .doc('F0Ikn1UouYIkqmRFKIpg')
                               .snapshots(),
@@ -57,15 +58,12 @@ class AdminChatScreen extends StatelessWidget {
                             if (messageIndex.hasData) {
                               if (messageIndex.data!.data() == null) {
                                 return const Text('');
-                              } else if (messageIndex.data!
-                                      .data()!['chatIndex'] <=
-                                  0) {
+                              } else if (messageIndex.data!.data()!['chatIndex'] <= 0) {
                                 FirebaseFirestore.instance
                                     .collection('DrivingSchoolCollection')
                                     .doc(UserCredentialsController.schoolId)
                                     .collection("Admins")
-                                    .doc(UserCredentialsController
-                                        .adminModel?.docid)
+                                    .doc(adminDocid)
                                     .collection('StudentChatCounter')
                                     .doc('F0Ikn1UouYIkqmRFKIpg')
                                     .update({'chatIndex': 0});
@@ -73,8 +71,7 @@ class AdminChatScreen extends StatelessWidget {
                                   radius: 10.sp,
                                   backgroundColor: Colors.white,
                                   child: Center(
-                                    child: Text(
-                                      '0',
+                                    child: Text( '0',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 10.sp,
@@ -83,8 +80,7 @@ class AdminChatScreen extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                MessageCounter.studentMessageCounter =
-                                    messageIndex.data?.data()?['chatIndex'];
+                                MessageCounter.studentMessageCounter = messageIndex.data?.data()?['chatIndex'];
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 5),
                                   child: CircleAvatar(
@@ -92,9 +88,7 @@ class AdminChatScreen extends StatelessWidget {
                                     backgroundColor: Colors.white,
                                     child: Center(
                                       child: Text(
-                                        messageIndex.data!
-                                            .data()!['chatIndex']
-                                            .toString(),
+                                        messageIndex.data!.data()!['chatIndex'].toString(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 10,
@@ -127,8 +121,7 @@ class AdminChatScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Tutors",
+                        Text("Tutors",
                           style: TextStyle(fontSize: 17.sp),
                         ),
                         StreamBuilder(
@@ -137,31 +130,27 @@ class AdminChatScreen extends StatelessWidget {
                               .doc(UserCredentialsController.schoolId)
                               .collection("Admins")
                               .doc(UserCredentialsController.adminModel?.docid)
-                              .collection('TeacherChatCounter')
+                              .collection('TutorChatCounter')
                               .doc('F0Ikn1UouYIkqmRFKIpg')
                               .snapshots(),
                           builder: (context, messageIndex) {
                             if (messageIndex.hasData) {
                               if (messageIndex.data!.data() == null) {
                                 return const Text('');
-                              } else if (messageIndex.data!
-                                      .data()!['chatIndex'] <=
-                                  0) {
+                              } else if (messageIndex.data! .data()!['chatIndex'] <=0) {
                                 FirebaseFirestore.instance
                                     .collection('DrivingSchoolCollection')
                                     .doc(UserCredentialsController.schoolId)
                                     .collection("Admins")
-                                    .doc(UserCredentialsController
-                                        .adminModel?.docid)
-                                    .collection('TeacherChatCounter')
+                                    .doc(UserCredentialsController.adminModel?.docid)
+                                    .collection('TutorChatCounter')
                                     .doc('F0Ikn1UouYIkqmRFKIpg')
                                     .update({'chatIndex': 0});
                                 return const CircleAvatar(
                                   radius: 10,
                                   backgroundColor: Colors.white,
                                   child: Center(
-                                    child: Text(
-                                      '0',
+                                    child: Text('0',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 10,
@@ -170,8 +159,7 @@ class AdminChatScreen extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                MessageCounter.tutorMessageCounter =
-                                    messageIndex.data?.data()?['chatIndex'];
+                                MessageCounter.tutorMessageCounter =messageIndex.data?.data()?['chatIndex'];
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 5),
                                   child: CircleAvatar(
@@ -179,9 +167,7 @@ class AdminChatScreen extends StatelessWidget {
                                     backgroundColor: Colors.white,
                                     child: Center(
                                       child: Text(
-                                        messageIndex.data!
-                                            .data()!['chatIndex']
-                                            .toString(),
+                                        messageIndex.data!.data()!['chatIndex'].toString(),
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 10.sp,
@@ -204,17 +190,15 @@ class AdminChatScreen extends StatelessWidget {
                 ),
               ),
               Tab(
-                  icon: const Icon(
-                    Icons.class_,
-                  ),
+                  icon: const Icon(Icons.class_,),
                   text: 'Group'.tr),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            const StudentsMessagesScreen(),
-            const TeachersMessagesScreen(),
+             AdminToStudentsMessagesScreen(),
+            const AdminToTeachersMessagesScreen(),
             GroupChatScreenForAdmin(),
           ],
         ),

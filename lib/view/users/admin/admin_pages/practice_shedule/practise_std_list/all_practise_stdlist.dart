@@ -29,10 +29,10 @@ class AllPractiseScheduleStudentList extends StatelessWidget {
               const Text('Students'),
               Spacer(),
               GestureDetector(
-                onTap: () {
-                  addStudentToPractise(context);
-                },
-                child: Icon(Icons.person_add))
+                  onTap: () {
+                    addStudentToPractise(context);
+                  },
+                  child: Icon(Icons.person_add))
             ],
           ),
           foregroundColor: cWhite,
@@ -138,8 +138,8 @@ class AllPractiseScheduleStudentList extends StatelessWidget {
                                                   fontWeight: FontWeight.bold,
                                                   color: cblack,
                                                 ),
-                                                StreamBuilder<List<String>>(
-                                                  stream: studentController
+                                                FutureBuilder<List<String>>(
+                                                  future: studentController
                                                       .fetchStudentsCourse(
                                                           data),
                                                   builder: (context, snapshot) {

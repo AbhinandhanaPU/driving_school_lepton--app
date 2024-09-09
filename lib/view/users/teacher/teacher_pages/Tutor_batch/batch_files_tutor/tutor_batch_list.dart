@@ -5,6 +5,7 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/controller/batch_controller/batch_controller.dart';
 import 'package:new_project_app/model/batch_model/batch_model.dart';
+import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/batch/crud_functions/batch_edit.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
@@ -16,8 +17,8 @@ class TutorBatchList extends StatelessWidget {
     super.key,
     required this.data,
   });
-  
- final BatchController batchController =Get.put(BatchController());
+
+  final BatchController batchController = Get.put(BatchController());
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +69,9 @@ class TutorBatchList extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          batchController
-                              .batchNameController.text = data.batchName;
-                          batchController.dateController.text =
-                              data.date;
+                          batchController.batchNameController.text =
+                              data.batchName;
+                          batchController.dateController.text = data.date;
                           editFunctionOfBatch(context, data);
                         },
                       ),
@@ -145,14 +145,14 @@ class TutorBatchList extends StatelessWidget {
                       children: [
                         Icon(Icons.group, color: themeColor),
                         kWidth10,
-                        StreamBuilder<int>(
+                        StreamBuilder<List<StudentModel>>(
                           stream: batchController
-                              .fetchTotalStudents(data.batchId),
+                              .fetchFilteredStudents(data.batchId),
                           builder: (context, snapshot) {
+                            final studentCount =
+                                snapshot.hasData ? snapshot.data!.length : 0;
                             return TextFontWidget(
-                              text: snapshot.hasData
-                                  ? snapshot.data.toString()
-                                  : '0',
+                              text: studentCount.toString(),
                               fontsize: 16.h,
                               fontWeight: FontWeight.bold,
                               color: cblack,

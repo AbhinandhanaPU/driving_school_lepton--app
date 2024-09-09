@@ -46,6 +46,7 @@ class AllStudentsHomePage extends StatelessWidget {
                   .collection('DrivingSchoolCollection')
                   .doc(UserCredentialsController.schoolId)
                   .collection('Students')
+                  .where('status', isEqualTo: true)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -60,7 +61,7 @@ class AllStudentsHomePage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => StudentProfile(
-                                data: data,
+                                studentModel: data,
                               ),
                             ),
                           );

@@ -25,7 +25,10 @@ class StudentController extends GetxController {
   Future<void> fetchAllStudents() async {
     try {
       log("fetchAllStudents......................");
-      final data = await _fbServer.collection('Students').get();
+      final data = await _fbServer
+          .collection('Students')
+          .where('status', isEqualTo: true)
+          .get();
       studentProfileList =
           data.docs.map((e) => StudentModel.fromMap(e.data())).toList();
       log(studentProfileList[0].toString());
@@ -38,7 +41,10 @@ class StudentController extends GetxController {
     try {
       log("fetchAllArchivesStudents......................");
       studentProfileList = [];
-      final data = await _fbServer.collection('Archives').get();
+      final data = await _fbServer
+          .collection('Students')
+          .where('status', isEqualTo: false)
+          .get();
       studentProfileList =
           data.docs.map((e) => StudentModel.fromMap(e.data())).toList();
       log(studentProfileList[0].toString());
@@ -101,7 +107,7 @@ class StudentController extends GetxController {
     }
   }
 
-  Stream<List<String>> fetchStudentsCourse(StudentModel studentModel) async* {
+  Future<List<String>> fetchStudentsCourse(StudentModel studentModel) async {
     List<String> courseNames = [];
 
     try {
@@ -127,7 +133,6 @@ class StudentController extends GetxController {
               if (courseName != null) {
                 courseNames.add(courseName);
                 log("courseNames : $courseNames");
-                yield courseNames;
               }
             }
           }
@@ -136,6 +141,7 @@ class StudentController extends GetxController {
     } catch (e) {
       log("Student course fetching error: $e");
     }
+    return courseNames;
   }
 
   Future<void> addStudentReqToCourse(
@@ -249,41 +255,6 @@ class StudentController extends GetxController {
     }
   }
 
-  Future<void> addStudentFeeColl(
-    StudentModel studentModel,
-    String status,
-    String courseID,
-  ) async {
-    try {
-      await _fbServer
-          .collection('FeeCollection')
-          .doc(courseID)
-          .set({'docId': courseID}).then((value) async {
-        await _fbServer
-            .collection('FeeCollection')
-            .doc(courseID)
-            .collection('Students')
-            .doc(studentModel.docid)
-            .set({
-          'studentName': studentModel.studentName,
-          'studentID': studentModel.docid,
-          'feeStatus': status,
-          'pendingAmount':
-              amountController.text == "" ? 0 : amountController.text,
-          'courseID': courseID
-        }).then((value) async {
-          await acceptStudentToCourse(studentModel, status, courseID);
-          amountController.clear();
-          update();
-          showToast(msg: 'student fees updated');
-          log("Fees Status Updated");
-        });
-      });
-    } catch (e) {
-      log(" FeeCollection error: $e");
-    }
-  }
-
   Future<void> acceptStudentToCourse(
     StudentModel studentModel,
     String status,
@@ -385,13 +356,37 @@ class StudentController extends GetxController {
     try {
       await _fbServer.collection('Students').doc(studentModel.docid).update({
         'batchId': batchId.value,
-        'batchName': batchName.value,
       }).then((value) {
         studentModel.batchId = batchId.value;
-        studentModel.batchName = batchName.value;
         update();
         log("Student batch updated to $batchId");
       });
+      // await addStudentToBatch(studentModel);
+      // await checkStudentInBatches(studentModel);
+      final docidofcourse = await _fbServer.collection("Courses").get();
+      if (docidofcourse.docs.isNotEmpty) {
+        for (var courseDoc in docidofcourse.docs) {
+          final courseDocid = courseDoc.id;
+
+          final std = await _fbServer
+              .collection("Courses")
+              .doc(courseDocid)
+              .collection('Students')
+              .doc(studentModel.docid)
+              .get();
+
+          if (std.exists) {
+            await _fbServer
+                .collection("Courses")
+                .doc(courseDocid)
+                .collection('Students')
+                .doc(studentModel.docid)
+                .update({
+              'batchId': batchId.value,
+            });
+          }
+        }
+      }
     } catch (e) {
       log('student batch update error $e');
     }
@@ -694,6 +689,43 @@ class StudentController extends GetxController {
       }
     } catch (e) {
       log('deleteStudentFromPracticeSchedule error: $e');
+    }
+  }
+
+  Stream<List<String>> fetchStudentsCourseChat(String stdocid) async* {
+    List<String> courseNames = [];
+
+    try {
+      final docidofcourse = await _fbServer.collection("Courses").get();
+
+      if (docidofcourse.docs.isNotEmpty) {
+        for (var courseDoc in docidofcourse.docs) {
+          final courseDocid = courseDoc.id;
+
+          final std = await _fbServer
+              .collection("Courses")
+              .doc(courseDocid)
+              .collection('Students')
+              .doc(stdocid)
+              .get();
+
+          if (std.exists) {
+            final courseDocument =
+                await _fbServer.collection("Courses").doc(courseDocid).get();
+
+            if (courseDocument.exists) {
+              final courseName = courseDocument.data()?['courseName'];
+              if (courseName != null) {
+                courseNames.add(courseName);
+                log("courseNames : $courseNames");
+                yield courseNames;
+              }
+            }
+          }
+        }
+      }
+    } catch (e) {
+      log("Student course fetching error: $e");
     }
   }
 }
