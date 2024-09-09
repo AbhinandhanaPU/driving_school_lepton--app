@@ -310,9 +310,7 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
         'block': false,
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
-        'teachername': UserCredentialsController.teacherModel?.teacherName ?? "",
-
-        ///ppprnt
+        'teachername': UserCredentialsController.teacherModel?.teacherName ?? "", ///ppprnt
       }).then((value) async {
         await FirebaseFirestore.instance
             .collection('DrivingSchoolCollection')
