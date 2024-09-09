@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/controller/batch_controller/batch_controller.dart';
-import 'package:new_project_app/controller/practice_shedule_controller/practice_shedule_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/student_profile.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/batch/students_list/students_datalist.dart';
