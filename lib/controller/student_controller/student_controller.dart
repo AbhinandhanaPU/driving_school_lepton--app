@@ -132,7 +132,7 @@ class StudentController extends GetxController {
               final courseName = courseDocument.data()?['courseName'];
               if (courseName != null) {
                 courseNames.add(courseName);
-                log("courseNames : $courseNames");
+                // log("courseNames : $courseNames");
               }
             }
           }

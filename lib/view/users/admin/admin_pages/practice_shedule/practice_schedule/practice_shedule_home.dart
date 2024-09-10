@@ -43,27 +43,41 @@ class PracticeSheduleHome extends StatelessWidget {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final data = PracticeSheduleModel.fromMap(
-                              snapshot.data!.docs[index].data());
-                          return GestureDetector(
-                            onTap: () {
-                              practiceSheduleController.scheduleId.value =
-                                  data.practiceId;
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      PracticalStudentsList(data: data),
+                      return snapshot.data!.docs.isEmpty
+                          ? const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Please create Students",
+                                  style: TextStyle(fontWeight: FontWeight.w400),
                                 ),
-                              );
-                            },
-                            child: PracticeSheduleList(data: data),
-                          );
-                        },
-                      );
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final data = PracticeSheduleModel.fromMap(
+                                    snapshot.data!.docs[index].data());
+                                return GestureDetector(
+                                  onTap: () {
+                                    practiceSheduleController.scheduleId.value =
+                                        data.practiceId;
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            PracticalStudentsList(
+                                          dataModel: data,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: PracticeSheduleList(data: data),
+                                );
+                              },
+                            );
+                    } else if (snapshot.data == null) {
+                      return const LoadingWidget();
                     } else {
                       return const LoadingWidget();
                     }

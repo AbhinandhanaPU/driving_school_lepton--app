@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
-import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/controller/practice_shedule_controller/practice_shedule_controller.dart';
-import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/practice_shedule_model/practice_shedule_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/all_students/student_profile.dart';
@@ -17,11 +15,11 @@ import 'package:new_project_app/view/widgets/loading_widget/loading_widget.dart'
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class PracticalStudentsList extends StatelessWidget {
-  final PracticeSheduleModel data;
+  final PracticeSheduleModel dataModel;
 
   PracticalStudentsList({
     super.key,
-    required this.data,
+    required this.dataModel,
   });
   final PracticeSheduleController practiceSheduleController =
       Get.put(PracticeSheduleController());
@@ -32,13 +30,13 @@ class PracticalStudentsList extends StatelessWidget {
       appBar: AppBar(
         foregroundColor: cWhite,
         title: Text(
-          "Students List".tr,
+          dataModel.practiceName,
         ),
         flexibleSpace: const AppBarColorWidget(),
         actions: [
           GestureDetector(
             onTap: () {
-              searchStudentsByName(context, data.practiceId);
+              searchStudentsByName(context, dataModel.practiceId);
             },
             child: Icon(Icons.search),
           ),
@@ -57,47 +55,48 @@ class PracticalStudentsList extends StatelessWidget {
           Column(
             children: [
               Expanded(
-                child: StreamBuilder(
-                  stream: server
-                      .collection('DrivingSchoolCollection')
-                      .doc(UserCredentialsController.schoolId)
-                      .collection('PracticeSchedule')
-                      .doc(data.practiceId)
-                      .collection('Students')
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
+                child: StreamBuilder<List<StudentModel>>(
+                  stream: practiceSheduleController
+                      .fetchStudentsWithStatusTrue(dataModel.practiceId),
+                  builder: (context, studentSnapshot) {
+                    if (studentSnapshot.connectionState ==
+                        ConnectionState.waiting) {
                       return const LoadingWidget();
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else if (!snapshot.hasData ||
-                        snapshot.data!.docs.isEmpty) {
+                    }
+                    if (studentSnapshot.hasError) {
                       return Center(
-                        child: TextFontWidget(
-                          text: 'No students found',
-                          fontsize: 18,
-                          fontWeight: FontWeight.w500,
+                        child:
+                            Text('Error: ${studentSnapshot.error.toString()}'),
+                      );
+                    }
+                    final students = studentSnapshot.data ?? [];
+                    if (students.isEmpty) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Please add Students",
+                            style: TextStyle(fontWeight: FontWeight.w400),
+                          ),
                         ),
                       );
                     } else {
                       return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
+                        itemCount: students.length,
                         itemBuilder: (BuildContext context, int index) {
-                          final data = StudentModel.fromMap(
-                              snapshot.data!.docs[index].data());
                           return GestureDetector(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => StudentProfile(
-                                    studentModel: data,
+                                    studentModel: students[index],
                                   ),
                                 ),
                               );
                             },
                             child: PracticeStudentDataList(
-                              data: data,
+                              data: students[index],
                             ),
                           );
                         },
@@ -135,7 +134,7 @@ class PracticalStudentsList extends StatelessWidget {
 
   Future<void> searchStudentsByName(
       BuildContext context, String practiceId) async {
-    practiceSheduleController.fetchStudents(practiceId);
+    practiceSheduleController.fetchStudentsWithStatusTrue(practiceId);
     await showSearch(context: context, delegate: SearchStudentByNamePS());
   }
 }

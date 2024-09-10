@@ -8,6 +8,7 @@ import 'package:new_project_app/controller/practice_shedule_controller/practice_
 import 'package:new_project_app/controller/student_controller/student_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
+import 'package:new_project_app/view/widgets/loading_widget/lottie_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
 class PracticeStudentDataList extends StatelessWidget {
@@ -102,7 +103,7 @@ class PracticeStudentDataList extends StatelessWidget {
                     future: studentController.fetchStudentsCourse(data),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const LottieLoadingWidet();
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
