@@ -392,29 +392,7 @@ class StudentController extends GetxController {
     }
   }
 
-  Future<void> addStudentsToArchive(StudentModel studentModel) async {
-    try {
-      await _fbServer
-          .collection('Archives')
-          .doc(studentModel.docid)
-          .set(studentModel.toMap())
-          .then((value) async {
-        log('Student Archived');
-        await deleteStudentFromAllStudents(studentModel, isArchiving: true);
-        await deleteStudentFromCourse(studentModel, isArchiving: true);
-        await deleteStudentFromBatch(studentModel, isArchiving: true);
-        await deleteStudentFromDrivingTest(studentModel, isArchiving: true);
-        await deleteStudentFromPracticeSchedule(studentModel,
-            isArchiving: true);
-        await deleteStudentFromFee(studentModel, isArchiving: true);
-        showToast(msg: 'Student Archived');
-        Get.back();
-      });
-    } catch (e) {
-      log('Students archive error $e', name: 'StudentController');
-    }
-  }
-
+  
   Future<void> deleteStudentFromAllStudents(StudentModel studentModel,
       {bool isArchiving = false}) async {
     try {

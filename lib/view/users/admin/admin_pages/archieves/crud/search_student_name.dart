@@ -55,19 +55,19 @@ class ArchivedStdSearchByName extends SearchDelegate {
       body: SafeArea(
         child: ListView.separated(
           itemBuilder: (context, index) {
-            final data = suggestionList[index];
+            final studentModel = suggestionList[index];
             return GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => StudentProfile(
-                      studentModel: data,
+                      studentModel: studentModel,
                     ),
                   ),
                 );
               },
-              child: ArchiveStdDataList(data: data),
+              child: ArchiveStdDataList(studentModel: studentModel),
             );
           },
           separatorBuilder: (context, index) {
