@@ -161,21 +161,32 @@ class PracticeSheduleController extends GetxController {
     return coursesRef.snapshots().map((snapshot) => snapshot.docs.length);
   }
 
-  Future<void> fetchStudents(String courseId) async {
-    try {
-      log("fetchStudents......................");
-      final data = await server
+  Stream<List<StudentModel>> fetchStudentsWithStatusTrue(String practiseId) {
+    return server
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('PracticeSchedule')
+        .doc(practiseId)
+        .collection('Students')
+        .snapshots()
+        .asyncMap((snapshot) async {
+      List<String> studentIds = snapshot.docs.map((doc) => doc.id).toList();
+
+      if (studentIds.isEmpty) return [];
+
+      QuerySnapshot studentSnapshot = await server
           .collection('DrivingSchoolCollection')
           .doc(UserCredentialsController.schoolId)
-          .collection('PracticeSchedule')
-          .doc(courseId)
           .collection('Students')
+          .where('status', isEqualTo: true)
+          .where('docid', whereIn: studentIds)
           .get();
-      studentList =
-          data.docs.map((e) => StudentModel.fromMap(e.data())).toList();
-      log(studentList[0].toString());
-    } catch (e) {
-      showToast(msg: "User Data Error");
-    }
+
+      studentList = studentSnapshot.docs
+          .map(
+              (doc) => StudentModel.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
+      return studentList;
+    });
   }
 }

@@ -133,7 +133,7 @@ class TutorPracticalStudentsList extends StatelessWidget {
 
   Future<void> searchStudentsByName(
       BuildContext context, String practiceId) async {
-    practiceSheduleController.fetchStudents(practiceId);
+    practiceSheduleController.fetchStudentsWithStatusTrue(practiceId);
     await showSearch(context: context, delegate: SearchStudentByNamePS());
   }
 }

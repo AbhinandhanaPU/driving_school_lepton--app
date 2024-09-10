@@ -5,6 +5,7 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
 import 'package:new_project_app/controller/practice_shedule_controller/practice_shedule_controller.dart';
 import 'package:new_project_app/model/practice_shedule_model/practice_shedule_model.dart';
+import 'package:new_project_app/model/student_model/student_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/crud_functions/practice_shedule_edit.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
@@ -22,9 +23,6 @@ class PracticeSheduleList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () {
-      //   Get.to(()=>AllPractiseScheduleStudentList(id: data));
-      // },
       child: Container(
         margin: EdgeInsets.only(
           top: 15,
@@ -147,14 +145,14 @@ class PracticeSheduleList extends StatelessWidget {
                       children: [
                         Icon(Icons.group, color: themeColor),
                         kWidth10,
-                        StreamBuilder<int>(
+                        StreamBuilder<List<StudentModel>>(
                           stream: practiceshedulecontroller
-                              .fetchTotalStudents(data.practiceId),
+                              .fetchStudentsWithStatusTrue(data.practiceId),
                           builder: (context, snapshot) {
+                            final studentCount =
+                                snapshot.hasData ? snapshot.data!.length : 0;
                             return TextFontWidget(
-                              text: snapshot.hasData
-                                  ? snapshot.data.toString()
-                                  : '0',
+                              text: studentCount.toString(),
                               fontsize: 16.h,
                               fontWeight: FontWeight.bold,
                               color: cblack,

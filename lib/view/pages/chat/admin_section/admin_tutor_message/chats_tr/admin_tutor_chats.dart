@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _AdminToTeachersChatsScreenState
     fectinTeacherChatStatus();
     // connectingStudentToTeacher();
     connectingCurrentStudentToTeacher();
-    getStudentTeacherChatIndex();
+    fectchingTeacherCurrentMessageIndex();
     getCurrentTeacherMessageIndex().then((value) => resetUserMessageIndextr());
     super.initState();
   }
@@ -154,7 +155,7 @@ class _AdminToTeachersChatsScreenState
                                   child: IconButton(
                                       icon: const Icon( Icons.send,
                                         color: Colors.white,
-                                      ),
+                                      ),  
                                       onPressed: () async {
                                         log('teacherName >>>>  ${widget.teacherDocID}');
                                         ///////////////////////////
@@ -207,13 +208,32 @@ class _AdminToTeachersChatsScreenState
     }
   }
 
-  Future<int> getCurrentTeacherMessageIndex() async {
+    Future<int> fectchingTeacherCurrentMessageIndex() async {
+    final studentData = await FirebaseFirestore.instance
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('Teachers')
+        .doc(widget.teacherDocID)
+        .collection('AdminChats')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (studentData.data()?['messageindex'] == null) {
+      return 1;
+    } else {
+      int currentIndex = studentData.data()!['messageindex'];
+      currentStudentMessageIndex = currentIndex + 1;
+      return currentStudentMessageIndex;
+    }
+  }
+
+  Future<int>   getCurrentTeacherMessageIndex() async {
     var vari = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
         .collection('Teachers')
         .doc(widget.teacherDocID)
-        .collection('AdminsChats')
+        .collection('AdminChats')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     currentStudentMessageIndex = vari.data()?['messageindex'] ?? 0;
@@ -228,7 +248,7 @@ class _AdminToTeachersChatsScreenState
 
   resetUserMessageIndextr() async {
     int zero = 0;
-    final int messageIndexNotify =MessageCounter.adminMessageCounter - await getStudentTeacherChatIndex();
+    final int messageIndexNotify =MessageCounter.adminMessageCounter - currentStudentMessageIndex;
     MessageCounter.adminMessageCounter = messageIndexNotify;
 
     log("StudentCounter${MessageCounter.adminMessageCounter}");
@@ -240,7 +260,7 @@ class _AdminToTeachersChatsScreenState
         .collection('Admins')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('TutorChatCounter')
-        .doc('c3cDX5ymHfITQ3AXcwSp')
+        .doc('F0Ikn1UouYIkqmRFKIpg')
         .update({
       'chatIndex': messageIndexNotify == 0 ? zero : messageIndexNotify
     }).then((value) async {
