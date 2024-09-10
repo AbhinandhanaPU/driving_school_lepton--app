@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:adaptive_ui_layout/flutter_responsive_layout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
+
 import '../../../model/chat_model/chat_model.dart';
 import '../../../model/student_model/data_base_model.dart';
 
@@ -330,8 +332,8 @@ class AdminChatController extends GetxController {
             .doc(teacherDocID)
             .collection('AdminChats')
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection('messages')
-            .doc(id)
+            // .collection('messages')
+            // .doc(id)
            .update({'messageindex': sentIindex})
            // .set(sendMessage.toMap())
             .then((value) async {
