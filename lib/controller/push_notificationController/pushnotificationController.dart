@@ -33,6 +33,8 @@ class PushNotificationController extends GetxController {
         'devideID': deviceID.value,
       }, SetOptions(merge: true)).then((value) async {
         await server
+            .collection('DrivingSchoolCollection')
+            .doc(UserCredentialsController.schoolId)
             .collection('AllUsersDeviceID')
             .doc(currentUSer)
             .update({"devideID": deviceID.value});
@@ -42,9 +44,10 @@ class PushNotificationController extends GetxController {
       log(e.toString());
     }
   }
-    Future<void> removeAllNotification() async {
+
+  Future<void> removeAllNotification() async {
     await server
-        .collection("DrivingSchoolCollection")
+        .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
         .collection("AllUsersDeviceID")
         .doc(FirebaseAuth.instance.currentUser?.uid)
@@ -53,7 +56,7 @@ class PushNotificationController extends GetxController {
         .then((value) async {
       for (var i = 0; i < value.docs.length; i++) {
         await server
-            .collection("DrivingSchoolCollection")
+            .collection('DrivingSchoolCollection')
             .doc(UserCredentialsController.schoolId)
             .collection("AllUsersDeviceID")
             .doc(FirebaseAuth.instance.currentUser?.uid)
@@ -64,10 +67,10 @@ class PushNotificationController extends GetxController {
       Get.back();
     });
   }
-  
+
   Future<void> removeSingleNotification(String docid) async {
     await server
-        .collection("DrivingSchoolCollection")
+        .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
         .collection("AllUsersDeviceID")
         .doc(FirebaseAuth.instance.currentUser?.uid)
