@@ -13,6 +13,9 @@ class FeeController extends GetxController {
   final formKey = GlobalKey<FormState>();
   TextEditingController amountController = TextEditingController();
 
+  RxBool onTapBtach = false.obs;
+  RxString batchId = ''.obs;
+
   final _fbServer = server
       .collection('DrivingSchoolCollection')
       .doc(UserCredentialsController.schoolId);
@@ -189,6 +192,136 @@ class FeeController extends GetxController {
       }
     } catch (e) {
       log("Students approval error: $e");
+    }
+  }
+
+  Future<Map<String, Map<String, dynamic>>> fetchUnpaidStudents() async {
+    final unpaidStudentsWithFeeData = <String, Map<String, dynamic>>{};
+
+    try {
+      final batches = await _fbServer.collection('FeesCollection').get();
+
+      for (var batchDoc in batches.docs) {
+        final batchId = batchDoc.id;
+
+        final courses = await _fbServer
+            .collection('FeesCollection')
+            .doc(batchId)
+            .collection('Courses')
+            .get();
+
+        for (var courseDoc in courses.docs) {
+          final courseId = courseDoc.id;
+
+          final students = await _fbServer
+              .collection('FeesCollection')
+              .doc(batchId)
+              .collection('Courses')
+              .doc(courseId)
+              .collection('Students')
+              .where('paidStatus', isEqualTo: false)
+              .get();
+
+          for (var studentDoc in students.docs) {
+            final studentId = studentDoc.data()['studentID'];
+
+            final studentData = await server
+                .collection('DrivingSchoolCollection')
+                .doc(UserCredentialsController.schoolId)
+                .collection('Students')
+                .doc(studentId)
+                .get();
+
+            if (studentData.exists) {
+              final studentModel = StudentModel.fromMap(studentData.data()!);
+
+              if (unpaidStudentsWithFeeData.containsKey(studentId)) {
+                final existingData = unpaidStudentsWithFeeData[studentId];
+                existingData!['amountPaid'] += studentDoc.data()['amountPaid'];
+                existingData['totalAmount'] += studentDoc.data()['totalAmount'];
+              } else {
+                unpaidStudentsWithFeeData[studentId] = {
+                  'studentModel': studentModel,
+                  'amountPaid': studentDoc.data()['amountPaid'],
+                  'totalAmount': studentDoc.data()['totalAmount'],
+                };
+              }
+            }
+          }
+        }
+      }
+    } catch (e) {
+      log("Error fetching unpaid students: $e");
+    }
+
+    return unpaidStudentsWithFeeData;
+  }
+
+  Future<Map<String, Map<String, dynamic>>> fetchBatchStudents() async {
+    final studentFeeData = <String, Map<String, dynamic>>{};
+
+    try {
+      if (batchId.value.isEmpty) {
+        throw Exception("Batch ID is not selected.");
+      }
+
+      final courses = await _fbServer
+          .collection('FeesCollection')
+          .doc(batchId.value)
+          .collection('Courses')
+          .get();
+
+      for (var courseDoc in courses.docs) {
+        final courseId = courseDoc.id;
+
+        final students = await _fbServer
+            .collection('FeesCollection')
+            .doc(batchId.value)
+            .collection('Courses')
+            .doc(courseId)
+            .collection('Students')
+            .get();
+
+        for (var studentDoc in students.docs) {
+          final studentId = studentDoc.data()['studentID'];
+
+          final studentData = await server
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection('Students')
+              .doc(studentId)
+              .get();
+
+          if (studentData.exists) {
+            final studentModel = StudentModel.fromMap(studentData.data()!);
+
+            final amountPaid = studentDoc.data()['amountPaid'];
+            final totalAmount = studentDoc.data()['totalAmount'];
+            final pendingAmount = totalAmount - amountPaid;
+
+            studentFeeData[studentId] = {
+              'studentModel': studentModel,
+              'amountPaid': amountPaid,
+              'totalAmount': totalAmount,
+              'pendingAmount': pendingAmount,
+            };
+          }
+        }
+      }
+
+      final sortedStudentFeeData = Map.fromEntries(
+        studentFeeData.entries.toList()
+          ..sort((a, b) {
+            final pendingAmountA = a.value['pendingAmount'];
+            final pendingAmountB = b.value['pendingAmount'];
+            return pendingAmountB.compareTo(pendingAmountA);
+          }),
+      );
+
+      return sortedStudentFeeData;
+    } catch (e) {
+      log("Error fetching batch students: $e");
+      return studentFeeData;
     }
   }
 }
