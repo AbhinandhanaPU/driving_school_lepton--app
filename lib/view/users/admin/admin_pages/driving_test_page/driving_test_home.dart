@@ -48,12 +48,10 @@ class DrivingHomePage extends StatelessWidget {
                         return ListView.builder(
                           itemCount: snapshot.data!.length,
                           itemBuilder: (BuildContext context, int index) {
-                            final data =
-                                TestModel.fromMap(snapshot.data![index]);
+                            final data = TestModel.fromMap(snapshot.data![index]);
                             return GestureDetector(
                               onTap: () {
-                                Get.to(
-                                    () => AllTestStudentList(testModel: data));
+                                Get.to(() => AllTestStudentList(testModel: data));
                               },
                               child: DrivingTestList(data: data),
                             );
@@ -67,6 +65,26 @@ class DrivingHomePage extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          Positioned(
+            bottom: 20,
+            left: 20,
+            child: GestureDetector(
+              onTap: () {},
+              child: ButtonContainerWidgetRed(
+                curving: 30,
+                height: 40,
+                width: 180,
+                child: const Center(
+                  child: TextFontWidgetRouter(
+                    text: 'Send Notification',
+                    fontsize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: cWhite,
+                  ),
+                ),
+              ),
+            ),
           ),
           Positioned(
             bottom: 20,
