@@ -108,11 +108,6 @@ class CourseDetails extends StatelessWidget {
                     );
                   },
                 ),
-
-                kHeight20,
-                ProfileDetailsWidget(title: "Course Completed", content: '50'),
-                kHeight20,
-                ProfileDetailsWidget(title: "Pending Students", content: '50'),
               ],
             ),
             Positioned(

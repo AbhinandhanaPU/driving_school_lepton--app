@@ -27,6 +27,9 @@ class BatchController extends GetxController {
   RxString batchId = ''.obs;
   List<StudentModel> studentList = [];
 
+  Rx<bool> onBatchWiseView = Rx<bool>(false);
+  RxString batchView = ''.obs;
+
   Future<void> createBatch() async {
     final uuid = const Uuid().v1();
     final batchDetails = BatchModel(

@@ -11,7 +11,7 @@ import 'package:new_project_app/controller/student_controller/student_controller
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/batch_model/batch_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/all_students/search_students/update_std_batch.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/all_students/crud/update_batch/update_std_batch.dart';
 import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
 import 'package:new_project_app/view/widgets/loading_widget/lottie_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
