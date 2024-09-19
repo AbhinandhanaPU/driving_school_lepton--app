@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/utils/firebase/firebase.dart';
@@ -210,8 +209,11 @@ class StudentController extends GetxController {
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> fetchStdFeeStatus() async* {
+  Future<List<Map<String, dynamic>>> fetchStdFeeStatus() async {
+    List<Map<String, dynamic>> feeStatusList = [];
+
     try {
+      // Fetch all courses in the FeesCollection for the student's batch
       final docOfFee = await _fbServer
           .collection('FeesCollection')
           .doc(UserCredentialsController.studentModel!.batchId)
@@ -221,6 +223,8 @@ class StudentController extends GetxController {
       if (docOfFee.docs.isNotEmpty) {
         for (var courseDoc in docOfFee.docs) {
           final courseDocId = courseDoc.id;
+
+          // Fetch the student's fee document for the current course
           final studentDocSnapshot = await _fbServer
               .collection("FeesCollection")
               .doc(UserCredentialsController.studentModel!.batchId)
@@ -230,23 +234,22 @@ class StudentController extends GetxController {
               .doc(UserCredentialsController.studentModel!.docid)
               .get();
 
+          // If the student's fee data exists, add it to the list with the courseId
           if (studentDocSnapshot.exists) {
-            yield* _fbServer
-                .collection("FeesCollection")
-                .doc(UserCredentialsController.studentModel!.batchId)
-                .collection('Courses')
-                .doc(courseDocId)
-                .collection('Students')
-                .where(UserCredentialsController.studentModel!.docid)
-                .snapshots();
+            feeStatusList.add({
+              'courseId': courseDocId,
+              'feeData': studentDocSnapshot.data(),
+            });
           }
         }
       } else {
         log('No fee data available');
       }
     } catch (error) {
-      log('Student fee fetching error $error');
+      log('Student fee fetching error: $error');
     }
+
+    return feeStatusList;
   }
 
   Future<void> acceptStudentToCourse(

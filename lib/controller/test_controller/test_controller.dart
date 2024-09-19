@@ -239,4 +239,30 @@ class TestController extends GetxController {
       return [];
     }
   }
+
+  Future<List<TestModel>> fetchStudentDrivingTests() async {
+    final drivingTestsSnapshot = await server
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('DrivingTest')
+        .get();
+
+    List<TestModel> studentDrivingTests = [];
+    for (var testDoc in drivingTestsSnapshot.docs) {
+      final studentDoc = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('DrivingTest')
+          .doc(testDoc.id)
+          .collection('Students')
+          .doc(UserCredentialsController.studentModel!.docid)
+          .get();
+
+      if (studentDoc.exists) {
+        studentDrivingTests.add(TestModel.fromMap(testDoc.data()));
+      }
+    }
+
+    return studentDrivingTests;
+  }
 }

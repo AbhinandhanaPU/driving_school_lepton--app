@@ -189,4 +189,30 @@ class PracticeSheduleController extends GetxController {
       return studentList;
     });
   }
+
+  Future<List<PracticeSheduleModel>> fetchStudentPracticeSchedules() async {
+    final schedulesSnapshot = await server
+        .collection('DrivingSchoolCollection')
+        .doc(UserCredentialsController.schoolId)
+        .collection('PracticeSchedule')
+        .get();
+
+    List<PracticeSheduleModel> studentSchedules = [];
+    for (var scheduleDoc in schedulesSnapshot.docs) {
+      final studentDoc = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('PracticeSchedule')
+          .doc(scheduleDoc.id)
+          .collection('Students')
+          .doc(UserCredentialsController.studentModel!.docid)
+          .get();
+
+      if (studentDoc.exists) {
+        studentSchedules.add(PracticeSheduleModel.fromMap(scheduleDoc.data()));
+      }
+    }
+
+    return studentSchedules;
+  }
 }

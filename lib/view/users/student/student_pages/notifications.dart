@@ -58,7 +58,8 @@ class NotificationPartOfStd extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () async {
-                          await pushNotificationController.removeAllNotification();
+                          await pushNotificationController
+                              .removeAllNotification();
                         },
                         child: const Text(
                           "yes",
@@ -139,14 +140,16 @@ class NotificationPartOfStd extends StatelessWidget {
                                                 style: TextStyle(
                                                     color: cWhite,
                                                     fontSize: 20,
-                                                    fontWeight: FontWeight.bold),
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                             ),
                                           ],
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 20),
                                         child: Text(
                                           data['messageText'],
                                           //   " Tommorow is Holiday  ",
@@ -178,7 +181,8 @@ class NotificationPartOfStd extends StatelessWidget {
                                 child: Center(
                                   child: Icon(
                                     //  Icons.alarm,
-                                    IconData(data['icon'], fontFamily: 'MaterialIcons'),
+                                    IconData(data['icon'],
+                                        fontFamily: 'MaterialIcons'),
                                     color: Colors.white,
                                   ),
                                 ),
@@ -187,8 +191,8 @@ class NotificationPartOfStd extends StatelessWidget {
                           ),
                           title: data['open'] == true
                               ? Text(
-                                  // data['headerText'],
-                                  "Holiday",
+                                  data['headerText'],
+                                  // "Holiday",
                                   style: const TextStyle(
                                       color: Color.fromARGB(255, 48, 88, 86),
                                       fontSize: 18,
@@ -237,7 +241,8 @@ class NotificationPartOfStd extends StatelessWidget {
                                     TextButton(
                                       onPressed: () async {
                                         await pushNotificationController
-                                            .removeSingleNotification(data['docid']);
+                                            .removeSingleNotification(
+                                                data['docid']);
                                       },
                                       child: const Text(
                                         "yes",
@@ -265,7 +270,8 @@ class NotificationPartOfStd extends StatelessWidget {
                 } else if (snapshot.data == null) {
                   return Text(
                     "NO Notifications",
-                    style: TextStyle(fontSize: 20, color: cblack.withOpacity(0.5)),
+                    style:
+                        TextStyle(fontSize: 20, color: cblack.withOpacity(0.5)),
                   );
                 } else {
                   return circularProgressIndicatotWidget;

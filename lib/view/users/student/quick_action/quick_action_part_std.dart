@@ -60,27 +60,26 @@ class QuickActionPartStudent extends StatelessWidget {
 }
 
 viewallMenus(BuildContext context) {
-    final QuizTestAdminSideController quizTestAdminSideController =
+  final QuizTestAdminSideController quizTestAdminSideController =
       Get.put(QuizTestAdminSideController());
   double w = MediaQuery.of(context).size.width;
   int columnCount = 3;
   final screenNavigationOfStd = [
     DocumentsStd(), // Documents
-    const StudentDrivingTest(), // driving test
-    const StudentPracticeSchedule(), // Practice schedule
+    StudentDrivingTest(), // driving test
+    StudentPracticeSchedule(), // Practice schedule
     const StudyMaterialsStudent(), // Study Materials
-    StudentChatScreen(),//chat
+    StudentChatScreen(), //chat
     EventsListOfStudent(), //event
-     GestureDetector(
-      onTap: () {
-         quizTestAdminSideController.showLanguageBottomSheet();
-      },
-      child: QuestionWidget()),///mock
+    GestureDetector(
+        onTap: () {
+          quizTestAdminSideController.showLanguageBottomSheet();
+        },
+        child: QuestionWidget()), //mock
     const VideosListStudent(), // Video
     const NoticePageStudent(), //Notice
-    StudentFeeStatus(),//fee
+    StudentFeeStatus(), //fee
     AttendanceHomePage(), //
-    //
   ];
 
   Get.bottomSheet(
@@ -112,18 +111,24 @@ viewallMenus(BuildContext context) {
                             scale: 1.5,
                             child: FadeInAnimation(
                               child: GestureDetector(
-                                onTap: () => Navigator.push(context, MaterialPageRoute(
+                                onTap: () =>
+                                    Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
                                     return screenNavigationOfStd[index];
                                   },
                                 )),
                                 child: Container(
                                   margin: EdgeInsets.only(
-                                      bottom: w / 25, left: w / 30, right: w / 30, top: w / 25),
+                                      bottom: w / 25,
+                                      left: w / 30,
+                                      right: w / 30,
+                                      top: w / 25),
                                   decoration: BoxDecoration(
                                     color: Colors.transparent,
-                                    border: Border.all(color: cblack.withOpacity(0.1)),
-                                    borderRadius: const BorderRadius.all(Radius.circular(7)),
+                                    border: Border.all(
+                                        color: cblack.withOpacity(0.1)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(7)),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.1),
@@ -152,7 +157,9 @@ viewallMenus(BuildContext context) {
                                             color: themeColor,
                                             // cWhite,
                                             shape: BoxShape.circle,
-                                            border: Border.all(color: themeColor.withOpacity(0.5))),
+                                            border: Border.all(
+                                                color: themeColor
+                                                    .withOpacity(0.5))),
                                         child: Center(
                                           child: Image.asset(
                                             imageStd[index],

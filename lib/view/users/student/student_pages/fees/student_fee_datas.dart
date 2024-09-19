@@ -9,14 +9,17 @@ import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.d
 
 class StudentFeeDatas extends StatelessWidget {
   final Map<String, dynamic> dataa;
+  final String courseId;
 
   StudentFeeDatas({
     super.key,
     required this.dataa,
+    required this.courseId,
   });
 
   @override
   Widget build(BuildContext context) {
+    final pendingAmount = dataa['totalAmount'] - dataa['amountPaid'];
     return Container(
       margin: const EdgeInsets.only(
         top: 20,
@@ -52,7 +55,7 @@ class StudentFeeDatas extends StatelessWidget {
                     .collection('DrivingSchoolCollection')
                     .doc(UserCredentialsController.schoolId)
                     .collection('Courses')
-                    .doc(dataa['courseID'])
+                    .doc(courseId)
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -76,7 +79,8 @@ class StudentFeeDatas extends StatelessWidget {
                       ),
                     );
                   } else {
-                    final courseData = CourseModel.fromMap(snapshot.data!.data()!);
+                    final courseData =
+                        CourseModel.fromMap(snapshot.data!.data()!);
                     return Flexible(
                       child: TextFontWidget(
                         text: courseData.courseName,
@@ -115,6 +119,30 @@ class StudentFeeDatas extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextFontWidget(
+                    text: 'Amount Paid',
+                    fontsize: 14.h,
+                    fontWeight: FontWeight.bold,
+                    color: cblack.withOpacity(0.7),
+                  ),
+                  kHeight10,
+                  TextFontWidget(
+                    text: dataa['amountPaid'].toString(),
+                    fontsize: 18.h,
+                    fontWeight: FontWeight.bold,
+                    color: cblue,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          kHeight20,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFontWidget(
                     text: 'Pending Amount',
                     fontsize: 14.h,
                     fontWeight: FontWeight.bold,
@@ -122,9 +150,27 @@ class StudentFeeDatas extends StatelessWidget {
                   ),
                   kHeight10,
                   TextFontWidget(
-                    text: dataa['pendingAmount'].toString(),
+                    text: pendingAmount.toString(),
                     fontsize: 18.h,
-                    fontWeight: FontWeight.bold,          
+                    fontWeight: FontWeight.bold,
+                    color: cblue,
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextFontWidget(
+                    text: 'Total Amount',
+                    fontsize: 14.h,
+                    fontWeight: FontWeight.bold,
+                    color: cblack.withOpacity(0.7),
+                  ),
+                  kHeight10,
+                  TextFontWidget(
+                    text: dataa['totalAmount'].toString(),
+                    fontsize: 18.h,
+                    fontWeight: FontWeight.bold,
                     color: cblue,
                   ),
                 ],
