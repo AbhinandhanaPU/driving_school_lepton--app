@@ -8,12 +8,14 @@ import 'package:new_project_app/controller/practice_shedule_controller/practice_
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/practice_shedule_model/practice_shedule_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/crud_functions/create_slot.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/crud_functions/practice_showdialodue.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/practice_schedule/practice_shedule_list.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/practice_shedule/students_list/practise_std_list.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
 import 'package:new_project_app/view/widgets/loading_widget/loading_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
+import 'package:progress_state_button/progress_button.dart';
 
 class PracticeSheduleHome extends StatelessWidget {
   PracticeSheduleHome({super.key});
@@ -85,6 +87,30 @@ class PracticeSheduleHome extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          Positioned(
+            bottom: 20,
+            left: 20,
+            child: GestureDetector(
+              onTap: () {
+                sendPracticeScheduleNotification(context);
+                practiceSheduleController.selectAllSchedule.value = false;
+                practiceSheduleController.buttonstate.value = ButtonState.idle;
+              },
+              child: ButtonContainerWidgetRed(
+                curving: 30,
+                height: 40,
+                width: 180,
+                child: const Center(
+                  child: TextFontWidgetRouter(
+                    text: 'Send Practice schedule',
+                    fontsize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: cWhite,
+                  ),
+                ),
+              ),
+            ),
           ),
           Positioned(
             bottom: 20,
