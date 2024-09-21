@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
+import 'package:new_project_app/controller/notification_controller/notification_controller.dart';
 import 'package:new_project_app/controller/test_controller/test_controller.dart';
 import 'package:new_project_app/model/test_model/test_model.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/driving_test_page/CRUD/create_test.dart';
@@ -48,10 +49,12 @@ class DrivingHomePage extends StatelessWidget {
                         return ListView.builder(
                           itemCount: snapshot.data!.length,
                           itemBuilder: (BuildContext context, int index) {
-                            final data = TestModel.fromMap(snapshot.data![index]);
+                            final data =
+                                TestModel.fromMap(snapshot.data![index]);
                             return GestureDetector(
                               onTap: () {
-                                Get.to(() => AllTestStudentList(testModel: data));
+                                Get.to(
+                                    () => AllTestStudentList(testModel: data));
                               },
                               child: DrivingTestList(data: data),
                             );
@@ -70,7 +73,12 @@ class DrivingHomePage extends StatelessWidget {
             bottom: 20,
             left: 20,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Get.find<NotificationController>().fetchDrivingTestAllUsers(
+                  bodyText: 'Location',
+                  titleText: 'Driving Test Notification',
+                );
+              },
               child: ButtonContainerWidgetRed(
                 curving: 30,
                 height: 40,
