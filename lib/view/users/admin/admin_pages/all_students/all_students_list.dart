@@ -67,8 +67,15 @@ class AllStudentList extends StatelessWidget {
                       activeColor: Colors.green,
                       value: data.status == true,
                       onChanged: (value) {
-                        final newStatus = value ? true : false;
-                        studentController.updateStudentStatus(data, newStatus);
+                        customShowDialogStatus(
+                          context: context,
+                          onTap: () {
+                            final newStatus = value ? true : false;
+                            studentController.updateStudentStatus(data, newStatus);
+
+                            Navigator.pop(context);
+                          },
+                        );
                       },
                     ),
                   ),
@@ -178,22 +185,18 @@ class AllStudentList extends StatelessWidget {
                           .doc(data.batchId)
                           .get(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
                           return const LottieLoadingWidet();
                         } else if (snapshot.hasError) {
                           log('Error fetching batch data: ${snapshot.error}');
                           return Text('Error: ${snapshot.error}');
-                        } else if (!snapshot.hasData ||
-                            !snapshot.data!.exists) {
+                        } else if (!snapshot.hasData || !snapshot.data!.exists) {
                           log('No data found for batchId: ${data.batchId}');
                           return const Text('Batch Not Found');
                         } else {
-                          final batchData =
-                              BatchModel.fromMap(snapshot.data!.data()!);
-                          String batchName = batchData.batchName.isEmpty
-                              ? "Not found"
-                              : batchData.batchName;
+                          final batchData = BatchModel.fromMap(snapshot.data!.data()!);
+                          String batchName =
+                              batchData.batchName.isEmpty ? "Not found" : batchData.batchName;
                           log('Batch name for batchId ${data.batchId}: $batchName');
                           return Expanded(
                             child: TextFontWidget(

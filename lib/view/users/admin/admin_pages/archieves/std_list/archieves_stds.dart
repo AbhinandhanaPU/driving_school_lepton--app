@@ -11,6 +11,7 @@ import 'package:new_project_app/controller/student_controller/student_controller
 import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/batch_model/batch_model.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
+import 'package:new_project_app/view/widgets/custom_delete_showdialog/custom_delete_showdialog.dart';
 import 'package:new_project_app/view/widgets/loading_widget/lottie_widget.dart';
 import 'package:new_project_app/view/widgets/text_font_widget/text_font_widget.dart';
 
@@ -63,9 +64,18 @@ class ArchiveStdDataList extends StatelessWidget {
                   activeColor: Colors.green,
                   value: studentModel.status == true,
                   onChanged: (value) {
-                    final newStatus = value ? true : false;
-                    studentController.updateStudentStatus(
-                        studentModel, newStatus);
+                    customShowDialogArchives(
+                      context: context,
+                      onTap: () {
+                        final newStatus = value ? true : false;
+                        studentController.updateStudentStatus(studentModel, newStatus);
+
+                        Navigator.pop(context);
+                      },
+                    );
+                    // final newStatus = value ? true : false;
+                    // studentController.updateStudentStatus(
+                    //     studentModel, newStatus);
                   },
                 ),
               ),
@@ -131,22 +141,18 @@ class ArchiveStdDataList extends StatelessWidget {
                               .doc(studentModel.batchId)
                               .get(),
                           builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
                               return const LottieLoadingWidet();
                             } else if (snapshot.hasError) {
                               log('Error fetching batch data: ${snapshot.error}');
                               return Text('Error: ${snapshot.error}');
-                            } else if (!snapshot.hasData ||
-                                !snapshot.data!.exists) {
+                            } else if (!snapshot.hasData || !snapshot.data!.exists) {
                               log('No data found for batchId: ${studentModel.batchId}');
                               return const Text('Batch Not Found');
                             } else {
-                              final batchData =
-                                  BatchModel.fromMap(snapshot.data!.data()!);
-                              String batchName = batchData.batchName.isEmpty
-                                  ? "Not found"
-                                  : batchData.batchName;
+                              final batchData = BatchModel.fromMap(snapshot.data!.data()!);
+                              String batchName =
+                                  batchData.batchName.isEmpty ? "Not found" : batchData.batchName;
                               log('Batch name for batchId ${studentModel.batchId}: $batchName');
                               return TextFontWidget(
                                 text: batchName,
