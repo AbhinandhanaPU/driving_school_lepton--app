@@ -61,10 +61,10 @@ class _StudentToTutorChatsScreenState extends State<StudentToTutorChatsScreen> {
               PopupMenuItem(
                 onTap: () async {
                     developer.log("PopUp Blocked button");
-                  await FirebaseFirestore.instance
+                  await FirebaseFirestore.instance  
                       .collection('DrivingSchoolCollection')
                       .doc(UserCredentialsController.schoolId)
-                      .collection("Students")////doubt
+                      .collection("Students")////doubt  
                       .doc(FirebaseAuth.instance.currentUser!.uid)
                       .collection('TeacherChats')
                       .doc(widget.tutorDocID)
@@ -122,10 +122,10 @@ class _StudentToTutorChatsScreenState extends State<StudentToTutorChatsScreen> {
                 stream: FirebaseFirestore.instance
                       .collection('DrivingSchoolCollection')
                       .doc(UserCredentialsController.schoolId)
-                      .collection("Teachers")
-                      .doc(widget.tutorDocID)
-                      .collection('StudentChats')
+                      .collection('Students')
                       .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .collection("TeachersChats")
+                      .doc(widget.tutorDocID)
                       .snapshots(),
                 builder: (context, checkingblock) {
                   if (checkingblock.hasData) {
@@ -187,12 +187,12 @@ class _StudentToTutorChatsScreenState extends State<StudentToTutorChatsScreen> {
                                             if (messageText.isNotEmpty){
                                              await studentChatController.sentMessageTeacher(
                                               widget.tutorDocID,
-                                             await getCurrentParenttMessageIndex(),
-                                             await getTutorChatCounterIndex(),
+                                              await getCurrentParenttMessageIndex(),
+                                              await getTutorChatCounterIndex(),
                                              );
-                                        } 
-                                        /////////////////////////
-                                      }),
+                                           }  /////////////////////////
+                                      }
+                                  ),
                                 ),
                               ),
                             ],
@@ -203,9 +203,7 @@ class _StudentToTutorChatsScreenState extends State<StudentToTutorChatsScreen> {
                   } else if (checkingblock.data?.data() == null) {
                     return const Text("data");
                   } else {
-                    return const Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    );
+                    return const Center(child: CircularProgressIndicator.adaptive(),);
                   }
                 }),
           ],
@@ -315,8 +313,7 @@ class _StudentToTutorChatsScreenState extends State<StudentToTutorChatsScreen> {
         'docid': FirebaseAuth.instance.currentUser?.uid,
         'messageindex': 0,
         'studentName': UserCredentialsController.studentModel?.studentName,
-      })
-     .then((value) async {
+      }).then((value) async {
         await FirebaseFirestore.instance
             .collection('DrivingSchoolCollection')
            .doc(UserCredentialsController.schoolId)
@@ -325,12 +322,12 @@ class _StudentToTutorChatsScreenState extends State<StudentToTutorChatsScreen> {
             .collection('TeacherChats')
             .doc(widget.tutorDocID)
             .set({
-          'block': false,
-          'docid': widget.tutorDocID,
-          'messageindex': 0,
-          'teachername': widget.teachername,
+             'block': false,
+             'docid': widget.tutorDocID,
+             'messageindex': 0,
+             'teachername': widget.teachername,
+            });
         });
-      });
     }
   }
 

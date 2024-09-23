@@ -390,6 +390,44 @@ class AdminChatController extends GetxController {
     );
   }
 
+  unBlockuserTr(String teacherDocid, BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Alert'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[Text('Do you want to unblock this user?')],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Ok'),
+              onPressed: () async {
+                await FirebaseFirestore.instance
+                    .collection('DrivingSchoolCollection')
+                    .doc(UserCredentialsController.schoolId)
+                    .collection("Admins")
+                    .doc(UserCredentialsController.adminModel!.docid)
+                    .collection('TeacherChats')
+                    .doc(teacherDocid)
+                    .set({'block': false}, SetOptions(merge: true)).then(
+                        (value) => Navigator.of(context).pop());
+              },
+            ),
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   Future<int> fectchingStudentCurrentMessageIndex(String studentDocID) async {
     final studentData = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')

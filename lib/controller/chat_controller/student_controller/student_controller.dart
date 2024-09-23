@@ -411,7 +411,7 @@ class StudentChatController extends GetxController {
     });
   }
 
-  unBlockuser(String adminId, BuildContext context) async {
+  unBlockuser(String teacherId, BuildContext context) async {
     return showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -430,10 +430,10 @@ class StudentChatController extends GetxController {
                 await FirebaseFirestore.instance
                     .collection('DrivingSchoolCollection')
                     .doc(UserCredentialsController.schoolId)
-                    .collection("Admins")
-                    .doc(UserCredentialsController.teacherModel!.docid)
-                    .collection('StudentChats')
-                    .doc(adminId)
+                    .collection("Students")
+                    .doc(UserCredentialsController.studentModel!.docid)
+                    .collection('TeacherChats')
+                    .doc(teacherId)
                     .set({'block': false}, SetOptions(merge: true)).then(
                         (value) => Navigator.of(context).pop());
               },

@@ -47,7 +47,7 @@ class StudentChatScreen extends StatelessWidget {
                                 .doc(UserCredentialsController.schoolId)
                                 .collection('Students')
                                 .doc(FirebaseAuth.instance.currentUser?.uid)
-                                .collection("AdminsChatCounter")
+                                .collection("AdminChatCounter")
                                 .doc("c3cDX5ymHfITQ3AXcwSp")
                                 .snapshots(),
                             builder: (context, messageIndex) {
@@ -109,7 +109,7 @@ class StudentChatScreen extends StatelessWidget {
                                 .collection('Students')
                                 .doc(FirebaseAuth.instance.currentUser?.uid)
                                 .collection("TutorChatCounter")
-                                .doc("c3cDX5ymHfITQ3AXcwSp")
+                                .doc("F0Ikn1UouYIkqmRFKIpg")
                                 .snapshots(),
                             builder: (context, messageIndex) {
                               if (messageIndex.hasData) {

@@ -56,6 +56,26 @@ class _AdminToTeachersChatsScreenState
             Text(widget.teacherName),
           ],
         ),
+         actions: [
+          PopupMenuButton(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                onTap: () async {
+                  log("PopUp Blocked button");
+                  await FirebaseFirestore.instance
+                      .collection('DrivingSchoolCollection')
+                      .doc(UserCredentialsController.schoolId)
+                      .collection('Admins')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .collection('TeacherChats')
+                      .doc(widget.teacherDocID)
+                      .set({'block': true}, SetOptions(merge: true));
+                },
+                child: const Center(child: Text('Block')),
+              ),
+            ],
+          )
+        ],
         backgroundColor: adminePrimayColor,
       ),
       body: SingleChildScrollView(
@@ -112,7 +132,10 @@ class _AdminToTeachersChatsScreenState
                   if (checkingblock.hasData) {
                     if (checkingblock.data?.data()?['block'] == true) {
                       return GestureDetector(
-                        onTap: () async {},
+                        onTap: () async {
+                           await adminChatController.unBlockuserTr(
+                              widget.teacherDocID, context);
+                        },
                         child: SizedBox(
                           height: size.height / 15,
                           width: size.width,
@@ -120,6 +143,7 @@ class _AdminToTeachersChatsScreenState
                             children: [
                               Text('You are Blocked '),
                               SizedBox( height: 10,),
+                                Text('Tap to unblock '),
                             ],
                           ),
                         ),
