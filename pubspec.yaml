@@ -44,7 +44,7 @@ dependencies:
   intl:
   http:
   image_picker:
-  fluttertoast:
+  fluttertoast: ^8.2.1
   google_nav_bar:
   line_icons:
   shimmer:

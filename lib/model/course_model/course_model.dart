@@ -1,12 +1,13 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+ 
 import 'dart:convert';
 
-class CourseModel {
+ class CourseModel {
   String courseName;
   String courseDes;
-  String duration;
-  int rate;
+  String duration; 
+  int rate;         
   String courseId;
+
   CourseModel({
     required this.courseName,
     required this.courseDes,
@@ -18,7 +19,6 @@ class CourseModel {
   CourseModel copyWith({
     String? courseName,
     String? courseDes,
-    String? tutor,
     String? duration,
     int? rate,
     String? courseId,
@@ -46,8 +46,12 @@ class CourseModel {
     return CourseModel(
       courseName: map['courseName'] ?? "",
       courseDes: map['courseDes'] ?? "",
-      duration: map['duration'] ?? "",
-      rate: map['rate'] ?? 0,
+      
+      duration: map['duration'].toString(),
+      
+      rate: map['rate'] is String
+          ? int.tryParse(map['rate']) ?? 0  
+          : map['rate'] ?? 0,             
       courseId: map['courseId'] ?? "",
     );
   }
