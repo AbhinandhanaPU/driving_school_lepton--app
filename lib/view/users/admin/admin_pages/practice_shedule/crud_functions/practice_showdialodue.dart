@@ -213,8 +213,9 @@ sendPracticeScheduleNotification(BuildContext context) {
                           ButtonState.loading;
                       notificationController
                           .sendNotificationParticeSchedule(
-                              bodyText: 'practice schedule',
-                              titleText: 'Practice Scedule Notification',
+                              bodyText:
+                                  'Your driving practice is scheduled. Kindly be on time for your practice',
+                              titleText: 'Practice Schedule Reminder',
                               selectedListDocID: practiceSheduleController
                                   .selectedScheduleList)
                           .then((value) {

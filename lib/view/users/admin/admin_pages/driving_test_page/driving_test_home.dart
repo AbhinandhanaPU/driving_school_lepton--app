@@ -75,8 +75,9 @@ class DrivingHomePage extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 Get.find<NotificationController>().fetchDrivingTestAllUsers(
-                  bodyText: 'Location',
-                  titleText: 'Driving Test Notification',
+                  bodyText:
+                      'Your driving test is scheduled. Please arrive on time and bring all required documents. Good luck!',
+                  titleText: 'Driving Test Reminder',
                 );
               },
               child: ButtonContainerWidgetRed(
