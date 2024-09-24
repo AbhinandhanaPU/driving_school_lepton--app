@@ -33,7 +33,8 @@ class StudentRequest extends StatelessWidget {
                 } else if (snapshot.hasError) {
                   return Center(child: Text("Error: ${snapshot.error}"));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(child: Text("No students found."));
+                  return const Center(
+                      child: Text("No students Requested to join any course."));
                 } else {
                   final studentCourseList = snapshot.data!;
                   return ListView.builder(

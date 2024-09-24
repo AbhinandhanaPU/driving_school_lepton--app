@@ -145,7 +145,11 @@ class Notifications extends StatelessWidget {
                                     InfoNotifierSetup().whiteshadeColor,
                                 containerColor:
                                     InfoNotifierSetup().containerColor,
-                              );
+                              )
+                                  .then((value) {
+                                notificationCntrl.headingController.clear();
+                                notificationCntrl.messageController.clear();
+                              });
                             }
 
                             if (notificationCntrl.selectStudent.value &&
