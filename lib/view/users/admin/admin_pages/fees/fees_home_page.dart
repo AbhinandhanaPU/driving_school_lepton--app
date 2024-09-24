@@ -22,11 +22,7 @@ class FeesHomePage extends StatelessWidget {
       () => Scaffold(
         appBar: AppBar(
           foregroundColor: cWhite,
-          title: Text(
-            feeController.onTapBtach.value == true
-                ? 'Batch Student List'
-                : "Unpaid Students List".tr,
-          ),
+          title: Text("Unpaid Students List".tr),
           flexibleSpace: const AppBarColorWidget(),
         ),
         body: Stack(
@@ -38,37 +34,38 @@ class FeesHomePage extends StatelessWidget {
                   child: BatchDropDown(
                     onChanged: (batchModel) {
                       feeController.onTapBtach.value = true;
-                      feeController.batchId.value = batchModel!.batchId;
+                      // Check if "All Unpaid Students" is selected
+                      if (batchModel!.batchId == 'all') {
+                        feeController.batchId.value = ''; // Empty batch ID for unpaid students
+                      } else {
+                        feeController.batchId.value = batchModel.batchId;
+                      }
                     },
                   ),
                 ),
                 Expanded(
                   child: FutureBuilder<Map<String, Map<String, dynamic>>>(
-                    future: feeController.onTapBtach.value == true
-                        ? feeController.fetchBatchStudents()
-                        : feeController.fetchUnpaidStudents(),
+                    future: feeController.batchId.value.isEmpty
+                        ? feeController
+                            .fetchUnpaidStudents() // Fetch unpaid students if no batch is selected
+                        : feeController.fetchBatchStudents(), // Fetch batch students otherwise
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const LoadingWidget();
                       }
                       if (snapshot.hasError) {
-                        return Center(
-                            child: Text('Error: ${snapshot.error.toString()}'));
+                        return Center(child: Text('Error: ${snapshot.error.toString()}'));
                       }
 
-                      final studentsWithFeeData =
-                          snapshot.data?.values.toList() ?? [];
+                      final studentsWithFeeData = snapshot.data?.values.toList() ?? [];
                       if (studentsWithFeeData.isNotEmpty) {
                         return ListView.builder(
                           itemCount: studentsWithFeeData.length,
                           itemBuilder: (context, index) {
                             final studentData = studentsWithFeeData[index];
-                            final studentModel =
-                                studentData['studentModel'] as StudentModel;
-                            final amountPaid =
-                                (studentData['amountPaid'] as num).toDouble();
-                            final totalAmount =
-                                (studentData['totalAmount'] as num).toDouble();
+                            final studentModel = studentData['studentModel'] as StudentModel;
+                            final amountPaid = (studentData['amountPaid'] as num).toDouble();
+                            final totalAmount = (studentData['totalAmount'] as num).toDouble();
                             final pendingAmount = totalAmount - amountPaid;
                             return FeesList(
                               stdData: studentModel,
@@ -113,7 +110,7 @@ class FeesHomePage extends StatelessWidget {
                         width: 180,
                         child: const Center(
                           child: TextFontWidgetRouter(
-                            text: 'Noyify Students',
+                            text: 'Notify Students',
                             fontsize: 14,
                             fontWeight: FontWeight.bold,
                             color: cWhite,
@@ -122,7 +119,7 @@ class FeesHomePage extends StatelessWidget {
                       ),
                     ),
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ],
         ),
       ),

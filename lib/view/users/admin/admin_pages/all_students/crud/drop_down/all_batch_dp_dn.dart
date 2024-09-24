@@ -8,8 +8,7 @@ class AllStudentBatchDropDown extends StatelessWidget {
   final Function(BatchModel?)? onChanged;
   final Function? onAllStudentsSelected;
 
-  AllStudentBatchDropDown(
-      {super.key, this.onChanged, this.onAllStudentsSelected});
+  AllStudentBatchDropDown({super.key, this.onChanged, this.onAllStudentsSelected});
 
   final BatchController batchController = Get.put(BatchController());
 
