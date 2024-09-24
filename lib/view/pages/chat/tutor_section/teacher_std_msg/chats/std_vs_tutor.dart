@@ -160,7 +160,7 @@ class Parent_TeachersChatsScreenState extends State<TutorStdChatsScreen> {
                                         tutorChatController.sentMessagesToStd(
                                           widget.stdDocID,
                                           await getCurrentTeacherMessageIndex(),
-                                          await getTutorChatCounterIndex(),
+                                          //await getTutorChatCounterIndex(),
                                           //await connectingParentToteacher(),
                                         );
                                         /////////////////////////

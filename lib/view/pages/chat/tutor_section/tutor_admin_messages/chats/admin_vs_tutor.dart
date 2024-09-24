@@ -162,7 +162,7 @@ class Parent_TeachersChatsScreenState extends State<TutorAdminChatsScreen> {
                                         parentChatController.sentMessages(
                                           widget.adminDocID,
                                           await getCurrentTeacherMessageIndex(),
-                                          await getTutorChatCounterIndex(),
+                                          //await getTutorChatCounterIndex(),
                                         );
                                         /////////////////////////
                                       }),

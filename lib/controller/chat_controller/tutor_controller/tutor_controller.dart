@@ -192,7 +192,7 @@ class TutorChatController extends GetxController {
   }
 
   sentMessagesToStd(String studentId, int usercurrentIndex,
-      int parentChatCounterIndex) async {
+      ) async {
     var countPlusone = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)
@@ -259,7 +259,7 @@ class TutorChatController extends GetxController {
   }
 
   sentMessages(
-      String adminId, int usercurrentIndex, int parentChatCounterIndex) async {
+      String adminId, int usercurrentIndex, ) async {
     var countPlusone = await FirebaseFirestore.instance
         .collection('DrivingSchoolCollection')
         .doc(UserCredentialsController.schoolId)

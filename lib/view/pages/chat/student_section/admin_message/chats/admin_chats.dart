@@ -271,7 +271,7 @@ class _AdminsChatsScreenState extends State<AdminsChatsScreen> {
         .collection('Students')
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .collection('AdminChatCounter')
-        .doc('c3cDX5ymHfITQ3AXcwSp')
+        .doc('F0Ikn1UouYIkqmRFKIpg')
         .get();
     return currentStudentMessageIndex2 = vari.data()?['chatIndex'] ?? 0;
   }

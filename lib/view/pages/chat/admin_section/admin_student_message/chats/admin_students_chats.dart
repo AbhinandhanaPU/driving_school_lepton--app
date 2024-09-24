@@ -241,11 +241,11 @@ class _AdminToStudentsChatsScreenState extends State<AdminToStudentsChatsScreen>
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
 
-    if (studentData.data()?['messageindex'] == null) {
-      return 1;
+    if (studentData.data()?['messageindex'] == 0) {
+      return 0;
     } else {
-      int currentIndex = studentData.data()!['messageindex'];
-      currentStudentMessageIndex = currentIndex + 1;
+      // int currentIndex = studentData.data()!['messageindex'];
+      // currentStudentMessageIndex = currentIndex + 1;
       return currentStudentMessageIndex;
     }
   }
