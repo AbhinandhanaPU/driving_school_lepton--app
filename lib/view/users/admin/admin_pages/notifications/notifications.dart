@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
+import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/constant/utils/validations.dart';
 import 'package:new_project_app/controller/notification_controller/notification_controller.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
@@ -132,38 +133,46 @@ class Notifications extends StatelessWidget {
                   () => Center(
                     child: ProgressButtonWidget(
                         function: () async {
-                          notificationCntrl.selectedUSerUIDList.clear();
-                          if (notificationCntrl.formKey.currentState!
-                              .validate()) {
-                            Future<void> sendNotificationsForRole(
-                                String role) async {
-                              await notificationCntrl.fetchUsersID(role: role);
-                              await notificationCntrl
-                                  .sendNotificationSelectedUsers(
-                                icon: Icons.warning_rounded,
-                                whiteshadeColor:
-                                    InfoNotifierSetup().whiteshadeColor,
-                                containerColor:
-                                    InfoNotifierSetup().containerColor,
-                              )
-                                  .then((value) {
-                                notificationCntrl.headingController.clear();
-                                notificationCntrl.messageController.clear();
-                              });
-                            }
+                          if (notificationCntrl.selectStudent.value == true ||
+                              notificationCntrl.selectTeacher.value == true) {
+                            notificationCntrl.selectedUSerUIDList.clear();
+                            if (notificationCntrl.formKey.currentState!
+                                .validate()) {
+                              Future<void> sendNotificationsForRole(
+                                  String role) async {
+                                await notificationCntrl.fetchUsersID(
+                                    role: role);
+                                await notificationCntrl
+                                    .sendNotificationSelectedUsers(
+                                  icon: Icons.warning_rounded,
+                                  whiteshadeColor:
+                                      InfoNotifierSetup().whiteshadeColor,
+                                  containerColor:
+                                      InfoNotifierSetup().containerColor,
+                                )
+                                    .then((value) {
+                                  notificationCntrl.headingController.clear();
+                                  notificationCntrl.messageController.clear();
+                                });
+                              }
 
-                            if (notificationCntrl.selectStudent.value &&
-                                notificationCntrl.selectTeacher.value) {
-                              // Fetch and send notifications for both students and teachers
-                              await sendNotificationsForRole('student');
-                              await sendNotificationsForRole('teacher');
-                            } else if (notificationCntrl.selectStudent.value) {
-                              // Fetch and send notifications for students only
-                              await sendNotificationsForRole('student');
-                            } else if (notificationCntrl.selectTeacher.value) {
-                              // Fetch and send notifications for teachers only
-                              await sendNotificationsForRole('teacher');
+                              if (notificationCntrl.selectStudent.value &&
+                                  notificationCntrl.selectTeacher.value) {
+                                // Fetch and send notifications for both students and teachers
+                                await sendNotificationsForRole('student');
+                                await sendNotificationsForRole('teacher');
+                              } else if (notificationCntrl
+                                  .selectStudent.value) {
+                                // Fetch and send notifications for students only
+                                await sendNotificationsForRole('student');
+                              } else if (notificationCntrl
+                                  .selectTeacher.value) {
+                                // Fetch and send notifications for teachers only
+                                await sendNotificationsForRole('teacher');
+                              }
                             }
+                          } else {
+                            showToast(msg: 'Select any user');
                           }
                         },
                         buttonstate: notificationCntrl.buttonstate.value,

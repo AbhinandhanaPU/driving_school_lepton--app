@@ -674,4 +674,33 @@ class StudentController extends GetxController {
       log("Student course fetching error: $e");
     }
   }
+
+  var isInStudentsCollection = false.obs;
+  var isInRequestedStudentsCollection = false.obs;
+  Future<void> checkStudentPresence(String courseId) async {
+    try {
+      final studentsSnapshot = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Courses')
+          .doc(courseId)
+          .collection('Students')
+          .doc(UserCredentialsController.studentModel!.docid)
+          .get();
+      isInStudentsCollection.value = studentsSnapshot.exists;
+
+      final requestedStudentsSnapshot = await server
+          .collection('DrivingSchoolCollection')
+          .doc(UserCredentialsController.schoolId)
+          .collection('Courses')
+          .doc(courseId)
+          .collection('RequestedStudents')
+          .doc(UserCredentialsController.studentModel!.docid)
+          .get();
+
+      isInRequestedStudentsCollection.value = requestedStudentsSnapshot.exists;
+    } catch (e) {
+      print('Error checking student presence: $e');
+    }
+  }
 }

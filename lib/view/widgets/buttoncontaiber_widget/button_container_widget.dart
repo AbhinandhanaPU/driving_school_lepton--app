@@ -34,7 +34,7 @@ class ButtonContainerWidget extends StatelessWidget {
             offset: const Offset(4, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xff6448fe)),
+        border: Border.all(color: containerColor[colorindex].first),
         gradient: LinearGradient(
             colors: containerColor[colorindex],
             begin: Alignment.centerLeft,

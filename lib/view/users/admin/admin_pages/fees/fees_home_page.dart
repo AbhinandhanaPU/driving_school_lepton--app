@@ -4,7 +4,7 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/controller/fee_controller/fee_controller.dart';
 import 'package:new_project_app/controller/notification_controller/notification_controller.dart';
 import 'package:new_project_app/model/student_model/student_model.dart';
-import 'package:new_project_app/view/users/admin/admin_pages/batch/drop_down/batch_dp_dn.dart';
+import 'package:new_project_app/view/users/admin/admin_pages/fees/batch_drop_down/batch_dp_dn.dart';
 import 'package:new_project_app/view/users/admin/admin_pages/fees/fees_list.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
@@ -31,12 +31,11 @@ class FeesHomePage extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
-                  child: BatchDropDown(
+                  child: UnpaidBatchDropDown(
                     onChanged: (batchModel) {
                       feeController.onTapBtach.value = true;
-                      // Check if "All Unpaid Students" is selected
                       if (batchModel!.batchId == 'all') {
-                        feeController.batchId.value = ''; // Empty batch ID for unpaid students
+                        feeController.batchId.value = '';
                       } else {
                         feeController.batchId.value = batchModel.batchId;
                       }
@@ -46,26 +45,30 @@ class FeesHomePage extends StatelessWidget {
                 Expanded(
                   child: FutureBuilder<Map<String, Map<String, dynamic>>>(
                     future: feeController.batchId.value.isEmpty
-                        ? feeController
-                            .fetchUnpaidStudents() // Fetch unpaid students if no batch is selected
-                        : feeController.fetchBatchStudents(), // Fetch batch students otherwise
+                        ? feeController.fetchUnpaidStudents()
+                        : feeController.fetchBatchStudents(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const LoadingWidget();
                       }
                       if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error.toString()}'));
+                        return Center(
+                            child: Text('Error: ${snapshot.error.toString()}'));
                       }
 
-                      final studentsWithFeeData = snapshot.data?.values.toList() ?? [];
+                      final studentsWithFeeData =
+                          snapshot.data?.values.toList() ?? [];
                       if (studentsWithFeeData.isNotEmpty) {
                         return ListView.builder(
                           itemCount: studentsWithFeeData.length,
                           itemBuilder: (context, index) {
                             final studentData = studentsWithFeeData[index];
-                            final studentModel = studentData['studentModel'] as StudentModel;
-                            final amountPaid = (studentData['amountPaid'] as num).toDouble();
-                            final totalAmount = (studentData['totalAmount'] as num).toDouble();
+                            final studentModel =
+                                studentData['studentModel'] as StudentModel;
+                            final amountPaid =
+                                (studentData['amountPaid'] as num).toDouble();
+                            final totalAmount =
+                                (studentData['totalAmount'] as num).toDouble();
                             final pendingAmount = totalAmount - amountPaid;
                             return FeesList(
                               stdData: studentModel,

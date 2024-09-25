@@ -3,10 +3,8 @@ import 'package:get/get.dart';
 import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/responsive.dart';
 import 'package:new_project_app/constant/sizes/sizes.dart';
-import 'package:new_project_app/constant/utils/firebase/firebase.dart';
 import 'package:new_project_app/constant/utils/utils.dart';
 import 'package:new_project_app/controller/student_controller/student_controller.dart';
-import 'package:new_project_app/controller/user_credentials/user_credentials_controller.dart';
 import 'package:new_project_app/model/course_model/course_model.dart';
 import 'package:new_project_app/view/widgets/appbar_color_widget/appbar_color_widget.dart';
 import 'package:new_project_app/view/widgets/buttoncontaiber_widget/button_container_widget.dart';
@@ -21,6 +19,7 @@ class CourseDetailsStd extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    studentController.checkStudentPresence(data.courseId);
     return Scaffold(
       appBar: AppBar(
         foregroundColor: cWhite,
@@ -64,12 +63,14 @@ class CourseDetailsStd extends StatelessWidget {
                         title: 'Fee',
                         content: data.rate.toString(),
                       ),
-                      kHeight10, // Course Duration
+                      kHeight10,
+                      // Course Duration
                       ProfileDetailsWidget(
                         title: 'Duration',
                         content: "${data.duration} Days",
                       ),
-                      kHeight20, // Course Description
+                      kHeight20,
+                      // Course Description
                       Text(
                         "Description",
                         style: TextStyle(
@@ -80,6 +81,7 @@ class CourseDetailsStd extends StatelessWidget {
                       SizedBox(height: 5),
                       Text(
                         data.courseDes,
+                        textAlign: TextAlign.justify,
                         style: TextStyle(
                           fontSize: ResponsiveApp.width * .04,
                         ),
@@ -87,151 +89,145 @@ class CourseDetailsStd extends StatelessWidget {
                     ],
                   ),
                 ),
-                //  Students details
               ],
             ),
-            Positioned(
-              bottom: 30,
-              right: 40,
-              left: 40,
-              child: GestureDetector(
-                onTap: () async {
-                  final courseStd = await server
-                      .collection('DrivingSchoolCollection')
-                      .doc(UserCredentialsController.schoolId)
-                      .collection('Courses')
-                      .doc(data.courseId)
-                      .collection('Students')
-                      .doc(UserCredentialsController.studentModel!.docid)
-                      .get();
-                  if (!courseStd.exists) {
-                    final reqCourseStd = await server
-                        .collection('DrivingSchoolCollection')
-                        .doc(UserCredentialsController.schoolId)
-                        .collection('Courses')
-                        .doc(data.courseId)
-                        .collection('RequestedStudents')
-                        .doc(UserCredentialsController.studentModel!.docid)
-                        .get();
-                    if (!reqCourseStd.exists) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0)),
-                          title: Center(
-                            child: Text(
-                              'Payment Mode',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                          actions: [
-                            Column(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    studentController.addStudentToCourseOnline(
-                                        data.courseId, context);
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width: 250,
-                                    decoration: const BoxDecoration(
-                                      color: themeColor,
-                                    ),
-                                    child: Center(
-                                      child: GooglePoppinsWidgets(
-                                          text: 'Online Payment',
-                                          color: cWhite,
-                                          fontsize: 15,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
+            Obx(
+              () {
+                final isInStudents =
+                    studentController.isInStudentsCollection.value;
+                final isInRequestedStudents =
+                    studentController.isInRequestedStudentsCollection.value;
+
+                return Positioned(
+                  bottom: 30,
+                  right: 40,
+                  left: 40,
+                  child: GestureDetector(
+                    onTap: () async {
+                      if (!isInStudents) {
+                        if (!isInRequestedStudents) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0)),
+                              title: Center(
+                                child: Text(
+                                  'Payment Mode',
+                                  style: TextStyle(fontSize: 20),
                                 ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    studentController.addStudentReqToCourse(
-                                        data.courseId, context);
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width: 250,
-                                    decoration: const BoxDecoration(
-                                      color: themeColor,
+                              ),
+                              actions: [
+                                Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        studentController
+                                            .addStudentToCourseOnline(
+                                                data.courseId, context);
+                                      },
+                                      child:
+                                          _buildPaymentOption('Online Payment'),
                                     ),
-                                    child: Center(
-                                      child: GooglePoppinsWidgets(
-                                          text: 'Sent Ofline Payment Request',
-                                          color: cWhite,
-                                          fontsize: 15,
-                                          fontWeight: FontWeight.w500),
+                                    SizedBox(
+                                      height: 20,
                                     ),
-                                  ),
-                                ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        studentController.addStudentReqToCourse(
+                                            data.courseId, context);
+                                      },
+                                      child: _buildPaymentOption(
+                                          'Sent Offline Payment Request'),
+                                    ),
+                                  ],
+                                )
                               ],
-                            )
-                          ],
-                        ),
-                      );
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Message'),
-                            content: const SingleChildScrollView(
-                              child: ListBody(
-                                children: <Widget>[
-                                  Text(
-                                      'You are already requested for ofline payment. Try Online Payment')
-                                ],
-                              ),
                             ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text('Cancel'),
-                                onPressed: () {
-                                  Get.back();
-                                },
-                              ),
-                              TextButton(
-                                child: const Text('Pay Online'),
-                                onPressed: () {
-                                  studentController.addStudentToCourseOnline(
-                                      data.courseId, context);
-                                },
-                              ),
-                            ],
                           );
-                        },
-                      );
-                    }
-                  } else {
-                    showToast2(msg: 'You are already Added');
-                  }
-                },
-                child: ButtonContainerWidget(
-                  curving: 30,
-                  colorindex: 0,
-                  height: 60,
-                  width: 140,
-                  child: const Center(
-                    child: TextFontWidgetRouter(
-                      text: 'Join Course',
-                      fontsize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: cWhite,
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text('Message'),
+                                content: const SingleChildScrollView(
+                                  child: ListBody(
+                                    children: <Widget>[
+                                      Text(
+                                          'You are already requested for ofline payment. Try Online Payment')
+                                    ],
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text('Cancel'),
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text('Pay Online'),
+                                    onPressed: () {
+                                      studentController
+                                          .addStudentToCourseOnline(
+                                              data.courseId, context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      } else {
+                        showToast2(msg: 'You are already Added');
+                      }
+                    },
+                    child: ButtonContainerWidget(
+                      curving: 30,
+                      colorindex: isInStudents
+                          ? 8
+                          : isInRequestedStudents
+                              ? 2
+                              : 0,
+                      height: 60,
+                      width: 140,
+                      child: Center(
+                        child: TextFontWidgetRouter(
+                          text: isInStudents
+                              ? 'Joined Course'
+                              : isInRequestedStudents
+                                  ? 'Requested to Join'
+                                  : 'Join Course',
+                          fontsize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: cWhite,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
+                );
+              },
             )
           ],
         ),
       ),
     );
   }
+}
+
+Widget _buildPaymentOption(String text) {
+  return Container(
+    height: 40,
+    width: 250,
+    decoration: const BoxDecoration(color: themeColor),
+    child: Center(
+      child: GooglePoppinsWidgets(
+        text: text,
+        color: cWhite,
+        fontsize: 15,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  );
 }
