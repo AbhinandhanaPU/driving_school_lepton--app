@@ -1,10 +1,11 @@
 import 'dart:developer';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
+import 'package:new_project_app/service/push_notifications/notification_services.dart';
 import 'package:new_project_app/view/splash_screen/splash_screen.dart';
-
-import '../../../helper/shared_pref_helper.dart';
 
 class SelectLanguage extends StatefulWidget {
   const SelectLanguage({super.key});
@@ -14,12 +15,14 @@ class SelectLanguage extends StatefulWidget {
 }
 
 class _SelectLanguageState extends State<SelectLanguage> {
-  // NotificationServices notificationServices = NotificationServices();
+  NotificationServices notificationServices = NotificationServices();
 
   @override
   void initState() {
     super.initState();
     userRequestPermission();
+    notificationServices.firebaseInit(context);
+    notificationServices.setupInteractMessage(context);
   }
 
   final List locale = [
@@ -37,25 +40,25 @@ class _SelectLanguageState extends State<SelectLanguage> {
   }
 
   void userRequestPermission() async {
-    // FirebaseMessaging messaging = FirebaseMessaging.instance;
-    // NotificationSettings settings = await messaging.requestPermission(
-    //   alert: true,
-    //   announcement: false,
-    //   badge: true,
-    //   carPlay: false,
-    //   criticalAlert: false,
-    //   provisional: false,
-    //   sound: true,
-    // );
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
 
-    // if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    //   log('User granted permission');
-    // } else if (settings.authorizationStatus ==
-    //     AuthorizationStatus.provisional) {
-    //   log('User granted provisional permission');
-    // } else {
-    //   log('User declined or has not accepted permission');
-    // }
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      log('User granted permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      log('User granted provisional permission');
+    } else {
+      log('User declined or has not accepted permission');
+    }
   }
 
   builddialog(BuildContext context) {
@@ -106,7 +109,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
                   BoxDecoration(borderRadius: BorderRadius.circular(30)),
               child: ElevatedButton(
                   onPressed: () async {
-                    // builddialog(context);
+                    builddialog(context);
                   },
                   child: Text('Change Language'.tr)),
             ),

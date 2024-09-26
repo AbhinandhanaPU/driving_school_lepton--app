@@ -10,6 +10,8 @@ import 'package:new_project_app/constant/colors/colors.dart';
 import 'package:new_project_app/constant/responsive.dart';
 import 'package:new_project_app/controller/helper/shared_pref_helper.dart';
 import 'package:new_project_app/firebase_options.dart';
+import 'package:new_project_app/language/language.dart';
+import 'package:new_project_app/language/select_language/select_language.dart';
 import 'package:new_project_app/service/pushnotification_service/pushnotification_service.dart';
 import 'package:new_project_app/view/splash_screen/splash_screen.dart';
 
@@ -67,11 +69,16 @@ Future<void> main(List<String> args) async {
   }
 //  await callCloudFunction();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final String languageCode =
+      SharedPreferencesHelper.getString("langCode") ?? "en";
+  final String countryCode =
+      SharedPreferencesHelper.getString("langCode") ?? "US";
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +88,8 @@ class MyApp extends StatelessWidget {
         ResponsiveApp.serMq(context);
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
+          translations: GetxLanguage(),
+          locale: Locale(languageCode, countryCode),
           theme: ThemeData(
             tabBarTheme: TabBarTheme(
               unselectedLabelColor: cWhite,
@@ -89,7 +98,9 @@ class MyApp extends StatelessWidget {
             ),
             appBarTheme: const AppBarTheme(foregroundColor: cWhite),
           ),
-          home: SplashScreen(),
+          home: SharedPreferencesHelper.getString("langCode") != null
+              ? const SplashScreen()
+              : const SelectLanguage(),
         );
       },
     );
