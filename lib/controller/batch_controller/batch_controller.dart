@@ -99,47 +99,71 @@ class BatchController extends GetxController {
 
   Future<void> addStudent() async {
     try {
-      final studentResult = await server
-          .collection('DrivingSchoolCollection')
-          .doc(UserCredentialsController.schoolId)
-          .collection('Students')
-          .doc(courseCtrl.studentDocID.value)
-          .get();
-      if (courseCtrl.studentDocID.value != '') {
-        log("Batch Id${batchId.value}");
-        final data = StudentModel.fromMap(studentResult.data()!);
-        await server
+      final studentDocID = courseCtrl.studentDocID.value;
+
+      if (studentDocID != '') {
+        final studentResult = await server
             .collection('DrivingSchoolCollection')
             .doc(UserCredentialsController.schoolId)
-            .collection('Batch')
-            .doc(batchId.value)
             .collection('Students')
-            .doc(courseCtrl.studentDocID.value)
-            .set(data.toMap())
-            .then((value) async {
-          buttonstate.value = ButtonState.success;
-          showToast(msg: "Student added Successfully");
-          await Future.delayed(const Duration(seconds: 2)).then((vazlue) {
-            buttonstate.value = ButtonState.idle;
+            .doc(studentDocID)
+            .get();
+
+        if (studentResult.exists) {
+          final studentData = studentResult.data()!;
+          final currentBatchId = studentData['batchId'];
+          if (currentBatchId != '' && currentBatchId != batchId.value) {
+            buttonstate.value = ButtonState.fail;
+            showToast(msg: "Student is already enrolled in another batch.");
+            return;
+          }
+
+          await server
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection('Students')
+              .doc(studentDocID)
+              .update({"batchId": batchId.value});
+          final updatedStudentResult = await server
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection('Students')
+              .doc(studentDocID)
+              .get();
+
+          final data = StudentModel.fromMap(updatedStudentResult.data()!);
+
+          await server
+              .collection('DrivingSchoolCollection')
+              .doc(UserCredentialsController.schoolId)
+              .collection('Batch')
+              .doc(batchId.value)
+              .collection('Students')
+              .doc(studentDocID)
+              .set(data.toMap())
+              .then((value) async {
+            buttonstate.value = ButtonState.success;
+            showToast(msg: "Student added successfully.");
+            await Future.delayed(const Duration(seconds: 2)).then((value) {
+              buttonstate.value = ButtonState.idle;
+            });
           });
-        });
-        //    }
-        // } catch (e) {
-        //   buttonstate.value = ButtonState.fail;
-        //   await Future.delayed(const Duration(seconds: 2)).then((value) {
-        //     buttonstate.value = ButtonState.idle;
-        //   });
+        } else {
+          log("Student document not found", name: "Batch");
+          buttonstate.value = ButtonState.fail;
+          showToast(msg: "Student not found. Please try again.");
+        }
       } else {
-        log("Student document not found", name: "Batch");
+        log("Student document ID is empty", name: "Batch");
         buttonstate.value = ButtonState.fail;
-        showToast(msg: "Student not found. Please try again.");
+        showToast(msg: "Student document ID is empty.");
       }
     } catch (e) {
       buttonstate.value = ButtonState.fail;
       await Future.delayed(const Duration(seconds: 2)).then((value) {
         buttonstate.value = ButtonState.idle;
       });
-      log("Error .... $e");
+      log("Error: $e");
     }
   }
 
@@ -189,12 +213,12 @@ class BatchController extends GetxController {
           .where('status', isEqualTo: true)
           .get();
 
-      studentList = filteredStudentsSnapshot.docs
+      List<StudentModel> filteredStudents = filteredStudentsSnapshot.docs
           .map(
               (doc) => StudentModel.fromMap(doc.data() as Map<String, dynamic>))
           .toList();
 
-      return studentList;
+      return filteredStudents;
     });
   }
 

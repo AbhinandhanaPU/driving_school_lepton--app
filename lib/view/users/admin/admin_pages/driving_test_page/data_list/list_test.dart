@@ -64,9 +64,11 @@ class DrivingTestList extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        testController.testDateController.text = data.testDate;
-                        testController.testTimeController.text = data.testTime;
-                        testController.testLocationController.text =
+                        testController.testDateEditController.text =
+                            data.testDate;
+                        testController.testTimeEditController.text =
+                            data.testTime;
+                        testController.testLocationEditController.text =
                             data.location;
                         editFunctionOfTest(context, data);
                       },

@@ -30,160 +30,155 @@ class VideosListAdmin extends StatelessWidget {
           ),
           flexibleSpace: const AppBarColorWidget(),
         ),
-        body: SafeArea(
-          child: Stack(
-            children: [
-              StreamBuilder(
-                stream: server
-                    .collection('DrivingSchoolCollection')
-                    .doc(UserCredentialsController.schoolId)
-                    .collection('Videos')
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.separated(
-                        itemCount: snapshot.data!.docs.length,
-                        separatorBuilder: ((context, index) {
-                          return kHeight10;
-                        }),
-                        itemBuilder: (BuildContext context, int index) {
-                          final data = snapshot.data!.docs[index].data();
-                          String fileName = data['fileName'];
-                          String fileExtension = fileName.split('.').last;
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                left: 12, right: 12, top: 10),
-                            child: ListTileCardWidget(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PlayVideoFlicker(
-                                        videoUrl: data['downloadUrl']),
-                                  ),
-                                );
-                              },
-                              leading: Icon(Icons.ondemand_video_outlined),
-                              title: Row(
+        body: Stack(
+          children: [
+            StreamBuilder(
+              stream: server
+                  .collection('DrivingSchoolCollection')
+                  .doc(UserCredentialsController.schoolId)
+                  .collection('Videos')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.separated(
+                      itemCount: snapshot.data!.docs.length,
+                      separatorBuilder: ((context, index) {
+                        return kHeight10;
+                      }),
+                      itemBuilder: (BuildContext context, int index) {
+                        final data = snapshot.data!.docs[index].data();
+                        String fileName = data['fileName'];
+                        String fileExtension = fileName.split('.').last;
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              left: 12, right: 12, top: 10),
+                          child: ListTileCardWidget(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PlayVideoFlicker(
+                                      videoUrl: data['downloadUrl']),
+                                ),
+                              );
+                            },
+                            leading: Icon(Icons.ondemand_video_outlined),
+                            title: Row(
+                              children: [
+                                TextFontWidget(
+                                  fontsize: 15.h,
+                                  text: data['videoTitle'],
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                TextFontWidget(
+                                  fontsize: 15.h,
+                                  text: ' .$fileExtension',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ],
+                            ),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TextFontWidget(
                                     fontsize: 15.h,
-                                    text: data['videoTitle'],
-                                    fontWeight: FontWeight.bold,
+                                    text: "Category: ${data['videoCategory']}",
+                                    fontWeight: FontWeight.w400,
                                   ),
+                                  kHeight10,
                                   TextFontWidget(
                                     fontsize: 15.h,
-                                    text: ' .$fileExtension',
+                                    text: data['videoDes'],
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ],
                               ),
-                              subtitle: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TextFontWidget(
-                                      fontsize: 15.h,
-                                      text:
-                                          "Category: ${data['videoCategory']}",
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    kHeight10,
-                                    TextFontWidget(
-                                      fontsize: 15.h,
-                                      text: data['videoDes'],
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              trailing: PopupMenuButton(
-                                itemBuilder: (context) {
-                                  return [
-                                    PopupMenuItem(
-                                      onTap: () {
-                                        videosController
-                                            .editVideoTitleController
-                                            .text = data['videoTitle'];
-                                        videosController.editVideoCateController
-                                            .text = data['videoCategory'];
-                                        videosController.editVideoDesController
-                                            .text = data['videoDes'];
-                                        editFunctionOfVideo(context, data);
-                                      },
-                                      child: const Text(
-                                        "Edit",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                    PopupMenuItem(
-                                      onTap: () {
-                                        customDeleteShowDialog(
-                                          context: context,
-                                          onTap: () {
-                                            videosController
-                                                .deletevideo(
-                                                    docId: data['docId'])
-                                                .then((value) =>
-                                                    Navigator.pop(context));
-                                          },
-                                        );
-                                      },
-                                      child: const Text(
-                                        " Delete",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    )
-                                  ];
-                                },
-                              ),
                             ),
-                          );
-                        });
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return Center(child: Text('No Videos Uploaded Yet!'.tr));
+                            trailing: PopupMenuButton(
+                              itemBuilder: (context) {
+                                return [
+                                  PopupMenuItem(
+                                    onTap: () {
+                                      videosController.editVideoTitleController
+                                          .text = data['videoTitle'];
+                                      videosController.editVideoCateController
+                                          .text = data['videoCategory'];
+                                      videosController.editVideoDesController
+                                          .text = data['videoDes'];
+                                      editFunctionOfVideo(context, data);
+                                    },
+                                    child: const Text(
+                                      "Edit",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                  PopupMenuItem(
+                                    onTap: () {
+                                      customDeleteShowDialog(
+                                        context: context,
+                                        onTap: () {
+                                          videosController
+                                              .deletevideo(docId: data['docId'])
+                                              .then((value) =>
+                                                  Navigator.pop(context));
+                                        },
+                                      );
+                                    },
+                                    child: const Text(
+                                      " Delete",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  )
+                                ];
+                              },
+                            ),
+                          ),
+                        );
+                      });
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Center(child: Text('No Videos Uploaded Yet!'.tr));
+              },
+            ),
+            Positioned(
+              bottom: 20,
+              right: 20,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return VideosUploadPage();
+                    },
+                  ));
                 },
-              ),
-              Positioned(
-                bottom: 20,
-                right: 20,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return VideosUploadPage();
-                      },
-                    ));
-                  },
-                  child: ButtonContainerWidget(
-                    curving: 30,
-                    colorindex: 0,
-                    height: 40,
-                    width: 140,
-                    child: const Center(
-                      child: TextFontWidgetRouter(
-                        text: 'Upload Videos',
-                        fontsize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: cWhite,
-                      ),
+                child: ButtonContainerWidget(
+                  curving: 30,
+                  colorindex: 0,
+                  height: 40,
+                  width: 140,
+                  child: const Center(
+                    child: TextFontWidgetRouter(
+                      text: 'Upload Videos',
+                      fontsize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: cWhite,
                     ),
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
