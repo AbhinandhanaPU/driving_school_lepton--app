@@ -82,7 +82,7 @@ class FeesHomePage extends StatelessWidget {
                         return const Center(
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: Text(
+                            child: Text( 
                               "No students added to fees collection",
                               style: TextStyle(fontWeight: FontWeight.w400),
                             ),
